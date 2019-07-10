@@ -10,14 +10,14 @@
 	</parent>
 	<artifactId>application-service-module</artifactId>
 	<packaging>pom</packaging>
-	
+
 	<modules>
 		<module>basic-service-module</module>
 		<module>support-service-module</module>
 		<module>mall-service-module</module>
 		<module>application-service-common-config</module>
 	</modules>
-	
+
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
@@ -27,4 +27,11 @@
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-actuator</artifactId>
+		</dependency>
+	</dependencies>
 </project>
