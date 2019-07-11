@@ -8,7 +8,7 @@
  		<th>说明</th>
  	</tr>
  	<tr>
- 		<td rowspan=4>application-service-module（应用服务模块）</td>
+ 		<td rowspan=5>application-service-module（应用服务模块）</td>
  		<td>application-service-common-config</td>
  		<td>公共配置</td>
  	</tr>
@@ -18,7 +18,11 @@
  	</tr>
  	<tr>
  		<td>mall-service-module</td>
- 		<td>商场服务模块</td>
+ 		<td>商城服务模块</td>
+ 	</tr>
+ 	<tr>
+ 		<td>rpc-module</td>
+ 		<td>rpc调用模块</td>
  	</tr>
  	<tr>
  		<td>support-service-module</td>
@@ -39,7 +43,7 @@
  		<td>公共部分封装</td>
  	</tr>
  	<tr>
- 		<td>system-test-module（系统测试模块）</td>
+ 		<td>system-test</td>
  		<td>-</td>
  		<td>系统测试模块</td>
  	</tr>
@@ -74,6 +78,17 @@
  		<td>mall-service-product</td>
  		<td>商品服务</td>
  		<td>20021</td>
+ 	</tr>
+ 	<tr>
+ 		<td rowspan=2>rpc-module</td>
+ 		<td>basic-service-rpc</td>
+ 		<td>基础服务rpc模块</td>
+ 		<td>-</td>
+ 	</tr>
+ 	<tr>
+ 		<td>mall-service-rpc</td>
+ 		<td>商城服务rpc模块</td>
+ 		<td>-</td>
  	</tr>
  	<tr>
  		<td rowspan=3>support-service-module</td>

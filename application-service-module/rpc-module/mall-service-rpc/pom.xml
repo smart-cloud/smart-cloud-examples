@@ -6,8 +6,8 @@
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>org.smartframework.cloud</groupId>
-		<artifactId>system-test-module</artifactId>
+		<artifactId>rpc-module</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
-	<artifactId>system-test-mall</artifactId>
+	<artifactId>mall-service-rpc</artifactId>
 </project>

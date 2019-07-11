@@ -5,13 +5,21 @@
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>org.smartframework.cloud</groupId>
-		<artifactId>smart-cloud-examples</artifactId>
+		<artifactId>application-service-module</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
-	<artifactId>system-test-module</artifactId>
+	<artifactId>rpc-module</artifactId>
 	<packaging>pom</packaging>
-	
+
+	<dependencies>
+		<dependency>
+			<groupId>org.smartframework.cloud</groupId>
+			<artifactId>smart-cloud-starter-rpc</artifactId>
+		</dependency>
+	</dependencies>
+
 	<modules>
-		<module>system-test-mall</module>
+		<module>basic-service-rpc</module>
+		<module>mall-service-rpc</module>
 	</modules>
 </project>
