@@ -99,9 +99,9 @@
   127.0.0.1       nodeA
 ```
 
-- 安装redis（https://github.com/microsoftarchive/redis/releases），并启动
-- 安装mysql，执行/docs/sql下脚本
-- 安装seata服务端，下载地址https://github.com/seata/seata/releases
+- 安装[redis](https://github.com/microsoftarchive/redis/releases)，并启动
+- 安装[mysql](https://www.mysql.com/downloads/)，执行/docs/sql下脚本
+- 安装[seata](https://github.com/seata/seata/releases)服务端，并启动
 - 服务启动（先启动eureka，然后依次启动mall下服务）
 
 # 三、注意事项
