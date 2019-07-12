@@ -29,6 +29,11 @@
  		<td>支撑服务模块（如注册中心、网关、监控等）</td>
  	</tr>
  	<tr>
+ 		<td>docs</td>
+ 		<td>-</td>
+ 		<td>相关文档、sql等</td>
+ 	</tr>
+ 	<tr>
  		<td rowspan=2>merge-module（服务合并模块）</td>
  		<td>merge-basic</td>
  		<td>基础服务合并</td>
