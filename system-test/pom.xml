@@ -10,4 +10,21 @@
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 	<artifactId>system-test</artifactId>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.smartframework.cloud</groupId>
+			<artifactId>basic-service-rpc</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.smartframework.cloud</groupId>
+			<artifactId>mall-service-rpc</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.smartframework.cloud</groupId>
+			<artifactId>smart-cloud-starter-test</artifactId>
+		</dependency>
+	</dependencies>
 </project>

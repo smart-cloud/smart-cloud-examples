@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>org.smartframework.cloud</groupId>
@@ -14,14 +16,50 @@
 		<module>merge-module</module>
 		<module>system-test-module</module>
 		<module>smart-cloud-example-framework</module>
-    <module>system-test</module>
-  </modules>
+		<module>system-test</module>
+	</modules>
 
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
 				<groupId>org.smartframework.cloud</groupId>
 				<artifactId>smart-cloud-example-framework</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			
+			<dependency>
+				<groupId>org.smartframework.cloud</groupId>
+				<artifactId>basic-service-rpc</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			
+			<dependency>
+				<groupId>org.smartframework.cloud</groupId>
+				<artifactId>mall-service-rpc</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			
+			<dependency>
+				<groupId>org.smartframework.cloud</groupId>
+				<artifactId>basic-service-user</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			
+			<dependency>
+				<groupId>org.smartframework.cloud</groupId>
+				<artifactId>basic-service-auth</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			
+			<dependency>
+				<groupId>org.smartframework.cloud</groupId>
+				<artifactId>mall-service-product</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			
+			<dependency>
+				<groupId>org.smartframework.cloud</groupId>
+				<artifactId>mall-service-order</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 		</dependencies>

@@ -1,0 +1,18 @@
+smart:
+  swagger:
+    enable: true
+    group-name: mall_order
+    title: 订单服务
+    description: 
+    name: luckyQing
+    url: https://github.com/luckyQing
+    email: 1634653825@qq.com
+  datasources:
+    order:
+      url: jdbc:mysql://127.0.0.1:3306/demo_order
+      username: ENC(Ell/BrCjyLFI0+iZgPqo6w==)
+      password: ENC(Aq90bjkofJr0svNO4mtFfw==)
+      mapper-interface-location: org.smartframework.cloud.examples.mall.service.order.mapper
+      transaction-base-packages: org.smartframework.cloud.examples.mall.service.order.service
+      mapper-xml-location: classpath*:/org/smartframework/cloud/examples/mall/service/order/mybatis/**/*.xml
+      seata-enable: true

@@ -19,9 +19,29 @@
 	<dependencies>
 		<dependency>
 			<groupId>org.smartframework.cloud</groupId>
-			<artifactId>smart-cloud-example-framework</artifactId>
+			<artifactId>application-service-common-config</artifactId>
 		</dependency>
 		
+		<dependency>
+			<groupId>org.smartframework.cloud</groupId>
+			<artifactId>smart-cloud-example-framework</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.smartframework.cloud</groupId>
+			<artifactId>smart-cloud-starter-mybatis</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.smartframework.cloud</groupId>
+			<artifactId>smart-cloud-starter-web</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.smartframework.cloud</groupId>
+			<artifactId>smart-cloud-starter-redis</artifactId>
+		</dependency>
+
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
@@ -40,6 +60,11 @@
 		<dependency>
 			<groupId>de.codecentric</groupId>
 			<artifactId>spring-boot-admin-starter-client</artifactId>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.smartframework.cloud</groupId>
+			<artifactId>mall-service-rpc</artifactId>
 		</dependency>
 	</dependencies>
 

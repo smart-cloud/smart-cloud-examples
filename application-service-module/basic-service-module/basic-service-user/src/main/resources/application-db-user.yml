@@ -1,0 +1,17 @@
+smart:
+  swagger:
+    enable: true
+    group-name: mall_user
+    title: 用户服务
+    description: 
+    name: luckyQing
+    url: https://github.com/luckyQing
+    email: 1634653825@qq.com
+  datasources:
+    user:
+      url: jdbc:mysql://127.0.0.1:3306/demo_user
+      username: ENC(PbMw+RtvRPYAo4Acbuxe4Q==)
+      password: ENC(IwbzHJPe93Wevq8LVx0AwQ==)
+      mapper-interface-location: org.smartframework.cloud.examples.basic.service.user.mapper
+      transaction-base-packages: org.smartframework.cloud.examples.basic.service.user.service
+      mapper-xml-location: classpath*:/org/smartframework/cloud/examples/basic/service/user/mybatis/**/*.xml

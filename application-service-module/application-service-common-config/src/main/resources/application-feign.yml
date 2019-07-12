@@ -1,0 +1,17 @@
+feign:
+  hystrix:
+    enabled: false
+  httpclient: 
+    enabled: true
+  compression:  
+    request:
+      enabled: true
+      mime-types: text/xml,application/xml,application/json
+      min-request-size: 2048
+    response:
+      enabled: true
+  client:
+    config:
+      default: 
+        connectTimeout: 10000
+        readTimeout: 10000

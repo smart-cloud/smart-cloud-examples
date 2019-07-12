@@ -1,0 +1,18 @@
+smart:
+  swagger:
+    enable: true
+    group-name: mall_product
+    title: 商品服务
+    description: 
+    name: luckyQing
+    url: https://github.com/luckyQing
+    email: 1634653825@qq.com
+  datasources:
+    product:
+      url: jdbc:mysql://127.0.0.1:3306/demo_product
+      username: ENC(PbMw+RtvRPYAo4Acbuxe4Q==)
+      password: ENC(IwbzHJPe93Wevq8LVx0AwQ==)
+      mapper-interface-location: org.smartframework.cloud.examples.mall.service.product.mapper
+      transaction-base-packages: org.smartframework.cloud.examples.mall.service.product.service
+      mapper-xml-location: classpath*:/org/smartframework/cloud/examples/mall/service/product/mybatis/**/*.xml
+      seata-enable: true

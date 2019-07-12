@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.smartframework.cloud.examples.mall.service.product.mapper.rpc.ProductInfoRpcMapper">
+
+	<!-- 更新库存 -->
+	<update id="updateStock" parameterType="java.util.List">
+		<foreach collection="list" item="item" separator=";">
+			UPDATE t_product_info
+			SET f_stock = f_stock - #{item.count}
+			WHERE f_id = #{item.id}
+			AND f_stock-#{item.count} >= 0
+			AND f_sys_del_state = 1
+		</foreach>
+	</update>
+
+</mapper>

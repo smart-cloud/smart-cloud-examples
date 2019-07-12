@@ -10,4 +10,16 @@
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 	<artifactId>merge-mall</artifactId>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.smartframework.cloud</groupId>
+			<artifactId>mall-service-product</artifactId>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.smartframework.cloud</groupId>
+			<artifactId>mall-service-order</artifactId>
+		</dependency>
+	</dependencies>
 </project>

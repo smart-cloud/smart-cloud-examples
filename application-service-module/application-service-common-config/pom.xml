@@ -11,4 +11,11 @@
 	</parent>
 	<artifactId>application-service-common-config</artifactId>
 	<packaging>jar</packaging>
+
+	<dependencies>
+		<dependency>
+			<groupId>com.github.ulisesbocchio</groupId>
+			<artifactId>jasypt-spring-boot-starter</artifactId>
+		</dependency>
+	</dependencies>
 </project>
