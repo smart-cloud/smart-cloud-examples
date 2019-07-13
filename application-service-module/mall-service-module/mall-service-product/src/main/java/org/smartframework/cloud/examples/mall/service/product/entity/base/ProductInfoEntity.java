@@ -16,7 +16,7 @@ import lombok.experimental.SuperBuilder;
  * 商品信息
  *
  * @author liyulin
- * @date 2019年6月28日下午3:54:39
+ * @date 2019-6-28
  */
 @Getter
 @Setter

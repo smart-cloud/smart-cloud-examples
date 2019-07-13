@@ -6,6 +6,9 @@ import lombok.Getter;
 
 /**
  * 密码状态=={"1":"未设置","2":"已设置"}
+ *
+ * @author liyulin
+ * @date 2019-07-13
  */
 @Getter
 @AllArgsConstructor(access = AccessLevel.PRIVATE)

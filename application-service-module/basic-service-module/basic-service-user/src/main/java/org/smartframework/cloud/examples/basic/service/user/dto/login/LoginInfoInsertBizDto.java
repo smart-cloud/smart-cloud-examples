@@ -9,7 +9,7 @@ import lombok.experimental.SuperBuilder;
  * 插入登陆信息
  * 
  * @author liyulin
- * @date 2019年7月1日 上午11:06:40
+ * @date 2019-07-01
  */
 @Getter
 @Setter

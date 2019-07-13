@@ -8,7 +8,7 @@ import lombok.Getter;
  * 所在平台=={"1":"app","2":"web后台","3":"微信"}
  *
  * @author liyulin
- * @date 2019年6月29日上午11:49:59
+ * @date 2019-06-29
  */
 @Getter
 @AllArgsConstructor(access = AccessLevel.PRIVATE)

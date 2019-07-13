@@ -18,7 +18,7 @@ import org.springframework.stereotype.Service;
  * 商品信息 oms service
  *
  * @author liyulin
- * @date 2019年3月29日下午11:52:13
+ * @date 2019-03-29
  */
 @Service
 public class ProductInfoOmsService {

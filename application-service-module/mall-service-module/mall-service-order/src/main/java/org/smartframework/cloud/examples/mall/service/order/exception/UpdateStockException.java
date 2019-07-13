@@ -7,7 +7,7 @@ import org.smartframework.cloud.starter.common.business.exception.BaseException;
  * 库存更新异常
  *
  * @author liyulin
- * @date 2019年4月16日下午4:49:18
+ * @date 2019-04-16
  */
 public class UpdateStockException extends BaseException {
 

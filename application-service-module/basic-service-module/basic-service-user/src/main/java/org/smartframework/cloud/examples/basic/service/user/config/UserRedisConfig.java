@@ -6,7 +6,7 @@ import lombok.experimental.UtilityClass;
  * 用户模块redis配置
  *
  * @author liyulin
- * @date 2019年6月29日下午4:42:36
+ * @date 2019-06-29
  */
 @UtilityClass
 public class UserRedisConfig {

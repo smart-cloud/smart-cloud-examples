@@ -9,7 +9,7 @@ import org.smartframework.cloud.examples.mall.service.rpc.product.request.rpc.Up
  * 商品rpc mapper
  *
  * @author liyulin
- * @date 2019年4月7日下午11:40:18
+ * @date 2019-04-07
  */
 public interface ProductInfoRpcMapper {
 

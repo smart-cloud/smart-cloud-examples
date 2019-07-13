@@ -18,7 +18,7 @@ import lombok.experimental.SuperBuilder;
  * 用户信息
  *
  * @author liyulin
- * @date 2019年6月28日下午3:54:24
+ * @date 2019-06-28
  */
 @Getter
 @Setter

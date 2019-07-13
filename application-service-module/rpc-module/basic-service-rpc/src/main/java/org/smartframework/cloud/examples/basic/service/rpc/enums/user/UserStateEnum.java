@@ -8,7 +8,7 @@ import lombok.Getter;
  * 用户状态=={"1":"启用","2":"禁用"}
  *
  * @author liyulin
- * @date 2019年6月29日上午11:39:17
+ * @date 2019-06-29
  */
 @Getter
 @AllArgsConstructor(access = AccessLevel.PRIVATE)

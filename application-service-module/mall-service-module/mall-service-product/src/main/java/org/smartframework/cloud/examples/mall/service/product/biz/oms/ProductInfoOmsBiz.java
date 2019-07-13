@@ -25,7 +25,7 @@ import tk.mybatis.mapper.entity.Example.Criteria;
  * 商品信息oms biz
  *
  * @author liyulin
- * @date 2019年3月31日下午4:51:08
+ * @date 2019-03-31
  */
 @Repository
 public class ProductInfoOmsBiz extends BaseBiz<ProductInfoEntity> {

@@ -8,7 +8,7 @@ import lombok.Getter;
  * 性别=={"1":"男","2":"女","3":"未知"}
  *
  * @author liyulin
- * @date 2019年6月29日上午11:40:24
+ * @date 2019-06-29
  */
 @Getter
 @AllArgsConstructor(access = AccessLevel.PRIVATE)

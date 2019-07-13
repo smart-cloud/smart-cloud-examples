@@ -10,7 +10,7 @@ import lombok.Getter;
  * 订单服务状态码
  *
  * @author liyulin
- * @date 2019年4月16日下午4:48:43
+ * @date 2019-04-16
  */
 @Getter
 @AllArgsConstructor(access = AccessLevel.PRIVATE)

@@ -36,7 +36,7 @@ import io.seata.spring.annotation.GlobalTransactional;
  * 订单api service
  *
  * @author liyulin
- * @date 2019年4月8日上午12:49:20
+ * @date 2019-04-08
  */
 @Service
 public class OrderApiService {

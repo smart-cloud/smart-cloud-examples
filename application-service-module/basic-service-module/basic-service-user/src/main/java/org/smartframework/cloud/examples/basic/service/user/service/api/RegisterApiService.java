@@ -15,7 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
  * 注册
  *
  * @author liyulin
- * @date 2019年6月29日下午3:23:59
+ * @date 2019-06-29
  */
 @Service
 public class RegisterApiService {

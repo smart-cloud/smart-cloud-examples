@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
  * 订单信息api biz
  *
  * @author liyulin
- * @date 2019年4月8日上午12:53:39
+ * @date 2019-04-08
  */
 @Repository
 public class OrderBillApiBiz extends BaseBiz<OrderBillEntity> {

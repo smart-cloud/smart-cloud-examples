@@ -4,7 +4,7 @@ package org.smartframework.cloud.examples.system.test.enums;
  * 系统测试环境
  *
  * @author liyulin
- * @date 2019年6月14日下午11:42:56
+ * @date 2019-06-14
  */
 public enum SytemTestEnv {
 

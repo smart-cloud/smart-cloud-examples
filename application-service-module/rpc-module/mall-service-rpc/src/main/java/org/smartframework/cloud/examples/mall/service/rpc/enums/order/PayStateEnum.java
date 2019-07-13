@@ -8,7 +8,7 @@ import lombok.Getter;
  * 支付状态
  *
  * @author liyulin
- * @date 2019年4月16日下午3:54:38
+ * @date 2019-04-16
  */
 @Getter
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
