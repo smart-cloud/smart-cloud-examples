@@ -86,7 +86,7 @@ public class ProductInfoOmsBiz extends BaseBiz<ProductInfoEntity> {
 		Criteria criteria = example.createCriteria();
 		PageProductReqBody reqBody = req.getQuery();
 		if (!Objects.isNull(reqBody) && StringUtils.isNotBlank(reqBody.getName())) {
-			criteria.andLike(ProductInfoEntity.Columns.NAME.getProperty(), reqBody.getName() + "%");
+			criteria.andLike(ProductInfoEntity.Columns.name.toString(), reqBody.getName() + "%");
 		}
 		criteria.andEqualTo(BaseEntity.Columns.DEL_STATE.getProperty(), DelStateEnum.NORMAL.getDelState());
 		example.orderBy(BaseEntity.Columns.ADD_TIME.getProperty()).desc();

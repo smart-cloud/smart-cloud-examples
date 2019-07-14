@@ -5,8 +5,6 @@ import javax.persistence.Table;
 
 import org.smartframework.cloud.starter.mybatis.common.mapper.entity.BaseEntity;
 
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -16,7 +14,7 @@ import lombok.experimental.SuperBuilder;
  * 运单信息
  *
  * @author liyulin
- * @date 2019年3月31日下午4:26:31
+ * @date 2019-07-15
  */
 @Getter
 @Setter
@@ -27,41 +25,38 @@ public class OrderDeliveryInfoEntity extends BaseEntity {
 
 	private static final long serialVersionUID = 1L;
 
-	/** 所属订单（t_order_bill表f_id） */
-	@Column(name = "t_order_bill_id")
+    /** 所属订单（t_order_bill表f_id） */
+    @Column(name = "orderBillId")     
 	private Long orderBillId;
-
-	/** 购买的商品id（demo_product库t_product_info表f_id） */
-	@Column(name = "t_product_info_id")
+	
+    /** 购买的商品id（demo_product库t_product_info表f_id） */
+    @Column(name = "productInfoId")     
 	private Long productInfoId;
-
-	/** 商品名称 */
-	@Column(name = "f_product_name")
+	
+    /** 商品名称 */
+    @Column(name = "productName")     
 	private String productName;
-
-	/** 商品购买价格（单位：万分之一元） */
-	@Column(name = "f_price")
+	
+    /** 商品购买价格（单位：万分之一元） */
+    @Column(name = "price")     
 	private Long price;
-
-	/** 购买数量 */
-	@Column(name = "f_buy_count")
+	
+    /** 购买数量 */
+    @Column(name = "buyCount")     
 	private Integer buyCount;
-
-	@Getter
-	@AllArgsConstructor(access = AccessLevel.PRIVATE)
+	
+	/** 表字段名 */
 	public enum Columns {
-		/** 所属订单 */
-		ORDER_BILL_ID("orderBillId"),
-		/** 购买的商品id */
-		PRODUCTINFO_ID("productInfoId"),
-		/** 商品名称 */
-		PRODUCT_NAME("productName"),
-		/** 商品购买价格 */
-		PRICE("price"),
-		/** 购买数量 */
-		BUY_COUNT("buyCount");
-
-		private String property;
+	    /** 所属订单（t_order_bill表f_id） */
+		orderBillId,
+	    /** 购买的商品id（demo_product库t_product_info表f_id） */
+		productInfoId,
+	    /** 商品名称 */
+		productName,
+	    /** 商品购买价格（单位：万分之一元） */
+		price,
+	    /** 购买数量 */
+		buyCount;
 	}
 
 }

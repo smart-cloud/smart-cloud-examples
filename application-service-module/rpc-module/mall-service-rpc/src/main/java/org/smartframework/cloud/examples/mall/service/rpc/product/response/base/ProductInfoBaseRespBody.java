@@ -13,18 +13,18 @@ import lombok.experimental.SuperBuilder;
 @Getter
 @NoArgsConstructor
 @SuperBuilder
-@ApiModel(description = "商品信息响应信息")
+@ApiModel(description = "商品信息")
 public class ProductInfoBaseRespBody extends BaseEntityRespBody {
 
 	private static final long serialVersionUID = 1L;
 
-	@ApiModelProperty(value = "商品名称")
+    @ApiModelProperty(value = "商品名称")
 	private String name;
-
-	@ApiModelProperty(value = "销售价格（单位：万分之一元）")
-	private long sellPrice;
-
-	@ApiModelProperty(value = "库存")
-	private long stock;
-
+	
+    @ApiModelProperty(value = "销售价格（单位：万分之一元）")
+	private Long sellPrice;
+	
+    @ApiModelProperty(value = "库存")
+	private Long stock;
+	
 }
