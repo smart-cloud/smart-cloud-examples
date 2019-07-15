@@ -26,15 +26,15 @@ public class OrderBillEntity extends BaseEntity {
 	private static final long serialVersionUID = 1L;
 
     /** 订单金额总金额 */
-    @Column(name = "amount")     
+    @Column(name = "f_amount")     
 	private Long amount;
 	
     /** 支付状态（1：待支付；2：支付成功；3：支付失败；4：待退款；5：退款成功；6：退款失败） */
-    @Column(name = "payState")     
+    @Column(name = "f_pay_state")     
 	private Byte payState;
 	
     /** 购买人id（demo_user库t_user_info表f_id） */
-    @Column(name = "buyer")     
+    @Column(name = "f_buyer")     
 	private Long buyer;
 	
 	/** 表字段名 */

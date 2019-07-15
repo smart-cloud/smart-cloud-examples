@@ -26,8 +26,8 @@ public class UserInfoApiBiz extends BaseBiz<UserInfoEntity> {
 	public UserInfoEntity insert(UserInfoInsertReqBody userInfo) {
 		UserInfoEntity record = create();
 		record.setMobile(userInfo.getMobile());
-		record.setNickname(userInfo.getNickname());
-		record.setRealname(userInfo.getRealname());
+		record.setNickName(userInfo.getNickname());
+		record.setRealName(userInfo.getRealname());
 		record.setSex(userInfo.getSex());
 		record.setBirthday(userInfo.getBirthday());
 		record.setProfileImage(userInfo.getProfileImage());
@@ -45,7 +45,7 @@ public class UserInfoApiBiz extends BaseBiz<UserInfoEntity> {
 	 */
 	public boolean existByMobile(String mobile) {
 		Example example = new Example(UserInfoEntity.class, true, true);
-		example.createCriteria().andEqualTo(UserInfoEntity.Columns.MOBILE.getProperty(), mobile);
+		example.createCriteria().andEqualTo(UserInfoEntity.Columns.mobile.toString(), mobile);
 		return userInfoBaseMapper.selectCountByExample(example) > 0;
 	}
 

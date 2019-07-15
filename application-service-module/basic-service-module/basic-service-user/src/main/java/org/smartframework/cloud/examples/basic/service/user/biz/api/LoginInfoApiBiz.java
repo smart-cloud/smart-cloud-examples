@@ -49,7 +49,7 @@ public class LoginInfoApiBiz extends BaseBiz<LoginInfoEntity> {
 	 */
 	public LoginInfoEntity queryByUsername(String username) {
 		Example example = new Example(LoginInfoEntity.class, true, true);
-		example.createCriteria().andEqualTo(LoginInfoEntity.Columns.USERNAME.getProperty(), username);
+		example.createCriteria().andEqualTo(LoginInfoEntity.Columns.username.toString(), username);
 		List<LoginInfoEntity> list = loginInfoBaseMapper.selectByExampleAndRowBounds(example, new RowBounds(0, 1));
 		if (CollectionUtil.isEmpty(list)) {
 			return null;
@@ -65,7 +65,7 @@ public class LoginInfoApiBiz extends BaseBiz<LoginInfoEntity> {
 	 */
 	public boolean existByUsername(String username) {
 		Example example = new Example(LoginInfoEntity.class, true, true);
-		example.createCriteria().andEqualTo(LoginInfoEntity.Columns.USERNAME.getProperty(), username);
+		example.createCriteria().andEqualTo(LoginInfoEntity.Columns.username.toString(), username);
 		return loginInfoBaseMapper.selectCountByExample(example) > 0;
 	}
 

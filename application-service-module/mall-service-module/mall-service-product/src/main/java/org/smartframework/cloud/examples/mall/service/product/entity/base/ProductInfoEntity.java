@@ -26,15 +26,15 @@ public class ProductInfoEntity extends BaseEntity {
 	private static final long serialVersionUID = 1L;
 
     /** 商品名称 */
-    @Column(name = "name")     
+    @Column(name = "f_name")     
 	private String name;
 	
     /** 销售价格（单位：万分之一元） */
-    @Column(name = "sellPrice")     
+    @Column(name = "f_sell_price")     
 	private Long sellPrice;
 	
     /** 库存 */
-    @Column(name = "stock")     
+    @Column(name = "f_stock")     
 	private Long stock;
 	
 	/** 表字段名 */

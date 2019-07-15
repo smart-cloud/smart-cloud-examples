@@ -26,23 +26,23 @@ public class OrderDeliveryInfoEntity extends BaseEntity {
 	private static final long serialVersionUID = 1L;
 
     /** 所属订单（t_order_bill表f_id） */
-    @Column(name = "orderBillId")     
+    @Column(name = "t_order_bill_id")     
 	private Long orderBillId;
 	
     /** 购买的商品id（demo_product库t_product_info表f_id） */
-    @Column(name = "productInfoId")     
+    @Column(name = "t_product_info_id")     
 	private Long productInfoId;
 	
     /** 商品名称 */
-    @Column(name = "productName")     
+    @Column(name = "f_product_name")     
 	private String productName;
 	
     /** 商品购买价格（单位：万分之一元） */
-    @Column(name = "price")     
+    @Column(name = "f_price")     
 	private Long price;
 	
     /** 购买数量 */
-    @Column(name = "buyCount")     
+    @Column(name = "f_buy_count")     
 	private Integer buyCount;
 	
 	/** 表字段名 */
