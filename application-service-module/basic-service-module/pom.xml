@@ -31,6 +31,11 @@
 			<groupId>org.smartframework.cloud</groupId>
 			<artifactId>smart-cloud-starter-mybatis</artifactId>
 		</dependency>
+		
+		<dependency>
+			<groupId>tk.mybatis</groupId>
+			<artifactId>mapper</artifactId>
+		</dependency>
 
 		<dependency>
 			<groupId>org.smartframework.cloud</groupId>
