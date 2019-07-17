@@ -41,6 +41,11 @@
 			<groupId>org.smartframework.cloud</groupId>
 			<artifactId>smart-cloud-starter-web</artifactId>
 		</dependency>
+		
+		<dependency>
+			<groupId>org.smartframework.cloud</groupId>
+			<artifactId>smart-cloud-starter-swagger</artifactId>
+		</dependency>
 
 		<dependency>
 			<groupId>org.smartframework.cloud</groupId>
