@@ -19,6 +19,10 @@
 		<module>system-test</module>
 	</modules>
 
+	<properties>
+		<docker.image.prefix>example</docker.image.prefix>
+	</properties>
+
 	<dependencyManagement>
 		<dependencies>
 			<dependency>

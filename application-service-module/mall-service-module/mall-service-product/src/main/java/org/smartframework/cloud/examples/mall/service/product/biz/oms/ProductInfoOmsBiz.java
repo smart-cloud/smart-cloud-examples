@@ -88,8 +88,8 @@ public class ProductInfoOmsBiz extends BaseBiz<ProductInfoEntity> {
 		if (!Objects.isNull(reqBody) && StringUtils.isNotBlank(reqBody.getName())) {
 			criteria.andLike(ProductInfoEntity.Columns.name.toString(), reqBody.getName() + "%");
 		}
-		criteria.andEqualTo(BaseEntity.Columns.DEL_STATE.getProperty(), DelStateEnum.NORMAL.getDelState());
-		example.orderBy(BaseEntity.Columns.ADD_TIME.getProperty()).desc();
+		criteria.andEqualTo(BaseEntity.Columns.delState.toString(), DelStateEnum.NORMAL.getDelState());
+		example.orderBy(BaseEntity.Columns.addTime.toString()).desc();
 
 		return productInfoBaseMapper.pageRespByExample(example, req.getPageNum(), req.getPageSize());
 	}

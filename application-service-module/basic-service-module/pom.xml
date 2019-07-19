@@ -77,26 +77,4 @@
 			<artifactId>basic-service-rpc</artifactId>
 		</dependency>
 	</dependencies>
-
-	<profiles>
-		<!--单体服务构建 -->
-		<profile>
-			<id>single</id>
-			<build>
-				<plugins>
-					<plugin>
-						<groupId>org.springframework.boot</groupId>
-						<artifactId>spring-boot-maven-plugin</artifactId>
-					</plugin>
-				</plugins>
-			</build>
-			<activation>
-				<activeByDefault>true</activeByDefault>
-			</activation>
-		</profile>
-		<!-- 合体服务构建 -->
-		<profile>
-			<id>merge</id>
-		</profile>
-	</profiles>
 </project>
