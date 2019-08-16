@@ -14,7 +14,6 @@
 	<modules>
 		<module>application-service-module</module>
 		<module>merge-module</module>
-		<module>system-test-module</module>
 		<module>smart-cloud-example-framework</module>
 		<module>system-test</module>
 	</modules>
