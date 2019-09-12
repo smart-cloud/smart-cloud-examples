@@ -5,21 +5,21 @@
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>org.smartframework.cloud</groupId>
-		<artifactId>application-service-module</artifactId>
+		<artifactId>application-module</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
-	<artifactId>basic-service-module</artifactId>
+	<artifactId>mall-module</artifactId>
 	<packaging>pom</packaging>
 
 	<modules>
-		<module>basic-service-user</module>
-		<module>basic-service-auth</module>
+		<module>mall-service-order</module>
+		<module>mall-service-product</module>
 	</modules>
 
 	<dependencies>
 		<dependency>
 			<groupId>org.smartframework.cloud</groupId>
-			<artifactId>application-service-common-config</artifactId>
+			<artifactId>application-common-config</artifactId>
 		</dependency>
 		
 		<dependency>
@@ -74,7 +74,29 @@
 		
 		<dependency>
 			<groupId>org.smartframework.cloud</groupId>
-			<artifactId>basic-service-rpc</artifactId>
+			<artifactId>mall-service-rpc</artifactId>
 		</dependency>
 	</dependencies>
+
+	<profiles>
+		<!--单体服务构建 -->
+		<profile>
+			<id>single</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.springframework.boot</groupId>
+						<artifactId>spring-boot-maven-plugin</artifactId>
+					</plugin>
+				</plugins>
+			</build>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+		</profile>
+		<!-- 合体服务构建 -->
+		<profile>
+			<id>merge</id>
+		</profile>
+	</profiles>
 </project>

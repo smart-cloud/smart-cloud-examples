@@ -12,7 +12,7 @@
 	<packaging>pom</packaging>
 
 	<modules>
-		<module>application-service-module</module>
+		<module>application-module</module>
 		<module>merge-module</module>
 		<module>smart-cloud-example-framework</module>
 		<module>system-test</module>
