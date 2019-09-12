@@ -8,16 +8,16 @@
  		<th>说明</th>
  	</tr>
  	<tr>
- 		<td rowspan=5>application-service-module（应用服务模块）</td>
- 		<td>application-service-common-config</td>
+ 		<td rowspan=5>application-module（应用服务模块）</td>
+ 		<td>application-common-config</td>
  		<td>公共配置</td>
  	</tr>
  	<tr>
- 		<td>basic-service-module</td>
+ 		<td>basic-module</td>
  		<td>基础服务模块（如文件服务、权限服务、登陆服务等）</td>
  	</tr>
  	<tr>
- 		<td>mall-service-module</td>
+ 		<td>mall-module</td>
  		<td>商城服务模块</td>
  	</tr>
  	<tr>
@@ -25,7 +25,7 @@
  		<td>rpc调用模块</td>
  	</tr>
  	<tr>
- 		<td>support-service-module</td>
+ 		<td>support-module</td>
  		<td>支撑服务模块（如注册中心、网关、监控等）</td>
  	</tr>
  	<tr>
@@ -63,7 +63,7 @@
  		<th>端口号</th>
  	</tr>
  	<tr>
- 		<td rowspan=2>basic-service-module</td>
+ 		<td rowspan=2>basic-module</td>
  		<td>basic-service-user</td>
  		<td>用户服务</td>
  		<td>20031</td>
@@ -74,7 +74,7 @@
  		<td>20041</td>
  	</tr>
  	<tr>
- 		<td rowspan=2>mall-service-module</td>
+ 		<td rowspan=2>mall-module</td>
  		<td>mall-service-order</td>
 		<td>订单服务</td>
  		<td>20011</td>
@@ -96,7 +96,7 @@
  		<td>-</td>
  	</tr>
  	<tr>
- 		<td rowspan=3>support-service-module</td>
+ 		<td rowspan=3>support-module</td>
  		<td>support-service-eureka</td>
  		<td>注册中心</td>
  		<td>10001</td>
