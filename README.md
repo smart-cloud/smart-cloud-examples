@@ -122,7 +122,7 @@
 - 安装[redis](https://github.com/microsoftarchive/redis/releases)，并启动
 - 安装[mysql](https://www.mysql.com/downloads/)，执行/docs/sql下脚本
 - 安装[seata](https://github.com/seata/seata/releases)服务端，并启动
-- 服务启动（先启动eureka，然后依次启动mall下服务）
+- 服务启动（先启动[nacos](https://nacos.io/en-us/docs/quick-start.html)，然后依次启动mall下服务）
 
 # 三、注意事项
 - 针对**jasypt**加密，所有的需要合并的单体服务的**jasypt.encryptor.password**的值必须相同，否则会报错。

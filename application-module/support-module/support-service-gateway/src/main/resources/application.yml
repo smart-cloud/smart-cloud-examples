@@ -2,7 +2,7 @@ spring:
   application:
     name: support-service-gateway
   profiles:
-    include: common-config,eureka
+    include: common-config,discovery
 
 server:
   port: 80
