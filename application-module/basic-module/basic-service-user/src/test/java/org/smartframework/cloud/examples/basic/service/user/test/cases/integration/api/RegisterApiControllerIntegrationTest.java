@@ -1,6 +1,7 @@
 package org.smartframework.cloud.examples.basic.service.user.test.cases.integration.api;
 
 import org.assertj.core.api.Assertions;
+import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 import org.smartframework.cloud.common.pojo.dto.Resp;
@@ -14,7 +15,10 @@ import org.smartframework.cloud.examples.basic.service.rpc.user.request.api.user
 import org.smartframework.cloud.examples.basic.service.rpc.user.response.api.register.RegisterUserRespBody;
 import org.smartframework.cloud.examples.basic.service.user.service.api.LoginInfoApiService;
 import org.smartframework.cloud.examples.basic.service.user.service.api.RegisterApiService;
+import org.smartframework.cloud.starter.common.business.security.LoginRedisConfig;
+import org.smartframework.cloud.starter.redis.component.RedisComponent;
 import org.smartframework.cloud.starter.test.AbstractIntegrationTest;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,6 +28,15 @@ import com.alibaba.fastjson.TypeReference;
 @Transactional
 public class RegisterApiControllerIntegrationTest extends AbstractIntegrationTest {
 
+	@Autowired
+	private RedisComponent redisComponent;
+
+	@Before
+	public void after() {
+		redisComponent.delete(LoginRedisConfig.getTokenRedisKey("*"));
+		redisComponent.delete(LoginRedisConfig.getUserIdRedisKey(null)+"*");
+	}
+	
 	@Test
 	public void testRegister() throws Exception {
 		// mock

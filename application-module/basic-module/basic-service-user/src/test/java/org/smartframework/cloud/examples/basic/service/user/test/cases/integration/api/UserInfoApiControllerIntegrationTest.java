@@ -1,6 +1,7 @@
 package org.smartframework.cloud.examples.basic.service.user.test.cases.integration.api;
 
 import org.assertj.core.api.Assertions;
+import org.junit.Before;
 import org.junit.Test;
 import org.smartframework.cloud.common.pojo.dto.Resp;
 import org.smartframework.cloud.common.pojo.enums.ReturnCodeEnum;
@@ -27,6 +28,12 @@ public class UserInfoApiControllerIntegrationTest extends AbstractIntegrationTes
 	@Autowired
 	private RedisComponent redisComponent;
 
+	@Before
+	public void after() {
+		redisComponent.delete(LoginRedisConfig.getTokenRedisKey("*"));
+		redisComponent.delete(LoginRedisConfig.getUserIdRedisKey(null)+"*");
+	}
+	
 	@Test
 	public void testQuery() throws Exception {
 		Long userId = 1L;
