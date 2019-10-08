@@ -1,7 +1,6 @@
 package org.smartframework.cloud.examples.basic.service.user.test.cases.integration.api;
 
 import org.assertj.core.api.Assertions;
-import org.junit.Before;
 import org.junit.Test;
 import org.smartframework.cloud.common.pojo.dto.BaseDto;
 import org.smartframework.cloud.common.pojo.dto.Resp;
@@ -33,12 +32,6 @@ public class LoginInfoApiControllerIntegrationTest extends AbstractIntegrationTe
 	@Autowired
 	private LoginInfoData loginInfoData;
 
-	@Before
-	public void after() {
-		redisComponent.delete(LoginRedisConfig.getTokenRedisKey("*"));
-		redisComponent.delete(LoginRedisConfig.getUserIdRedisKey(null)+"*");
-	}
-	
 	@Test
 	public void testGetRsaKey() throws Exception {
 		// 构造请求参数
