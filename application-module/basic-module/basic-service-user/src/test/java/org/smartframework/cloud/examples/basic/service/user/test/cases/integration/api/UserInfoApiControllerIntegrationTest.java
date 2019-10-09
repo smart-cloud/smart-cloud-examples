@@ -8,6 +8,7 @@ import org.smartframework.cloud.examples.basic.service.rpc.user.response.base.Us
 import org.smartframework.cloud.examples.basic.service.user.config.UserRedisConfig;
 import org.smartframework.cloud.examples.basic.service.user.test.data.UserInfoData;
 import org.smartframework.cloud.starter.common.business.LoginCache;
+import org.smartframework.cloud.starter.common.business.ReqContextHolder;
 import org.smartframework.cloud.starter.common.business.security.LoginRedisConfig;
 import org.smartframework.cloud.starter.common.business.security.util.ReqHttpHeadersUtil;
 import org.smartframework.cloud.starter.redis.component.RedisComponent;
@@ -29,6 +30,8 @@ public class UserInfoApiControllerIntegrationTest extends AbstractIntegrationTes
 
 	@Test
 	public void testQuery() throws Exception {
+		ReqContextHolder.clearLoginCache();
+		
 		Long userId = 1L;
 		userInfoData.insertTestData(userId);
 		
@@ -45,8 +48,6 @@ public class UserInfoApiControllerIntegrationTest extends AbstractIntegrationTes
 		Resp<UserInfoBaseRespBody> result = super.getWithHeaders("/api/identity/user/userInfo/query", null, token,
 				new TypeReference<Resp<UserInfoBaseRespBody>>() {
 				});
-		
-		redisComponent.delete(tokenRedisKey);
 
 		Assertions.assertThat(result).isNotNull();
 		Assertions.assertThat(result.getHead()).isNotNull();

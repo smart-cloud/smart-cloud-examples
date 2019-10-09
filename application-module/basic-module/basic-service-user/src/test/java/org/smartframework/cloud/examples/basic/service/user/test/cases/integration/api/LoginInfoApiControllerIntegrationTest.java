@@ -62,8 +62,6 @@ public class LoginInfoApiControllerIntegrationTest extends AbstractIntegrationTe
 				new TypeReference<Resp<BaseDto>>() {
 				});
 
-//		redisComponent.delete(tokenRedisKey);
-
 		Assertions.assertThat(result).isNotNull();
 		Assertions.assertThat(result.getHead()).isNotNull();
 		Assertions.assertThat(result.getHead().getCode()).isEqualTo(ReturnCodeEnum.SUCCESS.getCode());
@@ -92,8 +90,6 @@ public class LoginInfoApiControllerIntegrationTest extends AbstractIntegrationTe
 		Resp<LoginRespBody> result = super.postWithHeaders("/api/sign/user/loginInfo/login", reqBody, token,
 				new TypeReference<Resp<LoginRespBody>>() {
 				});
-
-//		redisComponent.delete(tokenRedisKey);
 
 		Assertions.assertThat(result).isNotNull();
 		Assertions.assertThat(result.getHead()).isNotNull();
