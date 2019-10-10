@@ -20,6 +20,7 @@
 		<dependency>
 			<groupId>org.smartframework.cloud</groupId>
 			<artifactId>smart-cloud-starter-test</artifactId>
+			<scope>test</scope>
 		</dependency>
 	</dependencies>
 </project>

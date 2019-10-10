@@ -28,7 +28,6 @@ import org.smartframework.cloud.utility.CollectionUtil;
 import org.smartframework.cloud.utility.ObjectUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import io.seata.spring.annotation.GlobalTransactional;
 
@@ -55,7 +54,6 @@ public class OrderApiService {
 	 * @return
 	 * @throws UpdateStockException 
 	 */
-	@Transactional
 	@GlobalTransactional
 	public Resp<CreateOrderRespBody> create(CreateOrderReqBody req) {
 		List<CreateOrderProductInfoReqBody> products = req.getProducts();
