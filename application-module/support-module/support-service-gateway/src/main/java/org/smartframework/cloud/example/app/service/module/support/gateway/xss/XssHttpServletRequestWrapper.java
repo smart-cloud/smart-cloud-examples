@@ -1,6 +1,7 @@
 package org.smartframework.cloud.example.app.service.module.support.gateway.xss;
 
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -76,7 +77,7 @@ public class XssHttpServletRequestWrapper extends HttpServletRequestWrapper {
 	@Override
 	public String[] getParameterValues(String name) {
 		String[] parameters = super.getParameterValues(name);
-		if (parameters == null || parameters.length == 0) {
+		if (ArrayUtils.isEmpty(parameters)) {
 			return null;
 		}
 

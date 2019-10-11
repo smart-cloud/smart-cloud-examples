@@ -113,6 +113,8 @@
  	</tr>
 </table>
 
+## （三）工程结构图
+![](docs/smart_cloud.png)
 # 二、环境搭建
 - 更改hosts文件，添加如下内容（注册中心eureka会使用到）
 ```
@@ -126,11 +128,6 @@
 
 # 三、注意事项
 - 针对**jasypt**加密，所有的需要合并的单体服务的**jasypt.encryptor.password**的值必须相同，否则会报错。
-- 关于seata
-```
-1、seata目前不支持“allowMultiQueries=true”，一次执行多条sql会报错。
-2、seata服务端以file方式存储；以db方式存储会报错。
-```
 
 - 服务构建
 ```
