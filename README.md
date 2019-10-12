@@ -113,8 +113,8 @@
  	</tr>
 </table>
 
-## （三）工程结构图
-![](docs/smart_cloud.png)
+## （三）工程模块图
+![](docs/images/smart_cloud.png)
 # 二、环境搭建
 - 更改hosts文件，添加如下内容（注册中心eureka会使用到）
 ```
