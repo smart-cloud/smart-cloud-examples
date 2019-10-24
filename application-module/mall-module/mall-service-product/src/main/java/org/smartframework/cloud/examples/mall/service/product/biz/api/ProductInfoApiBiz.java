@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.smartframework.cloud.common.pojo.dto.BasePageReq;
 import org.smartframework.cloud.common.pojo.dto.BasePageResp;
@@ -14,12 +15,11 @@ import org.smartframework.cloud.examples.mall.service.rpc.product.response.api.P
 import org.smartframework.cloud.starter.mybatis.common.biz.BaseBiz;
 import org.smartframework.cloud.starter.mybatis.common.mapper.entity.BaseEntity;
 import org.smartframework.cloud.starter.mybatis.common.mapper.enums.DelStateEnum;
-import org.smartframework.cloud.utility.CollectionUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.github.pagehelper.Page;
-import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.page.PageMethod;
 
 import tk.mybatis.mapper.entity.Example;
 import tk.mybatis.mapper.entity.Example.Criteria;
@@ -51,23 +51,22 @@ public class ProductInfoApiBiz extends BaseBiz<ProductInfoEntity> {
 		}
 		criteria.andEqualTo(BaseEntity.Columns.delState.toString(), DelStateEnum.NORMAL.getDelState());
 		example.orderBy(BaseEntity.Columns.addTime.toString()).desc();
-
-		Page<ProductInfoEntity> page = PageHelper.startPage(req.getPageNum(), req.getPageSize(), true);
+		
+		Page<ProductInfoEntity> page = PageMethod.startPage(req.getPageNum(), req.getPageSize(), true);
 		List<ProductInfoEntity> entitydatas = productInfoBaseMapper.selectByExample(example);
 		
-		if (CollectionUtil.isEmpty(entitydatas)) {
+		if (CollectionUtils.isEmpty(entitydatas)) {
 			return new BasePageResp<>(null, req.getPageNum(), req.getPageSize(), 0);
 		}
 		
-		List<PageProductRespBody> pagedatas = entitydatas.stream().map(entity->{
-			PageProductRespBody pagedata = PageProductRespBody.builder()
-					.id(entity.getId())
-					.name(entity.getName())
-					.sellPrice(entity.getSellPrice())
-					.stock(entity.getStock())
-					.build();
-			return pagedata;
-		}).collect(Collectors.toList());
+		List<PageProductRespBody> pagedatas = entitydatas.stream()
+				.map(entity -> PageProductRespBody.builder()
+						.id(entity.getId())
+						.name(entity.getName())
+						.sellPrice(entity.getSellPrice())
+						.stock(entity.getStock())
+						.build())
+				.collect(Collectors.toList());
 
 		return new BasePageResp<>(pagedatas, req.getPageNum(), req.getPageSize(), page.getTotal());
 	}

@@ -62,14 +62,14 @@ public class ProductInfoRpcBiz extends BaseBiz<ProductInfoEntity> {
 			return null;
 		}
 
-		List<QryProductByIdRespBody> productInfos = entities.stream().map(entity->{
-			return QryProductByIdRespBody.builder()
-					.id(entity.getId())
-					.name(entity.getName())
-					.sellPrice(entity.getSellPrice())
-					.stock(entity.getStock())
-					.build();
-		}).collect(Collectors.toList());
+		List<QryProductByIdRespBody> productInfos = entities.stream()
+				.map(entity -> QryProductByIdRespBody.builder()
+						.id(entity.getId())
+						.name(entity.getName())
+						.sellPrice(entity.getSellPrice())
+						.stock(entity.getStock())
+						.build())
+				.collect(Collectors.toList());
 		
 		return new QryProductByIdsRespBody(productInfos);
 	}

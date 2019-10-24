@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.apache.commons.collections4.CollectionUtils;
 import org.smartframework.cloud.common.pojo.dto.BaseDto;
 import org.smartframework.cloud.common.pojo.dto.Resp;
 import org.smartframework.cloud.examples.mall.service.order.biz.api.OrderBillApiBiz;
@@ -24,7 +25,6 @@ import org.smartframework.cloud.examples.mall.service.rpc.product.response.rpc.Q
 import org.smartframework.cloud.starter.common.business.util.RespUtil;
 import org.smartframework.cloud.starter.common.business.util.SnowFlakeIdUtil;
 import org.smartframework.cloud.starter.mybatis.common.mapper.enums.DelStateEnum;
-import org.smartframework.cloud.utility.CollectionUtil;
 import org.smartframework.cloud.utility.ObjectUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -67,7 +67,7 @@ public class OrderApiService {
 			return RespUtil.error(qryProductByIdsResp);
 		}
 		if (ObjectUtil.isNull(qryProductByIdsResp.getBody())
-				|| CollectionUtil.isEmpty(qryProductByIdsResp.getBody().getProductInfos())
+				|| CollectionUtils.isEmpty(qryProductByIdsResp.getBody().getProductInfos())
 				|| qryProductByIdsResp.getBody().getProductInfos().size()!=products.size()) {
 			return RespUtil.error(OrderReturnCodeEnum.PRODUCT_NOT_EXIST);
 		}

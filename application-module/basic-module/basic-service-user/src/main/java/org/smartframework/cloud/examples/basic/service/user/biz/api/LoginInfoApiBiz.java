@@ -3,13 +3,13 @@ package org.smartframework.cloud.examples.basic.service.user.biz.api;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.ibatis.session.RowBounds;
 import org.smartframework.cloud.examples.basic.service.rpc.enums.user.UserStateEnum;
 import org.smartframework.cloud.examples.basic.service.user.dto.login.LoginInfoInsertBizDto;
 import org.smartframework.cloud.examples.basic.service.user.entity.base.LoginInfoEntity;
 import org.smartframework.cloud.examples.basic.service.user.mapper.base.LoginInfoBaseMapper;
 import org.smartframework.cloud.starter.mybatis.common.biz.BaseBiz;
-import org.smartframework.cloud.utility.CollectionUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -51,7 +51,7 @@ public class LoginInfoApiBiz extends BaseBiz<LoginInfoEntity> {
 		Example example = new Example(LoginInfoEntity.class, true, true);
 		example.createCriteria().andEqualTo(LoginInfoEntity.Columns.username.toString(), username);
 		List<LoginInfoEntity> list = loginInfoBaseMapper.selectByExampleAndRowBounds(example, new RowBounds(0, 1));
-		if (CollectionUtil.isEmpty(list)) {
+		if (CollectionUtils.isEmpty(list)) {
 			return null;
 		}
 		return list.get(0);
