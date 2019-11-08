@@ -5,6 +5,8 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.smartframework.cloud.common.pojo.dto.BaseDto;
+import org.smartframework.cloud.mask.MaskLog;
+import org.smartframework.cloud.mask.MaskRule;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -30,6 +32,7 @@ public class LoginInfoInsertReqBody extends BaseDto {
 	@ApiModelProperty(value = "密码", required = true)
 	@Size(min = 6, max = 45)
 	@NotBlank
+	@MaskLog(MaskRule.PASSWROD)
 	private String password;
 	
 	@ApiModelProperty(value = "密码状态=={\"1\":\"未设置\",\"2\":\"已设置\"}", required = true)

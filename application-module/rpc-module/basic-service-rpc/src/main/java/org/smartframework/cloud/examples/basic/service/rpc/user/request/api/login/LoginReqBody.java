@@ -3,6 +3,8 @@ package org.smartframework.cloud.examples.basic.service.rpc.user.request.api.log
 import javax.validation.constraints.NotBlank;
 
 import org.smartframework.cloud.common.pojo.dto.BaseDto;
+import org.smartframework.cloud.mask.MaskLog;
+import org.smartframework.cloud.mask.MaskRule;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -26,6 +28,7 @@ public class LoginReqBody extends BaseDto {
 
 	@ApiModelProperty(value = "密码", required = true)
 	@NotBlank
+	@MaskLog(MaskRule.PASSWROD)
 	private String password;
 
 }
