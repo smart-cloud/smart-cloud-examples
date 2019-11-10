@@ -8,7 +8,7 @@ import org.smartframework.cloud.starter.mybatis.common.mapper.ext.ExtMapper;
  * 运单信息base mapper
  *
  * @author liyulin
- * @date 2019-07-15
+ * @date 2019-11-09
  */
 public interface OrderDeliveryInfoBaseMapper extends ExtMapper<OrderDeliveryInfoEntity, OrderDeliveryInfoBaseRespBody, Long> {
 

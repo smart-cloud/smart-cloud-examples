@@ -1,5 +1,7 @@
 package org.smartframework.cloud.examples.basic.service.user.entity.base;
 
+import org.smartframework.cloud.mask.MaskRule;
+import org.smartframework.cloud.mask.MaskLog;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Table;
@@ -15,7 +17,7 @@ import lombok.experimental.SuperBuilder;
  * 登录信息
  *
  * @author liyulin
- * @date 2019-07-15
+ * @date 2019-11-09
  */
 @Getter
 @Setter
@@ -34,10 +36,12 @@ public class LoginInfoEntity extends BaseEntity {
 	private String username;
 	
     /** 密码（md5加盐处理） */
+    @MaskLog(MaskRule.PASSWROD)
     @Column(name = "f_password")     
 	private String password;
 	
     /** 16位盐值 */
+    @MaskLog(MaskRule.DEFAULT)
     @Column(name = "f_salt")     
 	private String salt;
 	

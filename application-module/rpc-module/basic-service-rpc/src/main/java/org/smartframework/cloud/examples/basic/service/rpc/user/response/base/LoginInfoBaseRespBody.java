@@ -1,5 +1,7 @@
 package org.smartframework.cloud.examples.basic.service.rpc.user.response.base;
 
+import org.smartframework.cloud.mask.MaskRule;
+import org.smartframework.cloud.mask.MaskLog;
 import java.util.Date;
 import org.smartframework.cloud.common.pojo.dto.BaseEntityRespBody;
 
@@ -25,9 +27,11 @@ public class LoginInfoBaseRespBody extends BaseEntityRespBody {
 	private String username;
 	
     @ApiModelProperty(value = "密码（md5加盐处理）")
+    @MaskLog(MaskRule.PASSWROD)
 	private String password;
 	
     @ApiModelProperty(value = "16位盐值")
+    @MaskLog(MaskRule.DEFAULT)
 	private String salt;
 	
     @ApiModelProperty(value = "最近成功登录时间")

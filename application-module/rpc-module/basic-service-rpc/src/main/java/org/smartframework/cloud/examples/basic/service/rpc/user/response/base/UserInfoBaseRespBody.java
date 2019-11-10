@@ -1,5 +1,7 @@
 package org.smartframework.cloud.examples.basic.service.rpc.user.response.base;
 
+import org.smartframework.cloud.mask.MaskRule;
+import org.smartframework.cloud.mask.MaskLog;
 import java.util.Date;
 import org.smartframework.cloud.common.pojo.dto.BaseEntityRespBody;
 
@@ -20,12 +22,14 @@ public class UserInfoBaseRespBody extends BaseEntityRespBody {
 	private static final long serialVersionUID = 1L;
 
     @ApiModelProperty(value = "手机号")
+    @MaskLog(MaskRule.MOBILE)
 	private String mobile;
 	
     @ApiModelProperty(value = "昵称")
 	private String nickName;
 	
     @ApiModelProperty(value = "真实姓名")
+    @MaskLog(MaskRule.NAME)
 	private String realName;
 	
     @ApiModelProperty(value = "性别=={\"1\":\"男\",\"2\":\"女\",\"3\":\"未知\"}")

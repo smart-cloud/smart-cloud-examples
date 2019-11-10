@@ -1,5 +1,7 @@
 package org.smartframework.cloud.examples.basic.service.user.entity.base;
 
+import org.smartframework.cloud.mask.MaskRule;
+import org.smartframework.cloud.mask.MaskLog;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Table;
@@ -15,7 +17,7 @@ import lombok.experimental.SuperBuilder;
  * 用户信息
  *
  * @author liyulin
- * @date 2019-07-15
+ * @date 2019-11-09
  */
 @Getter
 @Setter
@@ -27,6 +29,7 @@ public class UserInfoEntity extends BaseEntity {
 	private static final long serialVersionUID = 1L;
 
     /** 手机号 */
+    @MaskLog(MaskRule.MOBILE)
     @Column(name = "f_mobile")     
 	private String mobile;
 	
@@ -35,6 +38,7 @@ public class UserInfoEntity extends BaseEntity {
 	private String nickName;
 	
     /** 真实姓名 */
+    @MaskLog(MaskRule.NAME)
     @Column(name = "f_real_name")     
 	private String realName;
 	
