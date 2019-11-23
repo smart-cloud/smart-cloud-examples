@@ -6,6 +6,7 @@ import javax.validation.constraints.NotNull;
 import org.smartframework.cloud.common.pojo.dto.BaseDto;
 import org.smartframework.cloud.examples.basic.service.rpc.user.request.api.login.LoginInfoInsertReqBody;
 import org.smartframework.cloud.examples.basic.service.rpc.user.request.api.user.UserInfoInsertReqBody;
+import org.smartframework.cloud.mask.EnableMask;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -19,6 +20,7 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @SuperBuilder
 @ApiModel(description = "用户注册请求参数")
+@EnableMask
 public class RegisterUserReqBody extends BaseDto {
 
 	private static final long serialVersionUID = 1L;

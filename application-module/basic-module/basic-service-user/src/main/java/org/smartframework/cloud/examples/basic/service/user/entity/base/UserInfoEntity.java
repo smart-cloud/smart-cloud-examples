@@ -1,8 +1,13 @@
 package org.smartframework.cloud.examples.basic.service.user.entity.base;
 
 import org.smartframework.cloud.mask.MaskRule;
+
 import org.smartframework.cloud.mask.MaskLog;
+
 import java.util.Date;
+
+import org.smartframework.cloud.mask.EnableMask;
+
 import javax.persistence.Column;
 import javax.persistence.Table;
 
@@ -17,13 +22,14 @@ import lombok.experimental.SuperBuilder;
  * 用户信息
  *
  * @author liyulin
- * @date 2019-11-09
+ * @date 2019-11-23
  */
 @Getter
 @Setter
 @NoArgsConstructor
 @SuperBuilder
 @Table(name = "t_user_info")
+@EnableMask
 public class UserInfoEntity extends BaseEntity {
 
 	private static final long serialVersionUID = 1L;

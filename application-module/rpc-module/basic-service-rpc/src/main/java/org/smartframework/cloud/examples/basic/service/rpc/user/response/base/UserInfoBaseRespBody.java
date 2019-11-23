@@ -3,6 +3,7 @@ package org.smartframework.cloud.examples.basic.service.rpc.user.response.base;
 import org.smartframework.cloud.mask.MaskRule;
 import org.smartframework.cloud.mask.MaskLog;
 import java.util.Date;
+import org.smartframework.cloud.mask.EnableMask;
 import org.smartframework.cloud.common.pojo.dto.BaseEntityRespBody;
 
 import io.swagger.annotations.ApiModel;
@@ -17,6 +18,7 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @SuperBuilder
 @ApiModel(description = "用户信息")
+@EnableMask
 public class UserInfoBaseRespBody extends BaseEntityRespBody {
 
 	private static final long serialVersionUID = 1L;

@@ -3,6 +3,7 @@ package org.smartframework.cloud.examples.basic.service.rpc.user.request.api.log
 import javax.validation.constraints.NotBlank;
 
 import org.smartframework.cloud.common.pojo.dto.BaseDto;
+import org.smartframework.cloud.mask.EnableMask;
 import org.smartframework.cloud.mask.MaskLog;
 import org.smartframework.cloud.mask.MaskRule;
 
@@ -18,6 +19,7 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @SuperBuilder
 @ApiModel(description = "登陆请求参数")
+@EnableMask
 public class LoginReqBody extends BaseDto {
 
 	private static final long serialVersionUID = 1L;

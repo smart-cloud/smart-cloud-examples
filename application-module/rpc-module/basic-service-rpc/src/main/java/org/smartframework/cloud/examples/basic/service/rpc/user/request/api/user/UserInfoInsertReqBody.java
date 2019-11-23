@@ -7,6 +7,9 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.smartframework.cloud.common.pojo.dto.BaseDto;
+import org.smartframework.cloud.mask.EnableMask;
+import org.smartframework.cloud.mask.MaskLog;
+import org.smartframework.cloud.mask.MaskRule;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -20,6 +23,7 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @SuperBuilder
 @ApiModel(description = "添加用户请求参数")
+@EnableMask
 public class UserInfoInsertReqBody extends BaseDto {
 
 	private static final long serialVersionUID = 1L;
@@ -27,6 +31,7 @@ public class UserInfoInsertReqBody extends BaseDto {
 	@ApiModelProperty(value = "手机号", required = true)
 	@Size(max = 11)
 	@NotBlank
+	@MaskLog(MaskRule.PASSWROD)
 	private String mobile;
 
 	@ApiModelProperty(value = "昵称")
@@ -35,6 +40,7 @@ public class UserInfoInsertReqBody extends BaseDto {
 
 	@ApiModelProperty(value = "真实姓名")
 	@Size(max = 45)
+	@MaskLog(MaskRule.NAME)
 	private String realname;
 
 	@ApiModelProperty(value = "性别=={\"1\":\"男\",\"2\":\"女\",\"3\":\"未知\"}")
