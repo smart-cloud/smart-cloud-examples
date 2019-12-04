@@ -1,9 +1,6 @@
 package org.smartframework.cloud.examples.mall.service.product.controller.rpc;
 
-import java.util.List;
-
 import javax.validation.Valid;
-import javax.validation.constraints.NotEmpty;
 
 import org.smartframework.cloud.common.pojo.dto.BaseDto;
 import org.smartframework.cloud.common.pojo.dto.Resp;
@@ -38,7 +35,7 @@ public class ProductInfoRpcController implements ProductInfoRpc {
 	}
 
 	@Override
-	public Resp<BaseDto> updateStock(@RequestBody @Valid @NotEmpty List<UpdateStockReqBody> req) {
+	public Resp<BaseDto> updateStock(@RequestBody @Valid UpdateStockReqBody req) {
 		return productInfoRpcService.updateStock(req);
 	}
 

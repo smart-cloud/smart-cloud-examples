@@ -3,7 +3,7 @@ package org.smartframework.cloud.examples.mall.service.product.mapper.rpc;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
-import org.smartframework.cloud.examples.mall.service.rpc.product.request.rpc.UpdateStockReqBody;
+import org.smartframework.cloud.examples.mall.service.rpc.product.request.rpc.UpdateStockReqBody.UpdateStockItem;
 
 /**
  * 商品rpc mapper
@@ -19,6 +19,6 @@ public interface ProductInfoRpcMapper {
 	 * @param list
 	 * @return
 	 */
-	int updateStock(@Param("list") List<UpdateStockReqBody> list);
+	int updateStock(@Param("list") List<UpdateStockItem> list);
 
 }

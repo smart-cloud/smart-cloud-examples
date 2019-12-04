@@ -20,6 +20,7 @@ import org.smartframework.cloud.examples.mall.service.rpc.order.response.api.Cre
 import org.smartframework.cloud.examples.mall.service.rpc.product.ProductInfoRpc;
 import org.smartframework.cloud.examples.mall.service.rpc.product.request.rpc.QryProductByIdsReqBody;
 import org.smartframework.cloud.examples.mall.service.rpc.product.request.rpc.UpdateStockReqBody;
+import org.smartframework.cloud.examples.mall.service.rpc.product.request.rpc.UpdateStockReqBody.UpdateStockItem;
 import org.smartframework.cloud.examples.mall.service.rpc.product.response.rpc.QryProductByIdRespBody;
 import org.smartframework.cloud.examples.mall.service.rpc.product.response.rpc.QryProductByIdsRespBody;
 import org.smartframework.cloud.starter.common.business.util.RespUtil;
@@ -80,14 +81,14 @@ public class OrderApiService {
 		OrderBillEntity orderBillEntity = saveOrderBill(orderBillId, entities);
 
 		// 3、扣减库存
-		List<UpdateStockReqBody> list = products.stream().map(item->{
-			UpdateStockReqBody updateStockReqBody = new UpdateStockReqBody();
-			updateStockReqBody.setId(item.getProductId());
-			updateStockReqBody.setCount(item.getBuyCount());
-			return updateStockReqBody;
+		List<UpdateStockItem> updateStockItems = products.stream().map(item->{
+			UpdateStockItem updateStockItem = new UpdateStockItem();
+			updateStockItem.setId(item.getProductId());
+			updateStockItem.setCount(item.getBuyCount());
+			return updateStockItem;
 		}).collect(Collectors.toList());
 		
-		Resp<BaseDto> updateStockResp = productInfoRpc.updateStock(list);
+		Resp<BaseDto> updateStockResp = productInfoRpc.updateStock(new UpdateStockReqBody(updateStockItems));
 		if(RespUtil.isSuccess(updateStockResp)) {
 			CreateOrderRespBody createOrderRespBody = new CreateOrderRespBody();
 			createOrderRespBody.setOrderId(orderBillId);

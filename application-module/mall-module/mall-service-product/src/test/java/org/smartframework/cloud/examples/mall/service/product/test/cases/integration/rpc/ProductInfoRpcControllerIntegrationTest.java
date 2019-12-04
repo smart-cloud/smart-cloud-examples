@@ -12,6 +12,7 @@ import org.smartframework.cloud.examples.mall.service.product.test.data.ProductI
 import org.smartframework.cloud.examples.mall.service.rpc.product.request.rpc.QryProductByIdReqBody;
 import org.smartframework.cloud.examples.mall.service.rpc.product.request.rpc.QryProductByIdsReqBody;
 import org.smartframework.cloud.examples.mall.service.rpc.product.request.rpc.UpdateStockReqBody;
+import org.smartframework.cloud.examples.mall.service.rpc.product.request.rpc.UpdateStockReqBody.UpdateStockItem;
 import org.smartframework.cloud.examples.mall.service.rpc.product.response.rpc.QryProductByIdRespBody;
 import org.smartframework.cloud.examples.mall.service.rpc.product.response.rpc.QryProductByIdsRespBody;
 import org.smartframework.cloud.starter.test.AbstractIntegrationTest;
@@ -78,10 +79,11 @@ public class ProductInfoRpcControllerIntegrationTest extends AbstractIntegration
 		productInfoData.batchInsertTestData(ids);
 
 		// build req params
-		List<UpdateStockReqBody> updateStockReqBody = new ArrayList<>();
+		List<UpdateStockItem> updateStockItems = new ArrayList<>();
 		for (Long id : ids) {
-			updateStockReqBody.add(new UpdateStockReqBody(id, 3));
+			updateStockItems.add(new UpdateStockItem(id, 3));
 		}
+		UpdateStockReqBody updateStockReqBody = new UpdateStockReqBody(updateStockItems);
 
 		Resp<BaseDto> result = super.postWithNoHeaders("/rpc/identity/product/productInfo/updateStock",
 				updateStockReqBody, new TypeReference<Resp<BaseDto>>() {

@@ -8,7 +8,7 @@ import org.smartframework.cloud.examples.mall.service.product.mapper.base.Produc
 import org.smartframework.cloud.examples.mall.service.product.mapper.rpc.ProductInfoRpcMapper;
 import org.smartframework.cloud.examples.mall.service.rpc.product.request.rpc.QryProductByIdReqBody;
 import org.smartframework.cloud.examples.mall.service.rpc.product.request.rpc.QryProductByIdsReqBody;
-import org.smartframework.cloud.examples.mall.service.rpc.product.request.rpc.UpdateStockReqBody;
+import org.smartframework.cloud.examples.mall.service.rpc.product.request.rpc.UpdateStockReqBody.UpdateStockItem;
 import org.smartframework.cloud.examples.mall.service.rpc.product.response.rpc.QryProductByIdRespBody;
 import org.smartframework.cloud.examples.mall.service.rpc.product.response.rpc.QryProductByIdsRespBody;
 import org.smartframework.cloud.starter.mybatis.common.biz.BaseBiz;
@@ -80,7 +80,7 @@ public class ProductInfoRpcBiz extends BaseBiz<ProductInfoEntity> {
 	 * @param list
 	 * @return
 	 */
-	public boolean updateStock(List<UpdateStockReqBody> list) {
+	public boolean updateStock(List<UpdateStockItem> list) {
 		return productInfoRpcMapper.updateStock(list)>0;
 	}
 

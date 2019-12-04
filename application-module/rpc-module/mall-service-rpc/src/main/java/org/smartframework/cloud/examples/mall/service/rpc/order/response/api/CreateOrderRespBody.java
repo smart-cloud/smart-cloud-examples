@@ -17,7 +17,7 @@ public class CreateOrderRespBody extends BaseDto {
 	@ApiModelProperty(value = "订单id")
 	private Long orderId;
 
-	@ApiModelProperty(value = "是否面单")
+	@ApiModelProperty(value = "是否免单")
 	private boolean free;
 
 }
