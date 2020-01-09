@@ -19,7 +19,7 @@ import io.swagger.annotations.ApiOperation;
 @RestController
 @Validated
 @RequestMapping("api/sign/user/register")
-@Api(tags = "用户api接口")
+@Api(tags = "注册api接口")
 public class RegisterApiController {
 
 	@Autowired
