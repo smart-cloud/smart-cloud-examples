@@ -7,7 +7,7 @@ smart:
     name: luckyQing
     url: https://github.com/luckyQing
     email: 1634653825@qq.com
-#    yapi:
+#    uploadYapi:
 #      projectUrl: http://127.0.0.1:3000/api/open/import_data
 #      token: c5f54bdeff0a2471ab521a850f0537f66449f8e390b5d75aa517d3f2d6a39174
   datasources:
