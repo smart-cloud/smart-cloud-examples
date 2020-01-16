@@ -1,8 +1,12 @@
+server:
+  port: 80
+  
 spring:
   application:
     name: support-service-gateway
   profiles:
     include: common-config,discovery
-
-server:
-  port: 80
+  cloud:    gateway:
+      discovery:        locator:          enabled: true      routes:      - id: user
+        uri: lb://basicServiceUser
+        predicates:        - Path=/*/*/user/**
