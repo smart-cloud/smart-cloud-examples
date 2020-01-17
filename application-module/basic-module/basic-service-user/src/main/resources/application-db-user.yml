@@ -15,6 +15,6 @@ smart:
       url: jdbc:mysql://127.0.0.1:3306/demo_user
       username: ENC(PbMw+RtvRPYAo4Acbuxe4Q==)
       password: ENC(IwbzHJPe93Wevq8LVx0AwQ==)
-      mapper-interface-location: org.smartframework.cloud.examples.basic.service.user.mapper
-      transaction-base-packages: org.smartframework.cloud.examples.basic.service.user.service
-      mapper-xml-location: classpath*:/org/smartframework/cloud/examples/basic/service/user/mybatis/**/*.xml
+      mapper-interface-location: org.smartframework.cloud.examples.basic.user.mapper
+      transaction-base-packages: org.smartframework.cloud.examples.basic.user.service
+      mapper-xml-location: classpath*:/org/smartframework/cloud/examples/basic/user/mapper/**/*.xml

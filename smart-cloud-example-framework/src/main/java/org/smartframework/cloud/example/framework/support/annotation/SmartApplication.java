@@ -14,7 +14,7 @@ import org.smartframework.cloud.starter.common.support.annotation.YamlScan;
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 @Inherited
-@SmartSpringCloudApplication(componentBasePackages = "org.smartframework.cloud.examples", feignClientBasePackages = "org.smartframework.cloud.examples.**.service.rpc")
+@SmartSpringCloudApplication(componentBasePackages = "org.smartframework.cloud.examples", feignClientBasePackages = "org.smartframework.cloud.examples.**..rpc")
 @YamlScan(locationPatterns = "classpath*:/application-*.yml")
 public @interface SmartApplication {
 
