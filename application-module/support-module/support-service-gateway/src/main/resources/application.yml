@@ -7,6 +7,17 @@ spring:
   profiles:
     include: common-config,discovery
   cloud:    gateway:
-      discovery:        locator:          enabled: true      routes:      - id: user
+      discovery:        locator:          enabled: true      routes:
+      # ------basic module      - id: user
         uri: lb://basicServiceUser
         predicates:        - Path=/*/*/user/**
+        
+      # ------mall module
+      - id: product
+        uri: lb://mallServiceProduct
+        predicates:
+        - Path=/*/*/product/**
+      - id: order
+        uri: lb://mallServiceOrder
+        predicates:
+        - Path=/*/*/order/**
