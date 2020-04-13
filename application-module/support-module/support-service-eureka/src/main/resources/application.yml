@@ -1,4 +1,4 @@
-spring:  application:    name: support-service-eureka  profiles:    include: common-config
+spring:  application:    name: supportServiceEureka  profiles:    include: common-config
 server:
   port: 10001
 # 多节点配置

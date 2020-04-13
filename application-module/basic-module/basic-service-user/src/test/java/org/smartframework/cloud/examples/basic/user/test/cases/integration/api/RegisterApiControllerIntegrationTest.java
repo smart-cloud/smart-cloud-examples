@@ -47,7 +47,7 @@ public class RegisterApiControllerIntegrationTest extends AbstractIntegrationTes
 		registerUserReqVO.setUserInfo(userInfo);
 		registerUserReqVO.setLoginInfo(loginInfo);
 
-		RespVO<RegisterUserRespVO> result = super.postWithNoHeaders("/api/sign/user/register", registerUserReqVO,
+		RespVO<RegisterUserRespVO> result = super.postWithNoHeaders("/user/api/register", registerUserReqVO,
 				new TypeReference<RespVO<RegisterUserRespVO>>() {
 				});
 

@@ -9,6 +9,12 @@
 		<artifactId>rpc-module</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
-	<artifactId>mall-service-rpc</artifactId>
+	<artifactId>support-service-rpc</artifactId>
 
+	<dependencies>
+		<dependency>
+			<groupId>org.smartframework.cloud</groupId>
+			<artifactId>smart-api-core</artifactId>
+		</dependency>
+	</dependencies>
 </project>

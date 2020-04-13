@@ -86,5 +86,10 @@
 			<groupId>org.smartframework.cloud</groupId>
 			<artifactId>basic-service-rpc</artifactId>
 		</dependency>
+		
+		<dependency>
+			<groupId>org.smartframework.cloud</groupId>
+			<artifactId>support-service-rpc</artifactId>
+		</dependency>
 	</dependencies>
 </project>

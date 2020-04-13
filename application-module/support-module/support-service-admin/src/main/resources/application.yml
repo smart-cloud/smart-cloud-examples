@@ -1,6 +1,6 @@
 spring:
   application:
-    name: support-service-admin
+    name: supportServiceAdmin
   profiles:
     include: common-config,discovery
 

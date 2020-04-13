@@ -22,15 +22,15 @@ import io.swagger.annotations.ApiOperation;
 public interface ProductInfoRpc {
 
 	@ApiOperation("根据id查询商品信息")
-	@PostMapping("rpc/identity/product/productInfo/qryProductById")
+	@PostMapping("product/rpc/productInfo/qryProductById")
 	RespVO<QryProductByIdRespVO> qryProductById(@RequestBody @Valid QryProductByIdReqVO req);
 
 	@ApiOperation("根据ids查询商品信息")
-	@PostMapping("rpc/identity/product/productInfo/qryProductByIds")
+	@PostMapping("product/rpc/productInfo/qryProductByIds")
 	RespVO<QryProductByIdsRespVO> qryProductByIds(@RequestBody @Valid QryProductByIdsReqVO req);
 
 	@ApiOperation("更新库存")
-	@PostMapping("rpc/identity/product/productInfo/updateStock")
+	@PostMapping("product/rpc/productInfo/updateStock")
 	RespVO<Base> updateStock(@RequestBody @Valid UpdateStockReqVO req);
 
 }

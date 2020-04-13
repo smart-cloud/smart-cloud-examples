@@ -2,6 +2,8 @@ package org.smartframework.cloud.examples.basic.user.controller.api;
 
 import javax.validation.Valid;
 
+import org.smartframework.cloud.api.core.annotation.SmartApiAC;
+import org.smartframework.cloud.api.core.enums.SignType;
 import org.smartframework.cloud.common.pojo.vo.RespVO;
 import org.smartframework.cloud.examples.basic.rpc.user.request.api.register.RegisterUserReqVO;
 import org.smartframework.cloud.examples.basic.rpc.user.response.api.register.RegisterUserRespVO;
@@ -18,7 +20,7 @@ import io.swagger.annotations.ApiOperation;
 
 @RestController
 @Validated
-@RequestMapping("api/sign/user/register")
+@RequestMapping("user/api/register")
 @Api(tags = "注册api接口")
 public class RegisterApiController {
 
@@ -27,6 +29,7 @@ public class RegisterApiController {
 
 	@PostMapping
 	@ApiOperation("注册")
+	@SmartApiAC(tokenCheck = false, sign = SignType.ALL, encrypt = true, decrypt = true)
 	public RespVO<RegisterUserRespVO> register(@RequestBody @Valid RegisterUserReqVO req) {
 		return registerApiService.register(req);
 	}

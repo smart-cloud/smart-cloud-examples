@@ -45,7 +45,7 @@ public class UserInfoApiControllerIntegrationTest extends AbstractIntegrationTes
 		redisComponent.setObject(tokenRedisKey, loginCache, UserRedisConfig.NON_LOGIN_TOKEN_EXPIRE_MILLIS);
 		
 
-		RespVO<UserInfoBaseRespVO> result = super.getWithHeaders("/api/identity/user/userInfo/query", null, token,
+		RespVO<UserInfoBaseRespVO> result = super.getWithHeaders("/user/api/userInfo/query", null, token,
 				new TypeReference<RespVO<UserInfoBaseRespVO>>() {
 				});
 

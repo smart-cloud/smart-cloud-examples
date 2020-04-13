@@ -2,6 +2,8 @@ package org.smartframework.cloud.examples.mall.product.controller.api;
 
 import javax.validation.Valid;
 
+import org.smartframework.cloud.api.core.annotation.SmartApiAC;
+import org.smartframework.cloud.api.core.enums.SignType;
 import org.smartframework.cloud.common.pojo.vo.BasePageReqVO;
 import org.smartframework.cloud.common.pojo.vo.BasePageRespVO;
 import org.smartframework.cloud.common.pojo.vo.RespVO;
@@ -20,7 +22,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
 @RestController
-@RequestMapping("api/identity/product/productInfo")
+@RequestMapping("product/api/productInfo")
 @Validated
 @Api(tags = "商品信息api相关接口")
 public class ProductInfoApiController {
@@ -30,6 +32,7 @@ public class ProductInfoApiController {
 
 	@ApiOperation("分页查询商品信息")
 	@PostMapping("pageProduct")
+	@SmartApiAC(tokenCheck = true, sign = SignType.ALL, encrypt = true, decrypt = true)
 	public RespVO<BasePageRespVO<PageProductRespVO>> pageProduct(
 			@RequestBody @Valid BasePageReqVO<PageProductReqVO> req) {
 		return RespUtil.success(productService.pageProduct(req));

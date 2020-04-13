@@ -48,7 +48,7 @@ public class OrderApiControllerIntegrationTest extends AbstractIntegrationTest {
 		setMockAttribute(orderApiService, productInfoRpc);
 		mockStubbing(productInfoRpc, buyProducts);
 		
-		RespVO<CreateOrderRespVO> resp = postWithNoHeaders("/api/identity/order/order/create", reqVO, new TypeReference<RespVO<CreateOrderRespVO>>() {
+		RespVO<CreateOrderRespVO> resp = postWithNoHeaders("/order/api/order/create", reqVO, new TypeReference<RespVO<CreateOrderRespVO>>() {
 		});
 
 		// 3、断言结果

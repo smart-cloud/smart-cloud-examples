@@ -26,7 +26,7 @@ public class OrderApi {
 		CreateOrderReqVO createOrderReqVO = new CreateOrderReqVO();
 		createOrderReqVO.setProducts(Arrays.asList(createOrderProductInfoReqVO));
 
-		return HttpUtil.postWithRaw(SystemTestConfig.getOrderBaseUrl() + "api/identity/order/order/create",
+		return HttpUtil.postWithRaw(SystemTestConfig.getOrderBaseUrl() + "order/api/order/create",
 				createOrderReqVO, new TypeReference<RespVO<CreateOrderRespVO>>() {
 				});
 	}

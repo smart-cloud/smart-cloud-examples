@@ -44,6 +44,12 @@
 			
 			<dependency>
 				<groupId>org.smartframework.cloud</groupId>
+				<artifactId>support-service-rpc</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			
+			<dependency>
+				<groupId>org.smartframework.cloud</groupId>
 				<artifactId>basic-service-user</artifactId>
 				<version>${project.version}</version>
 			</dependency>

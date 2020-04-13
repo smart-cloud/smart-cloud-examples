@@ -26,7 +26,7 @@ public class ProductInfoApiControllerIntegrationTest extends AbstractIntegration
 	public void testPageProduct() throws Exception {
 		productInfoData.batchInsertTestData();
 
-		RespVO<BasePageRespVO<PageProductRespVO>> result = super.postWithNoHeaders("/api/identity/product/productInfo/pageProduct",
+		RespVO<BasePageRespVO<PageProductRespVO>> result = super.postWithNoHeaders("/product/api/productInfo/pageProduct",
 				ReqUtil.build(null, 1, 10), new TypeReference<RespVO<BasePageRespVO<PageProductRespVO>>>() {
 				});
 

@@ -86,6 +86,11 @@
 			<groupId>org.smartframework.cloud</groupId>
 			<artifactId>mall-service-rpc</artifactId>
 		</dependency>
+		
+		<dependency>
+			<groupId>org.smartframework.cloud</groupId>
+			<artifactId>support-service-rpc</artifactId>
+		</dependency>
 	</dependencies>
 
 	<profiles>

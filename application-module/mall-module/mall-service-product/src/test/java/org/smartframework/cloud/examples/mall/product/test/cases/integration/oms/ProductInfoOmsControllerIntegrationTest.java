@@ -33,7 +33,7 @@ public class ProductInfoOmsControllerIntegrationTest extends AbstractIntegration
 		productInsertReqVO.setSellPrice(10000L);
 		productInsertReqVO.setStock(200L);
 
-		RespVO<Base> result = super.postWithNoHeaders("/oms/auth/product/productInfo/create", productInsertReqVO,
+		RespVO<Base> result = super.postWithNoHeaders("/product/oms/productInfo/create", productInsertReqVO,
 				new TypeReference<RespVO<Base>>() {
 				});
 
@@ -53,7 +53,7 @@ public class ProductInfoOmsControllerIntegrationTest extends AbstractIntegration
 		productUpdateReqVO.setSellPrice(10000L);
 		productUpdateReqVO.setStock(200L);
 
-		RespVO<Base> result = super.postWithNoHeaders("/oms/auth/product/productInfo/update", productUpdateReqVO,
+		RespVO<Base> result = super.postWithNoHeaders("/product/oms/productInfo/update", productUpdateReqVO,
 				new TypeReference<RespVO<Base>>() {
 				});
 
@@ -70,7 +70,7 @@ public class ProductInfoOmsControllerIntegrationTest extends AbstractIntegration
 		ProductDeleteReqVO productDeleteReqVO = new ProductDeleteReqVO();
 		productDeleteReqVO.setId(productId);
 
-		RespVO<Base> result = super.postWithNoHeaders("/oms/auth/product/productInfo/logicDelete",
+		RespVO<Base> result = super.postWithNoHeaders("/product/oms/productInfo/logicDelete",
 				productDeleteReqVO, new TypeReference<RespVO<Base>>() {
 				});
 
@@ -84,7 +84,7 @@ public class ProductInfoOmsControllerIntegrationTest extends AbstractIntegration
 		productInfoData.batchInsertTestData();
 
 		RespVO<BasePageRespVO<ProductInfoBaseRespVO>> result = super.postWithNoHeaders(
-				"/oms/auth/product/productInfo/pageProduct", ReqUtil.build(null, 1, 10),
+				"/product/oms/productInfo/pageProduct", ReqUtil.build(null, 1, 10),
 				new TypeReference<RespVO<BasePageRespVO<ProductInfoBaseRespVO>>>() {
 				});
 

@@ -35,7 +35,7 @@ public class LoginInfoApiControllerIntegrationTest extends AbstractIntegrationTe
 	@Test
 	public void testGetRsaKey() throws Exception {
 		// 构造请求参数
-		RespVO<UserInfoBaseRespVO> result = super.postWithNoHeaders("/api/open/user/loginInfo/getRsaKey", null,
+		RespVO<UserInfoBaseRespVO> result = super.postWithNoHeaders("/user/api/loginInfo/getRsaKey", null,
 				new TypeReference<RespVO<UserInfoBaseRespVO>>() {
 				});
 
@@ -58,7 +58,7 @@ public class LoginInfoApiControllerIntegrationTest extends AbstractIntegrationTe
 		CacheDesKeyReqVO reqVO = new CacheDesKeyReqVO();
 		reqVO.setKey(RandomUtil.generateRandom(false, 10));
 
-		RespVO<Base> result = super.postWithHeaders("/api/sign/user/loginInfo/cacheDesKey", reqVO, token,
+		RespVO<Base> result = super.postWithHeaders("/user/api/loginInfo/cacheDesKey", reqVO, token,
 				new TypeReference<RespVO<Base>>() {
 				});
 
@@ -87,7 +87,7 @@ public class LoginInfoApiControllerIntegrationTest extends AbstractIntegrationTe
 		reqVO.setUsername(username);
 		reqVO.setPassword(password);
 
-		RespVO<LoginRespVO> result = super.postWithHeaders("/api/sign/user/loginInfo/login", reqVO, token,
+		RespVO<LoginRespVO> result = super.postWithHeaders("/user/api/loginInfo/login", reqVO, token,
 				new TypeReference<RespVO<LoginRespVO>>() {
 				});
 

@@ -37,7 +37,7 @@ public class ProductInfoRpcControllerIntegrationTest extends AbstractIntegration
 		reqBody.setId(productId);
 
 		RespVO<QryProductByIdRespVO> result = super.postWithNoHeaders(
-				"/rpc/identity/product/productInfo/qryProductById", reqBody,
+				"/product/rpc/productInfo/qryProductById", reqBody,
 				new TypeReference<RespVO<QryProductByIdRespVO>>() {
 				});
 
@@ -58,7 +58,7 @@ public class ProductInfoRpcControllerIntegrationTest extends AbstractIntegration
 		qryProductByIdsReqVO.setIds(ids);
 
 		RespVO<QryProductByIdsRespVO> result = super.postWithNoHeaders(
-				"/rpc/identity/product/productInfo/qryProductByIds", qryProductByIdsReqVO,
+				"/product/rpc/productInfo/qryProductByIds", qryProductByIdsReqVO,
 				new TypeReference<RespVO<QryProductByIdsRespVO>>() {
 				});
 
@@ -85,7 +85,7 @@ public class ProductInfoRpcControllerIntegrationTest extends AbstractIntegration
 		}
 		UpdateStockReqVO updateStockReqVO = new UpdateStockReqVO(updateStockItems);
 
-		RespVO<Base> result = super.postWithNoHeaders("/rpc/identity/product/productInfo/updateStock",
+		RespVO<Base> result = super.postWithNoHeaders("/product/rpc/productInfo/updateStock",
 				updateStockReqVO, new TypeReference<RespVO<Base>>() {
 				});
 

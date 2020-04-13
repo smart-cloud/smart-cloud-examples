@@ -21,5 +21,6 @@
 	<modules>
 		<module>basic-service-rpc</module>
 		<module>mall-service-rpc</module>
+		<module>support-service-rpc</module>
 	</modules>
 </project>

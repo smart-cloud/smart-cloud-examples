@@ -18,7 +18,7 @@ public class ProductInfoApi {
 
 	public RespVO<BasePageRespVO<PageProductRespVO>> pageProduct() throws IOException {
 		return HttpUtil.postWithRaw(
-				SystemTestConfig.getProductBaseUrl() + "api/identity/product/productInfo/pageProduct",
+				SystemTestConfig.getProductBaseUrl() + "product/api/productInfo/pageProduct",
 				ReqUtil.build(null, 1, 10), new TypeReference<RespVO<BasePageRespVO<PageProductRespVO>>>() {
 				});
 	}
