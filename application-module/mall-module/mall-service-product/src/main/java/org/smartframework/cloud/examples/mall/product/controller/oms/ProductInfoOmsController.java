@@ -24,7 +24,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
 @RestController
-@RequestMapping("oms/auth/product/productInfo")
+@RequestMapping("product/oms/productInfo")
 @Validated
 @Api(tags = "商品信息oms相关接口")
 public class ProductInfoOmsController {

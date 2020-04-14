@@ -20,7 +20,7 @@ import springfox.documentation.annotations.ApiIgnore;
 public interface ApiMetaRpc {
 
 	@ApiOperation("上传接口元数据")
-	@PostMapping("rpc/gateway/apiMeta/upload")
+	@PostMapping("gateway/rpc/apiMeta/upload")
 	RespVO<Base> upload(@RequestBody @Valid ApiMetaUploadReqVO req);
 
 }

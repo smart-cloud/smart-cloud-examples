@@ -1,2 +1,2 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-org.smartframework.cloud.examples.api.ac.common.UploadApiMetaListener
+org.smartframework.cloud.examples.api.ac.core.configure.ApiAcAutoConfigure
