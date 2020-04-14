@@ -15,7 +15,7 @@ import org.smartframework.cloud.examples.mall.rpc.order.response.api.CreateOrder
 import org.smartframework.cloud.examples.mall.rpc.product.ProductInfoRpc;
 import org.smartframework.cloud.examples.mall.rpc.product.response.rpc.QryProductByIdRespVO;
 import org.smartframework.cloud.examples.mall.rpc.product.response.rpc.QryProductByIdsRespVO;
-import org.smartframework.cloud.starter.common.business.util.RespUtil;
+import org.smartframework.cloud.starter.core.business.util.RespUtil;
 import org.smartframework.cloud.starter.test.AbstractIntegrationTest;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;

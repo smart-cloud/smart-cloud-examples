@@ -6,7 +6,7 @@ import org.smartframework.cloud.common.pojo.vo.BasePageRespVO;
 import org.smartframework.cloud.common.pojo.vo.RespVO;
 import org.smartframework.cloud.examples.mall.rpc.product.response.api.PageProductRespVO;
 import org.smartframework.cloud.examples.system.test.config.SystemTestConfig;
-import org.smartframework.cloud.starter.common.business.util.ReqUtil;
+import org.smartframework.cloud.starter.core.business.util.ReqUtil;
 import org.smartframework.cloud.utility.HttpUtil;
 
 import com.alibaba.fastjson.TypeReference;

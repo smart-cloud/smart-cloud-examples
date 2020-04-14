@@ -7,7 +7,7 @@ import org.smartframework.cloud.common.pojo.vo.BasePageRespVO;
 import org.smartframework.cloud.common.pojo.vo.RespVO;
 import org.smartframework.cloud.examples.mall.product.test.data.ProductInfoData;
 import org.smartframework.cloud.examples.mall.rpc.product.response.api.PageProductRespVO;
-import org.smartframework.cloud.starter.common.business.util.ReqUtil;
+import org.smartframework.cloud.starter.core.business.util.ReqUtil;
 import org.smartframework.cloud.starter.test.AbstractIntegrationTest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.annotation.Rollback;

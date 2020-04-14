@@ -11,7 +11,7 @@ import org.smartframework.cloud.examples.mall.rpc.product.request.rpc.QryProduct
 import org.smartframework.cloud.examples.mall.rpc.product.request.rpc.UpdateStockReqVO;
 import org.smartframework.cloud.examples.mall.rpc.product.response.rpc.QryProductByIdRespVO;
 import org.smartframework.cloud.examples.mall.rpc.product.response.rpc.QryProductByIdsRespVO;
-import org.smartframework.cloud.starter.common.business.util.RespUtil;
+import org.smartframework.cloud.starter.core.business.util.RespUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestBody;

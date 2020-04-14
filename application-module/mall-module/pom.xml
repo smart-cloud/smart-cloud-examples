@@ -89,7 +89,7 @@
 		
 		<dependency>
 			<groupId>org.smartframework.cloud</groupId>
-			<artifactId>support-service-rpc</artifactId>
+			<artifactId>api-ac-core</artifactId>
 		</dependency>
 	</dependencies>
 

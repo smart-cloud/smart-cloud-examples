@@ -1,6 +1,6 @@
 package org.smartframework.cloud.examples.basic.user;
 
-import org.smartframework.cloud.example.framework.support.annotation.SmartApplication;
+import org.smartframework.cloud.examples.framework.support.annotation.SmartApplication;
 import org.springframework.boot.SpringApplication;
 
 @SmartApplication

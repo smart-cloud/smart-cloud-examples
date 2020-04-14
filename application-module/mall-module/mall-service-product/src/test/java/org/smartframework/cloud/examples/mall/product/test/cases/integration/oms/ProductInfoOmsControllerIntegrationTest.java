@@ -11,7 +11,7 @@ import org.smartframework.cloud.examples.mall.rpc.product.request.oms.ProductDel
 import org.smartframework.cloud.examples.mall.rpc.product.request.oms.ProductInsertReqVO;
 import org.smartframework.cloud.examples.mall.rpc.product.request.oms.ProductUpdateReqVO;
 import org.smartframework.cloud.examples.mall.rpc.product.response.base.ProductInfoBaseRespVO;
-import org.smartframework.cloud.starter.common.business.util.ReqUtil;
+import org.smartframework.cloud.starter.core.business.util.ReqUtil;
 import org.smartframework.cloud.starter.test.AbstractIntegrationTest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.annotation.Rollback;

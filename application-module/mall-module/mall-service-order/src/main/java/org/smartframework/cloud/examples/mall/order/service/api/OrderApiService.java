@@ -23,8 +23,8 @@ import org.smartframework.cloud.examples.mall.rpc.product.request.rpc.UpdateStoc
 import org.smartframework.cloud.examples.mall.rpc.product.request.rpc.UpdateStockReqVO.UpdateStockItem;
 import org.smartframework.cloud.examples.mall.rpc.product.response.rpc.QryProductByIdRespVO;
 import org.smartframework.cloud.examples.mall.rpc.product.response.rpc.QryProductByIdsRespVO;
-import org.smartframework.cloud.starter.common.business.util.RespUtil;
-import org.smartframework.cloud.starter.common.business.util.SnowFlakeIdUtil;
+import org.smartframework.cloud.starter.core.business.util.RespUtil;
+import org.smartframework.cloud.starter.core.business.util.SnowFlakeIdUtil;
 import org.smartframework.cloud.starter.mybatis.common.mapper.enums.DelStateEnum;
 import org.smartframework.cloud.utility.ObjectUtil;
 import org.springframework.beans.factory.annotation.Autowired;

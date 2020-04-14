@@ -11,9 +11,9 @@ import org.smartframework.cloud.examples.basic.rpc.user.response.api.login.Login
 import org.smartframework.cloud.examples.basic.rpc.user.response.base.UserInfoBaseRespVO;
 import org.smartframework.cloud.examples.basic.user.config.UserRedisConfig;
 import org.smartframework.cloud.examples.basic.user.test.data.LoginInfoData;
-import org.smartframework.cloud.starter.common.business.LoginCache;
-import org.smartframework.cloud.starter.common.business.security.LoginRedisConfig;
-import org.smartframework.cloud.starter.common.business.security.util.ReqHttpHeadersUtil;
+import org.smartframework.cloud.starter.core.business.LoginCache;
+import org.smartframework.cloud.starter.core.business.security.LoginRedisConfig;
+import org.smartframework.cloud.starter.core.business.security.util.ReqHttpHeadersUtil;
 import org.smartframework.cloud.starter.redis.component.RedisComponent;
 import org.smartframework.cloud.starter.test.AbstractIntegrationTest;
 import org.smartframework.cloud.utility.RandomUtil;

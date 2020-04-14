@@ -11,7 +11,7 @@ import org.smartframework.cloud.examples.basic.rpc.user.request.api.login.LoginR
 import org.smartframework.cloud.examples.basic.rpc.user.response.api.login.GetRsaKeyRespVO;
 import org.smartframework.cloud.examples.basic.rpc.user.response.api.login.LoginRespVO;
 import org.smartframework.cloud.examples.basic.user.service.api.LoginInfoApiService;
-import org.smartframework.cloud.starter.common.business.util.RespUtil;
+import org.smartframework.cloud.starter.core.business.util.RespUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;

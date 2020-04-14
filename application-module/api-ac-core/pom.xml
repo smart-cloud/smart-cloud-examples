@@ -6,8 +6,20 @@
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>org.smartframework.cloud</groupId>
-		<artifactId>rpc-module</artifactId>
+		<artifactId>application-module</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
-	<artifactId>support-service-rpc</artifactId>
+	<artifactId>api-ac-core</artifactId>
+	
+	<dependencies>
+		<dependency>
+			<groupId>org.smartframework.cloud</groupId>
+			<artifactId>smart-api-core</artifactId>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.smartframework.cloud</groupId>
+			<artifactId>support-service-rpc</artifactId>
+		</dependency>
+	</dependencies>
 </project>

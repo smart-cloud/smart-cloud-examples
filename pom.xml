@@ -32,6 +32,12 @@
 			
 			<dependency>
 				<groupId>org.smartframework.cloud</groupId>
+				<artifactId>api-ac-core</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			
+			<dependency>
+				<groupId>org.smartframework.cloud</groupId>
 				<artifactId>basic-service-rpc</artifactId>
 				<version>${project.version}</version>
 			</dependency>

@@ -6,7 +6,7 @@ import org.smartframework.cloud.examples.basic.rpc.user.request.api.register.Reg
 import org.smartframework.cloud.examples.basic.rpc.user.response.api.register.RegisterUserRespVO;
 import org.smartframework.cloud.examples.basic.user.bo.login.LoginInfoInsertServiceBO;
 import org.smartframework.cloud.examples.basic.user.entity.base.UserInfoEntity;
-import org.smartframework.cloud.starter.common.business.util.RespUtil;
+import org.smartframework.cloud.starter.core.business.util.RespUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

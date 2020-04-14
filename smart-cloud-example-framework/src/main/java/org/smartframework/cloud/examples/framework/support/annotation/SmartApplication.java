@@ -1,4 +1,4 @@
-package org.smartframework.cloud.example.framework.support.annotation;
+package org.smartframework.cloud.examples.framework.support.annotation;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
@@ -7,8 +7,8 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import org.smartframework.cloud.starter.common.support.annotation.SmartSpringCloudApplication;
-import org.smartframework.cloud.starter.common.support.annotation.YamlScan;
+import org.smartframework.cloud.starter.core.support.annotation.SmartSpringCloudApplication;
+import org.smartframework.cloud.starter.core.support.annotation.YamlScan;
 
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
