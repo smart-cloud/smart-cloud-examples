@@ -16,9 +16,13 @@ import lombok.Getter;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Getter
 public enum GatewayRedisKeyPrefix {
-	
-	API_META(StringUtils.join(RedisKeyPrefix.DATA.getKey(), "apimeta",RedisKeyPrefix.REDIS_KEY_SEPARATOR.getKey()));
-	
+
+	/** api meta */
+	API_META(StringUtils.join(RedisKeyPrefix.DATA.getKey(), "apimeta", RedisKeyPrefix.REDIS_KEY_SEPARATOR.getKey())),
+	/** 权限 */
+	AUTH(StringUtils.join(RedisKeyPrefix.DATA.getKey(), "auth", RedisKeyPrefix.REDIS_KEY_SEPARATOR.getKey()));
+
+	/** redis key prefix */
 	private String key;
-	
+
 }
