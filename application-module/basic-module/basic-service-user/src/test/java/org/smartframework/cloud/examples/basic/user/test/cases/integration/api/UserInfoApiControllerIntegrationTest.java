@@ -8,7 +8,7 @@ import org.smartframework.cloud.examples.basic.rpc.user.response.base.UserInfoBa
 import org.smartframework.cloud.examples.basic.user.config.UserRedisConfig;
 import org.smartframework.cloud.examples.basic.user.test.data.UserInfoData;
 import org.smartframework.cloud.starter.core.business.LoginCache;
-import org.smartframework.cloud.starter.core.business.ReqContextHolder;
+import org.smartframework.cloud.starter.core.business.SmartReqContext;
 import org.smartframework.cloud.starter.core.business.security.LoginRedisConfig;
 import org.smartframework.cloud.starter.core.business.security.util.ReqHttpHeadersUtil;
 import org.smartframework.cloud.starter.redis.component.RedisComponent;
@@ -30,7 +30,7 @@ public class UserInfoApiControllerIntegrationTest extends AbstractIntegrationTes
 
 	@Test
 	public void testQuery() throws Exception {
-		ReqContextHolder.clearLoginCache();
+		SmartReqContext.clearLoginCache();
 		
 		Long userId = 1L;
 		userInfoData.insertTestData(userId);

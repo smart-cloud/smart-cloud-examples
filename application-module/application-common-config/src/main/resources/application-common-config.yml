@@ -28,3 +28,5 @@ spring:
     enabled: true
   sleuth: 
     enabled: true
+  messages:
+    basename: i18n.messages

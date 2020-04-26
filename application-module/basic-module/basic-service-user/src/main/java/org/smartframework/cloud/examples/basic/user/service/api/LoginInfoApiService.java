@@ -19,7 +19,7 @@ import org.smartframework.cloud.examples.basic.user.config.UserRedisConfig;
 import org.smartframework.cloud.examples.basic.user.entity.base.LoginInfoEntity;
 import org.smartframework.cloud.examples.basic.user.enums.UserReturnCodeEnum;
 import org.smartframework.cloud.starter.core.business.LoginCache;
-import org.smartframework.cloud.starter.core.business.ReqContextHolder;
+import org.smartframework.cloud.starter.core.business.SmartReqContext;
 import org.smartframework.cloud.starter.core.business.exception.ParamValidateException;
 import org.smartframework.cloud.starter.core.business.exception.ServerException;
 import org.smartframework.cloud.starter.core.business.security.LoginRedisConfig;
@@ -96,7 +96,7 @@ public class LoginInfoApiService {
 	}
 
 	public void cacheDesKey(CacheDesKeyReqVO req) {
-		LoginCache loginCache = ReqContextHolder.getLoginCache();
+		LoginCache loginCache = SmartReqContext.getLoginCache();
 		loginCache.setAesKey(req.getKey());
 
 		String token = loginCache.getToken();
@@ -137,7 +137,7 @@ public class LoginInfoApiService {
 	
 	public void cacheLoginAfterLoginSuccess(Long userId) {
 		// 1、更新当前登陆缓存
-		LoginCache loginCache = ReqContextHolder.getLoginCache();
+		LoginCache loginCache = SmartReqContext.getLoginCache();
 		loginCache.setUserId(userId);
 
 		String token = loginCache.getToken();

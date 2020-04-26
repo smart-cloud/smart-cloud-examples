@@ -5,7 +5,7 @@ import org.smartframework.cloud.examples.basic.rpc.user.response.base.UserInfoBa
 import org.smartframework.cloud.examples.basic.user.biz.api.UserInfoApiBiz;
 import org.smartframework.cloud.examples.basic.user.config.UserParamValidateMessage;
 import org.smartframework.cloud.examples.basic.user.entity.base.UserInfoEntity;
-import org.smartframework.cloud.starter.core.business.ReqContextHolder;
+import org.smartframework.cloud.starter.core.business.SmartReqContext;
 import org.smartframework.cloud.starter.core.business.exception.ParamValidateException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,7 +22,7 @@ public class UserInfoApiService {
 	 * @return
 	 */
 	public UserInfoBaseRespVO query() {
-		Long userId = ReqContextHolder.getUserId();
+		Long userId = SmartReqContext.getUserId();
 		return userInfoApiBiz.getUserInfoBaseMapper().selectRespById(userId);
 	}
 
