@@ -19,6 +19,6 @@ public class GatewayAuthUploadReqVO extends Base {
 	
 	private static final long serialVersionUID = 1L;
 	
-	private long userId;
+	private long token;
 
 }

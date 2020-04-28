@@ -1,6 +1,6 @@
 package org.smartframework.cloud.example.support.gateway.enums;
 
-import org.apache.commons.lang3.StringUtils;
+import org.smartframework.cloud.starter.redis.RedisKeyUtil;
 import org.smartframework.cloud.starter.redis.enums.RedisKeyPrefix;
 
 import lombok.AccessLevel;
@@ -18,9 +18,9 @@ import lombok.Getter;
 public enum GatewayRedisKeyPrefix {
 
 	/** api meta */
-	API_META(StringUtils.join(RedisKeyPrefix.DATA.getKey(), "apimeta", RedisKeyPrefix.REDIS_KEY_SEPARATOR.getKey())),
+	API_META(RedisKeyUtil.buildKey(RedisKeyPrefix.DATA.getKey(), "apimeta", RedisKeyPrefix.REDIS_KEY_SEPARATOR.getKey())),
 	/** 权限 */
-	AUTH(StringUtils.join(RedisKeyPrefix.DATA.getKey(), "auth", RedisKeyPrefix.REDIS_KEY_SEPARATOR.getKey()));
+	AUTH(RedisKeyUtil.buildKey(RedisKeyPrefix.DATA.getKey(), "auth", RedisKeyPrefix.REDIS_KEY_SEPARATOR.getKey()));
 
 	/** redis key prefix */
 	private String key;

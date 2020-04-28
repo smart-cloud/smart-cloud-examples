@@ -1,6 +1,7 @@
 package org.smartframework.cloud.example.support.gateway.util;
 
 import org.smartframework.cloud.example.support.gateway.enums.GatewayRedisKeyPrefix;
+import org.smartframework.cloud.starter.redis.RedisKeyUtil;
 
 public class RedisKeyHelper {
 
@@ -11,7 +12,7 @@ public class RedisKeyHelper {
 	 * @return
 	 */
 	public static String getApiMetaKey(String urlMethod) {
-		return GatewayRedisKeyPrefix.API_META.getKey() + urlMethod;
+		return RedisKeyUtil.buildKey(GatewayRedisKeyPrefix.API_META.getKey(), urlMethod);
 	}
 
 }

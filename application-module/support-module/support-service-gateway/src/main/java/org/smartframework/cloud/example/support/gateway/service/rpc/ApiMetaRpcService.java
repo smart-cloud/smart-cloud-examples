@@ -12,6 +12,11 @@ import org.smartframework.cloud.starter.redis.component.RedisComponent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+/**
+ * @desc 接口元数据（签名、加解密、权限等）处理
+ * @author liyulin
+ * @date 2020/04/28
+ */
 @Service
 public class ApiMetaRpcService {
 
