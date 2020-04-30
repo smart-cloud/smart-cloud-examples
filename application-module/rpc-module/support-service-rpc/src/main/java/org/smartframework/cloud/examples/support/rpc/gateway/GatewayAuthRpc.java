@@ -20,7 +20,6 @@ import springfox.documentation.annotations.ApiIgnore;
 @ApiIgnore
 public interface GatewayAuthRpc {
 	
-
 	@ApiOperation("上传权限信息")
 	@PostMapping("gateway/rpc/auth/upload")
 	RespVO<Base> upload(@RequestBody @Valid GatewayAuthUploadReqVO req);

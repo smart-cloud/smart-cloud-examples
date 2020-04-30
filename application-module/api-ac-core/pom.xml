@@ -21,5 +21,11 @@
 			<groupId>org.smartframework.cloud</groupId>
 			<artifactId>support-service-rpc</artifactId>
 		</dependency>
+		
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-configuration-processor</artifactId>
+			<optional>true</optional>
+		</dependency>
 	</dependencies>
 </project>
