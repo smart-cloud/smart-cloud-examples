@@ -152,7 +152,47 @@ sign = RSA签名签名(AES加密(head的json串) + AES加密(body json串))
 
 - 安装[redis](https://github.com/microsoftarchive/redis/releases)，并启动
 - 安装[mysql](https://www.mysql.com/downloads/)，执行/docs/sql下脚本
-- 安装[seata](https://github.com/seata/seata/releases)服务端，并启动
+- 安装[seata](https://github.com/seata/seata/releases/tag/v1.2.0)服务端，并启动
+  - server sql见/smart-cloud-examples/docs/sql/seata.sql
+  - file.conf文件配置
+  ```
+	service {
+	  #vgroup->rgroup
+	  vgroupMapping.smartcloud_tx_group = "smartcloud"
+	  #only support single node
+	  smartcloud.grouplist = "127.0.0.1:8091"
+	  #degrade current not support
+	  enableDegrade = false
+	  #disable
+	  disable = false
+	  #unit ms,s,m,h,d represents milliseconds, seconds, minutes, hours, days, default permanent
+	  max.commit.retry.timeout = "-1"
+	  max.rollback.retry.timeout = "-1"
+	}
+	
+	store {
+	  ## store mode: file、db
+	  mode = "db"
+	  ## database store property
+	  db {
+	    ## the implement of javax.sql.DataSource, such as DruidDataSource(druid)/BasicDataSource(dbcp) etc.
+	    datasource = "druid"
+	    ## mysql/oracle/postgresql/h2/oceanbase etc.
+	    dbType = "mysql"
+	    driverClassName = "com.mysql.jdbc.Driver"
+	    url = "jdbc:mysql://127.0.0.1:3306/seata"
+	    user = "liyulin"
+	    password = "123456"
+	    minConn = 5
+	    maxConn = 30
+	    globalTable = "global_table"
+	    branchTable = "branch_table"
+	    lockTable = "lock_table"
+	    queryLimit = 100
+	    maxWait = 5000
+	  }
+	}
+  ```
 - 服务启动（先启动eureka，然后依次启动mall下服务）
 
 # 四、注意事项
