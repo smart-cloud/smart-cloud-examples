@@ -22,14 +22,14 @@ spring:
       discovery:        locator:          enabled: true      routes:
       # ------basic module      - id: user
         uri: lb://basicServiceUser
-        predicates:        - Path=/*/*/user/**
+        predicates:        - Path=/user/**
         
       # ------mall module
       - id: product
         uri: lb://mallServiceProduct
         predicates:
-        - Path=/*/*/product/**
+        - Path=/product/**
       - id: order
         uri: lb://mallServiceOrder
         predicates:
-        - Path=/*/*/order/**
+        - Path=/order/**

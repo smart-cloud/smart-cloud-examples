@@ -89,11 +89,11 @@ public class OrderApiService {
 		}).collect(Collectors.toList());
 		
 		RespVO<Base> updateStockResp = productInfoRpc.updateStock(new UpdateStockReqVO(updateStockItems));
-		if(RespUtil.isSuccess(updateStockResp)) {
+		if (RespUtil.isSuccess(updateStockResp)) {
 			CreateOrderRespVO createOrderRespVO = new CreateOrderRespVO();
 			createOrderRespVO.setOrderId(orderBillId);
-			createOrderRespVO.setFree(orderBillEntity.getAmount()==0);
-			
+			createOrderRespVO.setFree(orderBillEntity.getAmount() == 0);
+
 			return RespUtil.success(createOrderRespVO);
 		}
 		

@@ -13,11 +13,16 @@ smart:
 server:
   port: 20011
   
+seata:
+  tx-service-group: smartcloud_tx_group
+  service:    grouplist: 
+      smartcloud: 127.0.0.1:8091
+    vgroup-mapping: 
+      smartcloud_tx_group: smartcloud
+
 spring:
   application:
     name: mallServiceOrder
-  cloud: 
-    alibaba:      seata:        tx-service-group: ${spring.application.name}
   redis:
     host: localhost
     port: 6379

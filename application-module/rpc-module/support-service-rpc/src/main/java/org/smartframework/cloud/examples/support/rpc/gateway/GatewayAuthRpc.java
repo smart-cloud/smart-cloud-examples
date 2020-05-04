@@ -25,7 +25,7 @@ public interface GatewayAuthRpc {
 	RespVO<Base> upload(@RequestBody @Valid GatewayAuthUploadReqVO req);
 	
 	@ApiOperation("上传权限信息")
-	@PostMapping("gateway/rpc/auth/upload")
+	@PostMapping("gateway/rpc/auth/update")
 	RespVO<Base> update(@RequestBody @Valid GatewayAuthUpdateReqVO req);
 
 }
