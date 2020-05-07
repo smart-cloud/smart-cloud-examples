@@ -17,12 +17,14 @@ public class EurekaStateChangeListener {
 	public void listen(EurekaInstanceCanceledEvent event) {
 		// 服务下线事件
 		log.info("服务:{}|{}挂了", event.getAppName(), event.getServerId());
+		// TODO:下线通知
 	}
 
 	@EventListener
 	public void listen(EurekaInstanceRegisteredEvent event) {
 		// 服务注册事件
 		log.info("服务:{}|{}注册成功了", event.getInstanceInfo().getAppName(), event.getInstanceInfo().getIPAddr());
+		// TODO:注册通知
 	}
 
 	@EventListener

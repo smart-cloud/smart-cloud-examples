@@ -14,7 +14,7 @@ public class ApiAcAutoConfigure {
 	
 	@Autowired
 	@Bean
-	public UploadApiMetaListener UploadApiMetaListener(ApiMetaRpc apiMetaRpc, ApiAcProperties apiAcProperties) {
+	public UploadApiMetaListener uploadApiMetaListener(ApiMetaRpc apiMetaRpc, ApiAcProperties apiAcProperties) {
 		return new UploadApiMetaListener(apiMetaRpc, apiAcProperties);
 	}
 	

@@ -18,7 +18,6 @@ import lombok.experimental.SuperBuilder;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@SuperBuilder
 @ApiModel(description = "Api访问控制元数据信息")
 public class ApiMetaUploadReqVO extends Base {
 
