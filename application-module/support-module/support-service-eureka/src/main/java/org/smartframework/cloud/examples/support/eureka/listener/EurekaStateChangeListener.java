@@ -1,4 +1,4 @@
-package org.smartframework.cloud.example.support.eureka.listener;
+package org.smartframework.cloud.examples.support.eureka.listener;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.netflix.eureka.server.event.EurekaInstanceCanceledEvent;
