@@ -1,5 +1,5 @@
 smart:
-  dataMachineId: 1
+  dataMachineId: 3
   async: true
   api:
     validator: true
