@@ -1,10 +1,10 @@
-package org.smartframework.cloud.example.support.gateway.service.rpc;
+package org.smartframework.cloud.examples.support.gateway.service.rpc;
 
 import java.util.Map;
 
 import org.smartframework.cloud.common.pojo.Base;
 import org.smartframework.cloud.common.pojo.vo.RespVO;
-import org.smartframework.cloud.example.support.gateway.util.RedisKeyHelper;
+import org.smartframework.cloud.examples.support.gateway.util.RedisKeyHelper;
 import org.smartframework.cloud.examples.support.rpc.gateway.request.rpc.ApiMetaUploadReqVO;
 import org.smartframework.cloud.examples.support.rpc.gateway.request.rpc.ApiMetaUploadReqVO.ApiAC;
 import org.smartframework.cloud.starter.core.business.util.RespUtil;

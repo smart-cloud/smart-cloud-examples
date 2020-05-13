@@ -1,4 +1,4 @@
-package org.smartframework.cloud.example.support.gateway.service.rpc;
+package org.smartframework.cloud.examples.support.gateway.service.rpc;
 
 import org.smartframework.cloud.common.pojo.Base;
 import org.smartframework.cloud.common.pojo.vo.RespVO;

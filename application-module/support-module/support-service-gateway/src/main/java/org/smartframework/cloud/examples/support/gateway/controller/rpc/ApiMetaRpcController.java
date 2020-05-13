@@ -1,10 +1,10 @@
-package org.smartframework.cloud.example.support.gateway.controller.rpc;
+package org.smartframework.cloud.examples.support.gateway.controller.rpc;
 
 import javax.validation.Valid;
 
 import org.smartframework.cloud.common.pojo.Base;
 import org.smartframework.cloud.common.pojo.vo.RespVO;
-import org.smartframework.cloud.example.support.gateway.service.rpc.ApiMetaRpcService;
+import org.smartframework.cloud.examples.support.gateway.service.rpc.ApiMetaRpcService;
 import org.smartframework.cloud.examples.support.rpc.gateway.ApiMetaRpc;
 import org.smartframework.cloud.examples.support.rpc.gateway.request.rpc.ApiMetaUploadReqVO;
 import org.springframework.beans.factory.annotation.Autowired;

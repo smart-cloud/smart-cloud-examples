@@ -1,4 +1,4 @@
-package org.smartframework.cloud.example.support.gateway.enums;
+package org.smartframework.cloud.examples.support.gateway.enums;
 
 import org.smartframework.cloud.starter.redis.RedisKeyUtil;
 import org.smartframework.cloud.starter.redis.enums.RedisKeyPrefix;

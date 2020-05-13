@@ -20,6 +20,16 @@
 		<dependency>
 			<groupId>org.smartframework.cloud</groupId>
 			<artifactId>smart-cloud-starter-redis</artifactId>
+		</dependency>		
+
+		<dependency>
+			<groupId>org.smartframework.cloud</groupId>
+			<artifactId>smart-cloud-starter-web</artifactId>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.smartframework.cloud</groupId>
+			<artifactId>smart-cloud-example-framework</artifactId>
 		</dependency>
 		
 		<dependency>

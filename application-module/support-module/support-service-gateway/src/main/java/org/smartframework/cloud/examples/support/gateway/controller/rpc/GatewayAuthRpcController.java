@@ -1,10 +1,10 @@
-package org.smartframework.cloud.example.support.gateway.controller.rpc;
+package org.smartframework.cloud.examples.support.gateway.controller.rpc;
 
 import javax.validation.Valid;
 
 import org.smartframework.cloud.common.pojo.Base;
 import org.smartframework.cloud.common.pojo.vo.RespVO;
-import org.smartframework.cloud.example.support.gateway.service.rpc.GatewayAuthRpcService;
+import org.smartframework.cloud.examples.support.gateway.service.rpc.GatewayAuthRpcService;
 import org.smartframework.cloud.examples.support.rpc.gateway.GatewayAuthRpc;
 import org.smartframework.cloud.examples.support.rpc.gateway.request.rpc.GatewayAuthUpdateReqVO;
 import org.smartframework.cloud.examples.support.rpc.gateway.request.rpc.GatewayAuthUploadReqVO;
