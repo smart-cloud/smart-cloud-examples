@@ -2,7 +2,9 @@ package org.smartframework.cloud.examples.support.gateway.filter;
 
 import org.apache.commons.lang3.StringUtils;
 import org.smartframework.cloud.examples.support.gateway.constants.ProtostuffConstant;
+import org.smartframework.cloud.starter.core.business.SmartReqContext;
 import org.smartframework.cloud.starter.core.business.security.enums.ApiUseSideEnum;
+import org.smartframework.cloud.starter.core.business.security.util.ReqHttpHeadersUtil;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
 import org.springframework.http.MediaType;
@@ -24,8 +26,15 @@ public class GatewayFilter implements GlobalFilter {
 
 	@Override
 	public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
-		processRpcContentType(exchange.getRequest(), exchange.getResponse());
-		return chain.filter(exchange);
+		ServerHttpRequest request = exchange.getRequest();
+		processRpcContentType(request, exchange.getResponse());
+		
+		// local参数设置
+		SmartReqContext.setReqHttpHeadersBO(ReqHttpHeadersUtil.getReqHttpHeadersBO(request));
+		
+		return chain.filter(exchange).doFinally(signal -> {
+			SmartReqContext.removeReqHttpHeadersBO();
+		});
 	}
 
 	/**
