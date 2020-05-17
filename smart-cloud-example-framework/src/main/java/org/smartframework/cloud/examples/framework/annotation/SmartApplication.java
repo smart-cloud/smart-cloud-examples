@@ -1,4 +1,4 @@
-package org.smartframework.cloud.examples.framework.support.annotation;
+package org.smartframework.cloud.examples.framework.annotation;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
