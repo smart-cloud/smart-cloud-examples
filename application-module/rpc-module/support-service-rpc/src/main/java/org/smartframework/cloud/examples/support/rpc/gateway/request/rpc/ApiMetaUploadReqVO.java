@@ -37,23 +37,24 @@ public class ApiMetaUploadReqVO extends Base {
 
 		private static final long serialVersionUID = 1L;
 
-		/** 是否需要token校验 */
+		@ApiModelProperty(value = "是否需要token校验")
 		private boolean tokenCheck;
 
-		/** 签名控制 */
+		@ApiModelProperty(value = "签名控制")
 		private byte sign;
 
-		/** 请求参数是否需要解密 */
+		@ApiModelProperty(value = "请求参数是否需要解密")
 		private boolean decrypt;
 
-		/** 响应信息是否需要加密 */
+		@ApiModelProperty(value = "响应信息是否需要加密")
 		private boolean encrypt;
 
-		/** 是否需要权限控制 */
+		@ApiModelProperty(value = "是否需要权限控制")
 		private boolean auth;
 
-		/** 是否需要重复提交校验 */
+		@ApiModelProperty(value = "是否需要重复提交校验")
 		private boolean repeatSubmitCheck;
+
 	}
 
 }
