@@ -1,10 +1,10 @@
 package org.smartframework.cloud.examples.basic.rpc.user.response.base;
 
-import org.smartframework.cloud.mask.MaskRule;
-import org.smartframework.cloud.mask.MaskLog;
 import java.util.Date;
-import org.smartframework.cloud.mask.EnableMask;
+
 import org.smartframework.cloud.common.pojo.vo.BaseEntityRespVO;
+import org.smartframework.cloud.mask.MaskLog;
+import org.smartframework.cloud.mask.MaskRule;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -18,7 +18,6 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @SuperBuilder
 @ApiModel(description = "登录信息")
-@EnableMask
 public class LoginInfoBaseRespVO extends BaseEntityRespVO {
 
 	private static final long serialVersionUID = 1L;

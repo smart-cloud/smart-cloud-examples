@@ -9,7 +9,7 @@ import org.smartframework.cloud.examples.system.test.config.SystemTestConfig;
 import org.smartframework.cloud.starter.core.business.util.ReqUtil;
 import org.smartframework.cloud.utility.HttpUtil;
 
-import com.alibaba.fastjson.TypeReference;
+import com.fasterxml.jackson.core.type.TypeReference;
 
 import lombok.experimental.UtilityClass;
 

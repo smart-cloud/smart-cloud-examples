@@ -18,7 +18,7 @@ import org.smartframework.cloud.starter.test.AbstractIntegrationTest;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.alibaba.fastjson.TypeReference;
+import com.fasterxml.jackson.core.type.TypeReference;
 
 @Rollback
 @Transactional

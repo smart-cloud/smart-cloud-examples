@@ -5,7 +5,6 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.smartframework.cloud.common.pojo.Base;
-import org.smartframework.cloud.mask.EnableMask;
 import org.smartframework.cloud.mask.MaskLog;
 import org.smartframework.cloud.mask.MaskRule;
 
@@ -21,7 +20,6 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @SuperBuilder
 @ApiModel(description = "添加登陆信息请求参数")
-@EnableMask
 public class LoginInfoInsertReqVO extends Base {
 
 	private static final long serialVersionUID = 1L;

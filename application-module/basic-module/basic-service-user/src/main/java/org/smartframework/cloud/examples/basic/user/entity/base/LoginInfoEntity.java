@@ -1,16 +1,12 @@
 package org.smartframework.cloud.examples.basic.user.entity.base;
 
-import org.smartframework.cloud.mask.MaskRule;
-
-import org.smartframework.cloud.mask.MaskLog;
-
 import java.util.Date;
-
-import org.smartframework.cloud.mask.EnableMask;
 
 import javax.persistence.Column;
 import javax.persistence.Table;
 
+import org.smartframework.cloud.mask.MaskLog;
+import org.smartframework.cloud.mask.MaskRule;
 import org.smartframework.cloud.starter.mybatis.common.mapper.entity.BaseEntity;
 
 import lombok.Getter;
@@ -29,7 +25,6 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @SuperBuilder
 @Table(name = "t_login_info")
-@EnableMask
 public class LoginInfoEntity extends BaseEntity {
 
 	private static final long serialVersionUID = 1L;

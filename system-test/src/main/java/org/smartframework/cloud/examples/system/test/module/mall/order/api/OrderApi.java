@@ -10,7 +10,7 @@ import org.smartframework.cloud.examples.mall.rpc.order.response.api.CreateOrder
 import org.smartframework.cloud.examples.system.test.config.SystemTestConfig;
 import org.smartframework.cloud.utility.HttpUtil;
 
-import com.alibaba.fastjson.TypeReference;
+import com.fasterxml.jackson.core.type.TypeReference;
 
 import lombok.experimental.UtilityClass;
 
