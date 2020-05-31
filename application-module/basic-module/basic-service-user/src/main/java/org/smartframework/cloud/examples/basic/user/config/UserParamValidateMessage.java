@@ -12,8 +12,8 @@ import lombok.experimental.UtilityClass;
 public class UserParamValidateMessage {
 
 	/** 该手机号已存在，请换一个重新注册 */
-	public static final String REGISTER_MOBILE_EXSITED = "该手机号已存在，请换一个重新注册";
+	public static final String REGISTER_MOBILE_EXSITED = "user.register.mobile.existed";
 	/** 该用户名已存在，请换一个重新注册 */
-	public static final String REGISTER_USERNAME_EXSITED = "该用户名已存在，请换一个重新注册";
+	public static final String REGISTER_USERNAME_EXSITED = "user.register.username.existed";
 	
 }
