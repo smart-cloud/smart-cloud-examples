@@ -1,3 +1,3 @@
-smart:  dataMachineId: 2  async: true  api:    validator: true  aspect:    repeatSubmitCheck: true    rpclog: true    rpcSecurity: true    apilog: true    apiSecurity: trueserver:  port: 30001  spring:
+smart:  dataMachineId: 2  async: true  api:    validator: true  aspect:    apiidempotent: true    rpclog: true    rpcSecurity: true    apilog: true    apiSecurity: trueserver:  port: 30001  spring:
   application:
     name: merge-basic  redis:    host: localhost    port: 6379    password: 123456    database: 0    timeout: 10000ms    lettuce:      pool:        max-active: 1000        min-idle: 0        max-idle: 100        max-wait: 10000ms
