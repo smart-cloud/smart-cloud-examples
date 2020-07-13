@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
-@SmartFeignClient(name = RpcConstants.Product.FEIGN_CLIENT_NAME)
+@SmartFeignClient(name = RpcConstants.Product.FEIGN_CLIENT_NAME, contextId = "productInfoRpc")
 @Api(tags = "商品信息rpc相关接口")
 public interface ProductInfoRpc {
 
