@@ -193,6 +193,9 @@ sign = RSA签名签名(AES加密(head的json串) + AES加密(body json串))
 	  }
 	}
   ```
+- 将[smart-cloud](https://github.com/smart-cloud/smart-cloud)相关jar install到本地仓库
+  - clone下[smart-cloud](https://github.com/smart-cloud/smart-cloud)
+  - 进入smart-cloud目录，执行mvn -clean install -Dmaven.test.skip=true -T 4
 - 服务启动顺序
   - 先启动support-service-eureka
   - 再启动support-service-gateway
