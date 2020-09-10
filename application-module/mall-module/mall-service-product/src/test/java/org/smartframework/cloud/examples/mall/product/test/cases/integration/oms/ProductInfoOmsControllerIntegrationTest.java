@@ -1,5 +1,6 @@
 package org.smartframework.cloud.examples.mall.product.test.cases.integration.oms;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import org.assertj.core.api.Assertions;
 import org.junit.Test;
 import org.smartframework.cloud.common.pojo.Base;
@@ -12,87 +13,85 @@ import org.smartframework.cloud.examples.mall.rpc.product.request.oms.ProductIns
 import org.smartframework.cloud.examples.mall.rpc.product.request.oms.ProductUpdateReqVO;
 import org.smartframework.cloud.examples.mall.rpc.product.response.base.ProductInfoBaseRespVO;
 import org.smartframework.cloud.starter.core.business.util.ReqUtil;
-import org.smartframework.cloud.starter.test.AbstractIntegrationTest;
+import org.smartframework.cloud.starter.test.core.WebMvcIntegrationTest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-
 @Rollback
 @Transactional
-public class ProductInfoOmsControllerIntegrationTest extends AbstractIntegrationTest {
+public class ProductInfoOmsControllerIntegrationTest extends WebMvcIntegrationTest {
 
-	@Autowired
-	private ProductInfoData productInfoData;
+    @Autowired
+    private ProductInfoData productInfoData;
 
-	@Test
-	public void testCreate() throws Exception {
-		ProductInsertReqVO productInsertReqVO = new ProductInsertReqVO();
-		productInsertReqVO.setName("iphone10");
-		productInsertReqVO.setSellPrice(10000L);
-		productInsertReqVO.setStock(200L);
+    @Test
+    public void testCreate() throws Exception {
+        ProductInsertReqVO productInsertReqVO = new ProductInsertReqVO();
+        productInsertReqVO.setName("iphone10");
+        productInsertReqVO.setSellPrice(10000L);
+        productInsertReqVO.setStock(200L);
 
-		RespVO<Base> result = super.postWithNoHeaders("/product/oms/productInfo/create", productInsertReqVO,
-				new TypeReference<RespVO<Base>>() {
-				});
+        RespVO<Base> result = super.post("/product/oms/productInfo/create", productInsertReqVO,
+                new TypeReference<RespVO<Base>>() {
+                });
 
-		Assertions.assertThat(result).isNotNull();
-		Assertions.assertThat(result.getHead()).isNotNull();
-		Assertions.assertThat(result.getHead().getCode()).isEqualTo(ReturnCodeEnum.SUCCESS.getCode());
-	}
+        Assertions.assertThat(result).isNotNull();
+        Assertions.assertThat(result.getHead()).isNotNull();
+        Assertions.assertThat(result.getHead().getCode()).isEqualTo(ReturnCodeEnum.SUCCESS.getCode());
+    }
 
-	@Test
-	public void testUpdate() throws Exception {
-		Long productId = 1L;
-		productInfoData.insertTestData(productId);
+    @Test
+    public void testUpdate() throws Exception {
+        Long productId = 1L;
+        productInfoData.insertTestData(productId);
 
-		ProductUpdateReqVO productUpdateReqVO = new ProductUpdateReqVO();
-		productUpdateReqVO.setId(productId);
-		productUpdateReqVO.setName("iphone10");
-		productUpdateReqVO.setSellPrice(10000L);
-		productUpdateReqVO.setStock(200L);
+        ProductUpdateReqVO productUpdateReqVO = new ProductUpdateReqVO();
+        productUpdateReqVO.setId(productId);
+        productUpdateReqVO.setName("iphone10");
+        productUpdateReqVO.setSellPrice(10000L);
+        productUpdateReqVO.setStock(200L);
 
-		RespVO<Base> result = super.postWithNoHeaders("/product/oms/productInfo/update", productUpdateReqVO,
-				new TypeReference<RespVO<Base>>() {
-				});
+        RespVO<Base> result = super.post("/product/oms/productInfo/update", productUpdateReqVO,
+                new TypeReference<RespVO<Base>>() {
+                });
 
-		Assertions.assertThat(result).isNotNull();
-		Assertions.assertThat(result.getHead()).isNotNull();
-		Assertions.assertThat(result.getHead().getCode()).isEqualTo(ReturnCodeEnum.SUCCESS.getCode());
-	}
+        Assertions.assertThat(result).isNotNull();
+        Assertions.assertThat(result.getHead()).isNotNull();
+        Assertions.assertThat(result.getHead().getCode()).isEqualTo(ReturnCodeEnum.SUCCESS.getCode());
+    }
 
-	@Test
-	public void testLogicDelete() throws Exception {
-		Long productId = 2L;
-		productInfoData.insertTestData(productId);
+    @Test
+    public void testLogicDelete() throws Exception {
+        Long productId = 2L;
+        productInfoData.insertTestData(productId);
 
-		ProductDeleteReqVO productDeleteReqVO = new ProductDeleteReqVO();
-		productDeleteReqVO.setId(productId);
+        ProductDeleteReqVO productDeleteReqVO = new ProductDeleteReqVO();
+        productDeleteReqVO.setId(productId);
 
-		RespVO<Base> result = super.postWithNoHeaders("/product/oms/productInfo/logicDelete",
-				productDeleteReqVO, new TypeReference<RespVO<Base>>() {
-				});
+        RespVO<Base> result = super.post("/product/oms/productInfo/logicDelete",
+                productDeleteReqVO, new TypeReference<RespVO<Base>>() {
+                });
 
-		Assertions.assertThat(result).isNotNull();
-		Assertions.assertThat(result.getHead()).isNotNull();
-		Assertions.assertThat(result.getHead().getCode()).isEqualTo(ReturnCodeEnum.SUCCESS.getCode());
-	}
+        Assertions.assertThat(result).isNotNull();
+        Assertions.assertThat(result.getHead()).isNotNull();
+        Assertions.assertThat(result.getHead().getCode()).isEqualTo(ReturnCodeEnum.SUCCESS.getCode());
+    }
 
-	@Test
-	public void testPageProduct() throws Exception {
-		productInfoData.batchInsertTestData();
+    @Test
+    public void testPageProduct() throws Exception {
+        productInfoData.batchInsertTestData();
 
-		RespVO<BasePageRespVO<ProductInfoBaseRespVO>> result = super.postWithNoHeaders(
-				"/product/oms/productInfo/pageProduct", ReqUtil.build(null, 1, 10),
-				new TypeReference<RespVO<BasePageRespVO<ProductInfoBaseRespVO>>>() {
-				});
+        RespVO<BasePageRespVO<ProductInfoBaseRespVO>> result = super.post(
+                "/product/oms/productInfo/pageProduct", ReqUtil.build(null, 1, 10),
+                new TypeReference<RespVO<BasePageRespVO<ProductInfoBaseRespVO>>>() {
+                });
 
-		Assertions.assertThat(result).isNotNull();
-		Assertions.assertThat(result.getHead()).isNotNull();
-		Assertions.assertThat(result.getHead().getCode()).isEqualTo(ReturnCodeEnum.SUCCESS.getCode());
-		Assertions.assertThat(result.getBody()).isNotNull();
-		Assertions.assertThat(result.getBody().getDatas()).isNotEmpty();
-	}
+        Assertions.assertThat(result).isNotNull();
+        Assertions.assertThat(result.getHead()).isNotNull();
+        Assertions.assertThat(result.getHead().getCode()).isEqualTo(ReturnCodeEnum.SUCCESS.getCode());
+        Assertions.assertThat(result.getBody()).isNotNull();
+        Assertions.assertThat(result.getBody().getDatas()).isNotEmpty();
+    }
 
 }
