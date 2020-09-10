@@ -55,7 +55,7 @@ public class GatewayLogFilter implements WebFilter, Ordered {
         apiLogDO.setCost(System.currentTimeMillis());
         apiLogDO.setMethod(request.getMethod().name());
         apiLogDO.setUrl(path + (StringUtils.isBlank(query) ? "" : "?" + query));
-        apiLogDO.setHead(request.getHeaders().toString());
+        apiLogDO.setHead(request.getHeaders());
         LogUtil.getApiLogCache().set(apiLogDO);
     }
 

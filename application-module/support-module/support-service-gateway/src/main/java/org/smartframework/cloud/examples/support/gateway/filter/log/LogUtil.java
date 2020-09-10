@@ -16,7 +16,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 /**
- * @author liyulin
+ * @author collin
  * @date 2020-07-21
  */
 @Slf4j
@@ -36,6 +36,20 @@ public class LogUtil {
      */
     @Getter
     private static ThreadLocal<ApiLogDO> apiLogCache = new InheritableThreadLocal<>();
+
+    private LogUtil() {
+    }
+
+    public static ApiLogDO getApiLogBO() {
+        ApiLogDO apiLogDO = apiLogCache.get();
+        if (null != apiLogDO) {
+            return apiLogDO;
+        }
+        apiLogDO = new ApiLogDO();
+        apiLogCache.set(apiLogDO);
+
+        return apiLogDO;
+    }
 
     public static <T extends DataBuffer> T chain(DataType dataType, T buffer, ApiLogDO apiLogDO) {
         try {

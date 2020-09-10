@@ -29,7 +29,7 @@ public class ApiLogDO implements Serializable {
     /**
      * http头部数据
      */
-    private String head;
+    private Object head;
     /**
      * url参数
      */
