@@ -18,7 +18,7 @@ import lombok.Getter;
 public enum GatewayRedisKeyPrefix {
 
 	/** api meta */
-	API_META(RedisKeyUtil.buildKey(RedisKeyPrefix.DATA.getKey(), "apimeta", RedisKeyPrefix.REDIS_KEY_SEPARATOR.getKey())),
+	API_META(RedisKeyUtil.buildKey(RedisKeyPrefix.DATA.getKey(), "apimeta")),
 	/** 权限 */
 	AUTH(RedisKeyUtil.buildKey(RedisKeyPrefix.DATA.getKey(), "auth", RedisKeyPrefix.REDIS_KEY_SEPARATOR.getKey()));
 

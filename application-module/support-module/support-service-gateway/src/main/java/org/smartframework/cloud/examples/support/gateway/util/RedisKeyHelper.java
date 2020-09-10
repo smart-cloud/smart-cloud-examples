@@ -8,11 +8,20 @@ public class RedisKeyHelper {
 	/**
 	 * api meta redis key
 	 * 
+	 * @return
+	 */
+	public static String getApiMetaKey() {
+		return GatewayRedisKeyPrefix.API_META.getKey();
+	}
+
+	/**
+	 * api meta redis hash key
+	 *
 	 * @param urlMethod
 	 * @return
 	 */
-	public static String getApiMetaKey(String urlMethod) {
-		return RedisKeyUtil.buildKey(GatewayRedisKeyPrefix.API_META.getKey(), urlMethod);
+	public static String getApiMetaHashKey(String urlMethod) {
+		return urlMethod;
 	}
 
 }
