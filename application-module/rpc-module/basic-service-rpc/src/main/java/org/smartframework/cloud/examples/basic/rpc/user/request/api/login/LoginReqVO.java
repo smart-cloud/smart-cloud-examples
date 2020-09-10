@@ -1,34 +1,40 @@
 package org.smartframework.cloud.examples.basic.rpc.user.request.api.login;
 
-import javax.validation.constraints.NotBlank;
-
-import org.smartframework.cloud.common.pojo.Base;
-import org.smartframework.cloud.mask.MaskLog;
-import org.smartframework.cloud.mask.MaskRule;
-
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
+import org.smartframework.cloud.common.pojo.Base;
+import org.smartframework.cloud.mask.MaskLog;
+import org.smartframework.cloud.mask.MaskRule;
 
+import javax.validation.constraints.NotBlank;
+
+/**
+ * 登陆请求参数
+ *
+ * @author liyulin
+ * @date 2020-09-10
+ */
 @Setter
 @Getter
 @NoArgsConstructor
 @SuperBuilder
-@ApiModel(description = "登陆请求参数")
 public class LoginReqVO extends Base {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	@ApiModelProperty(value = "用户名", required = true)
-	@NotBlank
-	private String username;
+    /**
+     * 用户名
+     */
+    @NotBlank
+    private String username;
 
-	@ApiModelProperty(value = "密码", required = true)
-	@NotBlank
-	@MaskLog(MaskRule.PASSWROD)
-	private String password;
+    /**
+     * 密码
+     */
+    @NotBlank
+    @MaskLog(MaskRule.PASSWROD)
+    private String password;
 
 }

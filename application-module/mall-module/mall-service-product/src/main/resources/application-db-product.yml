@@ -1,12 +1,4 @@
 smart:
-  swagger:
-    enable: true
-    group-name: mall_product
-    title: 商品服务
-    description: 
-    name: luckyQing
-    url: https://github.com/luckyQing
-    email: 1634653825@qq.com
   datasources:
     product:
       url: jdbc:mysql://127.0.0.1:3306/demo_product

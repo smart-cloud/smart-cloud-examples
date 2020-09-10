@@ -1,26 +1,29 @@
 package org.smartframework.cloud.examples.mall.rpc.order.request.api;
 
-import java.util.List;
+import lombok.Getter;
+import lombok.Setter;
+import org.smartframework.cloud.common.pojo.Base;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
+import java.util.List;
 
-import org.smartframework.cloud.common.pojo.Base;
-
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
-import lombok.Getter;
-import lombok.Setter;
-
+/**
+ * 创建订单请求参数
+ *
+ * @author liyulin
+ * @date 2020-09-10
+ */
 @Getter
 @Setter
-@ApiModel(description = "创建订单请求参数")
 public class CreateOrderReqVO extends Base {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	@ApiModelProperty(value = "商品信息", required = true)
-	@NotEmpty
-	private List<@Valid CreateOrderProductInfoReqVO> products;
+    /**
+     * 商品信息
+     */
+    @NotEmpty
+    private List<@Valid CreateOrderProductInfoReqVO> products;
 
 }

@@ -12,23 +12,30 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-
+/**
+ * 用户api接口
+ *
+ * @author liyulin
+ * @date 2020-09-10
+ * @status done
+ */
 @RestController
 @Validated
 @RequestMapping("user/api/userInfo")
-@Api(tags = "用户api接口")
 public class UserInfoApiController {
 
-	@Autowired
-	private UserInfoApiService userInfoApIService;
+    @Autowired
+    private UserInfoApiService userInfoApIService;
 
-	@GetMapping("query")
-	@ApiOperation("查询当前用户信息")
-	@SmartApiAC(tokenCheck = true, sign = SignType.ALL, encrypt = true, decrypt = true)
-	public RespVO<UserInfoBaseRespVO> query() {
-		return RespUtil.success(userInfoApIService.query());
-	}
+    /**
+     * 查询当前用户信息
+     *
+     * @return
+     */
+    @GetMapping("query")
+    @SmartApiAC(tokenCheck = true, sign = SignType.ALL, encrypt = true, decrypt = true)
+    public RespVO<UserInfoBaseRespVO> query() {
+        return RespUtil.success(userInfoApIService.query());
+    }
 
 }

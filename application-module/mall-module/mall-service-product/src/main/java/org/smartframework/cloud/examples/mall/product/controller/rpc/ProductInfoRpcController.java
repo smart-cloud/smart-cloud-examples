@@ -1,7 +1,5 @@
 package org.smartframework.cloud.examples.mall.product.controller.rpc;
 
-import javax.validation.Valid;
-
 import org.smartframework.cloud.common.pojo.Base;
 import org.smartframework.cloud.common.pojo.vo.RespVO;
 import org.smartframework.cloud.examples.mall.product.service.rpc.ProductInfoRpcService;
@@ -17,26 +15,28 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
+
 @RestController
 @Validated
 public class ProductInfoRpcController implements ProductInfoRpc {
 
-	@Autowired
-	private ProductInfoRpcService productInfoRpcService;
+    @Autowired
+    private ProductInfoRpcService productInfoRpcService;
 
-	@Override
-	public RespVO<QryProductByIdRespVO> qryProductById(@RequestBody @Valid QryProductByIdReqVO req) {
-		return RespUtil.success(productInfoRpcService.qryProductById(req));
-	}
+    @Override
+    public RespVO<QryProductByIdRespVO> qryProductById(@RequestBody @Valid QryProductByIdReqVO req) {
+        return RespUtil.success(productInfoRpcService.qryProductById(req));
+    }
 
-	@Override
-	public RespVO<QryProductByIdsRespVO> qryProductByIds(@RequestBody @Valid QryProductByIdsReqVO req) {
-		return RespUtil.success(productInfoRpcService.qryProductByIds(req));
-	}
+    @Override
+    public RespVO<QryProductByIdsRespVO> qryProductByIds(@RequestBody @Valid QryProductByIdsReqVO req) {
+        return RespUtil.success(productInfoRpcService.qryProductByIds(req));
+    }
 
-	@Override
-	public RespVO<Base> updateStock(@RequestBody @Valid UpdateStockReqVO req) {
-		return productInfoRpcService.updateStock(req);
-	}
+    @Override
+    public RespVO<Base> updateStock(@RequestBody @Valid UpdateStockReqVO req) {
+        return productInfoRpcService.updateStock(req);
+    }
 
 }

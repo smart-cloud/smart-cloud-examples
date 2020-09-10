@@ -1,7 +1,5 @@
 package org.smartframework.cloud.examples.mall.rpc.product;
 
-import javax.validation.Valid;
-
 import org.smartframework.cloud.common.pojo.Base;
 import org.smartframework.cloud.common.pojo.vo.RespVO;
 import org.smartframework.cloud.examples.mall.rpc.constant.RpcConstants;
@@ -14,23 +12,43 @@ import org.smartframework.cloud.starter.rpc.feign.annotation.SmartFeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import javax.validation.Valid;
 
+/**
+ * 商品信息rpc相关接口
+ *
+ * @author liyulin
+ * @date 2020-09-10
+ * @status done
+ */
 @SmartFeignClient(name = RpcConstants.Product.FEIGN_CLIENT_NAME, contextId = "productInfoRpc")
-@Api(tags = "商品信息rpc相关接口")
 public interface ProductInfoRpc {
 
-	@ApiOperation("根据id查询商品信息")
-	@PostMapping(value="product/rpc/productInfo/qryProductById")
-	RespVO<QryProductByIdRespVO> qryProductById(@RequestBody @Valid QryProductByIdReqVO req);
+    /**
+     * 根据id查询商品信息
+     *
+     * @param req
+     * @return
+     */
+    @PostMapping("product/rpc/productInfo/qryProductById")
+    RespVO<QryProductByIdRespVO> qryProductById(@RequestBody @Valid QryProductByIdReqVO req);
 
-	@ApiOperation("根据ids查询商品信息")
-	@PostMapping(value="product/rpc/productInfo/qryProductByIds")
-	RespVO<QryProductByIdsRespVO> qryProductByIds(@RequestBody @Valid QryProductByIdsReqVO req);
+    /**
+     * 根据ids查询商品信息
+     *
+     * @param req
+     * @return
+     */
+    @PostMapping("product/rpc/productInfo/qryProductByIds")
+    RespVO<QryProductByIdsRespVO> qryProductByIds(@RequestBody @Valid QryProductByIdsReqVO req);
 
-	@ApiOperation("更新库存")
-	@PostMapping(value="product/rpc/productInfo/updateStock")
-	RespVO<Base> updateStock(@RequestBody @Valid UpdateStockReqVO req);
+    /**
+     * 更新库存
+     *
+     * @param req
+     * @return
+     */
+    @PostMapping("product/rpc/productInfo/updateStock")
+    RespVO<Base> updateStock(@RequestBody @Valid UpdateStockReqVO req);
 
 }
