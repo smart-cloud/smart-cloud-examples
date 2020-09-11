@@ -25,6 +25,12 @@ public class LoginReqVO extends Base {
     private static final long serialVersionUID = 1L;
 
     /**
+     * 访问令牌
+     */
+    @NotBlank
+    private String token;
+
+    /**
      * 用户名
      */
     @NotBlank

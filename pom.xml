@@ -35,7 +35,19 @@
 				<artifactId>api-ac-core</artifactId>
 				<version>${project.version}</version>
 			</dependency>
-			
+
+			<dependency>
+				<groupId>org.smartframework.cloud</groupId>
+				<artifactId>app-common-config</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.smartframework.cloud</groupId>
+				<artifactId>app-auth-core</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+
 			<dependency>
 				<groupId>org.smartframework.cloud</groupId>
 				<artifactId>basic-service-rpc</artifactId>

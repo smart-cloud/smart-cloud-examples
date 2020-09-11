@@ -27,4 +27,19 @@ public class LoginRespVO extends Base {
      */
     private Long userId;
 
+    /**
+     * 用户名
+     */
+    private String username;
+
+    /**
+     * 真实姓名
+     */
+    private String realName;
+
+    /**
+     * 手机号
+     */
+    private String mobile;
+
 }

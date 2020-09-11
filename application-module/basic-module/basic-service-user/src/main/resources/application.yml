@@ -4,12 +4,9 @@ smart:
   api:
     validator: true
   aspect:
-    apiidempotent: true
     rpclog: true
-    rpcSecurity: true
     apilog: true
-    apiSecurity: true
-    
+
 server:
   port: 20031
   

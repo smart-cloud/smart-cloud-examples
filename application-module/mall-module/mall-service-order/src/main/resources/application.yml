@@ -4,18 +4,16 @@ smart:
   api:
     validator: true
   aspect:
-    apiidempotent: true
     rpclog: true
-    rpcSecurity: true
     apilog: true
-    apiSecurity: true
-    
+
 server:
   port: 20011
   
 seata:
   tx-service-group: smartcloud_tx_group
-  service:    grouplist: 
+  service:
+    grouplist: 
       smartcloud: 127.0.0.1:8091
     vgroup-mapping: 
       smartcloud_tx_group: smartcloud

@@ -5,6 +5,7 @@ smart:
     validator: true
   aspect:
     repeatSubmitCheck: true
+    rpclog: true
     apilog: true
 
 server:
@@ -27,11 +28,17 @@ spring:
         max-wait: 10000ms
   profiles:
     include: common-config,discovery
-  cloud:    gateway:
-      discovery:        locator:          enabled: true      routes:
-      # ------basic module      - id: user
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+      routes:
+      # ------basic module
+      - id: user
         uri: lb://basicServiceUser
-        predicates:        - Path=/user/**
+        predicates:
+        - Path=/user/**
         
       # ------mall module
       - id: product

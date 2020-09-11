@@ -20,8 +20,4 @@ public class RegisterUserRespVO extends LoginRespVO {
 
     private static final long serialVersionUID = 1L;
 
-    public RegisterUserRespVO(LoginRespVO loginRespVO) {
-        super(loginRespVO.getUserId());
-    }
-
 }

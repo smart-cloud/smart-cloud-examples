@@ -19,7 +19,12 @@
 	<dependencies>
 		<dependency>
 			<groupId>org.smartframework.cloud</groupId>
-			<artifactId>application-common-config</artifactId>
+			<artifactId>app-auth-core</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.smartframework.cloud</groupId>
+			<artifactId>app-common-config</artifactId>
 		</dependency>
 		
 		<dependency>

@@ -1,0 +1,51 @@
+package org.smartframework.cloud.examples.support.rpc.gateway.request.rpc;
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.experimental.SuperBuilder;
+import org.smartframework.cloud.common.pojo.Base;
+
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@SuperBuilder
+public class CacheUserInfoReqVO extends Base {
+
+    private static final long serialVersionUID = 1L;
+
+    /**
+     * 访问令牌
+     */
+    @NotBlank
+    private String token;
+
+    /**
+     * 用户id
+     */
+    @NotNull
+    private Long userId;
+
+    /**
+     * 用户名
+     */
+    @NotBlank
+    private String username;
+
+    /**
+     * 真实姓名
+     */
+    @NotBlank
+    private String realName;
+
+    /**
+     * 手机号
+     */
+    private String mobile;
+
+}

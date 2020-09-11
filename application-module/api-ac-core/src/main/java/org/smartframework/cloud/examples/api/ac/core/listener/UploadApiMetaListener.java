@@ -83,13 +83,17 @@ public class UploadApiMetaListener implements ApplicationListener<ApplicationSta
 
         Map<String, ApiAC> apiACs = new HashMap<>();
         for (Method method : allMappingSet) {
-            ApiAC apiAC = buildApiAC(method.getAnnotation(SmartApiAC.class));
+            SmartApiAC smartApiAC = method.getAnnotation(SmartApiAC.class);
 
             Class<?> declaringClass = method.getDeclaringClass();
             String urlHeader = getUrlUnderClass(declaringClass);
             String[] urlTails = getUrlTails(method);
             for (String urlTail : urlTails) {
                 String urlCode = getUrlCode(urlHeader, urlTail);
+                ApiAC apiAC = null;
+                if (smartApiAC != null) {
+                    apiAC = buildApiAC(smartApiAC);
+                }
                 apiACs.put(urlCode, apiAC);
             }
         }

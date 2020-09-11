@@ -20,6 +20,7 @@ public class UserInfoData {
 		UserInfoEntity entity = new UserInfoEntity();
 		entity.setId(id);
 		entity.setMobile("18720912981");
+		entity.setRealName("李四");
 		entity.setChannel(ChannelEnum.APP.getValue());
 		entity.setSex(SexEnum.FEMALE.getValue());
 		entity.setAddTime(new Date());

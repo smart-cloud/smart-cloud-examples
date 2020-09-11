@@ -5,15 +5,11 @@ import org.assertj.core.api.Assertions;
 import org.junit.Test;
 import org.smartframework.cloud.common.pojo.enums.ReturnCodeEnum;
 import org.smartframework.cloud.common.pojo.vo.RespVO;
+import org.smartframework.cloud.examples.app.auth.core.UserBO;
+import org.smartframework.cloud.examples.app.auth.core.UserContext;
 import org.smartframework.cloud.examples.basic.rpc.user.response.base.UserInfoBaseRespVO;
-import org.smartframework.cloud.examples.basic.user.config.UserRedisConfig;
 import org.smartframework.cloud.examples.basic.user.test.data.UserInfoData;
-import org.smartframework.cloud.starter.core.business.LoginCache;
-import org.smartframework.cloud.starter.core.business.SmartReqContext;
-import org.smartframework.cloud.starter.core.business.security.LoginRedisConfig;
-import org.smartframework.cloud.starter.core.business.security.util.ReqHttpHeadersUtil;
-import org.smartframework.cloud.starter.redis.component.RedisComponent;
-import org.smartframework.cloud.starter.test.core.WebMvcIntegrationTest;
+import org.smartframework.cloud.starter.test.integration.WebMvcIntegrationTest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,25 +20,13 @@ public class UserInfoApiControllerIntegrationTest extends WebMvcIntegrationTest 
 
     @Autowired
     private UserInfoData userInfoData;
-    @Autowired
-    private RedisComponent redisComponent;
 
     @Test
     public void testQuery() throws Exception {
-        SmartReqContext.clearLoginCache();
+        UserContext.setContext(UserBO.builder().id(1L).mobile("13112345678").realName("张三").build());
 
         Long userId = 1L;
         userInfoData.insertTestData(userId);
-
-        // 构造请求参数
-        LoginCache loginCache = new LoginCache();
-        String token = ReqHttpHeadersUtil.generateToken();
-        loginCache.setToken(token);
-        loginCache.setUserId(userId);
-
-        String tokenRedisKey = LoginRedisConfig.getTokenRedisKey(token);
-        redisComponent.setObject(tokenRedisKey, loginCache, UserRedisConfig.NON_LOGIN_TOKEN_EXPIRE_MILLIS);
-
 
         RespVO<UserInfoBaseRespVO> result = super.get("/user/api/userInfo/query", null,
                 new TypeReference<RespVO<UserInfoBaseRespVO>>() {

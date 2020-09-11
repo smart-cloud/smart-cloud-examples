@@ -13,7 +13,7 @@ import org.smartframework.cloud.examples.mall.rpc.product.request.rpc.UpdateStoc
 import org.smartframework.cloud.examples.mall.rpc.product.request.rpc.UpdateStockReqVO.UpdateStockItem;
 import org.smartframework.cloud.examples.mall.rpc.product.response.rpc.QryProductByIdRespVO;
 import org.smartframework.cloud.examples.mall.rpc.product.response.rpc.QryProductByIdsRespVO;
-import org.smartframework.cloud.starter.test.core.WebMvcIntegrationTest;
+import org.smartframework.cloud.starter.test.integration.WebMvcIntegrationTest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;

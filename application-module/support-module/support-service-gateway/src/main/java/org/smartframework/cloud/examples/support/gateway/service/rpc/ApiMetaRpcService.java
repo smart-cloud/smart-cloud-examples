@@ -1,11 +1,8 @@
 package org.smartframework.cloud.examples.support.gateway.service.rpc;
 
-import org.smartframework.cloud.common.pojo.Base;
-import org.smartframework.cloud.common.pojo.vo.RespVO;
 import org.smartframework.cloud.examples.support.gateway.util.RedisKeyHelper;
 import org.smartframework.cloud.examples.support.rpc.gateway.request.rpc.ApiMetaUploadReqVO;
 import org.smartframework.cloud.examples.support.rpc.gateway.request.rpc.ApiMetaUploadReqVO.ApiAC;
-import org.smartframework.cloud.starter.core.business.util.RespUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
@@ -29,15 +26,13 @@ public class ApiMetaRpcService {
      * @param req
      * @return
      */
-    public RespVO<Base> save(ApiMetaUploadReqVO req) {
+    public void save(ApiMetaUploadReqVO req) {
         Map<String, ApiAC> apiACs = req.getApiACs();
 
         // redis持久化
         apiACs.forEach((urlMethod, apiAC) ->
                 redisTemplate.opsForHash().put(RedisKeyHelper.getApiMetaKey(), RedisKeyHelper.getApiMetaHashKey(urlMethod), apiAC)
         );
-
-        return RespUtil.success();
     }
 
 }

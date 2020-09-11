@@ -10,23 +10,14 @@
 	<packaging>pom</packaging>
 
 	<modules>
-		<module>application-common-config</module>
+		<module>api-ac-core</module>
+		<module>app-auth-core</module>
+		<module>app-common-config</module>
 		<module>basic-module</module>
-		<module>rpc-module</module>
 		<module>mall-module</module>
+		<module>rpc-module</module>
 		<module>support-module</module>
-    	<module>api-ac-core</module>
-  	</modules>
-
-	<dependencyManagement>
-		<dependencies>
-			<dependency>
-				<groupId>org.smartframework.cloud</groupId>
-				<artifactId>application-common-config</artifactId>
-				<version>${project.version}</version>
-			</dependency>
-		</dependencies>
-	</dependencyManagement>
+	</modules>
 
 	<dependencies>
 		<dependency>

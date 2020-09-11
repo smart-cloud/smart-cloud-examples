@@ -9,7 +9,7 @@
 		<artifactId>application-module</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
-	<artifactId>application-common-config</artifactId>
+	<artifactId>app-common-config</artifactId>
 	<packaging>jar</packaging>
 
 	<dependencies>

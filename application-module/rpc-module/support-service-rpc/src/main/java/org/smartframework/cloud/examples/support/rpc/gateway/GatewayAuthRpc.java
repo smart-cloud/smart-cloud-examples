@@ -31,7 +31,7 @@ public interface GatewayAuthRpc {
     RespVO<Base> upload(@RequestBody @Valid GatewayAuthUploadReqVO req);
 
     /**
-     * 上传权限信息
+     * 上传权限信息（更新）
      *
      * @param req
      * @return

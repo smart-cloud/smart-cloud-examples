@@ -9,6 +9,7 @@ import org.smartframework.cloud.examples.basic.rpc.user.request.api.login.LoginI
 import org.smartframework.cloud.examples.basic.rpc.user.request.api.user.UserInfoInsertReqVO;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 /**
@@ -24,6 +25,12 @@ import javax.validation.constraints.NotNull;
 public class RegisterUserReqVO extends Base {
 
     private static final long serialVersionUID = 1L;
+
+    /**
+     * 访问令牌
+     */
+    @NotBlank
+    private String token;
 
     /**
      * 用户信息

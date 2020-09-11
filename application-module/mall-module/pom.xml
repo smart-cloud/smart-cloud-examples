@@ -1,117 +1,122 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<modelVersion>4.0.0</modelVersion>
-	<parent>
-		<groupId>org.smartframework.cloud</groupId>
-		<artifactId>application-module</artifactId>
-		<version>0.0.1-SNAPSHOT</version>
-	</parent>
-	<artifactId>mall-module</artifactId>
-	<packaging>pom</packaging>
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>org.smartframework.cloud</groupId>
+        <artifactId>application-module</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+    </parent>
+    <artifactId>mall-module</artifactId>
+    <packaging>pom</packaging>
 
-	<modules>
-		<module>mall-service-order</module>
-		<module>mall-service-product</module>
-	</modules>
+    <modules>
+        <module>mall-service-order</module>
+        <module>mall-service-product</module>
+    </modules>
 
-	<dependencies>
-		<dependency>
-			<groupId>org.smartframework.cloud</groupId>
-			<artifactId>application-common-config</artifactId>
-		</dependency>
-		
-		<dependency>
-			<groupId>org.smartframework.cloud</groupId>
-			<artifactId>smart-cloud-example-framework</artifactId>
-		</dependency>
+    <dependencies>
+        <dependency>
+            <groupId>org.smartframework.cloud</groupId>
+            <artifactId>app-auth-core</artifactId>
+        </dependency>
 
-		<dependency>
-			<groupId>org.smartframework.cloud</groupId>
-			<artifactId>smart-cloud-starter-mybatis</artifactId>
-		</dependency>
+        <dependency>
+            <groupId>org.smartframework.cloud</groupId>
+            <artifactId>app-common-config</artifactId>
+        </dependency>
 
-		<dependency>
-			<groupId>org.smartframework.cloud</groupId>
-			<artifactId>smart-cloud-starter-locale</artifactId>
-		</dependency>
-		
-		<dependency>
-			<groupId>tk.mybatis</groupId>
-			<artifactId>mapper</artifactId>
-		</dependency>
+        <dependency>
+            <groupId>org.smartframework.cloud</groupId>
+            <artifactId>smart-cloud-example-framework</artifactId>
+        </dependency>
 
-		<dependency>
-			<groupId>org.smartframework.cloud</groupId>
-			<artifactId>smart-cloud-starter-web</artifactId>
-		</dependency>
-		
-		<dependency>
-			<groupId>org.smartframework.cloud</groupId>
-			<artifactId>smart-cloud-starter-redis</artifactId>
-		</dependency>
+        <dependency>
+            <groupId>org.smartframework.cloud</groupId>
+            <artifactId>smart-cloud-starter-mybatis</artifactId>
+        </dependency>
 
-		<dependency>
-			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
-		</dependency>
-		
-		<!-- <dependency>
-		    <groupId>com.alibaba.cloud</groupId>
-		    <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
-		</dependency> -->
-		
-		<!-- <dependency>
-		    <groupId>com.alibaba.cloud</groupId>
-		    <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
-		</dependency> -->
+        <dependency>
+            <groupId>org.smartframework.cloud</groupId>
+            <artifactId>smart-cloud-starter-locale</artifactId>
+        </dependency>
 
-		<dependency>
-			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-starter-sleuth</artifactId>
-		</dependency>
+        <dependency>
+            <groupId>tk.mybatis</groupId>
+            <artifactId>mapper</artifactId>
+        </dependency>
 
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-undertow</artifactId>
-		</dependency>
+        <dependency>
+            <groupId>org.smartframework.cloud</groupId>
+            <artifactId>smart-cloud-starter-web</artifactId>
+        </dependency>
 
-		<dependency>
-			<groupId>de.codecentric</groupId>
-			<artifactId>spring-boot-admin-starter-client</artifactId>
-		</dependency>
-		
-		<dependency>
-			<groupId>org.smartframework.cloud</groupId>
-			<artifactId>mall-service-rpc</artifactId>
-		</dependency>
-		
-		<dependency>
-			<groupId>org.smartframework.cloud</groupId>
-			<artifactId>api-ac-core</artifactId>
-		</dependency>
-	</dependencies>
+        <dependency>
+            <groupId>org.smartframework.cloud</groupId>
+            <artifactId>smart-cloud-starter-redis</artifactId>
+        </dependency>
 
-	<profiles>
-		<!--单体服务构建 -->
-		<profile>
-			<id>single</id>
-			<build>
-				<plugins>
-					<plugin>
-						<groupId>org.springframework.boot</groupId>
-						<artifactId>spring-boot-maven-plugin</artifactId>
-					</plugin>
-				</plugins>
-			</build>
-			<activation>
-				<activeByDefault>true</activeByDefault>
-			</activation>
-		</profile>
-		<!-- 合体服务构建 -->
-		<profile>
-			<id>merge</id>
-		</profile>
-	</profiles>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+        </dependency>
+
+        <!-- <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
+        </dependency> -->
+
+        <!-- <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
+        </dependency> -->
+
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-sleuth</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-undertow</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>de.codecentric</groupId>
+            <artifactId>spring-boot-admin-starter-client</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.smartframework.cloud</groupId>
+            <artifactId>mall-service-rpc</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.smartframework.cloud</groupId>
+            <artifactId>api-ac-core</artifactId>
+        </dependency>
+    </dependencies>
+
+    <profiles>
+        <!--单体服务构建 -->
+        <profile>
+            <id>single</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.springframework.boot</groupId>
+                        <artifactId>spring-boot-maven-plugin</artifactId>
+                    </plugin>
+                </plugins>
+            </build>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+        </profile>
+        <!-- 合体服务构建 -->
+        <profile>
+            <id>merge</id>
+        </profile>
+    </profiles>
 </project>

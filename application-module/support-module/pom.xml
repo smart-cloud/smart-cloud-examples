@@ -20,6 +20,11 @@
 	<dependencies>
 		<dependency>
 			<groupId>org.smartframework.cloud</groupId>
+			<artifactId>app-common-config</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.smartframework.cloud</groupId>
 			<artifactId>smart-cloud-starter-log</artifactId>
 		</dependency>
 
