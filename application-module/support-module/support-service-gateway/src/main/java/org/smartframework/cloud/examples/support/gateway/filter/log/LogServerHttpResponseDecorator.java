@@ -31,17 +31,17 @@ public class LogServerHttpResponseDecorator extends ServerHttpResponseDecorator 
     @Override
     public Mono<Void> writeWith(Publisher<? extends DataBuffer> body) {
         final MediaType contentType = super.getHeaders().getContentType();
-        if (LogUtil.legalLogMediaTypes.contains(contentType)) {
+        if (LogContext.legalLogMediaTypes.contains(contentType)) {
             if (body instanceof Mono) {
                 final Mono<DataBuffer> monoBody = (Mono<DataBuffer>) body;
                 return super.writeWith(monoBody.publishOn(Schedulers.single())
                         .map(dataBuffer
-                                -> LogUtil.chain(LogUtil.DataType.RESPONSE, dataBuffer, LogUtil.getApiLogCache().get())));
+                                -> LogContext.chain(LogContext.DataType.RESPONSE, dataBuffer, LogContext.getApiLogBO())));
             } else if (body instanceof Flux) {
                 final Flux<DataBuffer> monoBody = (Flux<DataBuffer>) body;
                 return super.writeWith(monoBody.publishOn(Schedulers.single())
                         .map(dataBuffer
-                                -> LogUtil.chain(LogUtil.DataType.RESPONSE, dataBuffer, LogUtil.getApiLogCache().get())));
+                                -> LogContext.chain(LogContext.DataType.RESPONSE, dataBuffer, LogContext.getApiLogBO())));
             }
         }
         return super.writeWith(body);

@@ -8,11 +8,11 @@ import org.smartframework.cloud.common.pojo.enums.ReturnCodeEnum;
 import org.smartframework.cloud.common.pojo.vo.BasePageRespVO;
 import org.smartframework.cloud.common.pojo.vo.RespVO;
 import org.smartframework.cloud.examples.mall.product.test.data.ProductInfoData;
+import org.smartframework.cloud.examples.mall.rpc.product.request.oms.PageProductReqVO;
 import org.smartframework.cloud.examples.mall.rpc.product.request.oms.ProductDeleteReqVO;
 import org.smartframework.cloud.examples.mall.rpc.product.request.oms.ProductInsertReqVO;
 import org.smartframework.cloud.examples.mall.rpc.product.request.oms.ProductUpdateReqVO;
 import org.smartframework.cloud.examples.mall.rpc.product.response.base.ProductInfoBaseRespVO;
-import org.smartframework.cloud.starter.core.business.util.ReqUtil;
 import org.smartframework.cloud.starter.test.integration.WebMvcIntegrationTest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.annotation.Rollback;
@@ -82,8 +82,12 @@ public class ProductInfoOmsControllerIntegrationTest extends WebMvcIntegrationTe
     public void testPageProduct() throws Exception {
         productInfoData.batchInsertTestData();
 
-        RespVO<BasePageRespVO<ProductInfoBaseRespVO>> result = super.post(
-                "/product/oms/productInfo/pageProduct", ReqUtil.build(null, 1, 10),
+        PageProductReqVO reqVO = new PageProductReqVO();
+        reqVO.setPageNum(1);
+        reqVO.setPageSize(10);
+
+        RespVO<BasePageRespVO<ProductInfoBaseRespVO>> result = super.get(
+                "/product/oms/productInfo/pageProduct", reqVO,
                 new TypeReference<RespVO<BasePageRespVO<ProductInfoBaseRespVO>>>() {
                 });
 

@@ -1,8 +1,5 @@
 package org.smartframework.cloud.examples.mall.product.biz.rpc;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 import org.smartframework.cloud.examples.mall.product.entity.base.ProductInfoEntity;
 import org.smartframework.cloud.examples.mall.product.mapper.base.ProductInfoBaseMapper;
 import org.smartframework.cloud.examples.mall.product.mapper.rpc.ProductInfoRpcMapper;
@@ -16,6 +13,9 @@ import org.smartframework.cloud.utility.ObjectUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 /**
  * 商品信息rpc biz
  *
@@ -25,63 +25,63 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class ProductInfoRpcBiz extends BaseBiz<ProductInfoEntity> {
 
-	@Autowired
-	private ProductInfoBaseMapper productInfoBaseMapper;
-	@Autowired
-	private ProductInfoRpcMapper productInfoRpcMapper;
+    @Autowired
+    private ProductInfoBaseMapper productInfoBaseMapper;
+    @Autowired
+    private ProductInfoRpcMapper productInfoRpcMapper;
 
-	/**
-	 * 根据id查询商品信息
-	 * 
-	 * @param reqBody
-	 * @return
-	 */
-	public QryProductByIdRespVO qryProductById(QryProductByIdReqVO reqBody) {
-		ProductInfoEntity entity = productInfoBaseMapper.selectByPrimaryKey(reqBody.getId());
-		if (ObjectUtil.isNull(entity)) {
-			return null;
-		}
+    /**
+     * 根据id查询商品信息
+     *
+     * @param reqBody
+     * @return
+     */
+    public QryProductByIdRespVO qryProductById(QryProductByIdReqVO reqBody) {
+        ProductInfoEntity entity = productInfoBaseMapper.selectByPrimaryKey(reqBody.getId());
+        if (ObjectUtil.isNull(entity)) {
+            return null;
+        }
 
-		return QryProductByIdRespVO.builder()
-				.id(entity.getId())
-				.name(entity.getName())
-				.sellPrice(entity.getSellPrice())
-				.stock(entity.getStock())
-				.build();
-	}
-	
-	/**
-	 * 根据ids查询商品信息
-	 * 
-	 * @param reqBody
-	 * @return
-	 */
-	public QryProductByIdsRespVO qryProductByIds(QryProductByIdsReqVO reqBody) {
-		List<ProductInfoEntity> entities = productInfoBaseMapper.selectByIdList(reqBody.getIds());
-		if (ObjectUtil.isNull(entities)) {
-			return null;
-		}
+        return QryProductByIdRespVO.builder()
+                .id(entity.getId())
+                .name(entity.getName())
+                .sellPrice(entity.getSellPrice())
+                .stock(entity.getStock())
+                .build();
+    }
 
-		List<QryProductByIdRespVO> productInfos = entities.stream()
-				.map(entity -> QryProductByIdRespVO.builder()
-						.id(entity.getId())
-						.name(entity.getName())
-						.sellPrice(entity.getSellPrice())
-						.stock(entity.getStock())
-						.build())
-				.collect(Collectors.toList());
-		
-		return new QryProductByIdsRespVO(productInfos);
-	}
-	
-	/**
-	 * 扣减库存
-	 * 
-	 * @param list
-	 * @return
-	 */
-	public boolean updateStock(List<UpdateStockItem> list) {
-		return productInfoRpcMapper.updateStock(list)>0;
-	}
+    /**
+     * 根据ids查询商品信息
+     *
+     * @param reqVO
+     * @return
+     */
+    public QryProductByIdsRespVO qryProductByIds(QryProductByIdsReqVO reqVO) {
+        List<ProductInfoEntity> entities = productInfoBaseMapper.selectByIdList(reqVO.getIds());
+        if (ObjectUtil.isNull(entities)) {
+            return null;
+        }
+
+        List<QryProductByIdRespVO> productInfos = entities.stream()
+                .map(entity -> QryProductByIdRespVO.builder()
+                        .id(entity.getId())
+                        .name(entity.getName())
+                        .sellPrice(entity.getSellPrice())
+                        .stock(entity.getStock())
+                        .build())
+                .collect(Collectors.toList());
+
+        return new QryProductByIdsRespVO(productInfos);
+    }
+
+    /**
+     * 扣减库存
+     *
+     * @param list
+     * @return
+     */
+    public boolean updateStock(List<UpdateStockItem> list) {
+        return productInfoRpcMapper.updateStock(list) > 0;
+    }
 
 }

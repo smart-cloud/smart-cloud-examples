@@ -82,8 +82,8 @@ public class SecurityApiService {
 
         RSAPrivateKey rsaPrivateKey = RsaUtil.getRSAPrivateKey(securityKeyBO.getSpriKeyModulus(), securityKeyBO.getSpriKeyExponent());
 
-        String cpubKeyModulus = decryptStringByJs(rsaPrivateKey, req.getEncryptedCpubKeyExponent());
-        String cpubKeyExponent = decryptStringByJs(rsaPrivateKey, req.getEncryptedCpubKeyExponent());
+        String cpubKeyModulus = decryptStringByJs(rsaPrivateKey, req.getEncryptedCpubKeyModulus());
+        String cpubKeyExponent = RsaUtil.decryptStringByJs(rsaPrivateKey, req.getEncryptedCpubKeyExponent());
         // 2、cache to redis
         securityKeyBO.setCpubKeyModulus(cpubKeyModulus);
         securityKeyBO.setCpubKeyExponent(cpubKeyExponent);

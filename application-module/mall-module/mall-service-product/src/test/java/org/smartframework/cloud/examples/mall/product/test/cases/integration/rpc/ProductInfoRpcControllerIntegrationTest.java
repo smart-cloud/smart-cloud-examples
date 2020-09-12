@@ -35,7 +35,7 @@ public class ProductInfoRpcControllerIntegrationTest extends WebMvcIntegrationTe
         QryProductByIdReqVO reqBody = new QryProductByIdReqVO();
         reqBody.setId(productId);
 
-        RespVO<QryProductByIdRespVO> result = super.post(
+        RespVO<QryProductByIdRespVO> result = super.get(
                 "/product/rpc/productInfo/qryProductById", reqBody,
                 new TypeReference<RespVO<QryProductByIdRespVO>>() {
                 });
@@ -56,7 +56,7 @@ public class ProductInfoRpcControllerIntegrationTest extends WebMvcIntegrationTe
         QryProductByIdsReqVO qryProductByIdsReqVO = new QryProductByIdsReqVO();
         qryProductByIdsReqVO.setIds(ids);
 
-        RespVO<QryProductByIdsRespVO> result = super.post(
+        RespVO<QryProductByIdsRespVO> result = super.get(
                 "/product/rpc/productInfo/qryProductByIds", qryProductByIdsReqVO,
                 new TypeReference<RespVO<QryProductByIdsRespVO>>() {
                 });

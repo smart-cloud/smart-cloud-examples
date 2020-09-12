@@ -4,7 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.smartframework.cloud.examples.support.gateway.constants.Order;
 import org.smartframework.cloud.examples.support.gateway.filter.access.ApiAccessBO;
 import org.smartframework.cloud.examples.support.gateway.filter.access.ApiAccessContext;
-import org.smartframework.cloud.examples.support.gateway.filter.log.LogUtil;
+import org.smartframework.cloud.examples.support.gateway.filter.log.LogContext;
 import org.smartframework.cloud.examples.support.gateway.util.RedisKeyHelper;
 import org.smartframework.cloud.examples.support.rpc.gateway.request.rpc.ApiMetaUploadReqVO;
 import org.smartframework.cloud.starter.core.business.exception.RepeatSubmitException;
@@ -41,14 +41,14 @@ public class RepeatSubmitCheckFilter implements GlobalFilter, Ordered {
         }
 
         StringBuilder params = new StringBuilder();
-        params.append(LogUtil.getApiLogBO().getQueryParams());
-        params.append(JacksonUtil.toJson(LogUtil.getApiLogBO().getArgs()));
+        params.append(LogContext.getApiLogBO().getQueryParams());
+        params.append(JacksonUtil.toJson(LogContext.getApiLogBO().getArgs()));
 
         String paramMd5 = Md5Util.md5Hex(params.toString());
 
         String checkKey = RedisKeyHelper.getRepeatSubmitCheckKey(apiAccessBO.getToken());
         if (!redisComponent.setNx(checkKey, paramMd5, 20000)) {
-            log.error("repeat.submit.reject==>{}", LogUtil.getApiLogBO());
+            log.error("repeat.submit.reject==>{}", LogContext.getApiLogBO());
             throw new RepeatSubmitException(null);
         }
 

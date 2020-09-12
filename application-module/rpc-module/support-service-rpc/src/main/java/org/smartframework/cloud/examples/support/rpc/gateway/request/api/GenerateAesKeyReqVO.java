@@ -34,10 +34,9 @@ public class GenerateAesKeyReqVO extends Base {
     private String[] encryptedCpubKeyModulus;
 
     /**
-     * 客户端生成的被（服务端公钥）加密的公钥对应的专用指数（备注：明文被均分为3部分）
+     * 客户端生成的被（服务端公钥）加密的公钥对应的专用指数
      */
-    @NotEmpty
-    @Size(min = 3, max = 3)
-    private String[] encryptedCpubKeyExponent;
+    @NotBlank
+    private String encryptedCpubKeyExponent;
 
 }

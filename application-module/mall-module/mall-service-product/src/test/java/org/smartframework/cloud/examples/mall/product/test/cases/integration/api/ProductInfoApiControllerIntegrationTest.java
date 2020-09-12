@@ -7,8 +7,8 @@ import org.smartframework.cloud.common.pojo.enums.ReturnCodeEnum;
 import org.smartframework.cloud.common.pojo.vo.BasePageRespVO;
 import org.smartframework.cloud.common.pojo.vo.RespVO;
 import org.smartframework.cloud.examples.mall.product.test.data.ProductInfoData;
+import org.smartframework.cloud.examples.mall.rpc.product.request.api.PageProductReqVO;
 import org.smartframework.cloud.examples.mall.rpc.product.response.api.PageProductRespVO;
-import org.smartframework.cloud.starter.core.business.util.ReqUtil;
 import org.smartframework.cloud.starter.test.integration.WebMvcIntegrationTest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.annotation.Rollback;
@@ -25,8 +25,12 @@ public class ProductInfoApiControllerIntegrationTest extends WebMvcIntegrationTe
     public void testPageProduct() throws Exception {
         productInfoData.batchInsertTestData();
 
-        RespVO<BasePageRespVO<PageProductRespVO>> result = super.post("/product/api/productInfo/pageProduct",
-                ReqUtil.build(null, 1, 10), new TypeReference<RespVO<BasePageRespVO<PageProductRespVO>>>() {
+        PageProductReqVO reqVO = new PageProductReqVO();
+        reqVO.setPageNum(1);
+        reqVO.setPageSize(10);
+
+        RespVO<BasePageRespVO<PageProductRespVO>> result = super.get("/product/api/productInfo/pageProduct",
+                reqVO, new TypeReference<RespVO<BasePageRespVO<PageProductRespVO>>>() {
                 });
 
         Assertions.assertThat(result).isNotNull();

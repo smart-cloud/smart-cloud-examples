@@ -14,6 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 
 /**
  * 商品信息rpc service
@@ -40,17 +42,17 @@ public class ProductInfoRpcService {
 	/**
 	 * 根据ids查询商品信息
 	 * 
-	 * @param reqBody
+	 * @param reqVO
 	 * @return
 	 */
-	public QryProductByIdsRespVO qryProductByIds(QryProductByIdsReqVO reqBody) {
-		return productRpcBiz.qryProductByIds(reqBody);
+	public QryProductByIdsRespVO qryProductByIds(QryProductByIdsReqVO reqVO) {
+		return productRpcBiz.qryProductByIds(reqVO);
 	}
 
 	/**
 	 * 扣减库存
 	 * 
-	 * @param list
+	 * @param req
 	 * @return
 	 */
 	@Transactional

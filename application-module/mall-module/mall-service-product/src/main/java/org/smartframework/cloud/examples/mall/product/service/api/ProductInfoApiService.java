@@ -1,6 +1,5 @@
 package org.smartframework.cloud.examples.mall.product.service.api;
 
-import org.smartframework.cloud.common.pojo.vo.BasePageReqVO;
 import org.smartframework.cloud.common.pojo.vo.BasePageRespVO;
 import org.smartframework.cloud.examples.mall.product.biz.api.ProductInfoApiBiz;
 import org.smartframework.cloud.examples.mall.rpc.product.request.api.PageProductReqVO;
@@ -26,7 +25,7 @@ public class ProductInfoApiService {
 	 * @param req
 	 * @return
 	 */
-	public BasePageRespVO<PageProductRespVO> pageProduct(BasePageReqVO<PageProductReqVO> req) {
+	public BasePageRespVO<PageProductRespVO> pageProduct(PageProductReqVO req) {
 		return productOmsBiz.pageProduct(req);
 	}
 	

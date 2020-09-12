@@ -1,7 +1,6 @@
 package org.smartframework.cloud.examples.mall.product.controller.oms;
 
 import org.smartframework.cloud.common.pojo.Base;
-import org.smartframework.cloud.common.pojo.vo.BasePageReqVO;
 import org.smartframework.cloud.common.pojo.vo.BasePageRespVO;
 import org.smartframework.cloud.common.pojo.vo.RespVO;
 import org.smartframework.cloud.examples.mall.product.service.oms.ProductInfoOmsService;
@@ -13,10 +12,7 @@ import org.smartframework.cloud.examples.mall.rpc.product.response.base.ProductI
 import org.smartframework.cloud.starter.core.business.util.RespUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -74,9 +70,8 @@ public class ProductInfoOmsController {
      * @param req
      * @return
      */
-    @PostMapping("pageProduct")
-    public RespVO<BasePageRespVO<ProductInfoBaseRespVO>> pageProduct(
-            @RequestBody @Valid BasePageReqVO<PageProductReqVO> req) {
+    @GetMapping("pageProduct")
+    public RespVO<BasePageRespVO<ProductInfoBaseRespVO>> pageProduct(@Valid PageProductReqVO req) {
         return RespUtil.success(productOmsService.pageProduct(req));
     }
 

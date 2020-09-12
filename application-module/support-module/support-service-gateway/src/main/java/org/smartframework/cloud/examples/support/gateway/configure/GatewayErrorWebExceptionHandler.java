@@ -4,7 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.smartframework.cloud.common.pojo.Base;
 import org.smartframework.cloud.common.pojo.vo.RespVO;
 import org.smartframework.cloud.examples.support.gateway.filter.log.ApiLogDO;
-import org.smartframework.cloud.examples.support.gateway.filter.log.LogUtil;
+import org.smartframework.cloud.examples.support.gateway.filter.log.LogContext;
 import org.smartframework.cloud.starter.web.exception.ExceptionHandlerContext;
 import org.springframework.boot.web.reactive.error.ErrorWebExceptionHandler;
 import org.springframework.context.annotation.Configuration;
@@ -45,7 +45,7 @@ public class GatewayErrorWebExceptionHandler implements ErrorWebExceptionHandler
      * @param response
      */
     private void printErrorLog(String response) {
-        ApiLogDO apiLogDO = LogUtil.getApiLogCache().get();
+        ApiLogDO apiLogDO = LogContext.getApiLogBO();
         if (apiLogDO != null) {
             apiLogDO.setCost(System.currentTimeMillis() - apiLogDO.getCost());
             apiLogDO.setResult(response);

@@ -2,7 +2,7 @@ package org.smartframework.cloud.examples.mall.rpc.product.request.oms;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.smartframework.cloud.common.pojo.Base;
+import org.smartframework.cloud.common.pojo.vo.BasePageReqVO;
 
 /**
  * 分页查询商品信息请求参数
@@ -12,7 +12,7 @@ import org.smartframework.cloud.common.pojo.Base;
  */
 @Getter
 @Setter
-public class PageProductReqVO extends Base {
+public class PageProductReqVO extends BasePageReqVO {
 
     private static final long serialVersionUID = 1L;
 

@@ -36,13 +36,13 @@ public class GatewayLogFilter implements WebFilter, Ordered {
 
         return chain.filter(exchange.mutate().request(requestDecorator).response(responseWrapper).build()).doFinally(signalType -> {
             if (SignalType.ON_ERROR.compareTo(signalType) != 0) {
-                ApiLogDO apiLogDO = LogUtil.getApiLogCache().get();
+                ApiLogDO apiLogDO = LogContext.getApiLogBO();
                 if (apiLogDO != null) {
                     apiLogDO.setCost(System.currentTimeMillis() - apiLogDO.getCost());
                     log.info("gateway.log=>{}", apiLogDO);
                 }
             }
-            LogUtil.getApiLogCache().remove();
+            LogContext.remove();
         });
     }
 
@@ -56,7 +56,7 @@ public class GatewayLogFilter implements WebFilter, Ordered {
         apiLogDO.setMethod(request.getMethod().name());
         apiLogDO.setUrl(path + (StringUtils.isBlank(query) ? "" : "?" + query));
         apiLogDO.setHead(request.getHeaders());
-        LogUtil.getApiLogCache().set(apiLogDO);
+        LogContext.setContext(apiLogDO);
     }
 
 }

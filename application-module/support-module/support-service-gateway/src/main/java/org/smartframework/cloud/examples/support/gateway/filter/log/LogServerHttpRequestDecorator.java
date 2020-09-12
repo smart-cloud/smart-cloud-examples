@@ -20,9 +20,9 @@ public class LogServerHttpRequestDecorator extends ServerHttpRequestDecorator {
     LogServerHttpRequestDecorator(ServerHttpRequest delegate) {
         super(delegate);
         Flux<DataBuffer> flux = super.getBody();
-        if (LogUtil.legalLogMediaTypes.contains(delegate.getHeaders().getContentType())) {
+        if (LogContext.legalLogMediaTypes.contains(delegate.getHeaders().getContentType())) {
             body = flux.publishOn(Schedulers.single()).map(dataBuffer ->
-                    LogUtil.chain(LogUtil.DataType.REQUEST, dataBuffer, LogUtil.getApiLogCache().get()));
+                    LogContext.chain(LogContext.DataType.REQUEST, dataBuffer, LogContext.getApiLogBO()));
         } else {
             body = flux;
         }

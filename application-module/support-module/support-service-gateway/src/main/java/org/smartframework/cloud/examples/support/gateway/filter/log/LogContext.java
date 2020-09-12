@@ -2,7 +2,6 @@ package org.smartframework.cloud.examples.support.gateway.filter.log;
 
 import com.google.common.collect.Lists;
 import io.netty.buffer.UnpooledByteBufAllocator;
-import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.IOUtils;
 import org.springframework.core.io.buffer.DataBuffer;
@@ -20,7 +19,7 @@ import java.util.List;
  * @date 2020-07-21
  */
 @Slf4j
-public class LogUtil {
+public class LogContext {
 
     /**
      * 打印日志的http content-type类型
@@ -34,10 +33,13 @@ public class LogUtil {
     /**
      * 存储临时日志
      */
-    @Getter
     private static ThreadLocal<ApiLogDO> apiLogCache = new InheritableThreadLocal<>();
 
-    private LogUtil() {
+    private LogContext() {
+    }
+
+    public static void setContext(ApiLogDO apiLogDO) {
+        apiLogCache.set(apiLogDO);
     }
 
     public static ApiLogDO getApiLogBO() {
@@ -49,6 +51,10 @@ public class LogUtil {
         apiLogCache.set(apiLogDO);
 
         return apiLogDO;
+    }
+
+    public static void remove() {
+        apiLogCache.remove();
     }
 
     public static <T extends DataBuffer> T chain(DataType dataType, T buffer, ApiLogDO apiLogDO) {

@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 
 @RestController
 @Validated
@@ -25,13 +26,13 @@ public class ProductInfoRpcController implements ProductInfoRpc {
     private ProductInfoRpcService productInfoRpcService;
 
     @Override
-    public RespVO<QryProductByIdRespVO> qryProductById(@RequestBody @Valid QryProductByIdReqVO req) {
+    public RespVO<QryProductByIdRespVO> qryProductById(@Valid @NotNull QryProductByIdReqVO req) {
         return RespUtil.success(productInfoRpcService.qryProductById(req));
     }
 
     @Override
-    public RespVO<QryProductByIdsRespVO> qryProductByIds(@RequestBody @Valid QryProductByIdsReqVO req) {
-        return RespUtil.success(productInfoRpcService.qryProductByIds(req));
+    public RespVO<QryProductByIdsRespVO> qryProductByIds(@Valid @NotNull QryProductByIdsReqVO reqVO) {
+        return RespUtil.success(productInfoRpcService.qryProductByIds(reqVO));
     }
 
     @Override

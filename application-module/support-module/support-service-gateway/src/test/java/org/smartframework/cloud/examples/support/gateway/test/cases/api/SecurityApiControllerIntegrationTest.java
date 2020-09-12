@@ -65,12 +65,13 @@ public class SecurityApiControllerIntegrationTest extends WebReactiveIntegration
         GenerateAesKeyReqVO generateAesKeyReqVO = new GenerateAesKeyReqVO();
         generateAesKeyReqVO.setToken(generateClientPubKeyRespVO.getToken());
 
+        // 客户端使用的公钥
         RSAPublicKey publicKey = RsaUtil.getRSAPublidKey(generateClientPubKeyRespVO.getPubKeyModulus(), generateClientPubKeyRespVO.getPubKeyExponent());
-        String cpubKeyModulus = StringUtils.reverse(RsaUtil.getModulus(clientPriServerPubKeyPair));
-        String cpubKeyExponent = StringUtils.reverse(RsaUtil.getPublicExponent(clientPriServerPubKeyPair));
+        String cpubKeyModulus = RsaUtil.getModulus(clientPriServerPubKeyPair);
+        String cpubKeyExponent = RsaUtil.getPublicExponent(clientPriServerPubKeyPair);
 
         generateAesKeyReqVO.setEncryptedCpubKeyModulus(generateEncryptedCpubKey(publicKey, cpubKeyModulus));
-        generateAesKeyReqVO.setEncryptedCpubKeyExponent(generateEncryptedCpubKey(publicKey, cpubKeyExponent));
+        generateAesKeyReqVO.setEncryptedCpubKeyExponent(RsaUtil.encryptString(publicKey, StringUtils.reverse(cpubKeyExponent)));
 
         RespVO<GenerateAesKeyRespVO> result = post("/gateway/api/security/generateAesKey", generateAesKeyReqVO, new TypeReference<RespVO<GenerateAesKeyRespVO>>() {
         });
@@ -78,7 +79,16 @@ public class SecurityApiControllerIntegrationTest extends WebReactiveIntegration
         Assertions.assertThat(result.getHead()).isNotNull();
         Assertions.assertThat(result.getHead().getCode()).isEqualTo(ReturnCodeEnum.SUCCESS.getCode());
         Assertions.assertThat(result.getBody().getEncryptedAesKey()).isNotBlank();
+
+        // 解密AES key
+        String aesKey = RsaUtil.decryptString(clientPriServerPubKeyPair.getPrivate(), result.getBody().getEncryptedAesKey());
+        Assertions.assertThat(aesKey.length()).isEqualTo(8);
     }
+
+    public static void main(String[] args) {
+        System.out.println("");
+    }
+
 
     private String[] generateEncryptedCpubKey(RSAPublicKey publicKey, String cpubKeyText) throws InvalidKeyException,
             NoSuchAlgorithmException, NoSuchPaddingException, IllegalBlockSizeException, BadPaddingException {
@@ -87,9 +97,9 @@ public class SecurityApiControllerIntegrationTest extends WebReactiveIntegration
         int averageLen = cpubKeyText.length() / encryptedCpubKey.length;
         for (int i = 0, size = encryptedCpubKey.length; i < size; i++) {
             if (i < size - 1) {
-                encryptedCpubKey[i] = RsaUtil.encryptString(publicKey, cpubKeyText.substring(i * averageLen, (i + 1) * averageLen));
+                encryptedCpubKey[i] = RsaUtil.encryptString(publicKey, StringUtils.reverse(cpubKeyText.substring(i * averageLen, (i + 1) * averageLen)));
             } else {
-                encryptedCpubKey[i] = RsaUtil.encryptString(publicKey, cpubKeyText.substring(i * averageLen, cpubKeyText.length()));
+                encryptedCpubKey[i] = RsaUtil.encryptString(publicKey, StringUtils.reverse(cpubKeyText.substring(i * averageLen, cpubKeyText.length())));
             }
 
         }

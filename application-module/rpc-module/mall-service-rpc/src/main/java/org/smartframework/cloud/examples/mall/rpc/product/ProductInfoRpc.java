@@ -9,10 +9,13 @@ import org.smartframework.cloud.examples.mall.rpc.product.request.rpc.UpdateStoc
 import org.smartframework.cloud.examples.mall.rpc.product.response.rpc.QryProductByIdRespVO;
 import org.smartframework.cloud.examples.mall.rpc.product.response.rpc.QryProductByIdsRespVO;
 import org.smartframework.cloud.starter.rpc.feign.annotation.SmartFeignClient;
+import org.springframework.cloud.openfeign.SpringQueryMap;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 
 /**
  * 商品信息rpc相关接口
@@ -30,17 +33,17 @@ public interface ProductInfoRpc {
      * @param req
      * @return
      */
-    @PostMapping("product/rpc/productInfo/qryProductById")
-    RespVO<QryProductByIdRespVO> qryProductById(@RequestBody @Valid QryProductByIdReqVO req);
+    @GetMapping("product/rpc/productInfo/qryProductById")
+    RespVO<QryProductByIdRespVO> qryProductById(@SpringQueryMap @Valid @NotNull QryProductByIdReqVO req);
 
     /**
      * 根据ids查询商品信息
      *
-     * @param req
+     * @param reqVO
      * @return
      */
-    @PostMapping("product/rpc/productInfo/qryProductByIds")
-    RespVO<QryProductByIdsRespVO> qryProductByIds(@RequestBody @Valid QryProductByIdsReqVO req);
+    @GetMapping("product/rpc/productInfo/qryProductByIds")
+    RespVO<QryProductByIdsRespVO> qryProductByIds(@SpringQueryMap @Valid @NotNull QryProductByIdsReqVO reqVO);
 
     /**
      * 更新库存

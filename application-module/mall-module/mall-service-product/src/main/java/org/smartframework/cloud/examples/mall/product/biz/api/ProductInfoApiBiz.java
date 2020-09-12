@@ -1,12 +1,9 @@
 package org.smartframework.cloud.examples.mall.product.biz.api;
 
-import java.util.List;
-import java.util.Objects;
-import java.util.stream.Collectors;
-
+import com.github.pagehelper.Page;
+import com.github.pagehelper.page.PageMethod;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.smartframework.cloud.common.pojo.vo.BasePageReqVO;
 import org.smartframework.cloud.common.pojo.vo.BasePageRespVO;
 import org.smartframework.cloud.examples.mall.product.entity.base.ProductInfoEntity;
 import org.smartframework.cloud.examples.mall.product.mapper.base.ProductInfoBaseMapper;
@@ -17,12 +14,11 @@ import org.smartframework.cloud.starter.mybatis.common.mapper.entity.BaseEntity;
 import org.smartframework.cloud.starter.mybatis.common.mapper.enums.DelStateEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-
-import com.github.pagehelper.Page;
-import com.github.pagehelper.page.PageMethod;
-
 import tk.mybatis.mapper.entity.Example;
 import tk.mybatis.mapper.entity.Example.Criteria;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * 商品信息api biz
@@ -42,12 +38,12 @@ public class ProductInfoApiBiz extends BaseBiz<ProductInfoEntity> {
 	 * @param req
 	 * @return
 	 */
-	public BasePageRespVO<PageProductRespVO> pageProduct(BasePageReqVO<PageProductReqVO> req) {
+	public BasePageRespVO<PageProductRespVO> pageProduct(PageProductReqVO req) {
 		Example example = new Example(ProductInfoEntity.class);
 		Criteria criteria = example.createCriteria();
-		PageProductReqVO reqBody = req.getQuery();
-		if (!Objects.isNull(reqBody) && StringUtils.isNotBlank(reqBody.getName())) {
-			criteria.andLike(ProductInfoEntity.Columns.name.toString(), "%" + reqBody.getName() + "%");
+		String name = req.getName();
+		if (StringUtils.isNotBlank(name)) {
+			criteria.andLike(ProductInfoEntity.Columns.name.toString(), "%" + name + "%");
 		}
 		criteria.andEqualTo(BaseEntity.Columns.delState.toString(), DelStateEnum.NORMAL.getDelState());
 		example.orderBy(BaseEntity.Columns.addTime.toString()).desc();
