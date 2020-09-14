@@ -4,6 +4,7 @@ import com.google.common.collect.Lists;
 import io.netty.buffer.UnpooledByteBufAllocator;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.IOUtils;
+import org.smartframework.cloud.starter.log.util.LogUtil;
 import org.springframework.core.io.buffer.DataBuffer;
 import org.springframework.core.io.buffer.DataBufferUtils;
 import org.springframework.core.io.buffer.NettyDataBufferFactory;
@@ -33,7 +34,7 @@ public class LogContext {
     /**
      * 存储临时日志
      */
-    private static ThreadLocal<ApiLogDO> apiLogCache = new InheritableThreadLocal<>();
+    private static ThreadLocal<ApiLogDO> apiLogCache = new ThreadLocal<>();
 
     private LogContext() {
     }
@@ -43,14 +44,7 @@ public class LogContext {
     }
 
     public static ApiLogDO getApiLogBO() {
-        ApiLogDO apiLogDO = apiLogCache.get();
-        if (null != apiLogDO) {
-            return apiLogDO;
-        }
-        apiLogDO = new ApiLogDO();
-        apiLogCache.set(apiLogDO);
-
-        return apiLogDO;
+        return apiLogCache.get();
     }
 
     public static void remove() {
@@ -71,7 +65,7 @@ public class LogContext {
             // 响应数据
             else if (data != null) {
                 // 超过长度的截掉
-                apiLogDO.setResult(data.length() <= 1024 ? data : data.substring(0, 1024));
+                apiLogDO.setResult(LogUtil.truncate(data));
             }
 
             DataBufferUtils.release(buffer);

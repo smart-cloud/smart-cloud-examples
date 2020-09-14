@@ -5,10 +5,10 @@ import org.springframework.core.io.buffer.DataBuffer;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.http.server.reactive.ServerHttpRequestDecorator;
 import reactor.core.publisher.Flux;
-import reactor.core.scheduler.Schedulers;
 
 /**
  * 包装ServerHttpRequest对象，获取请求body参数
+ *
  * @author liyulin
  * @date 2020-07-21
  */
@@ -21,7 +21,7 @@ public class LogServerHttpRequestDecorator extends ServerHttpRequestDecorator {
         super(delegate);
         Flux<DataBuffer> flux = super.getBody();
         if (LogContext.legalLogMediaTypes.contains(delegate.getHeaders().getContentType())) {
-            body = flux.publishOn(Schedulers.single()).map(dataBuffer ->
+            body = flux.map(dataBuffer ->
                     LogContext.chain(LogContext.DataType.REQUEST, dataBuffer, LogContext.getApiLogBO()));
         } else {
             body = flux;

@@ -8,7 +8,6 @@ import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.http.server.reactive.ServerHttpResponseDecorator;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
-import reactor.core.scheduler.Schedulers;
 
 /**
  * 包装ServerHttpResponse，获取响应结果
@@ -34,14 +33,12 @@ public class LogServerHttpResponseDecorator extends ServerHttpResponseDecorator 
         if (LogContext.legalLogMediaTypes.contains(contentType)) {
             if (body instanceof Mono) {
                 final Mono<DataBuffer> monoBody = (Mono<DataBuffer>) body;
-                return super.writeWith(monoBody.publishOn(Schedulers.single())
-                        .map(dataBuffer
-                                -> LogContext.chain(LogContext.DataType.RESPONSE, dataBuffer, LogContext.getApiLogBO())));
+                return super.writeWith(monoBody.map(dataBuffer
+                        -> LogContext.chain(LogContext.DataType.RESPONSE, dataBuffer, LogContext.getApiLogBO())));
             } else if (body instanceof Flux) {
                 final Flux<DataBuffer> monoBody = (Flux<DataBuffer>) body;
-                return super.writeWith(monoBody.publishOn(Schedulers.single())
-                        .map(dataBuffer
-                                -> LogContext.chain(LogContext.DataType.RESPONSE, dataBuffer, LogContext.getApiLogBO())));
+                return super.writeWith(monoBody.map(dataBuffer
+                        -> LogContext.chain(LogContext.DataType.RESPONSE, dataBuffer, LogContext.getApiLogBO())));
             }
         }
         return super.writeWith(body);
