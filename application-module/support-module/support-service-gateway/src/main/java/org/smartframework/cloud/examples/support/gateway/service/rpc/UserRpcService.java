@@ -56,13 +56,13 @@ public class UserRpcService {
 
         // 3、删除上一次登录的信息（如果存在）
         RMapCache<Long, String> userTokenCache = redissonClient.getMapCache(RedisKeyHelper.getUserTokenRelationHashKey());
-        String oldToken = userTokenCache.get(req.getUserId());
+        String oldToken = userTokenCache.get(RedisKeyHelper.getUserTokenRelationKey(req.getUserId()));
         if (StringUtils.isNotBlank(oldToken)) {
             removeSession(oldToken);
         }
 
         // 4、保存新的token与userId关系
-        userTokenCache.put(req.getUserId(), req.getToken(), RedisExpire.USER_EXPIRE_MILLIS_LOGIN_SUCCESS, TimeUnit.SECONDS);
+        userTokenCache.put(RedisKeyHelper.getUserTokenRelationKey(req.getUserId()), req.getToken(), RedisExpire.USER_EXPIRE_MILLIS_LOGIN_SUCCESS, TimeUnit.SECONDS);
     }
 
     /**

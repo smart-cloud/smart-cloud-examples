@@ -63,7 +63,7 @@ public class LogContext {
                 apiLogDO.setArgs(data);
             }
             // 响应数据
-            else if (data != null) {
+            if (dataType == DataType.RESPONSE) {
                 // 超过长度的截掉
                 apiLogDO.setResult(LogUtil.truncate(data));
             }

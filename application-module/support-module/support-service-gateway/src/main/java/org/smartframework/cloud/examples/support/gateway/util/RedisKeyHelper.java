@@ -80,4 +80,14 @@ public class RedisKeyHelper {
         return GatewayRedisKeyPrefix.USER_TOKEN_RELATION_HASH_KEY.getKey();
     }
 
+    /**
+     * 获取用户、token关联信息的key
+     *
+     * @param userId
+     * @return
+     */
+    public static Long getUserTokenRelationKey(Long userId) {
+        return userId;
+    }
+
 }

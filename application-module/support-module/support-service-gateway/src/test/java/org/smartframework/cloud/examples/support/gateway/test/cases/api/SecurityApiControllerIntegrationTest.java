@@ -85,11 +85,6 @@ public class SecurityApiControllerIntegrationTest extends WebReactiveIntegration
         Assertions.assertThat(aesKey.length()).isEqualTo(8);
     }
 
-    public static void main(String[] args) {
-        System.out.println("");
-    }
-
-
     private String[] generateEncryptedCpubKey(RSAPublicKey publicKey, String cpubKeyText) throws InvalidKeyException,
             NoSuchAlgorithmException, NoSuchPaddingException, IllegalBlockSizeException, BadPaddingException {
         String[] encryptedCpubKey = new String[3];

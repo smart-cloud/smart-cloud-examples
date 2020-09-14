@@ -1,7 +1,6 @@
 package org.smartframework.cloud.examples.support.gateway.test.cases.rpc;
 
 import com.fasterxml.jackson.core.type.TypeReference;
-import lombok.extern.slf4j.Slf4j;
 import org.assertj.core.api.Assertions;
 import org.junit.Test;
 import org.smartframework.cloud.common.pojo.Base;
@@ -17,7 +16,6 @@ import java.util.Map;
  * @author liyulin
  * @date 2020-09-12
  */
-@Slf4j
 public class ApiMetaRpcControllerIntegrationTest extends WebReactiveIntegrationTest {
 
     @Test

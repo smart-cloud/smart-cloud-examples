@@ -2,6 +2,7 @@ package org.smartframework.cloud.examples.support.gateway.filter.log;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.smartframework.cloud.examples.support.gateway.constants.GatewayConstants;
 import org.smartframework.cloud.examples.support.gateway.constants.Order;
 import org.springframework.core.Ordered;
 import org.springframework.http.server.reactive.ServerHttpRequest;
@@ -39,7 +40,13 @@ public class GatewayLogFilter implements WebFilter, Ordered {
                 ApiLogDO apiLogDO = LogContext.getApiLogBO();
                 if (apiLogDO != null) {
                     apiLogDO.setCost(System.currentTimeMillis() - apiLogDO.getCost());
-                    log.info("gateway.log=>{}", apiLogDO);
+                    if (log.isDebugEnabled()) {
+                        log.debug("gateway.log=>{}", apiLogDO);
+                    } else if (apiLogDO.getUrl() != null && apiLogDO.getUrl().startsWith(GatewayConstants.GATEWAY_API_URL_PREFIX)) {
+                        // gateway本身的接口打印
+                        log.info("gateway.log=>{}", apiLogDO);
+                    }
+
                 }
             }
             LogContext.remove();
