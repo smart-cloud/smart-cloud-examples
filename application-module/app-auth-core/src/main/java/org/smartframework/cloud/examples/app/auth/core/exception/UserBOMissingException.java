@@ -10,7 +10,7 @@ import org.smartframework.cloud.starter.core.business.exception.BaseException;
 public class UserBOMissingException extends BaseException {
 
     public UserBOMissingException() {
-        super(ReturnCodeEnum.DATA_MISSING);
+        super(ReturnCodeEnum.NOT_LOGGED_IN);
     }
 
 }

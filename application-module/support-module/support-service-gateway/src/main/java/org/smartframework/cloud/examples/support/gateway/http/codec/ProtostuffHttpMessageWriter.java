@@ -7,7 +7,7 @@ import java.util.Map;
 
 import org.reactivestreams.Publisher;
 import org.smartframework.cloud.examples.support.gateway.constants.ProtostuffConstant;
-import org.smartframework.cloud.starter.rpc.feign.protostuff.SerializingUtil;
+import org.smartframework.cloud.utility.SerializingUtil;
 import org.springframework.core.ResolvableType;
 import org.springframework.core.io.buffer.DataBuffer;
 import org.springframework.http.MediaType;
