@@ -1,9 +1,6 @@
 package org.smartframework.cloud.examples.mall.order.service.api;
 
-import java.util.Date;
-import java.util.List;
-import java.util.stream.Collectors;
-
+import io.seata.spring.annotation.GlobalTransactional;
 import org.apache.commons.collections4.CollectionUtils;
 import org.smartframework.cloud.common.pojo.Base;
 import org.smartframework.cloud.common.pojo.vo.RespVO;
@@ -23,6 +20,8 @@ import org.smartframework.cloud.examples.mall.rpc.product.request.rpc.UpdateStoc
 import org.smartframework.cloud.examples.mall.rpc.product.request.rpc.UpdateStockReqVO.UpdateStockItem;
 import org.smartframework.cloud.examples.mall.rpc.product.response.rpc.QryProductByIdRespVO;
 import org.smartframework.cloud.examples.mall.rpc.product.response.rpc.QryProductByIdsRespVO;
+import org.smartframework.cloud.starter.core.business.exception.BusinessException;
+import org.smartframework.cloud.starter.core.business.exception.ServerException;
 import org.smartframework.cloud.starter.core.business.util.RespUtil;
 import org.smartframework.cloud.starter.core.business.util.SnowFlakeIdUtil;
 import org.smartframework.cloud.starter.mybatis.common.mapper.enums.DelStateEnum;
@@ -30,7 +29,9 @@ import org.smartframework.cloud.utility.ObjectUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import io.seata.spring.annotation.GlobalTransactional;
+import java.util.Date;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * 订单api service
@@ -41,113 +42,113 @@ import io.seata.spring.annotation.GlobalTransactional;
 @Service
 public class OrderApiService {
 
-	@Autowired
-	private ProductInfoRpc productInfoRpc;
-	@Autowired
-	private OrderBillApiBiz orderBillApiBiz;
-	@Autowired
-	private OrderDeliveryInfoApiBiz orderDeliveryInfoApiBiz;
+    @Autowired
+    private ProductInfoRpc productInfoRpc;
+    @Autowired
+    private OrderBillApiBiz orderBillApiBiz;
+    @Autowired
+    private OrderDeliveryInfoApiBiz orderDeliveryInfoApiBiz;
 
-	/**
-	 * 创建订单
-	 * 
-	 * @param req
-	 * @return
-	 * @throws UpdateStockException 
-	 */
-	@GlobalTransactional
-	public RespVO<CreateOrderRespVO> create(CreateOrderReqVO req) {
-		List<CreateOrderProductInfoReqVO> products = req.getProducts();
-		// 1、查询商品信息
-		List<Long> productIds = products.stream().map(CreateOrderProductInfoReqVO::getProductId).collect(Collectors.toList());
+    /**
+     * 创建订单
+     *
+     * @param req
+     * @return
+     * @throws UpdateStockException
+     */
+    @GlobalTransactional
+    public CreateOrderRespVO create(CreateOrderReqVO req) {
+        List<CreateOrderProductInfoReqVO> products = req.getProducts();
+        // 1、查询商品信息
+        List<Long> productIds = products.stream().map(CreateOrderProductInfoReqVO::getProductId).collect(Collectors.toList());
 
-		QryProductByIdsReqVO qryProductByIdsReqVO = QryProductByIdsReqVO.builder().ids(productIds).build();
-		RespVO<QryProductByIdsRespVO> qryProductByIdsResp = productInfoRpc
-				.qryProductByIds(qryProductByIdsReqVO);
-		if (!RespUtil.isSuccess(qryProductByIdsResp)) {
-			return RespUtil.error(qryProductByIdsResp);
-		}
-		if (ObjectUtil.isNull(qryProductByIdsResp.getBody())
-				|| CollectionUtils.isEmpty(qryProductByIdsResp.getBody().getProductInfos())
-				|| qryProductByIdsResp.getBody().getProductInfos().size()!=products.size()) {
-			return RespUtil.error(OrderReturnCodeEnum.PRODUCT_NOT_EXIST);
-		}
-		List<QryProductByIdRespVO> productInfos = qryProductByIdsResp.getBody().getProductInfos();
+        QryProductByIdsReqVO qryProductByIdsReqVO = QryProductByIdsReqVO.builder().ids(productIds).build();
+        RespVO<QryProductByIdsRespVO> qryProductByIdsResp = productInfoRpc
+                .qryProductByIds(qryProductByIdsReqVO);
+        if (!RespUtil.isSuccess(qryProductByIdsResp)) {
+            throw new ServerException(RespUtil.getFailMsg(qryProductByIdsResp));
+        }
+        if (ObjectUtil.isNull(qryProductByIdsResp.getBody())
+                || CollectionUtils.isEmpty(qryProductByIdsResp.getBody().getProductInfos())
+                || qryProductByIdsResp.getBody().getProductInfos().size() != products.size()) {
+            throw new BusinessException(OrderReturnCodeEnum.PRODUCT_NOT_EXIST);
+        }
+        List<QryProductByIdRespVO> productInfos = qryProductByIdsResp.getBody().getProductInfos();
 
-		// 2、创建订单信息
-		Long orderBillId = SnowFlakeIdUtil.getInstance().nextId();
+        // 2、创建订单信息
+        Long orderBillId = SnowFlakeIdUtil.getInstance().nextId();
 
-		List<OrderDeliveryInfoEntity> entities = saveOrderDeliveryInfo(orderBillId, products, productInfos);
-		OrderBillEntity orderBillEntity = saveOrderBill(orderBillId, entities);
+        List<OrderDeliveryInfoEntity> entities = saveOrderDeliveryInfo(orderBillId, products, productInfos);
+        OrderBillEntity orderBillEntity = saveOrderBill(orderBillId, entities);
 
-		// 3、扣减库存
-		List<UpdateStockItem> updateStockItems = products.stream().map(item->{
-			UpdateStockItem updateStockItem = new UpdateStockItem();
-			updateStockItem.setId(item.getProductId());
-			updateStockItem.setCount(item.getBuyCount());
-			return updateStockItem;
-		}).collect(Collectors.toList());
-		
-		RespVO<Base> updateStockResp = productInfoRpc.updateStock(new UpdateStockReqVO(updateStockItems));
-		if (RespUtil.isSuccess(updateStockResp)) {
-			CreateOrderRespVO createOrderRespVO = new CreateOrderRespVO();
-			createOrderRespVO.setOrderId(orderBillId);
-			createOrderRespVO.setFree(orderBillEntity.getAmount() == 0);
+        // 3、扣减库存
+        List<UpdateStockItem> updateStockItems = products.stream().map(item -> {
+            UpdateStockItem updateStockItem = new UpdateStockItem();
+            updateStockItem.setId(item.getProductId());
+            updateStockItem.setCount(item.getBuyCount());
+            return updateStockItem;
+        }).collect(Collectors.toList());
 
-			return RespUtil.success(createOrderRespVO);
-		}
-		
-		throw new UpdateStockException();
-	}
+        RespVO<Base> updateStockResp = productInfoRpc.updateStock(new UpdateStockReqVO(updateStockItems));
+        if (RespUtil.isSuccess(updateStockResp)) {
+            CreateOrderRespVO createOrderRespVO = new CreateOrderRespVO();
+            createOrderRespVO.setOrderId(orderBillId);
+            createOrderRespVO.setFree(orderBillEntity.getAmount() == 0);
 
-	private List<OrderDeliveryInfoEntity> saveOrderDeliveryInfo(Long orderBillId,
-			List<CreateOrderProductInfoReqVO> products, List<QryProductByIdRespVO> productInfos) {
-		List<OrderDeliveryInfoEntity> entities = products.stream().map(item -> {
-			OrderDeliveryInfoEntity entity = new OrderDeliveryInfoEntity();
-			entity.setId(SnowFlakeIdUtil.getInstance().nextId());
-			entity.setOrderBillId(orderBillId);
-			entity.setProductInfoId(item.getProductId());
-			entity.setBuyCount(item.getBuyCount());
+            return createOrderRespVO;
+        }
 
-			QryProductByIdRespVO productInfo = getproductInfo(productInfos, item.getProductId());
-			entity.setPrice(productInfo.getSellPrice());
-			entity.setProductName(productInfo.getName());
+        throw new UpdateStockException();
+    }
 
-			entity.setAddTime(new Date());
-			entity.setDelState(DelStateEnum.NORMAL.getDelState());
+    private List<OrderDeliveryInfoEntity> saveOrderDeliveryInfo(Long orderBillId,
+                                                                List<CreateOrderProductInfoReqVO> products, List<QryProductByIdRespVO> productInfos) {
+        List<OrderDeliveryInfoEntity> entities = products.stream().map(item -> {
+            OrderDeliveryInfoEntity entity = new OrderDeliveryInfoEntity();
+            entity.setId(SnowFlakeIdUtil.getInstance().nextId());
+            entity.setOrderBillId(orderBillId);
+            entity.setProductInfoId(item.getProductId());
+            entity.setBuyCount(item.getBuyCount());
 
-			return entity;
-		}).collect(Collectors.toList());
+            QryProductByIdRespVO productInfo = getproductInfo(productInfos, item.getProductId());
+            entity.setPrice(productInfo.getSellPrice());
+            entity.setProductName(productInfo.getName());
 
-		orderDeliveryInfoApiBiz.create(entities);
+            entity.setAddTime(new Date());
+            entity.setDelState(DelStateEnum.NORMAL.getDelState());
 
-		return entities;
-	}
+            return entity;
+        }).collect(Collectors.toList());
 
-	private OrderBillEntity saveOrderBill(Long orderBillId, List<OrderDeliveryInfoEntity> entities) {
-		OrderBillEntity orderBillEntity = new OrderBillEntity();
-		orderBillEntity.setId(orderBillId);
+        orderDeliveryInfoApiBiz.create(entities);
 
-		Long amount = entities.stream().mapToLong(item -> item.getBuyCount() * item.getPrice()).sum();
-		orderBillEntity.setAmount(amount);
-		orderBillEntity.setPayState(PayStateEnum.PENDING_PAY.getValue());
-		orderBillEntity.setBuyer(1L);
-		orderBillEntity.setAddTime(new Date());
-		orderBillEntity.setDelState(DelStateEnum.NORMAL.getDelState());
+        return entities;
+    }
 
-		orderBillApiBiz.create(orderBillEntity);
-		
-		return orderBillEntity;
-	}
+    private OrderBillEntity saveOrderBill(Long orderBillId, List<OrderDeliveryInfoEntity> entities) {
+        OrderBillEntity orderBillEntity = new OrderBillEntity();
+        orderBillEntity.setId(orderBillId);
 
-	private QryProductByIdRespVO getproductInfo(List<QryProductByIdRespVO> productInfos, Long productId) {
-		for (QryProductByIdRespVO productInfo : productInfos) {
-			if (productInfo.getId().compareTo(productId) == 0) {
-				return productInfo;
-			}
-		}
+        Long amount = entities.stream().mapToLong(item -> item.getBuyCount() * item.getPrice()).sum();
+        orderBillEntity.setAmount(amount);
+        orderBillEntity.setPayState(PayStateEnum.PENDING_PAY.getValue());
+        orderBillEntity.setBuyer(1L);
+        orderBillEntity.setAddTime(new Date());
+        orderBillEntity.setDelState(DelStateEnum.NORMAL.getDelState());
 
-		return null;
-	}
+        orderBillApiBiz.create(orderBillEntity);
+
+        return orderBillEntity;
+    }
+
+    private QryProductByIdRespVO getproductInfo(List<QryProductByIdRespVO> productInfos, Long productId) {
+        for (QryProductByIdRespVO productInfo : productInfos) {
+            if (productInfo.getId().compareTo(productId) == 0) {
+                return productInfo;
+            }
+        }
+
+        return null;
+    }
 
 }

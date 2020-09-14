@@ -6,6 +6,7 @@ import org.smartframework.cloud.common.pojo.vo.RespVO;
 import org.smartframework.cloud.examples.mall.order.service.api.OrderApiService;
 import org.smartframework.cloud.examples.mall.rpc.order.request.api.CreateOrderReqVO;
 import org.smartframework.cloud.examples.mall.rpc.order.response.api.CreateOrderRespVO;
+import org.smartframework.cloud.starter.core.business.util.RespUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -39,7 +40,7 @@ public class OrderApiController {
     @PostMapping("create")
     @SmartApiAC(tokenCheck = true, sign = SignType.ALL, encrypt = true, decrypt = true, auth = true, repeatSubmitCheck = true)
     public RespVO<CreateOrderRespVO> create(@RequestBody @Valid CreateOrderReqVO req) {
-        return orderApiService.create(req);
+        return RespUtil.success(orderApiService.create(req));
     }
 
 }
