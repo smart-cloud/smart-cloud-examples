@@ -7,7 +7,6 @@ import org.apache.commons.io.IOUtils;
 import org.smartframework.cloud.starter.core.constants.ProtostuffConstant;
 import org.smartframework.cloud.starter.log.util.LogUtil;
 import org.springframework.core.io.buffer.DataBuffer;
-import org.springframework.core.io.buffer.DataBufferUtils;
 import org.springframework.core.io.buffer.NettyDataBufferFactory;
 import org.springframework.http.MediaType;
 
@@ -54,23 +53,22 @@ public class LogContext {
     }
 
     public static <T extends DataBuffer> T chain(DataType dataType, T buffer, ApiLogDO apiLogDO) {
-        try {
-            InputStream dataBuffer = buffer.asInputStream();
+        try (InputStream dataBuffer = buffer.asInputStream();){
             byte[] bytes = IOUtils.toByteArray(dataBuffer);
+            if (apiLogDO != null) {
+                String data = new String(bytes, StandardCharsets.UTF_8);
+                // 请求数据
+                if (dataType == DataType.REQUEST) {
+                    apiLogDO.setArgs(data);
+                }
+                // 响应数据
+                if (dataType == DataType.RESPONSE) {
+                    // 超过长度的截掉
+                    apiLogDO.setResult(LogUtil.truncate(data));
+                }
+            }
+
             NettyDataBufferFactory nettyDataBufferFactory = new NettyDataBufferFactory(new UnpooledByteBufAllocator(false));
-
-            String data = new String(bytes, StandardCharsets.UTF_8);
-            // 请求数据
-            if (dataType == DataType.REQUEST) {
-                apiLogDO.setArgs(data);
-            }
-            // 响应数据
-            if (dataType == DataType.RESPONSE) {
-                // 超过长度的截掉
-                apiLogDO.setResult(LogUtil.truncate(data));
-            }
-
-            DataBufferUtils.release(buffer);
             return (T) nettyDataBufferFactory.wrap(bytes);
         } catch (IOException e) {
             log.error(e.getMessage(), e);
