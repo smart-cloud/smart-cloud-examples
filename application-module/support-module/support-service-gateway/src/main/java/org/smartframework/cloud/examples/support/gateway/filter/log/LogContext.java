@@ -1,9 +1,10 @@
 package org.smartframework.cloud.examples.support.gateway.filter.log;
 
-import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
 import io.netty.buffer.UnpooledByteBufAllocator;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.IOUtils;
+import org.smartframework.cloud.starter.core.constants.ProtostuffConstant;
 import org.smartframework.cloud.starter.log.util.LogUtil;
 import org.springframework.core.io.buffer.DataBuffer;
 import org.springframework.core.io.buffer.DataBufferUtils;
@@ -13,7 +14,7 @@ import org.springframework.http.MediaType;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
-import java.util.List;
+import java.util.Set;
 
 /**
  * @author collin
@@ -25,16 +26,17 @@ public class LogContext {
     /**
      * 打印日志的http content-type类型
      */
-    public static final List<MediaType> legalLogMediaTypes = Lists.newArrayList(MediaType.APPLICATION_XML,
+    protected static final Set<MediaType> legalLogMediaTypes = Sets.newHashSet(MediaType.APPLICATION_XML,
             MediaType.APPLICATION_JSON,
             MediaType.APPLICATION_JSON_UTF8,
             MediaType.TEXT_PLAIN,
-            MediaType.TEXT_XML);
+            MediaType.TEXT_XML,
+            ProtostuffConstant.PROTOBUF_MEDIA_TYPE);
 
     /**
      * 存储临时日志
      */
-    private static ThreadLocal<ApiLogDO> apiLogCache = new ThreadLocal<>();
+    private static ThreadLocal<ApiLogDO> apiLogCache = new InheritableThreadLocal<>();
 
     private LogContext() {
     }

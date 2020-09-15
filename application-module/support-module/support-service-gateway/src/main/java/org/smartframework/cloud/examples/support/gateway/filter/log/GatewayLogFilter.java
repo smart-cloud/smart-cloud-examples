@@ -38,15 +38,12 @@ public class GatewayLogFilter implements WebFilter, Ordered {
         return chain.filter(exchange.mutate().request(requestDecorator).response(responseWrapper).build()).doFinally(signalType -> {
             if (SignalType.ON_ERROR.compareTo(signalType) != 0) {
                 ApiLogDO apiLogDO = LogContext.getApiLogBO();
-                if (apiLogDO != null) {
-                    apiLogDO.setCost(System.currentTimeMillis() - apiLogDO.getCost());
-                    if (log.isDebugEnabled()) {
-                        log.debug("gateway.log=>{}", apiLogDO);
-                    } else if (apiLogDO.getUrl() != null && apiLogDO.getUrl().startsWith(GatewayConstants.GATEWAY_API_URL_PREFIX)) {
-                        // gateway本身的接口打印
-                        log.info("gateway.log=>{}", apiLogDO);
-                    }
-
+                apiLogDO.setCost(System.currentTimeMillis() - apiLogDO.getCost());
+                if (log.isDebugEnabled()) {
+                    log.debug("gateway.log=>{}", apiLogDO);
+                } else if (apiLogDO.getUrl() != null && apiLogDO.getUrl().startsWith(GatewayConstants.GATEWAY_API_URL_PREFIX)) {
+                    // gateway本身的接口打印
+                    log.info("gateway.log=>{}", apiLogDO);
                 }
             }
             LogContext.remove();
