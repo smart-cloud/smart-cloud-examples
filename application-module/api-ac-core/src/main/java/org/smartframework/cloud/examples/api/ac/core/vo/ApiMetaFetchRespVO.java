@@ -1,4 +1,4 @@
-package org.smartframework.cloud.examples.support.rpc.gateway.request.rpc;
+package org.smartframework.cloud.examples.api.ac.core.vo;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -7,7 +7,6 @@ import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 import org.smartframework.cloud.common.pojo.Base;
 
-import javax.validation.constraints.NotEmpty;
 import java.util.Map;
 
 /**
@@ -20,14 +19,13 @@ import java.util.Map;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ApiMetaUploadReqVO extends Base {
+public class ApiMetaFetchRespVO extends Base {
 
     private static final long serialVersionUID = 1L;
 
     /**
      * Api访问控制信息<url编码（由url+http method组成）, Api访问控制信息>
      */
-    @NotEmpty
     private Map<String, ApiAC> apiACs;
 
     /**

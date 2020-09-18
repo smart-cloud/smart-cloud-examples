@@ -1,12 +1,12 @@
 package org.smartframework.cloud.examples.support.gateway.filter.access.core;
 
 import lombok.extern.slf4j.Slf4j;
+import org.smartframework.cloud.examples.api.ac.core.vo.ApiMetaFetchRespVO;
 import org.smartframework.cloud.examples.support.gateway.constants.Order;
 import org.smartframework.cloud.examples.support.gateway.filter.access.ApiAccessBO;
 import org.smartframework.cloud.examples.support.gateway.filter.access.ApiAccessContext;
 import org.smartframework.cloud.examples.support.gateway.filter.log.LogContext;
 import org.smartframework.cloud.examples.support.gateway.util.RedisKeyHelper;
-import org.smartframework.cloud.examples.support.rpc.gateway.request.rpc.ApiMetaUploadReqVO;
 import org.smartframework.cloud.starter.core.business.exception.RepeatSubmitException;
 import org.smartframework.cloud.starter.redis.component.RedisComponent;
 import org.smartframework.cloud.utility.JacksonUtil;
@@ -35,7 +35,7 @@ public class RepeatSubmitCheckFilter implements GlobalFilter, Ordered {
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
         ApiAccessBO apiAccessBO = ApiAccessContext.getContext();
-        ApiMetaUploadReqVO.ApiAC apiAC = apiAccessBO.getApiAC();
+        ApiMetaFetchRespVO.ApiAC apiAC = apiAccessBO.getApiAC();
         if (apiAC == null || !apiAC.isRepeatSubmitCheck()) {
             return chain.filter(exchange);
         }

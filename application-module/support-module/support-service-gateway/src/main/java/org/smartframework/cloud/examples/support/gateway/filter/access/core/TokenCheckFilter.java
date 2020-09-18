@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.redisson.api.RMapCache;
 import org.redisson.api.RedissonClient;
+import org.smartframework.cloud.examples.api.ac.core.vo.ApiMetaFetchRespVO;
 import org.smartframework.cloud.examples.app.auth.core.AppAuthConstants;
 import org.smartframework.cloud.examples.app.auth.core.UserBO;
 import org.smartframework.cloud.examples.support.gateway.constants.Order;
@@ -11,7 +12,6 @@ import org.smartframework.cloud.examples.support.gateway.enums.GatewayReturnCode
 import org.smartframework.cloud.examples.support.gateway.filter.access.ApiAccessBO;
 import org.smartframework.cloud.examples.support.gateway.filter.access.ApiAccessContext;
 import org.smartframework.cloud.examples.support.gateway.util.RedisKeyHelper;
-import org.smartframework.cloud.examples.support.rpc.gateway.request.rpc.ApiMetaUploadReqVO;
 import org.smartframework.cloud.starter.core.business.exception.BusinessException;
 import org.smartframework.cloud.starter.core.business.exception.DataValidateException;
 import org.smartframework.cloud.starter.core.business.exception.confg.ParamValidateMessage;
@@ -52,7 +52,7 @@ public class TokenCheckFilter implements GlobalFilter, Ordered {
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
         ApiAccessBO apiAccessBO = ApiAccessContext.getContext();
         String token = apiAccessBO.getToken();
-        ApiMetaUploadReqVO.ApiAC apiAC = apiAccessBO.getApiAC();
+        ApiMetaFetchRespVO.ApiAC apiAC = apiAccessBO.getApiAC();
         // 1、token校验
         if (apiAC == null || !apiAC.isTokenCheck()) {
             return chain.filter(exchange);

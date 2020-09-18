@@ -4,7 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 import org.smartframework.cloud.api.core.annotation.SmartApiAC;
-import org.smartframework.cloud.examples.support.rpc.gateway.request.rpc.ApiMetaUploadReqVO;
+import org.smartframework.cloud.examples.api.ac.core.vo.ApiMetaFetchRespVO;
 
 /**
  * {@link SmartApiAC}处理时需要的对应入参，供后续filter使用
@@ -20,7 +20,7 @@ public class ApiAccessBO {
     /**
      * 接口注解信息
      */
-    ApiMetaUploadReqVO.ApiAC apiAC;
+    ApiMetaFetchRespVO.ApiAC apiAC;
     /**
      * token
      */

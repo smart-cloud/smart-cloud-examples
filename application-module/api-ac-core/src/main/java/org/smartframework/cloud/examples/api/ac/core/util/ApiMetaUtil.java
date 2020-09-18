@@ -1,23 +1,16 @@
-package org.smartframework.cloud.examples.api.ac.core.listener;
+package org.smartframework.cloud.examples.api.ac.core.util;
 
-import lombok.AllArgsConstructor;
+import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.ArrayUtils;
 import org.reflections.Reflections;
 import org.reflections.scanners.MethodAnnotationsScanner;
 import org.smartframework.cloud.api.core.annotation.SmartApiAC;
-import org.smartframework.cloud.common.pojo.Base;
-import org.smartframework.cloud.common.pojo.vo.RespVO;
-import org.smartframework.cloud.examples.api.ac.core.properties.ApiAcProperties;
-import org.smartframework.cloud.examples.support.rpc.gateway.ApiMetaRpc;
-import org.smartframework.cloud.examples.support.rpc.gateway.request.rpc.ApiMetaUploadReqVO;
-import org.smartframework.cloud.examples.support.rpc.gateway.request.rpc.ApiMetaUploadReqVO.ApiAC;
-import org.smartframework.cloud.starter.core.business.exception.ServerException;
-import org.smartframework.cloud.starter.core.business.util.RespUtil;
+import org.smartframework.cloud.examples.api.ac.core.vo.ApiMetaFetchRespVO;
 import org.smartframework.cloud.starter.core.constants.PackageConfig;
-import org.springframework.boot.context.event.ApplicationStartedEvent;
-import org.springframework.context.ApplicationListener;
+import org.smartframework.cloud.starter.rpc.feign.annotation.SmartFeignClient;
+import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;
 
 import java.lang.reflect.Method;
@@ -28,38 +21,18 @@ import java.util.Set;
 
 /**
  * @author liyulin
- * @desc 上传接口信息给网关
- * @date 2020/04/14
+ * @date 2020-09-18
  */
 @Slf4j
-@AllArgsConstructor
-public class UploadApiMetaListener implements ApplicationListener<ApplicationStartedEvent> {
-
-    private ApiMetaRpc apiMetaRpc;
-    private ApiAcProperties apiAcProperties;
-
-    @Override
-    public void onApplicationEvent(ApplicationStartedEvent event) {
-        if (!apiAcProperties.isUploadApiMeta()) {
-            log.info("upload api meta is ignored!");
-            return;
-        }
-
-        log.info("upload api meta to gateway start!");
-        RespVO<Base> result = uploadApiMetaToGateWay();
-        log.info("upload api meta to gateway finish!");
-
-        if (!RespUtil.isSuccess(result)) {
-            throw new ServerException(RespUtil.getFailMsg(result));
-        }
-    }
+@UtilityClass
+public class ApiMetaUtil {
 
     /**
-     * 上传接口元数据给网关
+     * 收集上传接口元数据
      *
      * @return
      */
-    public RespVO<Base> uploadApiMetaToGateWay() {
+    public ApiMetaFetchRespVO collectApiMetas() {
         String[] basePackages = PackageConfig.getBasePackages();
         if (ArrayUtils.isEmpty(basePackages)) {
             log.debug("basePackages is empty!");
@@ -81,16 +54,20 @@ public class UploadApiMetaListener implements ApplicationListener<ApplicationSta
             return null;
         }
 
-        Map<String, ApiAC> apiACs = new HashMap<>();
+        Map<String, ApiMetaFetchRespVO.ApiAC> apiACs = new HashMap<>();
         for (Method method : allMappingSet) {
-            SmartApiAC smartApiAC = method.getAnnotation(SmartApiAC.class);
-
             Class<?> declaringClass = method.getDeclaringClass();
+            // 过滤掉rpc接口
+            if (declaringClass.isInterface() && (declaringClass.isAnnotationPresent(SmartFeignClient.class) || declaringClass.isAnnotationPresent(FeignClient.class))) {
+                continue;
+            }
+
+            SmartApiAC smartApiAC = method.getAnnotation(SmartApiAC.class);
             String urlHeader = getUrlUnderClass(declaringClass);
             String[] urlTails = getUrlTails(method);
             for (String urlTail : urlTails) {
                 String urlCode = getUrlCode(urlHeader, urlTail);
-                ApiAC apiAC = null;
+                ApiMetaFetchRespVO.ApiAC apiAC = null;
                 if (smartApiAC != null) {
                     apiAC = buildApiAC(smartApiAC);
                 }
@@ -98,7 +75,7 @@ public class UploadApiMetaListener implements ApplicationListener<ApplicationSta
             }
         }
 
-        return apiMetaRpc.upload(new ApiMetaUploadReqVO(apiACs));
+        return new ApiMetaFetchRespVO(apiACs);
     }
 
     private Set<Method> getAllApiMethods(Reflections reflections) {
@@ -136,8 +113,8 @@ public class UploadApiMetaListener implements ApplicationListener<ApplicationSta
         return urlCode;
     }
 
-    private ApiAC buildApiAC(SmartApiAC smartApiAC) {
-        return ApiAC.builder().tokenCheck(smartApiAC.tokenCheck())
+    private ApiMetaFetchRespVO.ApiAC buildApiAC(SmartApiAC smartApiAC) {
+        return ApiMetaFetchRespVO.ApiAC.builder().tokenCheck(smartApiAC.tokenCheck())
                 .sign(smartApiAC.sign().getType())
                 .decrypt(smartApiAC.decrypt())
                 .encrypt(smartApiAC.encrypt())

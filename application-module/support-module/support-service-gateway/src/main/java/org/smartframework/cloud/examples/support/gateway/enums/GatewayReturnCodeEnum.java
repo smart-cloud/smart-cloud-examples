@@ -11,6 +11,10 @@ import org.smartframework.cloud.common.pojo.enums.IBaseReturnCode;
 public enum GatewayReturnCodeEnum implements IBaseReturnCode {
 
     /**
+     * 获取api meta失败
+     */
+    FETCH_APIMETA_FAIL("203500", "gateway.fetch.apimeta.fail"),
+    /**
      * rsa密钥对生成出错
      */
     GENERATE_RSAKEY_FAIL("203501", "gateway.generate.rsakey.fail"),

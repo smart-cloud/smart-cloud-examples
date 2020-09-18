@@ -1,11 +1,11 @@
 package org.smartframework.cloud.examples.support.gateway.filter.access;
 
 import org.smartframework.cloud.api.core.annotation.SmartApiAC;
+import org.smartframework.cloud.examples.api.ac.core.vo.ApiMetaFetchRespVO;
 import org.smartframework.cloud.examples.support.gateway.constants.GatewayConstants;
 import org.smartframework.cloud.examples.support.gateway.constants.Order;
 import org.smartframework.cloud.examples.support.gateway.util.RedisKeyHelper;
 import org.smartframework.cloud.examples.support.gateway.util.WebUtil;
-import org.smartframework.cloud.examples.support.rpc.gateway.request.rpc.ApiMetaUploadReqVO.ApiAC;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
@@ -32,7 +32,7 @@ public class ApiAccessFilter implements GlobalFilter, Ordered {
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
         ServerHttpRequest request = exchange.getRequest();
         String urlMethod = request.getURI().getPath() + request.getMethodValue();
-        ApiAC apiAC = (ApiAC) redisTemplate.opsForHash().get(RedisKeyHelper.getApiMetaKey(), RedisKeyHelper.getApiMetaHashKey(urlMethod));
+        ApiMetaFetchRespVO.ApiAC apiAC = (ApiMetaFetchRespVO.ApiAC) redisTemplate.opsForHash().get(RedisKeyHelper.getApiMetaKey(), RedisKeyHelper.getApiMetaHashKey(urlMethod));
 
         String token = WebUtil.getFromRequestHeader(request, GatewayConstants.TOKEN);
 
