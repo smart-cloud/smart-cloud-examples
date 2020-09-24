@@ -9,7 +9,9 @@ smart-cloud-examples
 |    ├── merge-basic -- 基础服务合并项目[端口:30001]
 |    └── merge-mall -- 商城服务合并项目[端口:30002]
 └── application-module -- 应用服务模块
-     ├── application-common-config -- 公共配置
+     ├── api-ac-core -- api meta信息上传gateway处理
+     ├── app-auth-core -- 用户上下文信息处理
+     ├── app-common-config -- 公共配置
      ├── basic-module -- 基础服务模块（如文件服务、权限服务、登陆服务等）
      |    ├── basic-service-user -- 用户服务[端口:20031]
      |    └── basic-service-auth -- 权限服务[端口:20041]
@@ -26,17 +28,21 @@ smart-cloud-examples
           └── support-service-gateway -- 网关[端口:80]
 ```
 ## （二）工程模块图
-![](docs/images/smart_cloud.png)
+![](docs/images/smart-cloud-examples.png)
 # 二、接口安全
 
 ## （一）流程
-![](docs/images/gateway_auth_flow.png)
-```
-1、通过自定义注解，服务在启动时，会将接口信息（是否签名、是否加密、是否需要鉴权等）通过rpc上传给网关；网关接收到后会持久化到redis。
+1、通过自定义注解，监听服务启动完毕后，通知gateway，gateway根据服务名去注册中心获取服务的ip、port，然后通过http主动去掉服务的借口获取api meta信息（是否签名、是否加密、是否需要鉴权等），存至redis。
+![](docs/images/api_meta_upload.png)
+
+**注意：次处为了接口安全考虑，没有直接将api meta信息由服务主动上报给gateway。**
+
 2、后台管理系统在配置权限时，会通过rpc接口刷新网关服务存储的权限信息。
+
 3、用户登陆成功后，会将所拥有的权限信息通过rpc上传给网关。
+
 4、用户访问接口通过网关时，会与缓存在redis里的信息做加解密、鉴权等处理。
-```
+
 ## （二）接口数据加解密、签名流程
 
 ### 1、约定
@@ -94,15 +100,8 @@ http get、http post共同部分，即http headers部分的数据，它包含请
 ```
 ### 4、加密、签名
 #### 1.签名、加密的key传递
-![](docs/images/encrypt_sign.png)
-```
-1、C（客户端）请求S（服务端）；
-2、S端随机产生两对rsa公钥、私钥（clientPriKey、serverPubKey；clientPubKey、serverPriKey），以及token，并返回token、clientPubKey、clientPriKey给C端；
-3、C端保存“token、clientPubKey、clientPriKey”，并随机生成aes加密的key；
-4、C端将aesKey用clientPubKey加密，用clientPriKey签名并发送给S端；
-5、S端校验签名并解密，保存aesKey；
-6、后续C端与S端通信，将会用aesKey加解密；C端用clientPriKey签名，用clientPubKey校验签名；S端用serverPriKey签名，用serverPubKey校验签名。
-```
+![](docs/images/encrypt_decrypt_sign.png)
+
 #### 2.请求方
 ##### （1）请求参数
 ```
