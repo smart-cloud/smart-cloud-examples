@@ -6,6 +6,8 @@ import org.junit.Test;
 import org.mockito.Mockito;
 import org.smartframework.cloud.common.pojo.enums.ReturnCodeEnum;
 import org.smartframework.cloud.common.pojo.vo.RespVO;
+import org.smartframework.cloud.examples.app.auth.core.UserBO;
+import org.smartframework.cloud.examples.app.auth.core.UserContext;
 import org.smartframework.cloud.examples.mall.rpc.order.request.api.CreateOrderProductInfoReqVO;
 import org.smartframework.cloud.examples.mall.rpc.order.request.api.CreateOrderReqVO;
 import org.smartframework.cloud.examples.mall.rpc.order.response.api.CreateOrderRespVO;
@@ -30,6 +32,7 @@ public class OrderApiControllerIntegrationTest extends WebMvcIntegrationTest {
 
     @Test
     public void testCreate() throws Exception {
+        UserContext.setContext(UserBO.builder().id(1L).mobile("13112345678").realName("张三").build());
         // 1、构建请求
         // build args
         List<CreateOrderProductInfoReqVO> buyProducts = new ArrayList<>();

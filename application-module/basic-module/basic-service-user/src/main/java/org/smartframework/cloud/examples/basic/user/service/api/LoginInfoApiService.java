@@ -1,5 +1,6 @@
 package org.smartframework.cloud.examples.basic.user.service.api;
 
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.smartframework.cloud.common.pojo.Base;
 import org.smartframework.cloud.common.pojo.vo.RespVO;
@@ -15,6 +16,7 @@ import org.smartframework.cloud.examples.basic.user.config.UserParamValidateMess
 import org.smartframework.cloud.examples.basic.user.entity.base.LoginInfoEntity;
 import org.smartframework.cloud.examples.basic.user.entity.base.UserInfoEntity;
 import org.smartframework.cloud.examples.basic.user.enums.UserReturnCodeEnum;
+import org.smartframework.cloud.examples.basic.user.mapper.base.LoginInfoBaseMapper;
 import org.smartframework.cloud.examples.support.rpc.gateway.UserRpc;
 import org.smartframework.cloud.examples.support.rpc.gateway.request.rpc.CacheUserInfoReqVO;
 import org.smartframework.cloud.examples.support.rpc.gateway.request.rpc.ExitLoginReqVO;
@@ -32,7 +34,7 @@ import java.util.Objects;
 
 @Service
 @Slf4j
-public class LoginInfoApiService {
+public class LoginInfoApiService extends ServiceImpl<LoginInfoBaseMapper, LoginInfoEntity> {
 
     @Autowired
     private LoginInfoApiBiz loginInfoApiBiz;
@@ -66,7 +68,7 @@ public class LoginInfoApiService {
             throw new BusinessException(UserReturnCodeEnum.USER_DELETED);
         }
 
-        UserInfoEntity userInfoEntity = userInfoApiBiz.getUserInfoBaseMapper().selectByPrimaryKey(loginInfoEntity.getUserId());
+        UserInfoEntity userInfoEntity = userInfoApiBiz.getUserInfoBaseMapper().selectById(loginInfoEntity.getUserId());
 
         LoginRespVO loginRespVO = LoginRespVO.builder()
                 .userId(userInfoEntity.getId())

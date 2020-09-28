@@ -19,7 +19,7 @@ public class OrderBillApiBiz extends BaseBiz<OrderBillEntity> {
 	private OrderBillBaseMapper orderBillBaseMapper;
 
 	public long create(OrderBillEntity entity) {
-		orderBillBaseMapper.insertSelective(entity);
+		orderBillBaseMapper.insert(entity);
 		return entity.getId();
 	}
 

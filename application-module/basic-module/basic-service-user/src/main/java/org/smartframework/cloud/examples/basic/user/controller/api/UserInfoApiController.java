@@ -35,7 +35,7 @@ public class UserInfoApiController {
     @GetMapping("query")
     @SmartApiAC(tokenCheck = true, sign = SignType.ALL, encrypt = true, decrypt = true)
     public RespVO<UserInfoBaseRespVO> query() {
-        return RespUtil.success(userInfoApIService.query());
+        return RespUtil.success(userInfoApIService.queryById());
     }
 
 }

@@ -1,17 +1,22 @@
 package org.smartframework.cloud.examples.basic.user.service.api;
 
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.smartframework.cloud.examples.app.auth.core.UserContext;
 import org.smartframework.cloud.examples.basic.rpc.user.request.api.user.UserInfoInsertReqVO;
 import org.smartframework.cloud.examples.basic.rpc.user.response.base.UserInfoBaseRespVO;
 import org.smartframework.cloud.examples.basic.user.biz.api.UserInfoApiBiz;
 import org.smartframework.cloud.examples.basic.user.config.UserParamValidateMessage;
+import org.smartframework.cloud.examples.basic.user.entity.base.LoginInfoEntity;
 import org.smartframework.cloud.examples.basic.user.entity.base.UserInfoEntity;
+import org.smartframework.cloud.examples.basic.user.mapper.base.LoginInfoBaseMapper;
+import org.smartframework.cloud.examples.basic.user.mapper.base.UserInfoBaseMapper;
 import org.smartframework.cloud.starter.core.business.exception.ParamValidateException;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class UserInfoApiService {
+public class UserInfoApiService extends ServiceImpl<UserInfoBaseMapper, UserInfoEntity> {
 
 	@Autowired
 	private UserInfoApiBiz userInfoApiBiz;
@@ -21,9 +26,12 @@ public class UserInfoApiService {
 	 * 
 	 * @return
 	 */
-	public UserInfoBaseRespVO query() {
+	public UserInfoBaseRespVO queryById() {
 		Long userId = UserContext.getUserId();
-		return userInfoApiBiz.getUserInfoBaseMapper().selectRespById(userId);
+		UserInfoEntity userInfoEntity = super.getById(userId);
+		UserInfoBaseRespVO userInfoBaseRespVO = new UserInfoBaseRespVO();
+		BeanUtils.copyProperties(userInfoEntity, userInfoBaseRespVO);
+		return userInfoBaseRespVO;
 	}
 
 	/**

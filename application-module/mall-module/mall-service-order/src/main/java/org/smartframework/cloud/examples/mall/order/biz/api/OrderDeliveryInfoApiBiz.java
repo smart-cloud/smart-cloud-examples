@@ -1,7 +1,5 @@
 package org.smartframework.cloud.examples.mall.order.biz.api;
 
-import java.util.List;
-
 import org.smartframework.cloud.examples.mall.order.entity.base.OrderDeliveryInfoEntity;
 import org.smartframework.cloud.examples.mall.order.mapper.base.OrderDeliveryInfoBaseMapper;
 import org.smartframework.cloud.starter.mybatis.common.biz.BaseBiz;
@@ -17,11 +15,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class OrderDeliveryInfoApiBiz extends BaseBiz<OrderDeliveryInfoEntity> {
 
-	@Autowired
-	private OrderDeliveryInfoBaseMapper orderDeliveryInfoBaseMapper;
-
-	public boolean create(List<OrderDeliveryInfoEntity> entities) {
-		return orderDeliveryInfoBaseMapper.insertList(entities) > 0;
-	}
+    @Autowired
+    private OrderDeliveryInfoBaseMapper orderDeliveryInfoBaseMapper;
 
 }

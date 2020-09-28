@@ -1,10 +1,14 @@
-smart:
-  datasources:
-    order:
-      url: jdbc:mysql://127.0.0.1:3306/demo_order
-      username: ENC(Ell/BrCjyLFI0+iZgPqo6w==)
-      password: ENC(Aq90bjkofJr0svNO4mtFfw==)
-      mapper-interface-location: org.smartframework.cloud.examples.mall.order.mapper
-      transaction-base-packages: org.smartframework.cloud.examples.mall.order.service
-      mapper-xml-location: classpath*:/org/smartframework/cloud/examples/mall/order/mapper/**/*.xml
-      seata-enable: true
+spring:
+  datasource:
+    dynamic:
+      primary: mall-order
+      strict: true
+      datasource:
+        mall-order:
+          url: jdbc:mysql://127.0.0.1:3306/demo_order?serverTimezone=Asia/Shanghai&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true
+          username: ENC(Ell/BrCjyLFI0+iZgPqo6w==)
+          password: ENC(Aq90bjkofJr0svNO4mtFfw==)
+          driver-class-name: com.mysql.cj.jdbc.Driver
+mybatis-plus:
+  mapper-locations:
+    - classpath*:/org/smartframework/cloud/examples/mall/order/mapper/**/*.xml

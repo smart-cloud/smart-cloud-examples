@@ -4,8 +4,8 @@ import io.seata.spring.annotation.GlobalTransactional;
 import org.apache.commons.collections4.CollectionUtils;
 import org.smartframework.cloud.common.pojo.Base;
 import org.smartframework.cloud.common.pojo.vo.RespVO;
+import org.smartframework.cloud.examples.app.auth.core.UserContext;
 import org.smartframework.cloud.examples.mall.order.biz.api.OrderBillApiBiz;
-import org.smartframework.cloud.examples.mall.order.biz.api.OrderDeliveryInfoApiBiz;
 import org.smartframework.cloud.examples.mall.order.entity.base.OrderBillEntity;
 import org.smartframework.cloud.examples.mall.order.entity.base.OrderDeliveryInfoEntity;
 import org.smartframework.cloud.examples.mall.order.enums.OrderReturnCodeEnum;
@@ -47,7 +47,8 @@ public class OrderApiService {
     @Autowired
     private OrderBillApiBiz orderBillApiBiz;
     @Autowired
-    private OrderDeliveryInfoApiBiz orderDeliveryInfoApiBiz;
+    private OrderDeliveryInfoApiService orderDeliveryInfoApiService;
+
 
     /**
      * 创建订单
@@ -120,7 +121,7 @@ public class OrderApiService {
             return entity;
         }).collect(Collectors.toList());
 
-        orderDeliveryInfoApiBiz.create(entities);
+        orderDeliveryInfoApiService.create(entities);
 
         return entities;
     }
@@ -132,7 +133,7 @@ public class OrderApiService {
         Long amount = entities.stream().mapToLong(item -> item.getBuyCount() * item.getPrice()).sum();
         orderBillEntity.setAmount(amount);
         orderBillEntity.setPayState(PayStateEnum.PENDING_PAY.getValue());
-        orderBillEntity.setBuyer(1L);
+        orderBillEntity.setBuyer(UserContext.getUserId());
         orderBillEntity.setAddTime(new Date());
         orderBillEntity.setDelState(DelStateEnum.NORMAL.getDelState());
 

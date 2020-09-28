@@ -1,10 +1,14 @@
-smart:
-  datasources:
-    product:
-      url: jdbc:mysql://127.0.0.1:3306/demo_product
-      username: ENC(PbMw+RtvRPYAo4Acbuxe4Q==)
-      password: ENC(IwbzHJPe93Wevq8LVx0AwQ==)
-      mapper-interface-location: org.smartframework.cloud.examples.mall.product.mapper
-      transaction-base-packages: org.smartframework.cloud.examples.mall.product.service
-      mapper-xml-location: classpath*:/org/smartframework/cloud/examples/mall/product/mapper/**/*.xml
-      seata-enable: true
+spring:
+  datasource:
+    dynamic:
+      primary: mall-product
+      strict: true
+      datasource:
+        mall-product:
+          url: jdbc:mysql://127.0.0.1:3306/demo_product?serverTimezone=Asia/Shanghai&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true
+          username: ENC(PbMw+RtvRPYAo4Acbuxe4Q==)
+          password: ENC(IwbzHJPe93Wevq8LVx0AwQ==)
+          driver-class-name: com.mysql.cj.jdbc.Driver
+mybatis-plus:
+  mapper-locations:
+    - classpath*:/org/smartframework/cloud/examples/mall/product/mapper/**/*.xml

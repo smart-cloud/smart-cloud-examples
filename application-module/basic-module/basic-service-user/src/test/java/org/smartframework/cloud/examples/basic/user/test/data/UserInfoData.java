@@ -25,7 +25,7 @@ public class UserInfoData {
 		entity.setSex(SexEnum.FEMALE.getValue());
 		entity.setAddTime(new Date());
 		entity.setDelState(DelStateEnum.NORMAL.getDelState());
-		userInfoBaseMapper.insertSelective(entity);
+		userInfoBaseMapper.insert(entity);
 	}
 
 }

@@ -1,9 +1,14 @@
-smart:
-  datasources:
-    user:
-      url: jdbc:mysql://127.0.0.1:3306/demo_user
-      username: ENC(PbMw+RtvRPYAo4Acbuxe4Q==)
-      password: ENC(IwbzHJPe93Wevq8LVx0AwQ==)
-      mapper-interface-location: org.smartframework.cloud.examples.basic.user.mapper
-      transaction-base-packages: org.smartframework.cloud.examples.basic.user.service
-      mapper-xml-location: classpath*:/org/smartframework/cloud/examples/basic/user/mapper/**/*.xml
+spring:
+  datasource:
+    dynamic:
+      primary: basic-user
+      strict: true
+      datasource:
+        basic-user:
+          url: jdbc:mysql://127.0.0.1:3306/demo_user?serverTimezone=Asia/Shanghai&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true
+          username: ENC(PbMw+RtvRPYAo4Acbuxe4Q==)
+          password: ENC(IwbzHJPe93Wevq8LVx0AwQ==)
+          driver-class-name: com.mysql.cj.jdbc.Driver
+mybatis-plus:
+  mapper-locations:
+    - classpath*:/org/smartframework/cloud/examples/basic/user/mapper/**/*.xml

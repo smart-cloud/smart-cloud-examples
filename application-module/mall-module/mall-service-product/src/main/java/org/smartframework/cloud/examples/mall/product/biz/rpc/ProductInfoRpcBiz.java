@@ -37,7 +37,7 @@ public class ProductInfoRpcBiz extends BaseBiz<ProductInfoEntity> {
      * @return
      */
     public QryProductByIdRespVO qryProductById(QryProductByIdReqVO reqBody) {
-        ProductInfoEntity entity = productInfoBaseMapper.selectByPrimaryKey(reqBody.getId());
+        ProductInfoEntity entity = productInfoBaseMapper.selectById(reqBody.getId());
         if (ObjectUtil.isNull(entity)) {
             return null;
         }
@@ -57,7 +57,7 @@ public class ProductInfoRpcBiz extends BaseBiz<ProductInfoEntity> {
      * @return
      */
     public QryProductByIdsRespVO qryProductByIds(QryProductByIdsReqVO reqVO) {
-        List<ProductInfoEntity> entities = productInfoBaseMapper.selectByIdList(reqVO.getIds());
+        List<ProductInfoEntity> entities = productInfoBaseMapper.selectBatchIds(reqVO.getIds());
         if (ObjectUtil.isNull(entities)) {
             return null;
         }

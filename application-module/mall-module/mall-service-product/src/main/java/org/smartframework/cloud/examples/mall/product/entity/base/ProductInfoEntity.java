@@ -1,14 +1,12 @@
 package org.smartframework.cloud.examples.mall.product.entity.base;
 
-import javax.persistence.Column;
-import javax.persistence.Table;
-
-import org.smartframework.cloud.starter.mybatis.common.mapper.entity.BaseEntity;
-
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
+import org.smartframework.cloud.starter.mybatis.common.mapper.entity.BaseEntity;
 
 /**
  * 商品信息
@@ -20,31 +18,27 @@ import lombok.experimental.SuperBuilder;
 @Setter
 @NoArgsConstructor
 @SuperBuilder
-@Table(name = "t_product_info")
+@TableName("t_product_info")
 public class ProductInfoEntity extends BaseEntity {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-    /** 商品名称 */
-    @Column(name = "f_name")     
-	private String name;
-	
-    /** 销售价格（单位：万分之一元） */
-    @Column(name = "f_sell_price")     
-	private Long sellPrice;
-	
-    /** 库存 */
-    @Column(name = "f_stock")     
-	private Long stock;
-	
-	/** 表字段名 */
-	public enum Columns {
-	    /** 商品名称 */
-		name,
-	    /** 销售价格（单位：万分之一元） */
-		sellPrice,
-	    /** 库存 */
-		stock;
-	}
+    /**
+     * 商品名称
+     */
+    @TableField(value = "f_name")
+    private String name;
+
+    /**
+     * 销售价格（单位：万分之一元）
+     */
+    @TableField(value = "f_sell_price")
+    private Long sellPrice;
+
+    /**
+     * 库存
+     */
+    @TableField(value = "f_stock")
+    private Long stock;
 
 }

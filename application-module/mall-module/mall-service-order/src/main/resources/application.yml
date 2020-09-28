@@ -12,6 +12,7 @@ server:
   
 seata:
   tx-service-group: smartcloud_tx_group
+  enable-auto-data-source-proxy: false
   service:
     grouplist: 
       smartcloud: 127.0.0.1:8091

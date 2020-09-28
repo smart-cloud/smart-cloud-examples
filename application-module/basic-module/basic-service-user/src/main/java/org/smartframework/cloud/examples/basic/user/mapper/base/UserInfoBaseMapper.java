@@ -1,8 +1,10 @@
 package org.smartframework.cloud.examples.basic.user.mapper.base;
 
+import com.baomidou.dynamic.datasource.annotation.DS;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.apache.ibatis.annotations.Mapper;
 import org.smartframework.cloud.examples.basic.user.entity.base.UserInfoEntity;
-import org.smartframework.cloud.examples.basic.rpc.user.response.base.UserInfoBaseRespVO;
-import org.smartframework.cloud.starter.mybatis.common.mapper.ext.ExtMapper;
+import org.smartframework.cloud.examples.common.config.constants.DataSourceName;
 
 /**
  * 用户信息base mapper
@@ -10,6 +12,8 @@ import org.smartframework.cloud.starter.mybatis.common.mapper.ext.ExtMapper;
  * @author liyulin
  * @date 2020-01-17
  */
-public interface UserInfoBaseMapper extends ExtMapper<UserInfoEntity, UserInfoBaseRespVO, Long> {
+@DS(DataSourceName.BASIC_USER)
+@Mapper
+public interface UserInfoBaseMapper extends BaseMapper<UserInfoEntity> {
 
 }

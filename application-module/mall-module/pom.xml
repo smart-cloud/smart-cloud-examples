@@ -43,11 +43,6 @@
         </dependency>
 
         <dependency>
-            <groupId>tk.mybatis</groupId>
-            <artifactId>mapper</artifactId>
-        </dependency>
-
-        <dependency>
             <groupId>org.smartframework.cloud</groupId>
             <artifactId>smart-cloud-starter-web</artifactId>
         </dependency>
