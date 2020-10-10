@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.smartframework.cloud.common.pojo.vo.BasePageRespVO;
+import org.smartframework.cloud.examples.app.auth.core.UserContext;
 import org.smartframework.cloud.examples.mall.product.entity.base.ProductInfoEntity;
 import org.smartframework.cloud.examples.mall.product.mapper.base.ProductInfoBaseMapper;
 import org.smartframework.cloud.examples.mall.rpc.product.request.oms.PageProductReqVO;
@@ -45,6 +46,7 @@ public class ProductInfoOmsBiz extends BaseBiz<ProductInfoEntity> {
         record.setName(reqBody.getName());
         record.setSellPrice(reqBody.getSellPrice());
         record.setStock(reqBody.getStock());
+        record.setAddUser(UserContext.getUserId());
 
         return productInfoBaseMapper.insert(record) > 0;
     }
@@ -62,6 +64,7 @@ public class ProductInfoOmsBiz extends BaseBiz<ProductInfoEntity> {
         record.setSellPrice(reqBody.getSellPrice());
         record.setStock(reqBody.getStock());
         record.setUpdTime(new Date());
+        record.setUpdUser(UserContext.getUserId());
 
         return productInfoBaseMapper.updateById(record) > 0;
     }
@@ -77,6 +80,7 @@ public class ProductInfoOmsBiz extends BaseBiz<ProductInfoEntity> {
         record.setId(id);
         record.setDelState(DelStateEnum.DELETED.getDelState());
         record.setDelTime(new Date());
+        record.setDelUser(UserContext.getUserId());
         return productInfoBaseMapper.updateById(record) > 0;
     }
 

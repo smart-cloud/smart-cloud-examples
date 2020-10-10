@@ -19,14 +19,14 @@ import java.io.IOException;
 public class SecurityApi {
 
     public RespVO<GenerateClientPubKeyRespVO> generateClientPubKey() throws IOException {
-        return HttpUtil.get(
+        return HttpUtil.postWithRaw(
                 SystemTestConfig.getGatewayBaseUrl() + "gateway/api/security/generateClientPubKey",
                 null, new TypeReference<RespVO<GenerateClientPubKeyRespVO>>() {
                 });
     }
 
     public RespVO<GenerateAesKeyRespVO> generateAesKey(GenerateAesKeyReqVO reqVO) throws IOException {
-        return HttpUtil.get(
+        return HttpUtil.postWithRaw(
                 SystemTestConfig.getGatewayBaseUrl() + "gateway/api/security/generateAesKey",
                 reqVO, new TypeReference<RespVO<GenerateAesKeyRespVO>>() {
                 });

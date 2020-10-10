@@ -24,6 +24,7 @@ public class CreateOrderReqVO extends Base {
      * 商品信息
      */
     @NotEmpty
-    private List<@Valid CreateOrderProductInfoReqVO> products;
+    @Valid
+    private List<CreateOrderProductInfoReqVO> products;
 
 }

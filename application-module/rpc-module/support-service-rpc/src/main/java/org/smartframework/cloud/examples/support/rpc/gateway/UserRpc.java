@@ -5,6 +5,7 @@ import org.smartframework.cloud.common.pojo.vo.RespVO;
 import org.smartframework.cloud.examples.support.rpc.constant.RpcConstants;
 import org.smartframework.cloud.examples.support.rpc.gateway.request.rpc.CacheUserInfoReqVO;
 import org.smartframework.cloud.examples.support.rpc.gateway.request.rpc.ExitLoginReqVO;
+import org.smartframework.cloud.starter.core.constants.ProtostuffConstant;
 import org.smartframework.cloud.starter.rpc.feign.annotation.SmartFeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -27,8 +28,8 @@ public interface UserRpc {
      * @param req
      * @return
      */
-    @PostMapping("gateway/rpc/user/cacheUserInfo")
-    public RespVO<Base> cacheUserInfo(@RequestBody @Valid CacheUserInfoReqVO req);
+    @PostMapping(value = "gateway/rpc/user/cacheUserInfo", produces = "application/x-protobuf;charset=UTF-8", consumes = "application/x-protobuf;charset=UTF-8")
+    RespVO<Base> cacheUserInfo(@RequestBody @Valid CacheUserInfoReqVO req);
 
     /**
      * 退出登录
@@ -37,6 +38,6 @@ public interface UserRpc {
      * @return
      */
     @PostMapping("gateway/rpc/user/exit")
-    public RespVO<Base> exit(@RequestBody @Valid ExitLoginReqVO req);
+    RespVO<Base> exit(@RequestBody @Valid ExitLoginReqVO req);
 
 }
