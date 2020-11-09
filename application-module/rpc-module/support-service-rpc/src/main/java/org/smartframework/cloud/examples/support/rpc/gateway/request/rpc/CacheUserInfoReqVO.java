@@ -6,6 +6,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 import org.smartframework.cloud.common.pojo.Base;
+import org.smartframework.cloud.mask.MaskLog;
+import org.smartframework.cloud.mask.MaskRule;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -41,11 +43,13 @@ public class CacheUserInfoReqVO extends Base {
      * 真实姓名
      */
     @NotBlank
+    @MaskLog(MaskRule.NAME)
     private String realName;
 
     /**
      * 手机号
      */
+    @MaskLog(MaskRule.MOBILE)
     private String mobile;
 
 }

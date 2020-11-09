@@ -144,7 +144,7 @@ public final class TokenUtil {
 
     @Getter
     @Setter
-    static class Context {
+    public static class Context {
         private RSAPublicKey clientRSAPublicKey;
         private String token;
         private String aesKey;
