@@ -23,7 +23,6 @@ import org.springframework.stereotype.Service;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.Map;
 
 /**
  * @author liyulin
@@ -45,8 +44,7 @@ public class ApiMetaRpcService {
         method.invoke(discoveryClient);
 
         String url = getFetchUrl(discoveryClient, req.getServiceName());
-        RespVO<ApiMetaFetchRespVO> apiMetaFetchRespVO = HttpUtil.get(url, null, new TypeReference<RespVO<ApiMetaFetchRespVO>>() {
-        });
+        RespVO<ApiMetaFetchRespVO> apiMetaFetchRespVO = fetchApiMeta(url);
 
         if (!RespUtil.isSuccess(apiMetaFetchRespVO)) {
             throw new BusinessException(GatewayReturnCodeEnum.FETCH_APIMETA_FAIL);
@@ -72,6 +70,18 @@ public class ApiMetaRpcService {
         Application application = discoveryClient.getApplication(serviceName);
         InstanceInfo instanceInfo = application.getInstances().get(0);
         return "http://" + instanceInfo.getIPAddr() + ":" + instanceInfo.getPort() + ApiMetaConstants.FETCH_URL;
+    }
+
+    /**
+     * 以get方式请求
+     *
+     * @param url
+     * @return
+     * @throws IOException
+     */
+    public RespVO<ApiMetaFetchRespVO> fetchApiMeta(String url) throws IOException {
+        return HttpUtil.get(url, null, new TypeReference<RespVO<ApiMetaFetchRespVO>>() {
+        });
     }
 
 }
