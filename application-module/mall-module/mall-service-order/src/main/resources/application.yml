@@ -1,9 +1,7 @@
 smart:
   dataMachineId: 2
   async: true
-  api:
-    validator: true
-  aspect:
+  log:
     rpclog: true
     apilog: true
 
