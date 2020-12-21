@@ -34,7 +34,7 @@ public class ApiAccessFilter implements GlobalFilter, Ordered {
         String urlMethod = request.getURI().getPath() + request.getMethodValue();
         ApiMetaFetchRespVO.ApiAC apiAC = (ApiMetaFetchRespVO.ApiAC) redisTemplate.opsForHash().get(RedisKeyHelper.getApiMetaKey(), RedisKeyHelper.getApiMetaHashKey(urlMethod));
 
-        String token = WebUtil.getFromRequestHeader(request, GatewayConstants.TOKEN);
+        String token = WebUtil.getFromRequestHeader(request, GatewayConstants.AccessConstants.TOKEN);
 
         // 将数据塞入当前context，供后面filter使用
         ApiAccessBO apiAccessBO = new ApiAccessBO().setApiAC(apiAC).setToken(token);

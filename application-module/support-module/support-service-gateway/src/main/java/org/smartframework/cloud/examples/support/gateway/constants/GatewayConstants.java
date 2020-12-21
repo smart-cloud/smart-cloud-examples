@@ -9,13 +9,23 @@ package org.smartframework.cloud.examples.support.gateway.constants;
 public class GatewayConstants {
 
     /**
-     * http header token
-     */
-    public static final String TOKEN = "token";
-
-    /**
      * gateway接口url前缀
      */
     public static final String GATEWAY_API_URL_PREFIX = "/gateway";
+
+    public static class AccessConstants {
+        /**
+         * http header timestamp
+         */
+        public static final String TIMESTAMP = "smart-timestamp";
+        /**
+         * http header nonce
+         */
+        public static final String NONCE = "smart-nonce";
+        /**
+         * http header token
+         */
+        public static final String TOKEN = "smart-token";
+    }
 
 }
