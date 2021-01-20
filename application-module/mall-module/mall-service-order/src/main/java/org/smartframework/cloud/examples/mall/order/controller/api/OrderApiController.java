@@ -1,6 +1,6 @@
 package org.smartframework.cloud.examples.mall.order.controller.api;
 
-import org.smartframework.cloud.api.core.annotation.SmartApiAC;
+import org.smartframework.cloud.api.core.annotation.SmartApiAcess;
 import org.smartframework.cloud.api.core.enums.SignType;
 import org.smartframework.cloud.common.pojo.vo.RespVO;
 import org.smartframework.cloud.examples.mall.order.service.api.OrderApiService;
@@ -38,7 +38,7 @@ public class OrderApiController {
      * @return
      */
     @PostMapping("create")
-    @SmartApiAC(tokenCheck = true, sign = SignType.ALL, encrypt = true, decrypt = true, auth = true, repeatSubmitCheck = true)
+    @SmartApiAcess(tokenCheck = true, sign = SignType.ALL, encrypt = true, decrypt = true, auth = true, repeatSubmitCheck = true)
     public RespVO<CreateOrderRespVO> create(@RequestBody @Valid CreateOrderReqVO req) {
         return RespUtil.success(orderApiService.create(req));
     }

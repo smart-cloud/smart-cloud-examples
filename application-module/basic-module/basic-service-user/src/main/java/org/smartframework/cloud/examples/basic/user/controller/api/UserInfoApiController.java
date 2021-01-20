@@ -1,6 +1,6 @@
 package org.smartframework.cloud.examples.basic.user.controller.api;
 
-import org.smartframework.cloud.api.core.annotation.SmartApiAC;
+import org.smartframework.cloud.api.core.annotation.SmartApiAcess;
 import org.smartframework.cloud.api.core.enums.SignType;
 import org.smartframework.cloud.common.pojo.vo.RespVO;
 import org.smartframework.cloud.examples.basic.rpc.user.response.base.UserInfoBaseRespVO;
@@ -33,7 +33,7 @@ public class UserInfoApiController {
      * @return
      */
     @GetMapping("query")
-    @SmartApiAC(tokenCheck = true, sign = SignType.ALL, encrypt = true, decrypt = true)
+    @SmartApiAcess(tokenCheck = true, sign = SignType.ALL, encrypt = true, decrypt = true)
     public RespVO<UserInfoBaseRespVO> query() {
         return RespUtil.success(userInfoApIService.queryById());
     }

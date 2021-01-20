@@ -1,6 +1,6 @@
 package org.smartframework.cloud.examples.support.gateway.filter.access;
 
-import org.smartframework.cloud.api.core.annotation.SmartApiAC;
+import org.smartframework.cloud.api.core.annotation.SmartApiAcess;
 import org.smartframework.cloud.examples.api.ac.core.vo.ApiMetaFetchRespVO;
 import org.smartframework.cloud.examples.support.gateway.constants.GatewayConstants;
 import org.smartframework.cloud.examples.support.gateway.constants.Order;
@@ -17,7 +17,7 @@ import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
 /**
- * {@link SmartApiAC}对应入参处理，供后续filter使用
+ * {@link SmartApiAcess}对应入参处理，供后续filter使用
  *
  * @author liyulin
  * @date 2020-09-08

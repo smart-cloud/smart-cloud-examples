@@ -1,6 +1,6 @@
 package org.smartframework.cloud.examples.mall.product.controller.oms;
 
-import org.smartframework.cloud.api.core.annotation.SmartApiAC;
+import org.smartframework.cloud.api.core.annotation.SmartApiAcess;
 import org.smartframework.cloud.api.core.enums.SignType;
 import org.smartframework.cloud.common.pojo.Base;
 import org.smartframework.cloud.common.pojo.vo.BasePageRespVO;
@@ -40,7 +40,7 @@ public class ProductInfoOmsController {
      * @return
      */
     @PostMapping("create")
-    @SmartApiAC(tokenCheck = true, sign = SignType.ALL, encrypt = true, decrypt = true)
+    @SmartApiAcess(tokenCheck = true, sign = SignType.ALL, encrypt = true, decrypt = true)
     public RespVO<Base> create(@RequestBody @Valid ProductInsertReqVO req) {
         return productOmsService.create(req);
     }
@@ -52,7 +52,7 @@ public class ProductInfoOmsController {
      * @return
      */
     @PostMapping("update")
-    @SmartApiAC(tokenCheck = true, sign = SignType.ALL, encrypt = true, decrypt = true)
+    @SmartApiAcess(tokenCheck = true, sign = SignType.ALL, encrypt = true, decrypt = true)
     public RespVO<Base> update(@RequestBody @Valid ProductUpdateReqVO req) {
         return productOmsService.update(req);
     }
@@ -64,7 +64,7 @@ public class ProductInfoOmsController {
      * @return
      */
     @PostMapping("logicDelete")
-    @SmartApiAC(tokenCheck = true, sign = SignType.ALL, encrypt = true, decrypt = true)
+    @SmartApiAcess(tokenCheck = true, sign = SignType.ALL, encrypt = true, decrypt = true)
     public RespVO<Base> logicDelete(@RequestBody @Valid ProductDeleteReqVO req) {
         return productOmsService.logicDelete(req);
     }

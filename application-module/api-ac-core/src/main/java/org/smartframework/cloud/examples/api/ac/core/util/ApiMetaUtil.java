@@ -6,7 +6,7 @@ import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.ArrayUtils;
 import org.reflections.Reflections;
 import org.reflections.scanners.MethodAnnotationsScanner;
-import org.smartframework.cloud.api.core.annotation.SmartApiAC;
+import org.smartframework.cloud.api.core.annotation.SmartApiAcess;
 import org.smartframework.cloud.examples.api.ac.core.vo.ApiMetaFetchRespVO;
 import org.smartframework.cloud.starter.core.constants.PackageConfig;
 import org.smartframework.cloud.starter.rpc.feign.annotation.SmartFeignClient;
@@ -62,14 +62,14 @@ public class ApiMetaUtil {
                 continue;
             }
 
-            SmartApiAC smartApiAC = method.getAnnotation(SmartApiAC.class);
+            SmartApiAcess smartApiAcess = method.getAnnotation(SmartApiAcess.class);
             String urlHeader = getUrlUnderClass(declaringClass);
             String[] urlTails = getUrlTails(method);
             for (String urlTail : urlTails) {
                 String urlCode = getUrlCode(urlHeader, urlTail);
                 ApiMetaFetchRespVO.ApiAC apiAC = null;
-                if (smartApiAC != null) {
-                    apiAC = buildApiAC(smartApiAC);
+                if (smartApiAcess != null) {
+                    apiAC = buildApiAC(smartApiAcess);
                 }
                 apiACs.put(urlCode, apiAC);
             }
@@ -113,13 +113,13 @@ public class ApiMetaUtil {
         return urlCode;
     }
 
-    private ApiMetaFetchRespVO.ApiAC buildApiAC(SmartApiAC smartApiAC) {
-        return ApiMetaFetchRespVO.ApiAC.builder().tokenCheck(smartApiAC.tokenCheck())
-                .sign(smartApiAC.sign().getType())
-                .decrypt(smartApiAC.decrypt())
-                .encrypt(smartApiAC.encrypt())
-                .auth(smartApiAC.auth())
-                .repeatSubmitCheck(smartApiAC.repeatSubmitCheck())
+    private ApiMetaFetchRespVO.ApiAC buildApiAC(SmartApiAcess smartApiAcess) {
+        return ApiMetaFetchRespVO.ApiAC.builder().tokenCheck(smartApiAcess.tokenCheck())
+                .sign(smartApiAcess.sign().getType())
+                .decrypt(smartApiAcess.decrypt())
+                .encrypt(smartApiAcess.encrypt())
+                .auth(smartApiAcess.auth())
+                .repeatSubmitCheck(smartApiAcess.repeatSubmitCheck())
                 .build();
     }
 
