@@ -11,8 +11,6 @@ public abstract class AbstractSystemTestConfig {
     protected String getBaseUrl(String singleBaseUrl) {
         if (isGateway()) {
             return getGatewayBaseUrl();
-        } else if (isMerge()) {
-            return getMergeBaseUrl();
         } else {
             return singleBaseUrl;
         }
@@ -31,19 +29,5 @@ public abstract class AbstractSystemTestConfig {
      * @return
      */
     public abstract String getGatewayBaseUrl();
-
-    /**
-     * 是否走合并服务
-     *
-     * @return
-     */
-    public abstract boolean isMerge();
-
-    /**
-     * 合并服务地址前缀
-     *
-     * @return
-     */
-    public abstract String getMergeBaseUrl();
 
 }

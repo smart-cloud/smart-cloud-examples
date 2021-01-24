@@ -3,6 +3,7 @@ spring:
     dynamic:
       primary: mall-order
       strict: true
+      seata: true
       datasource:
         mall-order:
           url: jdbc:mysql://127.0.0.1:3306/demo_order?serverTimezone=Asia/Shanghai&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true

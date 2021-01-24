@@ -5,9 +5,7 @@ import org.smartframework.cloud.examples.basic.rpc.enums.user.UserStateEnum;
 import org.smartframework.cloud.examples.basic.user.bo.login.LoginInfoInsertBizBO;
 import org.smartframework.cloud.examples.basic.user.entity.base.LoginInfoEntity;
 import org.smartframework.cloud.examples.basic.user.mapper.base.LoginInfoBaseMapper;
-import org.smartframework.cloud.starter.core.business.util.SnowFlakeIdUtil;
 import org.smartframework.cloud.starter.mybatis.common.biz.BaseBiz;
-import org.smartframework.cloud.starter.mybatis.common.mapper.enums.DelStateEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -22,7 +20,7 @@ public class LoginInfoApiBiz extends BaseBiz<LoginInfoEntity> {
     /**
      * 插入登陆信息
      *
-     * @param dto
+     * @param bo
      * @return
      */
     public LoginInfoEntity insert(LoginInfoInsertBizBO bo) {

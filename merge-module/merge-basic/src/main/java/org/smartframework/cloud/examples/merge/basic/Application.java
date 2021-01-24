@@ -1,4 +1,4 @@
-package org.smartframework.cloud.examples.merge.mall;
+package org.smartframework.cloud.examples.merge.basic;
 
 import org.smartframework.cloud.examples.framework.annotation.SmartApplication;
 import org.springframework.boot.SpringApplication;

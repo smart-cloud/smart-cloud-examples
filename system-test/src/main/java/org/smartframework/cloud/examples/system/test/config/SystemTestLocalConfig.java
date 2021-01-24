@@ -4,8 +4,6 @@ public class SystemTestLocalConfig extends AbstractSystemTestConfig implements I
 
     private static final boolean GATEWAY = true;
     private static final String GATEWAY_BASE_URL = "http://localhost:80/";
-    private static final boolean MERGE_MODULE = false;
-    private static final String MERGE_MALL_BASE_URL = "http://localhost:30001/";
 
     @Override
     public String getUserBaseUrl() {
@@ -30,16 +28,6 @@ public class SystemTestLocalConfig extends AbstractSystemTestConfig implements I
     @Override
     public String getGatewayBaseUrl() {
         return GATEWAY_BASE_URL;
-    }
-
-    @Override
-    public boolean isMerge() {
-        return MERGE_MODULE;
-    }
-
-    @Override
-    public String getMergeBaseUrl() {
-        return MERGE_MALL_BASE_URL;
     }
 
 }

@@ -31,18 +31,31 @@ spring:
         locator:
           enabled: true
       routes:
+      # ======单体服务start
       # ------basic module
-      - id: user
-        uri: lb://basicServiceUser
-        predicates:
-        - Path=/user/**
+#      - id: user
+#        uri: lb://basicServiceUser
+#        predicates:
+#        - Path=/user/**
         
       # ------mall module
-      - id: product
-        uri: lb://mallServiceProduct
+#      - id: product
+#        uri: lb://mallServiceProduct
+#        predicates:
+#        - Path=/product/**
+#      - id: order
+#        uri: lb://mallServiceOrder
+#        predicates:
+#        - Path=/order/**
+      # ======单体服务end
+
+      # ======合体服务start
+      - id: basic
+        uri: lb://merge-basic
         predicates:
-        - Path=/product/**
-      - id: order
-        uri: lb://mallServiceOrder
+          - Path=/user/**
+      - id: mall
+        uri: lb://merge-mall
         predicates:
-        - Path=/order/**
+          - Path=/product/**,/order/**
+      # ======合体服务end
