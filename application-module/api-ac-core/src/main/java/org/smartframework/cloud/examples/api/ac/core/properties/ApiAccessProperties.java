@@ -10,7 +10,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @ConfigurationProperties(prefix = SmartConstant.SMART_PROPERTIES_PREFIX)
-public class ApiAcProperties extends Base {
+public class ApiAccessProperties extends Base {
 
 	private static final long serialVersionUID = 1L;
 

@@ -1,7 +1,7 @@
 package org.smartframework.cloud.examples.system.test.module.mall.util;
 
 import org.assertj.core.api.Assertions;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.smartframework.cloud.examples.system.test.util.TokenUtil;
 import org.smartframework.cloud.starter.test.AbstractSystemTest;
 

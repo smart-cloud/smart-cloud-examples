@@ -35,8 +35,8 @@ public class RepeatSubmitCheckFilter implements GlobalFilter, Ordered {
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
         ApiAccessBO apiAccessBO = ApiAccessContext.getContext();
-        ApiMetaFetchRespVO.ApiAC apiAC = apiAccessBO.getApiAC();
-        if (apiAC == null || !apiAC.isRepeatSubmitCheck()) {
+        ApiMetaFetchRespVO.ApiAccess apiAccess = apiAccessBO.getApiAccess();
+        if (apiAccess == null || !apiAccess.isRepeatSubmitCheck()) {
             return chain.filter(exchange);
         }
 

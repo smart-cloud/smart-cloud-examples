@@ -7,9 +7,10 @@ spring:
       datasource:
         mall-order:
           url: jdbc:mysql://127.0.0.1:3306/demo_order?serverTimezone=Asia/Shanghai&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true
-          username: ENC(Ell/BrCjyLFI0+iZgPqo6w==)
-          password: ENC(Aq90bjkofJr0svNO4mtFfw==)
+          username: root
+          password: 123456
           driver-class-name: com.mysql.cj.jdbc.Driver
+          type: com.zaxxer.hikari.HikariDataSource
 mybatis-plus:
   mapper-locations:
     - classpath*:/org/smartframework/cloud/examples/mall/order/mapper/**/*.xml

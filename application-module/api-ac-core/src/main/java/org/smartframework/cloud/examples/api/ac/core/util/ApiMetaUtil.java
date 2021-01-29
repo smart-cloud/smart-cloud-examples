@@ -54,7 +54,7 @@ public class ApiMetaUtil {
             return null;
         }
 
-        Map<String, ApiMetaFetchRespVO.ApiAC> apiACs = new HashMap<>();
+        Map<String, ApiMetaFetchRespVO.ApiAccess> apiAccessMap = new HashMap<>();
         for (Method method : allMappingSet) {
             Class<?> declaringClass = method.getDeclaringClass();
             // 过滤掉rpc接口
@@ -67,15 +67,15 @@ public class ApiMetaUtil {
             String[] urlTails = getUrlTails(method);
             for (String urlTail : urlTails) {
                 String urlCode = getUrlCode(urlHeader, urlTail);
-                ApiMetaFetchRespVO.ApiAC apiAC = null;
+                ApiMetaFetchRespVO.ApiAccess apiAccess = null;
                 if (smartApiAcess != null) {
-                    apiAC = buildApiAC(smartApiAcess);
+                    apiAccess = buildApiAccess(smartApiAcess);
                 }
-                apiACs.put(urlCode, apiAC);
+                apiAccessMap.put(urlCode, apiAccess);
             }
         }
 
-        return new ApiMetaFetchRespVO(apiACs);
+        return new ApiMetaFetchRespVO(apiAccessMap);
     }
 
     private Set<Method> getAllApiMethods(Reflections reflections) {
@@ -113,8 +113,8 @@ public class ApiMetaUtil {
         return urlCode;
     }
 
-    private ApiMetaFetchRespVO.ApiAC buildApiAC(SmartApiAcess smartApiAcess) {
-        return ApiMetaFetchRespVO.ApiAC.builder().tokenCheck(smartApiAcess.tokenCheck())
+    private ApiMetaFetchRespVO.ApiAccess buildApiAccess(SmartApiAcess smartApiAcess) {
+        return ApiMetaFetchRespVO.ApiAccess.builder().tokenCheck(smartApiAcess.tokenCheck())
                 .sign(smartApiAcess.sign().getType())
                 .decrypt(smartApiAcess.decrypt())
                 .encrypt(smartApiAcess.encrypt())

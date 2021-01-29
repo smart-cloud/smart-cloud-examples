@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.smartframework.cloud.common.pojo.Base;
 import org.smartframework.cloud.common.pojo.vo.RespVO;
-import org.smartframework.cloud.examples.api.ac.core.properties.ApiAcProperties;
+import org.smartframework.cloud.examples.api.ac.core.properties.ApiAccessProperties;
 import org.smartframework.cloud.examples.support.rpc.gateway.ApiMetaRpc;
 import org.smartframework.cloud.examples.support.rpc.gateway.request.rpc.NotifyFetchReqVO;
 import org.smartframework.cloud.starter.core.business.exception.ServerException;
@@ -24,7 +24,7 @@ import org.springframework.context.ApplicationListener;
 public class NotifyGatewayFetchApiMetaListener implements ApplicationListener<ApplicationReadyEvent> {
 
     private ApiMetaRpc apiMetaRpc;
-    private ApiAcProperties apiAcProperties;
+    private ApiAccessProperties apiAccessProperties;
     /**
      * 服务名key
      */
@@ -32,7 +32,7 @@ public class NotifyGatewayFetchApiMetaListener implements ApplicationListener<Ap
 
     @Override
     public void onApplicationEvent(ApplicationReadyEvent event) {
-        if (!apiAcProperties.isUploadApiMeta()) {
+        if (!apiAccessProperties.isUploadApiMeta()) {
             log.info("notify gateway to fetch api meta is ignored!");
             return;
         }

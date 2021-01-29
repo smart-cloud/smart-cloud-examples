@@ -50,12 +50,12 @@ public class ApiMetaRpcService {
             throw new BusinessException(GatewayReturnCodeEnum.FETCH_APIMETA_FAIL);
         }
         ApiMetaFetchRespVO apiMetaFetch = apiMetaFetchRespVO.getBody();
-        if (apiMetaFetch == null || MapUtils.isEmpty(apiMetaFetch.getApiACs())) {
+        if (apiMetaFetch == null || MapUtils.isEmpty(apiMetaFetch.getApiAccessMap())) {
             return;
         }
         // redis持久化
-        apiMetaFetch.getApiACs().forEach((urlMethod, apiAC) ->
-                redisTemplate.opsForHash().put(RedisKeyHelper.getApiMetaKey(), RedisKeyHelper.getApiMetaHashKey(urlMethod), apiAC)
+        apiMetaFetch.getApiAccessMap().forEach((urlMethod, apiAccess) ->
+                redisTemplate.opsForHash().put(RedisKeyHelper.getApiMetaKey(), RedisKeyHelper.getApiMetaHashKey(urlMethod), apiAccess)
         );
     }
 

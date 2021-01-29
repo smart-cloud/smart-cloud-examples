@@ -2,7 +2,7 @@ package org.smartframework.cloud.examples.mall.order.test.cases.integration.api;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import org.assertj.core.api.Assertions;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.smartframework.cloud.common.pojo.enums.ReturnCodeEnum;
 import org.smartframework.cloud.common.pojo.vo.RespVO;

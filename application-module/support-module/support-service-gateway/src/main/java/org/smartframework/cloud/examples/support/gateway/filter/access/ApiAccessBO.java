@@ -20,7 +20,7 @@ public class ApiAccessBO {
     /**
      * 接口注解信息
      */
-    ApiMetaFetchRespVO.ApiAC apiAC;
+    ApiMetaFetchRespVO.ApiAccess apiAccess;
     /**
      * token
      */

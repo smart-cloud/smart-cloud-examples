@@ -52,7 +52,7 @@ public class TokenCheckFilter implements GlobalFilter, Ordered {
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
         ApiAccessBO apiAccessBO = ApiAccessContext.getContext();
         String token = apiAccessBO.getToken();
-        ApiMetaFetchRespVO.ApiAC apiAC = apiAccessBO.getApiAC();
+        ApiMetaFetchRespVO.ApiAccess apiAC = apiAccessBO.getApiAccess();
         // 1、token校验
         if (apiAC == null || !apiAC.isTokenCheck()) {
             return chain.filter(exchange);

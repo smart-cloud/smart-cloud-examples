@@ -32,12 +32,12 @@ public class ApiAccessFilter implements GlobalFilter, Ordered {
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
         ServerHttpRequest request = exchange.getRequest();
         String urlMethod = request.getURI().getPath() + request.getMethodValue();
-        ApiMetaFetchRespVO.ApiAC apiAC = (ApiMetaFetchRespVO.ApiAC) redisTemplate.opsForHash().get(RedisKeyHelper.getApiMetaKey(), RedisKeyHelper.getApiMetaHashKey(urlMethod));
+        ApiMetaFetchRespVO.ApiAccess apiAC = (ApiMetaFetchRespVO.ApiAccess) redisTemplate.opsForHash().get(RedisKeyHelper.getApiMetaKey(), RedisKeyHelper.getApiMetaHashKey(urlMethod));
 
         String token = WebUtil.getFromRequestHeader(request, GatewayConstants.AccessConstants.TOKEN);
 
         // 将数据塞入当前context，供后面filter使用
-        ApiAccessBO apiAccessBO = new ApiAccessBO().setApiAC(apiAC).setToken(token);
+        ApiAccessBO apiAccessBO = new ApiAccessBO().setApiAccess(apiAC).setToken(token);
         ApiAccessContext.setContext(apiAccessBO);
         return chain.filter(exchange).doFinally(s -> {
             // 使用完清理，避免内存泄漏

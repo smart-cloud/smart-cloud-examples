@@ -26,7 +26,7 @@ public class ApiMetaFetchRespVO extends Base {
     /**
      * Api访问控制信息<url编码（由url+http method组成）, Api访问控制信息>
      */
-    private Map<String, ApiAC> apiACs;
+    private Map<String, ApiAccess> apiAccessMap;
 
     /**
      * Api访问控制信息
@@ -39,7 +39,7 @@ public class ApiMetaFetchRespVO extends Base {
     @NoArgsConstructor
     @AllArgsConstructor
     @SuperBuilder
-    public static class ApiAC extends Base {
+    public static class ApiAccess extends Base {
 
         private static final long serialVersionUID = 1L;
 

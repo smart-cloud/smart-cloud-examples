@@ -43,10 +43,10 @@ public class ApiMetaRpcControllerIntegrationTest extends WebReactiveIntegrationT
 
         Mockito.when(discoveryClient.getApplication(serviceId)).thenReturn(applicationMock);
 
-        Map<String, ApiMetaFetchRespVO.ApiAC> apiACsMock = new HashMap<>();
-        apiACsMock.put("/user/api/login/checkPOST", ApiMetaFetchRespVO.ApiAC.builder().auth(false).tokenCheck(true).decrypt(false).build());
-        apiACsMock.put("/user/api/register/registerPOST", ApiMetaFetchRespVO.ApiAC.builder().auth(false).tokenCheck(true).decrypt(false).build());
-        RespVO<ApiMetaFetchRespVO> apiMetaFetchRespVOMock = new RespVO(new ApiMetaFetchRespVO(apiACsMock));
+        Map<String, ApiMetaFetchRespVO.ApiAccess> apiAccessMapMock = new HashMap<>();
+        apiAccessMapMock.put("/user/api/login/checkPOST", ApiMetaFetchRespVO.ApiAccess.builder().auth(false).tokenCheck(true).decrypt(false).build());
+        apiAccessMapMock.put("/user/api/register/registerPOST", ApiMetaFetchRespVO.ApiAccess.builder().auth(false).tokenCheck(true).decrypt(false).build());
+        RespVO<ApiMetaFetchRespVO> apiMetaFetchRespVOMock = new RespVO(new ApiMetaFetchRespVO(apiAccessMapMock));
         Mockito.doReturn(apiMetaFetchRespVOMock).when(apiMetaRpcService).fetchApiMeta(Mockito.anyString());
         // mock end
 

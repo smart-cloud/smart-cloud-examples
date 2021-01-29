@@ -33,29 +33,29 @@ spring:
       routes:
       # ======单体服务start
       # ------basic module
-#      - id: user
-#        uri: lb://basicServiceUser
-#        predicates:
-#        - Path=/user/**
+      - id: user
+        uri: lb://basicServiceUser
+        predicates:
+        - Path=/user/**
         
       # ------mall module
-#      - id: product
-#        uri: lb://mallServiceProduct
-#        predicates:
-#        - Path=/product/**
-#      - id: order
-#        uri: lb://mallServiceOrder
-#        predicates:
-#        - Path=/order/**
+      - id: product
+        uri: lb://mallServiceProduct
+        predicates:
+        - Path=/product/**
+      - id: order
+        uri: lb://mallServiceOrder
+        predicates:
+        - Path=/order/**
       # ======单体服务end
 
       # ======合体服务start
-      - id: basic
-        uri: lb://merge-basic
-        predicates:
-          - Path=/user/**
-      - id: mall
-        uri: lb://merge-mall
-        predicates:
-          - Path=/product/**,/order/**
+#      - id: basic
+#        uri: lb://merge-basic
+#        predicates:
+#          - Path=/user/**
+#      - id: mall
+#        uri: lb://merge-mall
+#        predicates:
+#          - Path=/product/**,/order/**
       # ======合体服务end

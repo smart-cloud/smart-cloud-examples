@@ -151,7 +151,7 @@ sign = RSA签名签名(AES加密(head的json串) + AES加密(body json串))
 
 - 安装[redis](https://github.com/microsoftarchive/redis/releases)，并启动
 - 安装[mysql](https://www.mysql.com/downloads/)，执行/docs/sql下脚本
-- 安装[seata](https://github.com/seata/seata/releases/tag/v1.2.0)服务端，并启动
+- 安装[seata](https://github.com/seata/seata/releases/tag/v1.4.0)服务端，并启动
   - server sql见/smart-cloud-examples/docs/sql/seata.sql
   - file.conf文件配置
   ```
