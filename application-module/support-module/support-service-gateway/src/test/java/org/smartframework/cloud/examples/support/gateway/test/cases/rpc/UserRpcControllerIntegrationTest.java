@@ -2,7 +2,7 @@ package org.smartframework.cloud.examples.support.gateway.test.cases.rpc;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import org.assertj.core.api.Assertions;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.redisson.api.RMapCache;
 import org.redisson.api.RedissonClient;
 import org.smartframework.cloud.common.pojo.Base;

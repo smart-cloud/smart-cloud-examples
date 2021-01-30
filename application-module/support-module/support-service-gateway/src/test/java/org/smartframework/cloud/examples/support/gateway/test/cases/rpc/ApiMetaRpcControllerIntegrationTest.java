@@ -5,7 +5,7 @@ import com.netflix.appinfo.InstanceInfo;
 import com.netflix.discovery.DiscoveryClient;
 import com.netflix.discovery.shared.Application;
 import org.assertj.core.api.Assertions;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.smartframework.cloud.common.pojo.Base;
 import org.smartframework.cloud.common.pojo.enums.ReturnCodeEnum;
