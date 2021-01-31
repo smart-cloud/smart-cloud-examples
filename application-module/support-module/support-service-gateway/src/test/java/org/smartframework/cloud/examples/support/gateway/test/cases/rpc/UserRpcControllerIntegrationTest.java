@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.redisson.api.RMapCache;
 import org.redisson.api.RedissonClient;
 import org.smartframework.cloud.common.pojo.Base;
-import org.smartframework.cloud.common.pojo.enums.ReturnCodeEnum;
+import org.smartframework.cloud.common.pojo.enums.CommonReturnCodes;
 import org.smartframework.cloud.common.pojo.vo.RespVO;
 import org.smartframework.cloud.examples.support.gateway.bo.SecurityKeyBO;
 import org.smartframework.cloud.examples.support.gateway.constants.RedisExpire;
@@ -50,7 +50,7 @@ public class UserRpcControllerIntegrationTest extends WebReactiveIntegrationTest
         });
         Assertions.assertThat(result).isNotNull();
         Assertions.assertThat(result.getHead()).isNotNull();
-        Assertions.assertThat(result.getHead().getCode()).isEqualTo(ReturnCodeEnum.SUCCESS.getCode());
+        Assertions.assertThat(result.getHead().getCode()).isEqualTo(CommonReturnCodes.SUCCESS.getCode());
     }
 
 }

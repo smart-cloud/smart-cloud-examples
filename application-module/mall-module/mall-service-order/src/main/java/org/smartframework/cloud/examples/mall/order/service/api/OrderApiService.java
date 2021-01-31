@@ -8,7 +8,7 @@ import org.smartframework.cloud.examples.app.auth.core.UserContext;
 import org.smartframework.cloud.examples.mall.order.biz.api.OrderBillApiBiz;
 import org.smartframework.cloud.examples.mall.order.entity.base.OrderBillEntity;
 import org.smartframework.cloud.examples.mall.order.entity.base.OrderDeliveryInfoEntity;
-import org.smartframework.cloud.examples.mall.order.enums.OrderReturnCodeEnum;
+import org.smartframework.cloud.examples.mall.order.enums.OrderReturnCodes;
 import org.smartframework.cloud.examples.mall.order.exception.UpdateStockException;
 import org.smartframework.cloud.examples.mall.rpc.enums.order.PayStateEnum;
 import org.smartframework.cloud.examples.mall.rpc.order.request.api.CreateOrderProductInfoReqVO;
@@ -72,7 +72,7 @@ public class OrderApiService {
         if (ObjectUtil.isNull(qryProductByIdsResp.getBody())
                 || CollectionUtils.isEmpty(qryProductByIdsResp.getBody().getProductInfos())
                 || qryProductByIdsResp.getBody().getProductInfos().size() != products.size()) {
-            throw new BusinessException(OrderReturnCodeEnum.PRODUCT_NOT_EXIST);
+            throw new BusinessException(OrderReturnCodes.PRODUCT_NOT_EXIST);
         }
         List<QryProductByIdRespVO> productInfos = qryProductByIdsResp.getBody().getProductInfos();
 

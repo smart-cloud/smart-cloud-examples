@@ -8,13 +8,12 @@ import org.smartframework.cloud.examples.api.ac.core.vo.ApiMetaFetchRespVO;
 import org.smartframework.cloud.examples.app.auth.core.AppAuthConstants;
 import org.smartframework.cloud.examples.app.auth.core.UserBO;
 import org.smartframework.cloud.examples.support.gateway.constants.Order;
-import org.smartframework.cloud.examples.support.gateway.enums.GatewayReturnCodeEnum;
+import org.smartframework.cloud.examples.support.gateway.enums.GatewayReturnCodes;
 import org.smartframework.cloud.examples.support.gateway.filter.access.ApiAccessBO;
 import org.smartframework.cloud.examples.support.gateway.filter.access.ApiAccessContext;
 import org.smartframework.cloud.examples.support.gateway.util.RedisKeyHelper;
 import org.smartframework.cloud.starter.core.business.exception.BusinessException;
 import org.smartframework.cloud.starter.core.business.exception.DataValidateException;
-import org.smartframework.cloud.starter.core.business.exception.confg.ParamValidateMessage;
 import org.smartframework.cloud.utility.JacksonUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
@@ -57,12 +56,12 @@ public class TokenCheckFilter implements GlobalFilter, Ordered {
         if (apiAC == null || !apiAC.isTokenCheck()) {
             return chain.filter(exchange);
         } else if (StringUtils.isBlank(token)) {
-            throw new DataValidateException(ParamValidateMessage.TOKEN_MISSING);
+            throw new DataValidateException(GatewayReturnCodes.TOKEN_MISSING);
         }
         RMapCache<String, UserBO> userCache = redissonClient.getMapCache(RedisKeyHelper.getUserHashKey());
         UserBO userBO = userCache.get(RedisKeyHelper.getUserKey(token));
         if (userBO == null) {
-            throw new BusinessException(GatewayReturnCodeEnum.TOKEN_EXPIRED_LOGIN_SUCCESS);
+            throw new BusinessException(GatewayReturnCodes.TOKEN_EXPIRED_LOGIN_SUCCESS);
         }
 
         // 2、将用户信息塞入http header

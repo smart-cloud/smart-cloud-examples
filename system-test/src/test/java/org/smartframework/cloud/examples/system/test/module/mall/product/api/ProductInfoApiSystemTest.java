@@ -2,7 +2,7 @@ package org.smartframework.cloud.examples.system.test.module.mall.product.api;
 
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.smartframework.cloud.common.pojo.enums.ReturnCodeEnum;
+import org.smartframework.cloud.common.pojo.enums.CommonReturnCodes;
 import org.smartframework.cloud.common.pojo.vo.BasePageRespVO;
 import org.smartframework.cloud.common.pojo.vo.RespVO;
 import org.smartframework.cloud.examples.mall.rpc.product.request.api.PageProductReqVO;
@@ -21,7 +21,7 @@ public class ProductInfoApiSystemTest extends AbstractSystemTest {
         RespVO<BasePageRespVO<PageProductRespVO>> result = ProductInfoApi.pageProduct(reqVO);
         Assertions.assertThat(result).isNotNull();
         Assertions.assertThat(result.getHead()).isNotNull();
-        Assertions.assertThat(result.getHead().getCode()).isEqualTo(ReturnCodeEnum.SUCCESS.getCode());
+        Assertions.assertThat(result.getHead().getCode()).isEqualTo(CommonReturnCodes.SUCCESS.getCode());
     }
 
 }

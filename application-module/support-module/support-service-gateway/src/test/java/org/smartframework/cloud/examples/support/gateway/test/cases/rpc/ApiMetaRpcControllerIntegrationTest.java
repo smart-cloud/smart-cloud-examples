@@ -8,7 +8,7 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.smartframework.cloud.common.pojo.Base;
-import org.smartframework.cloud.common.pojo.enums.ReturnCodeEnum;
+import org.smartframework.cloud.common.pojo.enums.CommonReturnCodes;
 import org.smartframework.cloud.common.pojo.vo.RespVO;
 import org.smartframework.cloud.examples.api.ac.core.vo.ApiMetaFetchRespVO;
 import org.smartframework.cloud.examples.support.gateway.service.rpc.ApiMetaRpcService;
@@ -54,7 +54,7 @@ public class ApiMetaRpcControllerIntegrationTest extends WebReactiveIntegrationT
         });
         Assertions.assertThat(result).isNotNull();
         Assertions.assertThat(result.getHead()).isNotNull();
-        Assertions.assertThat(result.getHead().getCode()).isEqualTo(ReturnCodeEnum.SUCCESS.getCode());
+        Assertions.assertThat(result.getHead().getCode()).isEqualTo(CommonReturnCodes.SUCCESS.getCode());
     }
 
 }

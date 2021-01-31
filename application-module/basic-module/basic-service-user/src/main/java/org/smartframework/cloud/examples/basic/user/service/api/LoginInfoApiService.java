@@ -15,7 +15,7 @@ import org.smartframework.cloud.examples.basic.user.bo.login.LoginInfoInsertServ
 import org.smartframework.cloud.examples.basic.user.config.UserParamValidateMessage;
 import org.smartframework.cloud.examples.basic.user.entity.base.LoginInfoEntity;
 import org.smartframework.cloud.examples.basic.user.entity.base.UserInfoEntity;
-import org.smartframework.cloud.examples.basic.user.enums.UserReturnCodeEnum;
+import org.smartframework.cloud.examples.basic.user.enums.UserReturnCodes;
 import org.smartframework.cloud.examples.basic.user.mapper.base.LoginInfoBaseMapper;
 import org.smartframework.cloud.examples.support.rpc.gateway.UserRpc;
 import org.smartframework.cloud.examples.support.rpc.gateway.request.rpc.CacheUserInfoReqVO;
@@ -52,20 +52,20 @@ public class LoginInfoApiService extends ServiceImpl<LoginInfoBaseMapper, LoginI
     public LoginRespVO login(LoginReqVO req) {
         LoginInfoEntity loginInfoEntity = loginInfoApiBiz.queryByUsername(req.getUsername());
         if (Objects.isNull(loginInfoEntity)) {
-            throw new BusinessException(UserReturnCodeEnum.ACCOUNT_NOT_EXIST);
+            throw new BusinessException(UserReturnCodes.ACCOUNT_NOT_EXIST);
         }
         // 校验密码
         String salt = loginInfoEntity.getSalt();
         String securePassword = PasswordUtil.secure(req.getPassword(), salt);
         if (!Objects.equals(securePassword, loginInfoEntity.getPassword())) {
-            throw new BusinessException(UserReturnCodeEnum.USERNAME_OR_PASSWORD_ERROR);
+            throw new BusinessException(UserReturnCodes.USERNAME_OR_PASSWORD_ERROR);
         }
 
         if (Objects.equals(loginInfoEntity.getUserState(), UserStateEnum.UNENABLE.getValue())) {
-            throw new BusinessException(UserReturnCodeEnum.USER_UNENABLE);
+            throw new BusinessException(UserReturnCodes.USER_UNENABLE);
         }
         if (Objects.equals(loginInfoEntity.getDelState(), DelStateEnum.DELETED.getDelState())) {
-            throw new BusinessException(UserReturnCodeEnum.USER_DELETED);
+            throw new BusinessException(UserReturnCodes.USER_DELETED);
         }
 
         UserInfoEntity userInfoEntity = userInfoApiBiz.getUserInfoBaseMapper().selectById(loginInfoEntity.getUserId());
@@ -154,7 +154,7 @@ public class LoginInfoApiService extends ServiceImpl<LoginInfoBaseMapper, LoginI
             salt = PasswordUtil.generateRandomSalt();
         } catch (NoSuchAlgorithmException e) {
             log.error(e.getMessage(), e);
-            throw new ServerException(UserReturnCodeEnum.GENERATE_SALT_FAIL);
+            throw new ServerException(UserReturnCodes.GENERATE_SALT_FAIL);
         }
         return salt;
     }

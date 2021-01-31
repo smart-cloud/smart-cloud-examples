@@ -4,7 +4,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
-import org.smartframework.cloud.common.pojo.enums.ReturnCodeEnum;
+import org.smartframework.cloud.common.pojo.enums.CommonReturnCodes;
 import org.smartframework.cloud.common.pojo.vo.RespVO;
 import org.smartframework.cloud.examples.app.auth.core.UserBO;
 import org.smartframework.cloud.examples.app.auth.core.UserContext;
@@ -56,7 +56,7 @@ public class OrderApiControllerIntegrationTest extends WebMvcIntegrationTest {
         // 3、断言结果
         Assertions.assertThat(resp).isNotNull();
         Assertions.assertThat(resp.getHead()).isNotNull();
-        Assertions.assertThat(resp.getHead().getCode()).isEqualTo(ReturnCodeEnum.SUCCESS.getCode());
+        Assertions.assertThat(resp.getHead().getCode()).isEqualTo(CommonReturnCodes.SUCCESS.getCode());
     }
 
     private void mockStubbing(ProductInfoRpc productInfoRpc, List<CreateOrderProductInfoReqVO> buyProducts) {

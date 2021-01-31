@@ -1,6 +1,6 @@
 package org.smartframework.cloud.examples.mall.order.exception;
 
-import org.smartframework.cloud.examples.mall.order.enums.OrderReturnCodeEnum;
+import org.smartframework.cloud.examples.mall.order.enums.OrderReturnCodes;
 import org.smartframework.cloud.starter.core.business.exception.BaseException;
 
 /**
@@ -14,7 +14,7 @@ public class UpdateStockException extends BaseException {
 	private static final long serialVersionUID = 1L;
 
 	public UpdateStockException() {
-		super(OrderReturnCodeEnum.UPDATE_STOCK_FAIL);
+		super(OrderReturnCodes.UPDATE_STOCK_FAIL);
 	}
 
 }

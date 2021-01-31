@@ -4,7 +4,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.smartframework.cloud.common.pojo.Base;
-import org.smartframework.cloud.common.pojo.enums.ReturnCodeEnum;
+import org.smartframework.cloud.common.pojo.enums.CommonReturnCodes;
 import org.smartframework.cloud.common.pojo.vo.RespVO;
 import org.smartframework.cloud.examples.mall.product.test.data.ProductInfoData;
 import org.smartframework.cloud.examples.mall.rpc.product.request.rpc.QryProductByIdReqVO;
@@ -42,7 +42,7 @@ public class ProductInfoRpcControllerIntegrationTest extends WebMvcIntegrationTe
 
         Assertions.assertThat(result).isNotNull();
         Assertions.assertThat(result.getHead()).isNotNull();
-        Assertions.assertThat(result.getHead().getCode()).isEqualTo(ReturnCodeEnum.SUCCESS.getCode());
+        Assertions.assertThat(result.getHead().getCode()).isEqualTo(CommonReturnCodes.SUCCESS.getCode());
     }
 
     @Test
@@ -63,7 +63,7 @@ public class ProductInfoRpcControllerIntegrationTest extends WebMvcIntegrationTe
 
         Assertions.assertThat(result).isNotNull();
         Assertions.assertThat(result.getHead()).isNotNull();
-        Assertions.assertThat(result.getHead().getCode()).isEqualTo(ReturnCodeEnum.SUCCESS.getCode());
+        Assertions.assertThat(result.getHead().getCode()).isEqualTo(CommonReturnCodes.SUCCESS.getCode());
         Assertions.assertThat(result.getBody()).isNotNull();
         Assertions.assertThat(result.getBody().getProductInfos()).isNotEmpty();
     }
@@ -90,7 +90,7 @@ public class ProductInfoRpcControllerIntegrationTest extends WebMvcIntegrationTe
 
         Assertions.assertThat(result).isNotNull();
         Assertions.assertThat(result.getHead()).isNotNull();
-        Assertions.assertThat(result.getHead().getCode()).isEqualTo(ReturnCodeEnum.SUCCESS.getCode());
+        Assertions.assertThat(result.getHead().getCode()).isEqualTo(CommonReturnCodes.SUCCESS.getCode());
     }
 
 }

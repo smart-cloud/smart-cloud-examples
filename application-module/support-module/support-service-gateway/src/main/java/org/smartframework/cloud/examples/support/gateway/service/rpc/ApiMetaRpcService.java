@@ -9,7 +9,7 @@ import org.apache.commons.collections4.MapUtils;
 import org.smartframework.cloud.common.pojo.vo.RespVO;
 import org.smartframework.cloud.examples.api.ac.core.constants.ApiMetaConstants;
 import org.smartframework.cloud.examples.api.ac.core.vo.ApiMetaFetchRespVO;
-import org.smartframework.cloud.examples.support.gateway.enums.GatewayReturnCodeEnum;
+import org.smartframework.cloud.examples.support.gateway.enums.GatewayReturnCodes;
 import org.smartframework.cloud.examples.support.gateway.util.RedisKeyHelper;
 import org.smartframework.cloud.examples.support.rpc.gateway.request.rpc.NotifyFetchReqVO;
 import org.smartframework.cloud.starter.core.business.exception.BusinessException;
@@ -47,7 +47,7 @@ public class ApiMetaRpcService {
         RespVO<ApiMetaFetchRespVO> apiMetaFetchRespVO = fetchApiMeta(url);
 
         if (!RespUtil.isSuccess(apiMetaFetchRespVO)) {
-            throw new BusinessException(GatewayReturnCodeEnum.FETCH_APIMETA_FAIL);
+            throw new BusinessException(GatewayReturnCodes.FETCH_APIMETA_FAIL);
         }
         ApiMetaFetchRespVO apiMetaFetch = apiMetaFetchRespVO.getBody();
         if (apiMetaFetch == null || MapUtils.isEmpty(apiMetaFetch.getApiAccessMap())) {

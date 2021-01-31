@@ -208,3 +208,23 @@ sign = RSA签名签名(AES加密(head的json串) + AES加密(body json串))
 单体服务构建：clean install
 合体服务构建：clean install -P merge
 ```
+
+# 五、错误码
+所属模块 | code | message
+---| ---|---
+basic-service-user | 100001 | 账号不存在
+basic-service-user | 100002 | 用户被禁用
+basic-service-user | 100003 | 用户已被删除
+basic-service-user | 100004 | 用户名或密码错误
+basic-service-user | 100005 | 该手机号已存在，请换一个重新注册
+basic-service-user | 100006 | 该用户名已存在，请换一个重新注册
+mall-service-order | 200001 | 库存更新失败
+mall-service-order | 200002 | 商品不存在
+mall-service-product | 300001 | 库存不足，操作失败
+support-service-gateway | 400001 | 获取api meta失败
+support-service-gateway | 400002 | rsa密钥对生成出错
+support-service-gateway | 400003 | 登录前token失效
+support-service-gateway | 400004 | 登录成功后token失效
+support-service-gateway | 400005 | 请求参数中token缺失
+support-service-gateway | 400006 | 当前用户暂未登陆，获取userId失败
+support-service-gateway | 400007 | 未获取到登陆缓存信息

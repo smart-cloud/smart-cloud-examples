@@ -5,7 +5,7 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentMatchers;
 import org.mockito.Mockito;
-import org.smartframework.cloud.common.pojo.enums.ReturnCodeEnum;
+import org.smartframework.cloud.common.pojo.enums.CommonReturnCodes;
 import org.smartframework.cloud.common.pojo.vo.RespVO;
 import org.smartframework.cloud.examples.basic.rpc.enums.user.ChannelEnum;
 import org.smartframework.cloud.examples.basic.rpc.enums.user.PwdStateEnum;
@@ -60,7 +60,7 @@ public class RegisterApiControllerIntegrationTest extends WebMvcIntegrationTest 
 
         Assertions.assertThat(result).isNotNull();
         Assertions.assertThat(result.getHead()).isNotNull();
-        Assertions.assertThat(result.getHead().getCode()).isEqualTo(ReturnCodeEnum.SUCCESS.getCode());
+        Assertions.assertThat(result.getHead().getCode()).isEqualTo(CommonReturnCodes.SUCCESS.getCode());
         Assertions.assertThat(result.getBody()).isNotNull();
         Assertions.assertThat(result.getBody().getUserId()).isNotNull();
         Assertions.assertThat(result.getBody().getUsername()).isNotBlank();

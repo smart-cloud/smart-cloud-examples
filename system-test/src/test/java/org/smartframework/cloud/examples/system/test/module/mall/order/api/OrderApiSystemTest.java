@@ -3,7 +3,7 @@ package org.smartframework.cloud.examples.system.test.module.mall.order.api;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.smartframework.cloud.common.pojo.Base;
-import org.smartframework.cloud.common.pojo.enums.ReturnCodeEnum;
+import org.smartframework.cloud.common.pojo.enums.CommonReturnCodes;
 import org.smartframework.cloud.common.pojo.vo.BasePageRespVO;
 import org.smartframework.cloud.common.pojo.vo.RespVO;
 import org.smartframework.cloud.examples.mall.rpc.order.request.api.CreateOrderProductInfoReqVO;
@@ -50,7 +50,7 @@ public class OrderApiSystemTest extends AbstractSystemTest {
         RespVO<CreateOrderRespVO> result = OrderApi.create(createOrderReqVO);
         Assertions.assertThat(result).isNotNull();
         Assertions.assertThat(result.getHead()).isNotNull();
-        Assertions.assertThat(result.getHead().getCode()).isEqualTo(ReturnCodeEnum.SUCCESS.getCode());
+        Assertions.assertThat(result.getHead().getCode()).isEqualTo(CommonReturnCodes.SUCCESS.getCode());
     }
 
 }

@@ -1,6 +1,6 @@
 package org.smartframework.cloud.examples.app.auth.core.exception;
 
-import org.smartframework.cloud.common.pojo.enums.ReturnCodeEnum;
+import org.smartframework.cloud.common.pojo.enums.CommonReturnCodes;
 import org.smartframework.cloud.starter.core.business.exception.BaseException;
 
 /**
@@ -10,7 +10,7 @@ import org.smartframework.cloud.starter.core.business.exception.BaseException;
 public class UserBOMissingException extends BaseException {
 
     public UserBOMissingException() {
-        super(ReturnCodeEnum.NOT_LOGGED_IN);
+        super(CommonReturnCodes.NOT_LOGGED_IN);
     }
 
 }

@@ -6,7 +6,7 @@ import org.redisson.api.RedissonClient;
 import org.smartframework.cloud.examples.app.auth.core.UserBO;
 import org.smartframework.cloud.examples.support.gateway.bo.SecurityKeyBO;
 import org.smartframework.cloud.examples.support.gateway.constants.RedisExpire;
-import org.smartframework.cloud.examples.support.gateway.enums.GatewayReturnCodeEnum;
+import org.smartframework.cloud.examples.support.gateway.enums.GatewayReturnCodes;
 import org.smartframework.cloud.examples.support.gateway.util.RedisKeyHelper;
 import org.smartframework.cloud.examples.support.rpc.gateway.request.rpc.CacheUserInfoReqVO;
 import org.smartframework.cloud.examples.support.rpc.gateway.request.rpc.ExitLoginReqVO;
@@ -39,7 +39,7 @@ public class UserRpcService {
         RMapCache<String, SecurityKeyBO> authCache = redissonClient.getMapCache(RedisKeyHelper.getSecurityHashKey());
         SecurityKeyBO securityKeyBO = authCache.get(RedisKeyHelper.getSecurityKey(req.getToken()));
         if (securityKeyBO == null) {
-            throw new ServerException(GatewayReturnCodeEnum.TOKEN_EXPIRED_BEFORE_LOGIN);
+            throw new ServerException(GatewayReturnCodes.TOKEN_EXPIRED_BEFORE_LOGIN);
         }
         authCache.put(RedisKeyHelper.getSecurityKey(req.getToken()), securityKeyBO, RedisExpire.SECURITY_KEY_EXPIRE_MILLIS_LOGIN_SUCCESS, TimeUnit.SECONDS);
 

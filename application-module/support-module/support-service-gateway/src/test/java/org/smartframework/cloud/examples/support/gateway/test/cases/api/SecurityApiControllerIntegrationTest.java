@@ -5,9 +5,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.smartframework.cloud.common.pojo.enums.ReturnCodeEnum;
+import org.smartframework.cloud.common.pojo.enums.CommonReturnCodes;
 import org.smartframework.cloud.common.pojo.vo.RespVO;
-import org.smartframework.cloud.examples.support.gateway.enums.GatewayReturnCodeEnum;
+import org.smartframework.cloud.examples.support.gateway.enums.GatewayReturnCodes;
 import org.smartframework.cloud.examples.support.gateway.service.api.SecurityApiService;
 import org.smartframework.cloud.examples.support.rpc.gateway.request.api.GenerateAesKeyReqVO;
 import org.smartframework.cloud.examples.support.rpc.gateway.response.api.GenerateAesKeyRespVO;
@@ -41,7 +41,7 @@ public class SecurityApiControllerIntegrationTest extends WebReactiveIntegration
         });
         Assertions.assertThat(result).isNotNull();
         Assertions.assertThat(result.getHead()).isNotNull();
-        Assertions.assertThat(result.getHead().getCode()).isEqualTo(ReturnCodeEnum.SUCCESS.getCode());
+        Assertions.assertThat(result.getHead().getCode()).isEqualTo(CommonReturnCodes.SUCCESS.getCode());
         Assertions.assertThat(result.getBody().getToken()).isNotBlank();
         Assertions.assertThat(result.getBody().getPubKeyModulus()).isNotBlank();
         Assertions.assertThat(result.getBody().getPubKeyExponent()).isNotBlank();
@@ -59,7 +59,7 @@ public class SecurityApiControllerIntegrationTest extends WebReactiveIntegration
             clientPriServerPubKeyPair = RsaUtil.generateKeyPair();
         } catch (NoSuchAlgorithmException e) {
             log.error(e.getMessage(), e);
-            throw new ServerException(GatewayReturnCodeEnum.GENERATE_RSAKEY_FAIL);
+            throw new ServerException(GatewayReturnCodes.GENERATE_RSAKEY_FAIL);
         }
 
         GenerateAesKeyReqVO generateAesKeyReqVO = new GenerateAesKeyReqVO();
@@ -77,7 +77,7 @@ public class SecurityApiControllerIntegrationTest extends WebReactiveIntegration
         });
         Assertions.assertThat(result).isNotNull();
         Assertions.assertThat(result.getHead()).isNotNull();
-        Assertions.assertThat(result.getHead().getCode()).isEqualTo(ReturnCodeEnum.SUCCESS.getCode());
+        Assertions.assertThat(result.getHead().getCode()).isEqualTo(CommonReturnCodes.SUCCESS.getCode());
         Assertions.assertThat(result.getBody().getEncryptedAesKey()).isNotBlank();
 
         // 解密AES key

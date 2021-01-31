@@ -3,7 +3,7 @@ package org.smartframework.cloud.examples.basic.user.test.cases.integration.api;
 import com.fasterxml.jackson.core.type.TypeReference;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.smartframework.cloud.common.pojo.enums.ReturnCodeEnum;
+import org.smartframework.cloud.common.pojo.enums.CommonReturnCodes;
 import org.smartframework.cloud.common.pojo.vo.RespVO;
 import org.smartframework.cloud.examples.app.auth.core.UserBO;
 import org.smartframework.cloud.examples.app.auth.core.UserContext;
@@ -34,7 +34,7 @@ public class UserInfoApiControllerIntegrationTest extends WebMvcIntegrationTest 
 
         Assertions.assertThat(result).isNotNull();
         Assertions.assertThat(result.getHead()).isNotNull();
-        Assertions.assertThat(result.getHead().getCode()).isEqualTo(ReturnCodeEnum.SUCCESS.getCode());
+        Assertions.assertThat(result.getHead().getCode()).isEqualTo(CommonReturnCodes.SUCCESS.getCode());
         Assertions.assertThat(result.getBody()).isNotNull();
     }
 

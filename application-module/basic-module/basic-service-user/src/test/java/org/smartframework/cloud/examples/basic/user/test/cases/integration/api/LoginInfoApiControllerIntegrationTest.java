@@ -5,7 +5,7 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentMatchers;
 import org.mockito.Mockito;
-import org.smartframework.cloud.common.pojo.enums.ReturnCodeEnum;
+import org.smartframework.cloud.common.pojo.enums.CommonReturnCodes;
 import org.smartframework.cloud.common.pojo.vo.RespVO;
 import org.smartframework.cloud.examples.basic.rpc.user.request.api.login.ExitReqVO;
 import org.smartframework.cloud.examples.basic.rpc.user.request.api.login.LoginReqVO;
@@ -59,7 +59,7 @@ public class LoginInfoApiControllerIntegrationTest extends WebMvcIntegrationTest
 
         Assertions.assertThat(result).isNotNull();
         Assertions.assertThat(result.getHead()).isNotNull();
-        Assertions.assertThat(result.getHead().getCode()).isEqualTo(ReturnCodeEnum.SUCCESS.getCode());
+        Assertions.assertThat(result.getHead().getCode()).isEqualTo(CommonReturnCodes.SUCCESS.getCode());
         Assertions.assertThat(result.getBody().getUserId()).isNotNull();
         Assertions.assertThat(result.getBody().getUsername()).isNotBlank();
         Assertions.assertThat(result.getBody().getRealName()).isNotBlank();
@@ -82,7 +82,7 @@ public class LoginInfoApiControllerIntegrationTest extends WebMvcIntegrationTest
 
         Assertions.assertThat(result).isNotNull();
         Assertions.assertThat(result.getHead()).isNotNull();
-        Assertions.assertThat(result.getHead().getCode()).isEqualTo(ReturnCodeEnum.SUCCESS.getCode());
+        Assertions.assertThat(result.getHead().getCode()).isEqualTo(CommonReturnCodes.SUCCESS.getCode());
     }
 
 }

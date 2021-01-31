@@ -6,7 +6,7 @@ import org.redisson.api.RMapCache;
 import org.redisson.api.RedissonClient;
 import org.smartframework.cloud.examples.support.gateway.bo.SecurityKeyBO;
 import org.smartframework.cloud.examples.support.gateway.constants.RedisExpire;
-import org.smartframework.cloud.examples.support.gateway.enums.GatewayReturnCodeEnum;
+import org.smartframework.cloud.examples.support.gateway.enums.GatewayReturnCodes;
 import org.smartframework.cloud.examples.support.gateway.util.RedisKeyHelper;
 import org.smartframework.cloud.examples.support.rpc.gateway.request.api.GenerateAesKeyReqVO;
 import org.smartframework.cloud.examples.support.rpc.gateway.response.api.GenerateAesKeyRespVO;
@@ -51,7 +51,7 @@ public class SecurityApiService {
             clientPubServerPriKeyPair = RsaUtil.generateKeyPair();
         } catch (NoSuchAlgorithmException e) {
             log.error(e.getMessage(), e);
-            throw new ServerException(GatewayReturnCodeEnum.GENERATE_RSAKEY_FAIL);
+            throw new ServerException(GatewayReturnCodes.GENERATE_RSAKEY_FAIL);
         }
 
         GenerateClientPubKeyRespVO respVO = new GenerateClientPubKeyRespVO();
@@ -77,7 +77,7 @@ public class SecurityApiService {
         RMapCache<String, SecurityKeyBO> authCache = redissonClient.getMapCache(RedisKeyHelper.getSecurityHashKey());
         SecurityKeyBO securityKeyBO = authCache.get(RedisKeyHelper.getSecurityKey(req.getToken()));
         if (securityKeyBO == null) {
-            throw new ServerException(GatewayReturnCodeEnum.TOKEN_EXPIRED_BEFORE_LOGIN);
+            throw new ServerException(GatewayReturnCodes.TOKEN_EXPIRED_BEFORE_LOGIN);
         }
 
         RSAPrivateKey rsaPrivateKey = RsaUtil.getRSAPrivateKey(securityKeyBO.getSpriKeyModulus(), securityKeyBO.getSpriKeyExponent());
