@@ -8,14 +8,14 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
 /**
- * 创建订单商品请求参数
+ * 提交订单商品请求参数
  *
  * @author liyulin
  * @date 2020-09-10
  */
 @Getter
 @Setter
-public class CreateOrderProductInfoReqVO extends Base {
+public class SubmitOrderProductInfoReqVO extends Base {
 
     private static final long serialVersionUID = 1L;
 

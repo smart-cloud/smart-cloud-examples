@@ -3,18 +3,17 @@ package org.smartframework.cloud.examples.mall.order.controller.api;
 import org.smartframework.cloud.api.core.annotation.SmartApiAcess;
 import org.smartframework.cloud.api.core.enums.SignType;
 import org.smartframework.cloud.common.pojo.vo.RespVO;
+import org.smartframework.cloud.examples.mall.order.mq.producer.OrderProducer;
 import org.smartframework.cloud.examples.mall.order.service.api.OrderApiService;
-import org.smartframework.cloud.examples.mall.rpc.order.request.api.CreateOrderReqVO;
-import org.smartframework.cloud.examples.mall.rpc.order.response.api.CreateOrderRespVO;
+import org.smartframework.cloud.examples.mall.rpc.order.request.api.SubmitOrderReqVO;
+import org.smartframework.cloud.examples.mall.rpc.order.response.api.QuerySubmitResultRespVO;
 import org.smartframework.cloud.starter.core.business.util.RespUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 
 /**
  * 订单
@@ -29,18 +28,31 @@ import javax.validation.Valid;
 public class OrderApiController {
 
     @Autowired
+    private OrderProducer orderProducer;
+    @Autowired
     private OrderApiService orderApiService;
 
     /**
-     * 创建订单
+     * 提交订单
      *
      * @param req
      * @return
      */
-    @PostMapping("create")
+    @PostMapping("submit")
     @SmartApiAcess(tokenCheck = true, sign = SignType.ALL, encrypt = true, decrypt = true, auth = true, repeatSubmitCheck = true)
-    public RespVO<CreateOrderRespVO> create(@RequestBody @Valid CreateOrderReqVO req) {
-        return RespUtil.success(orderApiService.create(req));
+    public RespVO<String> submit(@RequestBody @Valid SubmitOrderReqVO req) {
+        return RespUtil.success(orderProducer.submitOrder(req));
+    }
+
+    /**
+     * 查询提交结果
+     *
+     * @param orderNo 订单号
+     * @return
+     */
+    @GetMapping("querySubmitResult")
+    public RespVO<QuerySubmitResultRespVO> querySubmitResult(@NotNull String orderNo) {
+        return RespUtil.success(orderApiService.querySubmitResult(orderNo));
     }
 
 }

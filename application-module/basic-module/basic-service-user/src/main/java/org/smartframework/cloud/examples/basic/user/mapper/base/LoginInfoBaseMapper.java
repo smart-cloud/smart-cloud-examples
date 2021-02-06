@@ -10,7 +10,7 @@ import org.smartframework.cloud.examples.common.config.constants.DataSourceName;
  * 登录信息base mapper
  *
  * @author liyulin
- * @date 2020-01-17
+ * @date 2021-02-08
  */
 @DS(DataSourceName.BASIC_USER)
 @Mapper

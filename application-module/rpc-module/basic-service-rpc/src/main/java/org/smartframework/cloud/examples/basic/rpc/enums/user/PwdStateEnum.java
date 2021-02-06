@@ -14,11 +14,15 @@ import lombok.Getter;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public enum PwdStateEnum {
 
-	/** 未设置 */
-	NOT_SETTING((byte)1),
-	/** 已设置 */
-	DONE_SETTING((byte)2);
+    /**
+     * 未设置
+     */
+    NOT_SETTING((byte) 1),
+    /**
+     * 已设置
+     */
+    DONE_SETTING((byte) 2);
 
-	private Byte value;
-	
+    private byte value;
+
 }

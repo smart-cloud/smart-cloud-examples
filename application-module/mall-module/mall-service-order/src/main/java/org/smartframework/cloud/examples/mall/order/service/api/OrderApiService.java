@@ -1,19 +1,22 @@
 package org.smartframework.cloud.examples.mall.order.service.api;
 
 import io.seata.spring.annotation.GlobalTransactional;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.smartframework.cloud.common.pojo.Base;
 import org.smartframework.cloud.common.pojo.vo.RespVO;
-import org.smartframework.cloud.examples.app.auth.core.UserContext;
 import org.smartframework.cloud.examples.mall.order.biz.api.OrderBillApiBiz;
+import org.smartframework.cloud.examples.mall.order.biz.api.OrderDeliveryInfoApiBiz;
 import org.smartframework.cloud.examples.mall.order.entity.base.OrderBillEntity;
 import org.smartframework.cloud.examples.mall.order.entity.base.OrderDeliveryInfoEntity;
 import org.smartframework.cloud.examples.mall.order.enums.OrderReturnCodes;
 import org.smartframework.cloud.examples.mall.order.exception.UpdateStockException;
+import org.smartframework.cloud.examples.mall.order.mq.dto.SubmitOrderDTO;
+import org.smartframework.cloud.examples.mall.rpc.enums.order.OrderStatus;
 import org.smartframework.cloud.examples.mall.rpc.enums.order.PayStateEnum;
-import org.smartframework.cloud.examples.mall.rpc.order.request.api.CreateOrderProductInfoReqVO;
-import org.smartframework.cloud.examples.mall.rpc.order.request.api.CreateOrderReqVO;
-import org.smartframework.cloud.examples.mall.rpc.order.response.api.CreateOrderRespVO;
+import org.smartframework.cloud.examples.mall.rpc.order.request.api.SubmitOrderProductInfoReqVO;
+import org.smartframework.cloud.examples.mall.rpc.order.response.api.OrderDeliveryRespVO;
+import org.smartframework.cloud.examples.mall.rpc.order.response.api.QuerySubmitResultRespVO;
 import org.smartframework.cloud.examples.mall.rpc.product.ProductInfoRpc;
 import org.smartframework.cloud.examples.mall.rpc.product.request.rpc.QryProductByIdsReqVO;
 import org.smartframework.cloud.examples.mall.rpc.product.request.rpc.UpdateStockReqVO;
@@ -26,9 +29,12 @@ import org.smartframework.cloud.starter.core.business.util.RespUtil;
 import org.smartframework.cloud.starter.core.business.util.SnowFlakeIdUtil;
 import org.smartframework.cloud.starter.mybatis.common.mapper.enums.DelStateEnum;
 import org.smartframework.cloud.utility.ObjectUtil;
+import org.smartframework.cloud.utility.spring.SpringContextUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -40,6 +46,7 @@ import java.util.stream.Collectors;
  * @date 2019-04-08
  */
 @Service
+@Slf4j
 public class OrderApiService {
 
     @Autowired
@@ -47,21 +54,21 @@ public class OrderApiService {
     @Autowired
     private OrderBillApiBiz orderBillApiBiz;
     @Autowired
+    private OrderDeliveryInfoApiBiz orderDeliveryInfoApiBiz;
+    @Autowired
     private OrderDeliveryInfoApiService orderDeliveryInfoApiService;
 
-
     /**
-     * 创建订单
+     * 提交订单
      *
-     * @param req
+     * @param submitOrderDTO
      * @return
      * @throws UpdateStockException
      */
-    @GlobalTransactional
-    public CreateOrderRespVO create(CreateOrderReqVO req) {
-        List<CreateOrderProductInfoReqVO> products = req.getProducts();
+    public void submit(SubmitOrderDTO submitOrderDTO) {
+        List<SubmitOrderProductInfoReqVO> products = submitOrderDTO.getSubmtOrderProductInfos();
         // 1、查询商品信息
-        List<Long> productIds = products.stream().map(CreateOrderProductInfoReqVO::getProductId).collect(Collectors.toList());
+        List<Long> productIds = products.stream().map(SubmitOrderProductInfoReqVO::getProductId).collect(Collectors.toList());
 
         QryProductByIdsReqVO qryProductByIdsReqVO = QryProductByIdsReqVO.builder().ids(productIds).build();
         RespVO<QryProductByIdsRespVO> qryProductByIdsResp = productInfoRpc
@@ -76,13 +83,55 @@ public class OrderApiService {
         }
         List<QryProductByIdRespVO> productInfos = qryProductByIdsResp.getBody().getProductInfos();
 
+        OrderApiService orderApiService = SpringContextUtil.getBean(OrderApiService.class);
         // 2、创建订单信息
-        Long orderBillId = SnowFlakeIdUtil.getInstance().nextId();
+        orderApiService.createOrder(submitOrderDTO.getOrderNo(), submitOrderDTO.getUserId(), products, productInfos);
 
-        List<OrderDeliveryInfoEntity> entities = saveOrderDeliveryInfo(orderBillId, products, productInfos);
-        OrderBillEntity orderBillEntity = saveOrderBill(orderBillId, entities);
+        // 3、扣减库存、抵扣优惠券、更新订单状态
+        orderApiService.deductStockAndCounpon(submitOrderDTO.getOrderNo(), products);
+    }
 
-        // 3、扣减库存
+    @GlobalTransactional
+    public void deductStockAndCounpon(String orderNo, List<SubmitOrderProductInfoReqVO> products) {
+        OrderStatus status = null;
+        try {
+            // 3、扣减库存
+            RespVO<Base> updateStockResp = deductStock(products);
+            if (RespUtil.isSuccess(updateStockResp)) {
+                // TODO:4、抵扣优惠券
+
+                status = OrderStatus.PAY_TODO;
+            } else {
+                status = OrderStatus.DEDUCT_STOCK_FAIL;
+            }
+        } catch (Exception e) {
+            log.error("deductStockAndCounpon.fail", e);
+            status = OrderStatus.DEDUCT_STOCK_FAIL;
+        }
+        orderBillApiBiz.updateStatus(orderNo, status);
+    }
+
+    /**
+     * 创建订单
+     *
+     * @param orderNo
+     * @param userId
+     * @param products
+     * @param productInfos
+     */
+    @Transactional(rollbackFor = Exception.class)
+    public void createOrder(String orderNo, Long userId, List<SubmitOrderProductInfoReqVO> products, List<QryProductByIdRespVO> productInfos) {
+        List<OrderDeliveryInfoEntity> entities = saveOrderDeliveryInfo(orderNo, products, productInfos);
+        OrderBillEntity orderBillEntity = saveOrderBill(orderNo, userId, entities);
+    }
+
+    /**
+     * 扣减库存
+     *
+     * @param products
+     * @return
+     */
+    private RespVO<Base> deductStock(List<SubmitOrderProductInfoReqVO> products) {
         List<UpdateStockItem> updateStockItems = products.stream().map(item -> {
             UpdateStockItem updateStockItem = new UpdateStockItem();
             updateStockItem.setId(item.getProductId());
@@ -90,24 +139,49 @@ public class OrderApiService {
             return updateStockItem;
         }).collect(Collectors.toList());
 
-        RespVO<Base> updateStockResp = productInfoRpc.updateStock(new UpdateStockReqVO(updateStockItems));
-        if (RespUtil.isSuccess(updateStockResp)) {
-            CreateOrderRespVO createOrderRespVO = new CreateOrderRespVO();
-            createOrderRespVO.setOrderId(orderBillId);
-            createOrderRespVO.setFree(orderBillEntity.getAmount() == 0);
-
-            return createOrderRespVO;
-        }
-
-        throw new UpdateStockException();
+        return productInfoRpc.updateStock(new UpdateStockReqVO(updateStockItems));
     }
 
-    private List<OrderDeliveryInfoEntity> saveOrderDeliveryInfo(Long orderBillId,
-                                                                List<CreateOrderProductInfoReqVO> products, List<QryProductByIdRespVO> productInfos) {
+    /**
+     * 查询订单详情
+     *
+     * @param orderNo
+     * @return
+     */
+    public QuerySubmitResultRespVO querySubmitResult(String orderNo) {
+        OrderBillEntity orderBillEntity = orderBillApiBiz.getByOrderNo(orderNo);
+        if (orderBillEntity == null) {
+            return null;
+        }
+
+        QuerySubmitResultRespVO queryDetailRespVO = new QuerySubmitResultRespVO();
+        queryDetailRespVO.setOrderStatus(orderBillEntity.getStatus());
+        queryDetailRespVO.setAmount(orderBillEntity.getAmount());
+        queryDetailRespVO.setPayStatus(orderBillEntity.getPayState());
+
+        List<OrderDeliveryInfoEntity> orderDeliveryInfoEntities = orderDeliveryInfoApiBiz.getByOrderNo(orderNo);
+        if (CollectionUtils.isNotEmpty(orderDeliveryInfoEntities)) {
+            List<OrderDeliveryRespVO> orderDeliveries = new ArrayList<>(orderDeliveryInfoEntities.size());
+            queryDetailRespVO.setOrderDeliveries(orderDeliveries);
+
+            for (OrderDeliveryInfoEntity orderDeliveryInfoEntity : orderDeliveryInfoEntities) {
+                OrderDeliveryRespVO orderDeliveryRespVO = new OrderDeliveryRespVO();
+                orderDeliveryRespVO.setProductName(orderDeliveryInfoEntity.getProductName());
+                orderDeliveryRespVO.setPrice(orderDeliveryInfoEntity.getPrice());
+                orderDeliveryRespVO.setBuyCount(orderDeliveryInfoEntity.getBuyCount());
+
+                orderDeliveries.add(orderDeliveryRespVO);
+            }
+        }
+        return queryDetailRespVO;
+    }
+
+    private List<OrderDeliveryInfoEntity> saveOrderDeliveryInfo(String orderNo,
+                                                                List<SubmitOrderProductInfoReqVO> products, List<QryProductByIdRespVO> productInfos) {
         List<OrderDeliveryInfoEntity> entities = products.stream().map(item -> {
             OrderDeliveryInfoEntity entity = new OrderDeliveryInfoEntity();
             entity.setId(SnowFlakeIdUtil.getInstance().nextId());
-            entity.setOrderBillId(orderBillId);
+            entity.setOrderNo(orderNo);
             entity.setProductInfoId(item.getProductId());
             entity.setBuyCount(item.getBuyCount());
 
@@ -126,14 +200,16 @@ public class OrderApiService {
         return entities;
     }
 
-    private OrderBillEntity saveOrderBill(Long orderBillId, List<OrderDeliveryInfoEntity> entities) {
+    private OrderBillEntity saveOrderBill(String orderNo, Long userId, List<OrderDeliveryInfoEntity> entities) {
         OrderBillEntity orderBillEntity = new OrderBillEntity();
-        orderBillEntity.setId(orderBillId);
+        orderBillEntity.setId(SnowFlakeIdUtil.getInstance().nextId());
+        orderBillEntity.setOrderNo(orderNo);
 
         Long amount = entities.stream().mapToLong(item -> item.getBuyCount() * item.getPrice()).sum();
         orderBillEntity.setAmount(amount);
+        orderBillEntity.setStatus(OrderStatus.DEDUCT_STOCK_TODO.getStatus());
         orderBillEntity.setPayState(PayStateEnum.PENDING_PAY.getValue());
-        orderBillEntity.setBuyer(UserContext.getUserId());
+        orderBillEntity.setBuyer(userId);
         orderBillEntity.setAddTime(new Date());
         orderBillEntity.setDelState(DelStateEnum.NORMAL.getDelState());
 

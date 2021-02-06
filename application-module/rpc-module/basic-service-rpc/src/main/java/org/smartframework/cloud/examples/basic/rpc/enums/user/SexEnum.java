@@ -14,13 +14,19 @@ import lombok.Getter;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public enum SexEnum {
 
-	/** 男 */
-	MALE((byte) 1),
-	/** 女 */
-	FEMALE((byte) 2),
-	/** 未知 */
-	UNKNOWN((byte) 3);
+    /**
+     * 男
+     */
+    MALE((byte) 1),
+    /**
+     * 女
+     */
+    FEMALE((byte) 2),
+    /**
+     * 未知
+     */
+    UNKNOWN((byte) 3);
 
-	private Byte value;
+    private byte value;
 
 }

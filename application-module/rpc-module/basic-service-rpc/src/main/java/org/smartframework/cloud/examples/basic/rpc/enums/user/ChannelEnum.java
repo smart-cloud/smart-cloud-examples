@@ -14,13 +14,19 @@ import lombok.Getter;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public enum ChannelEnum {
 
-	/** app */
-	APP((byte) 1),
-	/** web后台 */
-	WEB((byte) 2),
-	/** 微信 */
-	WEIXIN((byte) 3);
+    /**
+     * app
+     */
+    APP((byte) 1),
+    /**
+     * web后台
+     */
+    WEB((byte) 2),
+    /**
+     * 微信
+     */
+    WEIXIN((byte) 3);
 
-	private Byte value;
+    private byte value;
 
 }

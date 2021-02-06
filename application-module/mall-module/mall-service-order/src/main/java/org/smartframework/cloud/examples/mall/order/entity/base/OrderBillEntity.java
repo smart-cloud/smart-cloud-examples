@@ -6,13 +6,14 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
+import java.util.Date;
 import org.smartframework.cloud.starter.mybatis.common.mapper.entity.BaseEntity;
 
 /**
  * 订单信息
  *
  * @author liyulin
- * @date 2019-11-09
+ * @date 2021-02-09
  */
 @Getter
 @Setter
@@ -21,24 +22,57 @@ import org.smartframework.cloud.starter.mybatis.common.mapper.entity.BaseEntity;
 @TableName("t_order_bill")
 public class OrderBillEntity extends BaseEntity {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    /**
-     * 订单金额总金额
-     */
+    @TableField(value = "f_id")
+	private Long id;
+	
+    /** 订单号 */
+    @TableField(value = "f_order_no")
+	private String orderNo;
+	
+    /** 订单金额总金额 */
     @TableField(value = "f_amount")
-    private Long amount;
-
-    /**
-     * 支付状态（1：待支付；2：支付成功；3：支付失败；4：待退款；5：退款成功；6：退款失败）
-     */
+	private Long amount;
+	
+    /** 订单状态（1：待扣减库存；2：扣减库存失败；3：抵扣优惠券失败；4：待付款；5：已取消；6：待发货；7：待收货；8：待评价，9：已完成） */
+    @TableField(value = "f_status")
+	private Byte status;
+	
+    /** 支付状态（1：待支付；2：支付成功；3：支付失败；4：待退款；5：退款成功；6：退款失败） */
     @TableField(value = "f_pay_state")
-    private Byte payState;
-
-    /**
-     * 购买人id（demo_user库t_user_info表f_id）
-     */
+	private Byte payState;
+	
+    /** 购买人id（demo_user库t_user_info表f_id） */
     @TableField(value = "f_buyer")
-    private Long buyer;
-
+	private Long buyer;
+	
+    /** 创建时间 */
+    @TableField(value = "f_sys_add_time")
+	private Date sysAddTime;
+	
+    /** 更新时间 */
+    @TableField(value = "f_sys_upd_time")
+	private Date sysUpdTime;
+	
+    /** 删除时间 */
+    @TableField(value = "f_sys_del_time")
+	private Date sysDelTime;
+	
+    /** 新增者 */
+    @TableField(value = "f_sys_add_user")
+	private Long sysAddUser;
+	
+    /** 更新者 */
+    @TableField(value = "f_sys_upd_user")
+	private Long sysUpdUser;
+	
+    /** 删除者 */
+    @TableField(value = "f_sys_del_user")
+	private Long sysDelUser;
+	
+    /** 删除状态=={1:正常, 2:已删除} */
+    @TableField(value = "f_sys_del_state")
+	private Byte sysDelState;
+	
 }

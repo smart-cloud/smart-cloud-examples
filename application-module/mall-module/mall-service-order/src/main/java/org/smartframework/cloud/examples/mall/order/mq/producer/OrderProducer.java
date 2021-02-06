@@ -1,0 +1,32 @@
+package org.smartframework.cloud.examples.mall.order.mq.producer;
+
+import org.smartframework.cloud.examples.app.auth.core.UserContext;
+import org.smartframework.cloud.examples.mall.order.mq.MqConstants;
+import org.smartframework.cloud.examples.mall.order.mq.dto.SubmitOrderDTO;
+import org.smartframework.cloud.examples.mall.order.util.OrderUtil;
+import org.smartframework.cloud.examples.mall.rpc.order.request.api.SubmitOrderReqVO;
+import org.smartframework.cloud.starter.rabbitmq.AbstractRabbitmqProducter;
+import org.springframework.stereotype.Component;
+
+@Component
+public class OrderProducer extends AbstractRabbitmqProducter {
+
+    /**
+     * 发送【提交订单】mq
+     *
+     * @param req
+     */
+    public String submitOrder(SubmitOrderReqVO req) {
+        SubmitOrderDTO submitOrderDTO = new SubmitOrderDTO();
+        Long userId = UserContext.getUserId();
+        submitOrderDTO.setUserId(userId);
+        String orderNo = OrderUtil.generateOrderNo(userId);
+        submitOrderDTO.setOrderNo(orderNo);
+        submitOrderDTO.setSubmtOrderProductInfos(req.getProducts());
+
+        // 发送mq
+        super.send(MqConstants.Exchange.SUBMIT_ORDER, MqConstants.RouteKey.SUBMIT_ORDER, submitOrderDTO);
+        return orderNo;
+    }
+
+}

@@ -13,12 +13,16 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public enum UserStateEnum {
-	
-	/** 启用 */
-	ENABLE((byte)1),
-	/** 禁用 */
-	UNENABLE((byte)2);
 
-	private Byte value;
+    /**
+     * 启用
+     */
+    ENABLE((byte) 1),
+    /**
+     * 禁用
+     */
+    UNENABLE((byte) 2);
+
+    private byte value;
 
 }

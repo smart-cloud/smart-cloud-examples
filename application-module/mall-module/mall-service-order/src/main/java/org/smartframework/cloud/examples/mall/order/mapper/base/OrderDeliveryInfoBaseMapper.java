@@ -10,7 +10,7 @@ import org.smartframework.cloud.examples.mall.order.entity.base.OrderDeliveryInf
  * 运单信息base mapper
  *
  * @author liyulin
- * @date 2019-11-09
+ * @date 2021-02-09
  */
 @DS(DataSourceName.MALL_ORDER)
 @Mapper

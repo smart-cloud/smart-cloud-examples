@@ -9,14 +9,14 @@ import javax.validation.constraints.NotEmpty;
 import java.util.List;
 
 /**
- * 创建订单请求参数
+ * 提交订单请求参数
  *
  * @author liyulin
  * @date 2020-09-10
  */
 @Getter
 @Setter
-public class CreateOrderReqVO extends Base {
+public class SubmitOrderReqVO extends Base {
 
     private static final long serialVersionUID = 1L;
 
@@ -25,6 +25,6 @@ public class CreateOrderReqVO extends Base {
      */
     @NotEmpty
     @Valid
-    private List<CreateOrderProductInfoReqVO> products;
+    private List<SubmitOrderProductInfoReqVO> products;
 
 }

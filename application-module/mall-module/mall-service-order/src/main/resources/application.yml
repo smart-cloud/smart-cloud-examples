@@ -32,3 +32,9 @@ spring:
         min-idle: 0
         max-idle: 100
         max-wait: 10000ms
+  rabbitmq:
+    host: localhost
+    port: 5672
+    virtual-host: /
+    username: guest
+    password: guest

@@ -6,9 +6,10 @@ import org.smartframework.cloud.common.pojo.Base;
 import org.smartframework.cloud.common.pojo.enums.CommonReturnCodes;
 import org.smartframework.cloud.common.pojo.vo.BasePageRespVO;
 import org.smartframework.cloud.common.pojo.vo.RespVO;
-import org.smartframework.cloud.examples.mall.rpc.order.request.api.CreateOrderProductInfoReqVO;
-import org.smartframework.cloud.examples.mall.rpc.order.request.api.CreateOrderReqVO;
-import org.smartframework.cloud.examples.mall.rpc.order.response.api.CreateOrderRespVO;
+import org.smartframework.cloud.examples.mall.rpc.enums.order.OrderStatus;
+import org.smartframework.cloud.examples.mall.rpc.order.request.api.SubmitOrderProductInfoReqVO;
+import org.smartframework.cloud.examples.mall.rpc.order.request.api.SubmitOrderReqVO;
+import org.smartframework.cloud.examples.mall.rpc.order.response.api.QuerySubmitResultRespVO;
 import org.smartframework.cloud.examples.mall.rpc.product.request.api.PageProductReqVO;
 import org.smartframework.cloud.examples.mall.rpc.product.request.oms.ProductInsertReqVO;
 import org.smartframework.cloud.examples.mall.rpc.product.response.api.PageProductRespVO;
@@ -23,7 +24,7 @@ import java.util.Arrays;
 public class OrderApiSystemTest extends AbstractSystemTest {
 
     @Test
-    public void testCreate() throws IOException {
+    public void testSubmit() throws IOException {
         // 1、创建商品
         ProductInsertReqVO productInsertReqVO = new ProductInsertReqVO();
         String name = "商品" + RandomUtil.generateRandom(false, 10);
@@ -39,18 +40,28 @@ public class OrderApiSystemTest extends AbstractSystemTest {
         reqVO.setPageSize(10);
         RespVO<BasePageRespVO<PageProductRespVO>> pageProductResult = ProductInfoApi.pageProduct(reqVO);
 
-        CreateOrderProductInfoReqVO createOrderProductInfoReqVO = new CreateOrderProductInfoReqVO();
+        // 3、提交订单
+        SubmitOrderProductInfoReqVO submitOrderProductInfoReqVO = new SubmitOrderProductInfoReqVO();
         long productId = pageProductResult.getBody().getDatas().get(0).getId();
-        createOrderProductInfoReqVO.setProductId(productId);
-        createOrderProductInfoReqVO.setBuyCount(10);
+        submitOrderProductInfoReqVO.setProductId(productId);
+        submitOrderProductInfoReqVO.setBuyCount(10);
 
-        CreateOrderReqVO createOrderReqVO = new CreateOrderReqVO();
-        createOrderReqVO.setProducts(Arrays.asList(createOrderProductInfoReqVO));
+        SubmitOrderReqVO createOrderReqVO = new SubmitOrderReqVO();
+        createOrderReqVO.setProducts(Arrays.asList(submitOrderProductInfoReqVO));
 
-        RespVO<CreateOrderRespVO> result = OrderApi.create(createOrderReqVO);
-        Assertions.assertThat(result).isNotNull();
-        Assertions.assertThat(result.getHead()).isNotNull();
-        Assertions.assertThat(result.getHead().getCode()).isEqualTo(CommonReturnCodes.SUCCESS.getCode());
+        RespVO<String> submitResult = OrderApi.submit(createOrderReqVO);
+        Assertions.assertThat(submitResult).isNotNull();
+        Assertions.assertThat(submitResult.getHead()).isNotNull();
+        Assertions.assertThat(submitResult.getHead().getCode()).isEqualTo(CommonReturnCodes.SUCCESS.getCode());
+        Assertions.assertThat(submitResult.getBody()).isNotBlank();
+
+        // 4、查询提单结果
+        RespVO<QuerySubmitResultRespVO> querySubmitResultResp = OrderApi.querySubmitResult(submitResult.getBody());
+        Assertions.assertThat(querySubmitResultResp).isNotNull();
+        Assertions.assertThat(querySubmitResultResp.getHead()).isNotNull();
+        Assertions.assertThat(querySubmitResultResp.getHead().getCode()).isEqualTo(CommonReturnCodes.SUCCESS.getCode());
+        Assertions.assertThat(querySubmitResultResp.getBody()).isNotNull();
+        Assertions.assertThat(querySubmitResultResp.getBody().getOrderStatus()).isEqualTo(OrderStatus.PAY_TODO.getStatus());
     }
 
 }
