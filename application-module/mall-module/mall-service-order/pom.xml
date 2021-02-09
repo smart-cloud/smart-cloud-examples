@@ -18,6 +18,15 @@
         </dependency>
 
         <dependency>
+            <groupId>org.apache.shardingsphere</groupId>
+            <artifactId>sharding-jdbc-spring-boot-starter</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.shardingsphere</groupId>
+            <artifactId>sharding-jdbc-spring-namespace</artifactId>
+        </dependency>
+
+        <dependency>
             <groupId>org.smartframework.cloud</groupId>
             <artifactId>smart-cloud-starter-rabbitmq</artifactId>
         </dependency>

@@ -1,5 +1,6 @@
 package org.smartframework.cloud.examples.mall.order.util;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.smartframework.cloud.utility.DateUtil;
 
@@ -9,14 +10,15 @@ import org.smartframework.cloud.utility.DateUtil;
  * @author collin
  * @date 2021-02-08
  */
+@Slf4j
 public class OrderUtil {
 
     /**
-     * 每个库的数据量
+     * 每个库的数据量（0~99999999）
      */
     private static final long DB_DATA_LIMIT = 1_0000_0000L;
     /**
-     * 每个库的表数量
+     * 每个库的表数量（00~99）
      */
     private static final long DB_TABLE_NUM = 100L;
 
@@ -30,8 +32,37 @@ public class OrderUtil {
         // yyyyMMddHHmmssSSS+uid/100000000+uid%100
         return new StringBuilder()
                 .append(DateUtil.getCurrentDateTime("yyyyMMddHHmmssSSS"))
-                .append(StringUtils.leftPad(String.valueOf(uid / DB_DATA_LIMIT), 8, '0'))
-                .append(StringUtils.leftPad(String.valueOf(uid % DB_TABLE_NUM), 2, '0')).toString();
+                .append(StringUtils.leftPad(String.valueOf(whichDB(uid)), 8, '0'))
+                .append(StringUtils.leftPad(String.valueOf(whichTable(uid)), 2, '0')).toString();
+    }
+
+    public final static Long whichDB(Long uid) {
+        return uid / DB_DATA_LIMIT;
+    }
+
+    public final static Long whichTable(Long uid) {
+        return uid % DB_TABLE_NUM;
+    }
+
+    public final static Long whichDB(String orderNo) {
+        return shardingByOrderNo(orderNo, orderNo.length() - 10, orderNo.length() - 2);
+    }
+
+    public final static Long whichTable(String orderNo) {
+        return shardingByOrderNo(orderNo, orderNo.length() - 2, orderNo.length());
+    }
+
+    private final static Long shardingByOrderNo(String orderNo, int start, int end) {
+        if (orderNo == null || orderNo.length() == 0) {
+            return null;
+        }
+        try {
+            String dbSuffixNum = StringUtils.substring(orderNo, start, end);
+            return Long.valueOf(dbSuffixNum);
+        } catch (Exception e) {
+            log.error("invalid order id:{}, can't do sharing.", orderNo, e);
+        }
+        return null;
     }
 
 }
