@@ -18,7 +18,7 @@ CREATE TABLE `t_order_bill_0` (
 
 CREATE TABLE `t_order_delivery_info_0` (
   `f_id` bigint(20) unsigned NOT NULL,
-  `t_order_no` varchar(32) NOT NULL COMMENT '订单号（t_order_bill表f_order_no）',
+  `f_order_no` varchar(32) NOT NULL COMMENT '订单号（t_order_bill表f_order_no）',
   `t_product_info_id` bigint(20) unsigned NOT NULL COMMENT '购买的商品id（demo_product库t_product_info表f_id）',
   `f_product_name` varchar(120) NOT NULL COMMENT '商品名称',
   `f_price` bigint(20) unsigned NOT NULL COMMENT '商品购买价格（单位：万分之一元）',
@@ -31,7 +31,7 @@ CREATE TABLE `t_order_delivery_info_0` (
   `f_sys_del_user` bigint(20) unsigned DEFAULT NULL COMMENT '删除者',
   `f_sys_del_state` tinyint(1) unsigned NOT NULL DEFAULT '1' COMMENT '删除状态=={1:正常, 2:已删除}',
   PRIMARY KEY (`f_id`),
-  KEY `idx_order_no` (`t_order_no`) USING BTREE
+  KEY `idx_order_no` (`f_order_no`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='运单信息';
 
 CREATE TABLE `undo_log` (

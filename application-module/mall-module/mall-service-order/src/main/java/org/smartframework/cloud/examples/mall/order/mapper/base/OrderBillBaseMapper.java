@@ -1,9 +1,7 @@
 package org.smartframework.cloud.examples.mall.order.mapper.base;
 
-import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
-import org.smartframework.cloud.examples.common.config.constants.DataSourceName;
 import org.smartframework.cloud.examples.mall.order.entity.base.OrderBillEntity;
 
 /**
@@ -12,7 +10,6 @@ import org.smartframework.cloud.examples.mall.order.entity.base.OrderBillEntity;
  * @author liyulin
  * @date 2021-02-09
  */
-@DS(DataSourceName.MALL_ORDER)
 @Mapper
 public interface OrderBillBaseMapper extends BaseMapper<OrderBillEntity> {
 

@@ -13,10 +13,6 @@ public interface DataSourceName {
      */
     String BASIC_USER = "basic-user";
     /**
-     * 订单
-     */
-    String MALL_ORDER = "mall-order";
-    /**
      * 商品
      */
     String MALL_PRODUCT = "mall-product";

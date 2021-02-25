@@ -29,7 +29,7 @@ public class OrderDeliveryInfoEntity extends BaseEntity {
 	private Long id;
 	
     /** 订单号（t_order_bill表f_order_no） */
-    @TableField(value = "t_order_no")
+    @TableField(value = "f_order_no")
 	private String orderNo;
 	
     /** 购买的商品id（demo_product库t_product_info表f_id） */
