@@ -13,7 +13,7 @@ spring:
 #          type: com.zaxxer.hikari.HikariDataSource
   shardingsphere:
     datasource:
-      names: mall-order-0, mall-order-1, mall-order-ro0, mall-order-ro1
+      names: mall-order-0, mall-order-1, mall-order-slave-0, mall-order-slave-1
       mall-order-0:
         type: com.zaxxer.hikari.HikariDataSource
         driver-class-name: com.mysql.cj.jdbc.Driver
