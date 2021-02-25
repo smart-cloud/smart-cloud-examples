@@ -12,15 +12,15 @@ import org.smartframework.cloud.utility.DateUtil;
  */
 @Slf4j
 public class OrderUtil {
-
-    /**
-     * 每个库的数据量（0~99999999）
-     */
-    private static final long DB_DATA_LIMIT = 1_0000_0000L;
     /**
      * 每个库的表数量（00~99）
      */
     private static final long DB_TABLE_NUM = 100L;
+
+    /**
+     * 每个库的数据量（0~99999999）
+     */
+    private static final long DB_DATA_LIMIT = 1_00_0000L * DB_TABLE_NUM;
 
     /**
      * 生成订单号

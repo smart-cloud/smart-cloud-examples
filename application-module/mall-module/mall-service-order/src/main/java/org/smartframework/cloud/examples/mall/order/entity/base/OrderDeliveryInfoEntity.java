@@ -1,6 +1,7 @@
 package org.smartframework.cloud.examples.mall.order.entity.base;
 
 import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -24,7 +25,7 @@ public class OrderDeliveryInfoEntity extends BaseEntity {
 
 	private static final long serialVersionUID = 1L;
 
-    @TableField(value = "f_id")
+    @TableId(value = "f_id")
 	private Long id;
 	
     /** 订单号（t_order_bill表f_order_no） */
