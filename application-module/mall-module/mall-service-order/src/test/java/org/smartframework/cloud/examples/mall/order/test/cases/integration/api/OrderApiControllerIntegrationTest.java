@@ -6,8 +6,6 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.smartframework.cloud.common.pojo.enums.CommonReturnCodes;
 import org.smartframework.cloud.common.pojo.vo.RespVO;
-import org.smartframework.cloud.examples.app.auth.core.UserBO;
-import org.smartframework.cloud.examples.app.auth.core.UserContext;
 import org.smartframework.cloud.examples.mall.order.util.OrderUtil;
 import org.smartframework.cloud.examples.mall.rpc.order.request.api.SubmitOrderProductInfoReqVO;
 import org.smartframework.cloud.examples.mall.rpc.order.request.api.SubmitOrderReqVO;
@@ -34,7 +32,6 @@ public class OrderApiControllerIntegrationTest extends WebMvcIntegrationTest {
 
     @Test
     public void testSubmit() throws Exception {
-        UserContext.setContext(UserBO.builder().id(1L).mobile("13112345678").realName("张三").build());
         // 1、构建请求
         // build args
         List<SubmitOrderProductInfoReqVO> buyProducts = new ArrayList<>();

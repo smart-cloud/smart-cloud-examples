@@ -5,8 +5,6 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.smartframework.cloud.common.pojo.enums.CommonReturnCodes;
 import org.smartframework.cloud.common.pojo.vo.RespVO;
-import org.smartframework.cloud.examples.app.auth.core.UserBO;
-import org.smartframework.cloud.examples.app.auth.core.UserContext;
 import org.smartframework.cloud.examples.basic.rpc.user.response.base.UserInfoBaseRespVO;
 import org.smartframework.cloud.examples.basic.user.test.data.UserInfoData;
 import org.smartframework.cloud.starter.test.integration.WebMvcIntegrationTest;
@@ -23,8 +21,6 @@ public class UserInfoApiControllerIntegrationTest extends WebMvcIntegrationTest 
 
     @Test
     public void testQuery() throws Exception {
-        UserContext.setContext(UserBO.builder().id(1L).mobile("13112345678").realName("张三").build());
-
         Long userId = 1L;
         userInfoData.insertTestData(userId);
 

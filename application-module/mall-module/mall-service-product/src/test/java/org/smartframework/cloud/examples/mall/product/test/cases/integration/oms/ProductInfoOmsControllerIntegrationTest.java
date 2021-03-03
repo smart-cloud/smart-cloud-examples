@@ -2,14 +2,11 @@ package org.smartframework.cloud.examples.mall.product.test.cases.integration.om
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import org.assertj.core.api.Assertions;
-import org.junit.Before;
 import org.junit.jupiter.api.Test;
 import org.smartframework.cloud.common.pojo.Base;
 import org.smartframework.cloud.common.pojo.enums.CommonReturnCodes;
 import org.smartframework.cloud.common.pojo.vo.BasePageRespVO;
 import org.smartframework.cloud.common.pojo.vo.RespVO;
-import org.smartframework.cloud.examples.app.auth.core.UserBO;
-import org.smartframework.cloud.examples.app.auth.core.UserContext;
 import org.smartframework.cloud.examples.mall.product.test.data.ProductInfoData;
 import org.smartframework.cloud.examples.mall.rpc.product.request.oms.PageProductReqVO;
 import org.smartframework.cloud.examples.mall.rpc.product.request.oms.ProductDeleteReqVO;
@@ -28,15 +25,8 @@ public class ProductInfoOmsControllerIntegrationTest extends WebMvcIntegrationTe
     @Autowired
     private ProductInfoData productInfoData;
 
-    @Before
-    public void beforeTest() {
-        UserContext.setContext(UserBO.builder().id(1L).mobile("13112345678").realName("张三").build());
-    }
-
     @Test
     public void testCreate() throws Exception {
-        UserContext.setContext(UserBO.builder().id(1L).mobile("13112345678").realName("张三").build());
-
         ProductInsertReqVO productInsertReqVO = new ProductInsertReqVO();
         productInsertReqVO.setName("iphone10");
         productInsertReqVO.setSellPrice(10000L);
@@ -53,8 +43,6 @@ public class ProductInfoOmsControllerIntegrationTest extends WebMvcIntegrationTe
 
     @Test
     public void testUpdate() throws Exception {
-        UserContext.setContext(UserBO.builder().id(1L).mobile("13112345678").realName("张三").build());
-
         Long productId = 1L;
         productInfoData.insertTestData(productId);
 
@@ -75,8 +63,6 @@ public class ProductInfoOmsControllerIntegrationTest extends WebMvcIntegrationTe
 
     @Test
     public void testLogicDelete() throws Exception {
-        UserContext.setContext(UserBO.builder().id(1L).mobile("13112345678").realName("张三").build());
-
         Long productId = 2L;
         productInfoData.insertTestData(productId);
 

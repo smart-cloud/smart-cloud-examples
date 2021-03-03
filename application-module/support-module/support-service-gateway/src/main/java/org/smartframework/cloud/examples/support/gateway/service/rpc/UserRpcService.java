@@ -44,12 +44,11 @@ public class UserRpcService {
         authCache.put(RedisKeyHelper.getSecurityKey(req.getToken()), securityKeyBO, RedisExpire.SECURITY_KEY_EXPIRE_MILLIS_LOGIN_SUCCESS, TimeUnit.SECONDS);
 
         // 2、缓存用户信息
-        UserBO userBO = UserBO.builder()
-                .id(req.getUserId())
-                .username(req.getUsername())
-                .realName(req.getRealName())
-                .mobile(req.getMobile())
-                .build();
+        UserBO userBO = new UserBO();
+        userBO.setId(req.getUserId());
+        userBO.setUsername(req.getUsername());
+        userBO.setRealName(req.getRealName());
+        userBO.setMobile(req.getMobile());
 
         RMapCache<String, UserBO> userCache = redissonClient.getMapCache(RedisKeyHelper.getUserHashKey());
         userCache.put(RedisKeyHelper.getUserKey(req.getToken()), userBO, RedisExpire.USER_EXPIRE_MILLIS_LOGIN_SUCCESS, TimeUnit.SECONDS);

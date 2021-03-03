@@ -1,5 +1,6 @@
 package org.smartframework.cloud.examples.app.auth.core;
 
+import org.smartframework.cloud.api.core.user.AbstractUserContext;
 import org.smartframework.cloud.examples.app.auth.core.exception.UserBOMissingException;
 import org.smartframework.cloud.starter.core.business.util.WebServletUtil;
 import org.smartframework.cloud.utility.JacksonUtil;
@@ -16,10 +17,7 @@ import java.nio.charset.StandardCharsets;
  * @author liyulin
  * @date 2020-09-10
  */
-public interface UserContext {
-
-
-    ThreadLocal<UserBO> USER_THREAD_LOCAL = new InheritableThreadLocal<>();
+public class UserContext extends AbstractUserContext {
 
     /**
      * 获取用户信息。为空则抛异常
@@ -27,7 +25,7 @@ public interface UserContext {
      * @return
      */
     @NonNull
-    static UserBO getContext() {
+    public static UserBO getContext() {
         UserBO userBO = getContextable();
         if (userBO == null) {
             throw new UserBOMissingException();
@@ -42,8 +40,8 @@ public interface UserContext {
      * @return
      */
     @Nullable
-    static UserBO getContextable() {
-        UserBO userBO = USER_THREAD_LOCAL.get();
+    public static UserBO getContextable() {
+        UserBO userBO = (UserBO)USER_THREAD_LOCAL.get();
         if (userBO != null) {
             return userBO;
         }
@@ -67,7 +65,7 @@ public interface UserContext {
      *
      * @return
      */
-    static Long getUserId() {
+    public static Long getUserId() {
         return getContext().getId();
     }
 
@@ -76,7 +74,7 @@ public interface UserContext {
      *
      * @return
      */
-    static String getUsername() {
+    public static String getUsername() {
         return getContext().getUsername();
     }
 
@@ -85,7 +83,7 @@ public interface UserContext {
      *
      * @return
      */
-    static String getRealName() {
+    public static String getRealName() {
         return getContext().getRealName();
     }
 
@@ -94,16 +92,8 @@ public interface UserContext {
      *
      * @return
      */
-    static String getMobile() {
+    public static String getMobile() {
         return getContext().getMobile();
-    }
-
-    static void setContext(UserBO userBO) {
-        USER_THREAD_LOCAL.set(userBO);
-    }
-
-    static void remove() {
-        USER_THREAD_LOCAL.remove();
     }
 
 }
