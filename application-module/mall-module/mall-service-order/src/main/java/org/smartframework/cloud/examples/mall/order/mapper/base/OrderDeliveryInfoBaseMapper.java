@@ -8,7 +8,7 @@ import org.smartframework.cloud.examples.mall.order.entity.base.OrderDeliveryInf
  * 运单信息base mapper
  *
  * @author liyulin
- * @date 2021-02-09
+ * @date 2021-03-14
  */
 @Mapper
 public interface OrderDeliveryInfoBaseMapper extends BaseMapper<OrderDeliveryInfoEntity> {

@@ -14,7 +14,7 @@ import lombok.experimental.SuperBuilder;
  * 用户信息
  *
  * @author liyulin
- * @date 2021-02-09
+ * @date 2021-03-14
  */
 @Setter
 @Getter
@@ -24,8 +24,6 @@ public class UserInfoBaseRespVO extends BaseEntityRespVO {
 
 	private static final long serialVersionUID = 1L;
 
-	private Long id;
-	
     /** 手机号 */
     @MaskLog(MaskRule.MOBILE)
 	private String mobile;
@@ -48,26 +46,5 @@ public class UserInfoBaseRespVO extends BaseEntityRespVO {
 	
     /** 所在平台=={"1":"app","2":"web后台","3":"微信"} */
 	private Byte channel;
-	
-    /** 新增时间 */
-	private Date sysAddTime;
-	
-    /** 更新时间 */
-	private Date sysUpdTime;
-	
-    /** 删除时间 */
-	private Date sysDelTime;
-	
-    /** 新增者 */
-	private Long sysAddUser;
-	
-    /** 修改者 */
-	private Long sysUpdUser;
-	
-    /** 删除者 */
-	private Long sysDelUser;
-	
-    /** 记录状态=={"1":"正常","2":"已删除"} */
-	private Byte sysDelState;
 	
 }

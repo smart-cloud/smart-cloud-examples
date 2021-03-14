@@ -14,7 +14,7 @@ import lombok.experimental.SuperBuilder;
  * 登录信息
  *
  * @author liyulin
- * @date 2021-02-09
+ * @date 2021-03-14
  */
 @Setter
 @Getter
@@ -24,8 +24,6 @@ public class LoginInfoBaseRespVO extends BaseEntityRespVO {
 
 	private static final long serialVersionUID = 1L;
 
-	private Long id;
-	
 	private Long userId;
 	
     /** 用户名 */
@@ -47,26 +45,5 @@ public class LoginInfoBaseRespVO extends BaseEntityRespVO {
 	
     /** 用户状态=={"1":"启用","2":"禁用"} */
 	private Byte userState;
-	
-    /** 新增时间 */
-	private Date sysAddTime;
-	
-    /** 更新时间 */
-	private Date sysUpdTime;
-	
-    /** 删除时间 */
-	private Date sysDelTime;
-	
-    /** 新增者 */
-	private Long sysAddUser;
-	
-    /** 修改者 */
-	private Long sysUpdUser;
-	
-    /** 删除者 */
-	private Long sysDelUser;
-	
-    /** 记录状态=={"1":"正常","2":"已删除"} */
-	private Byte sysDelState;
 	
 }
