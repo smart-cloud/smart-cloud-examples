@@ -1,9 +1,11 @@
 package org.smartframework.cloud.examples.app.auth.core;
 
 import org.smartframework.cloud.api.core.user.AbstractUserContext;
+import org.smartframework.cloud.api.core.user.ParentUserBO;
 import org.smartframework.cloud.examples.app.auth.core.exception.UserBOMissingException;
 import org.smartframework.cloud.starter.core.business.util.WebServletUtil;
 import org.smartframework.cloud.utility.JacksonUtil;
+import org.springframework.beans.BeanUtils;
 import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
 import org.springframework.util.Base64Utils;
@@ -41,9 +43,15 @@ public class UserContext extends AbstractUserContext {
      */
     @Nullable
     public static UserBO getContextable() {
-        UserBO userBO = (UserBO)USER_THREAD_LOCAL.get();
-        if (userBO != null) {
-            return userBO;
+        ParentUserBO parentUserBO = USER_THREAD_LOCAL.get();
+        if (parentUserBO != null) {
+            if (parentUserBO instanceof UserBO) {
+                return (UserBO) parentUserBO;
+            } else {
+                UserBO userBO = new UserBO();
+                BeanUtils.copyProperties(parentUserBO, userBO);
+                return userBO;
+            }
         }
 
         HttpServletRequest request = WebServletUtil.getHttpServletRequest();
@@ -55,7 +63,7 @@ public class UserContext extends AbstractUserContext {
             return null;
         }
 
-        userBO = JacksonUtil.parseObject(new String(Base64Utils.decodeFromUrlSafeString(userJson), StandardCharsets.UTF_8), UserBO.class);
+        UserBO userBO = JacksonUtil.parseObject(new String(Base64Utils.decodeFromUrlSafeString(userJson), StandardCharsets.UTF_8), UserBO.class);
         USER_THREAD_LOCAL.set(userBO);
         return userBO;
     }

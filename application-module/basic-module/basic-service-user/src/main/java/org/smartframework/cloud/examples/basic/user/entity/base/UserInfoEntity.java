@@ -1,15 +1,17 @@
 package org.smartframework.cloud.examples.basic.user.entity.base;
 
 import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
-import org.smartframework.cloud.mask.MaskRule;
 import org.smartframework.cloud.mask.MaskLog;
-import java.util.Date;
+import org.smartframework.cloud.mask.MaskRule;
 import org.smartframework.cloud.starter.mybatis.common.mapper.entity.BaseEntity;
+
+import java.util.Date;
 
 /**
  * 用户信息
@@ -26,7 +28,7 @@ public class UserInfoEntity extends BaseEntity {
 
 	private static final long serialVersionUID = 1L;
 
-    @TableField(value = "f_id")
+    @TableId(value = "f_id")
 	private Long id;
 	
     /** 手机号 */

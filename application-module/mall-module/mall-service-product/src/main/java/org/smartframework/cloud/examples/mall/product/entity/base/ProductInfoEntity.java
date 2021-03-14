@@ -1,6 +1,7 @@
 package org.smartframework.cloud.examples.mall.product.entity.base;
 
 import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -26,7 +27,7 @@ public class ProductInfoEntity extends BaseEntity {
     /**
      * 商品名称
      */
-    @TableField(value = "f_name")
+    @TableId(value = "f_name")
     private String name;
 
     /**
