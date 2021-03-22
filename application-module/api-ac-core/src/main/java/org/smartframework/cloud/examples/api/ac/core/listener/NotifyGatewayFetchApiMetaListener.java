@@ -33,7 +33,7 @@ public class NotifyGatewayFetchApiMetaListener implements ApplicationListener<Ap
     @Override
     public void onApplicationEvent(ApplicationReadyEvent event) {
         if (!apiAccessProperties.isUploadApiMeta()) {
-            log.info("notify gateway to fetch api meta is ignored!");
+            log.warn("notify gateway to fetch api meta is ignored!");
             return;
         }
 

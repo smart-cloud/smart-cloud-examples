@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
  * @author collin
  * @date 2021-02-09
  */
-public class DatabaseShardingAlgorithm<T extends Comparable<?>> extends BaseShardingAlgorithm implements ComplexKeysShardingAlgorithm<T> {
+public class OrderBillDatabaseShardingAlgorithm<T extends Comparable<?>> extends BaseShardingAlgorithm implements ComplexKeysShardingAlgorithm<T> {
 
     @Override
     public Collection<String> doSharding(Collection<String> availableDataBaseName, ComplexKeysShardingValue<T> complexKeysShardingValue) {
@@ -43,7 +43,7 @@ public class DatabaseShardingAlgorithm<T extends Comparable<?>> extends BaseShar
     }
 
     private Collection<String> getDataBaseNames(Collection<String> databaseNames, Long idSharding) {
-        return databaseNames.stream().filter(x -> x.endsWith("_" + idSharding)).collect(Collectors.toSet());
+        return databaseNames.stream().filter(x -> x.endsWith("-" + idSharding)).collect(Collectors.toSet());
     }
 
 }

@@ -20,7 +20,7 @@ import java.util.List;
 public class OrderDeliveryInfoApiService extends ServiceImpl<OrderDeliveryInfoBaseMapper, OrderDeliveryInfoEntity> {
 
     public boolean create(List<OrderDeliveryInfoEntity> entities) {
-        return super.saveBatch(entities);
+        return getBaseMapper().insertBatchSomeColumn(entities) == entities.size();
     }
 
 }

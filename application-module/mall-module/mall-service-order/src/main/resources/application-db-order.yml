@@ -1,16 +1,4 @@
 spring:
-  datasource:
-#    dynamic:
-#      primary: mall-order
-#      strict: true
-#      seata: true
-#      datasource:
-#        mall-order:
-#          url: jdbc:mysql://127.0.0.1:3306/demo_order_0?serverTimezone=Asia/Shanghai&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true
-#          username: root
-#          password: 123456
-#          driver-class-name: com.mysql.cj.jdbc.Driver
-#          type: com.zaxxer.hikari.HikariDataSource
   shardingsphere:
     datasource:
       names: mall-order-0, mall-order-1, mall-order-slave-0, mall-order-slave-1
@@ -44,22 +32,22 @@ spring:
           actual-data-nodes: mall-order-$->{0..1}.t_order_bill_$->{0..99},mall-order-slave-$->{0..1}.t_order_bill_$->{0..99}
           database-strategy:
             complex:
-              algorithm-class-name: org.smartframework.cloud.examples.mall.order.shardingjdbc.DatabaseShardingAlgorithm
+              algorithm-class-name: org.smartframework.cloud.examples.mall.order.shardingjdbc.OrderBillDatabaseShardingAlgorithm
               sharding-columns: f_buyer,f_order_no
           table-strategy:
             complex:
-              algorithm-class-name: org.smartframework.cloud.examples.mall.order.shardingjdbc.TableShardingAlgorithm
+              algorithm-class-name: org.smartframework.cloud.examples.mall.order.shardingjdbc.OrderBillTableShardingAlgorithm
               sharding-columns: f_buyer,f_order_no
         t_order_delivery_info:
           actual-data-nodes: mall-order-$->{0..1}.t_order_delivery_info_$->{0..99},mall-order-slave-$->{0..1}.t_order_delivery_info_$->{0..99}
           database-strategy:
-            complex:
-              algorithm-class-name: org.smartframework.cloud.examples.mall.order.shardingjdbc.DatabaseShardingAlgorithm
-              sharding-columns: t_order_no
+            standard:
+              precise-algorithm-class-name: org.smartframework.cloud.examples.mall.order.shardingjdbc.OrderDeliveryInfoDatabaseShardingAlgorithm
+              sharding-column: f_order_no
           table-strategy:
-            complex:
-              algorithm-class-name: org.smartframework.cloud.examples.mall.order.shardingjdbc.TableShardingAlgorithm
-              sharding-columns: t_order_no
+            standard:
+              precise-algorithm-class-name: org.smartframework.cloud.examples.mall.order.shardingjdbc.OrderDeliveryInfoTableShardingAlgorithm
+              sharding-column: f_order_no
     props:
       sql:
         show: true

@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
  * @author collin
  * @date 2021-02-09
  */
-public class TableShardingAlgorithm<T extends Comparable<?>> extends BaseShardingAlgorithm implements ComplexKeysShardingAlgorithm<T> {
+public class OrderBillTableShardingAlgorithm<T extends Comparable<?>> extends BaseShardingAlgorithm implements ComplexKeysShardingAlgorithm<T> {
 
     @Override
     public Collection<String> doSharding(Collection<String> availableTables, ComplexKeysShardingValue<T> complexKeysShardingValue) {

@@ -16,15 +16,13 @@ import org.smartframework.cloud.examples.mall.rpc.product.response.rpc.QryProduc
 import org.smartframework.cloud.starter.core.business.util.RespUtil;
 import org.smartframework.cloud.starter.test.integration.WebMvcIntegrationTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.test.annotation.Rollback;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-@Rollback
-@Transactional
+//@Rollback
+//@Transactional
 public class OrderApiControllerIntegrationTest extends WebMvcIntegrationTest {
 
     @MockBean
@@ -59,7 +57,7 @@ public class OrderApiControllerIntegrationTest extends WebMvcIntegrationTest {
         Assertions.assertThat(submitResp.getBody()).isNotBlank();
 
         // 4、查询提单结果
-        TimeUnit.SECONDS.sleep(5);
+        TimeUnit.SECONDS.sleep(10);
         RespVO<QuerySubmitResultRespVO> resp = querySubmitResult(submitResp.getBody());
 
         Assertions.assertThat(resp).isNotNull();

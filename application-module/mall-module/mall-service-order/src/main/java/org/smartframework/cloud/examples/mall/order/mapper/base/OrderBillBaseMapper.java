@@ -1,8 +1,8 @@
 package org.smartframework.cloud.examples.mall.order.mapper.base;
 
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 import org.smartframework.cloud.examples.mall.order.entity.base.OrderBillEntity;
+import org.smartframework.cloud.starter.mybatis.common.mapper.SmartMapper;
 
 /**
  * 订单信息base mapper
@@ -11,6 +11,6 @@ import org.smartframework.cloud.examples.mall.order.entity.base.OrderBillEntity;
  * @date 2021-03-14
  */
 @Mapper
-public interface OrderBillBaseMapper extends BaseMapper<OrderBillEntity> {
+public interface OrderBillBaseMapper extends SmartMapper<OrderBillEntity> {
 
 }

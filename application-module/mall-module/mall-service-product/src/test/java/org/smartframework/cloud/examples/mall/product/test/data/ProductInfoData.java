@@ -28,7 +28,7 @@ public class ProductInfoData {
         entity.setName("iphone");
         entity.setSellPrice(1000L);
         entity.setStock(2000L);
-        entity.setAddTime(new Date());
+        entity.setInsertTime(new Date());
         entity.setDelState(DelStateEnum.NORMAL.getDelState());
         productInfoBaseMapper.insert(entity);
     }
@@ -56,7 +56,7 @@ public class ProductInfoData {
             entity.setName("iphone");
             entity.setSellPrice(1000L);
             entity.setStock(2000L);
-            entity.setAddTime(new Date());
+            entity.setInsertTime(new Date());
             entity.setDelState(DelStateEnum.NORMAL.getDelState());
 
             productInfoBaseMapper.insert(entity);

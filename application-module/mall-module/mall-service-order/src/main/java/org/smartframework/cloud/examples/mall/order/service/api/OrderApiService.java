@@ -122,7 +122,7 @@ public class OrderApiService {
     @Transactional(rollbackFor = Exception.class)
     public void createOrder(String orderNo, Long userId, List<SubmitOrderProductInfoReqVO> products, List<QryProductByIdRespVO> productInfos) {
         List<OrderDeliveryInfoEntity> entities = saveOrderDeliveryInfo(orderNo, products, productInfos);
-        OrderBillEntity orderBillEntity = saveOrderBill(orderNo, userId, entities);
+        saveOrderBill(orderNo, userId, entities);
     }
 
     /**
@@ -189,7 +189,7 @@ public class OrderApiService {
             entity.setPrice(productInfo.getSellPrice());
             entity.setProductName(productInfo.getName());
 
-            entity.setAddTime(new Date());
+            entity.setInsertTime(new Date());
             entity.setDelState(DelStateEnum.NORMAL.getDelState());
 
             return entity;
@@ -210,7 +210,7 @@ public class OrderApiService {
         orderBillEntity.setStatus(OrderStatus.DEDUCT_STOCK_TODO.getStatus());
         orderBillEntity.setPayState(PayStateEnum.PENDING_PAY.getValue());
         orderBillEntity.setBuyer(userId);
-        orderBillEntity.setAddTime(new Date());
+        orderBillEntity.setInsertTime(new Date());
         orderBillEntity.setDelState(DelStateEnum.NORMAL.getDelState());
 
         orderBillApiBiz.create(orderBillEntity);

@@ -23,7 +23,7 @@ public class UserInfoData {
 		entity.setRealName("李四");
 		entity.setChannel(ChannelEnum.APP.getValue());
 		entity.setSex(SexEnum.FEMALE.getValue());
-		entity.setAddTime(new Date());
+		entity.setInsertTime(new Date());
 		entity.setDelState(DelStateEnum.NORMAL.getDelState());
 		userInfoBaseMapper.insert(entity);
 	}
