@@ -12,7 +12,7 @@ import org.smartframework.cloud.starter.mybatis.common.mapper.entity.BaseEntity;
  * 运单信息
  *
  * @author liyulin
- * @date 2021-03-14
+ * @date 2021-03-23
  */
 @Getter
 @Setter

@@ -1,11 +1,13 @@
 package org.smartframework.cloud.examples.mall.product.biz.api;
 
+import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.smartframework.cloud.common.pojo.vo.BasePageRespVO;
+import org.smartframework.cloud.examples.common.config.constants.DataSourceName;
 import org.smartframework.cloud.examples.mall.product.entity.base.ProductInfoEntity;
 import org.smartframework.cloud.examples.mall.product.mapper.base.ProductInfoBaseMapper;
 import org.smartframework.cloud.examples.mall.rpc.product.request.api.PageProductReqVO;
@@ -26,6 +28,7 @@ import java.util.stream.Collectors;
  * @date 2019-03-31
  */
 @Repository
+@DS(DataSourceName.MALL_PRODUCT)
 public class ProductInfoApiBiz extends BaseBiz<ProductInfoEntity> {
 
     @Autowired
@@ -44,7 +47,7 @@ public class ProductInfoApiBiz extends BaseBiz<ProductInfoEntity> {
             wrapper.like(ProductInfoEntity::getName, name);
         }
         wrapper.eq(BaseEntity::getDelState, DelStateEnum.NORMAL.getDelState());
-        wrapper.orderByDesc(BaseEntity::getAddTime);
+        wrapper.orderByDesc(BaseEntity::getInsertTime);
 
         IPage<ProductInfoEntity> page = productInfoBaseMapper.selectPage(new Page<>(req.getPageNum(), req.getPageSize(), true), wrapper);
         List<ProductInfoEntity> entitydatas = page.getRecords();

@@ -1,19 +1,16 @@
 package org.smartframework.cloud.examples.basic.user.mapper.base;
 
-import com.baomidou.dynamic.datasource.annotation.DS;
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
-import org.smartframework.cloud.examples.common.config.constants.DataSourceName;
 import org.smartframework.cloud.examples.basic.user.entity.base.UserInfoEntity;
+import org.smartframework.cloud.starter.mybatis.common.mapper.SmartMapper;
 
 /**
  * 用户信息base mapper
  *
  * @author liyulin
- * @date 2021-02-09
+ * @date 2021-03-23
  */
-@DS(DataSourceName.BASIC_USER)
 @Mapper
-public interface UserInfoBaseMapper extends BaseMapper<UserInfoEntity> {
+public interface UserInfoBaseMapper extends SmartMapper<UserInfoEntity> {
 
 }
