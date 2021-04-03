@@ -1,5 +1,7 @@
 # 一、项目说明
-此项目为基于[smart-cloud](https://github.com/smart-cloud/smart-cloud)的微服务示例项目。各模块说明如下：
+> 此项目为基于[smart-cloud](https://github.com/smart-cloud/smart-cloud)的微服务示例项目。
+> 自动化构建见[ci](https://github.com/smart-cloud/ci)
+
 ## （一）服务说明
 ```
 smart-cloud-examples
@@ -196,9 +198,11 @@ sign = RSA签名签名(AES加密(head的json串) + AES加密(body json串))
   - clone下[smart-cloud](https://github.com/smart-cloud/smart-cloud)
   - 进入smart-cloud目录，执行mvn -clean install -Dmaven.test.skip=true -T 4
 - 服务启动顺序
-  - 先启动support-service-eureka
-  - 再启动support-service-gateway
-  - 然后依次启动mall下或basic下服务
+  - 启动redis
+  - 启动seata
+  - 启动support-service-eureka
+  - 启动support-service-gateway
+  - 最后依次启动mall下或basic下服务
 
 # 四、注意事项
 - 针对**jasypt**加密，所有的需要合并的单体服务的**jasypt.encryptor.password**的值必须相同，否则会报错。
