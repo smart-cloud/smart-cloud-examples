@@ -53,6 +53,7 @@ public class ApiMetaRpcService {
         if (apiMetaFetch == null || MapUtils.isEmpty(apiMetaFetch.getApiAccessMap())) {
             return;
         }
+        // TODO:lua脚本。删除老的，添加新的
         // redis持久化
         apiMetaFetch.getApiAccessMap().forEach((urlMethod, apiAccess) ->
                 redisTemplate.opsForHash().put(RedisKeyHelper.getApiMetaKey(), RedisKeyHelper.getApiMetaHashKey(urlMethod), apiAccess)

@@ -27,16 +27,6 @@ spring:
     include: common-config,discovery
   cloud:
     gateway:
-      globalcors:
-        add-to-simple-url-handler-mapping: true
-        cors-configurations:
-          # 匹配所有请求
-          '[/**]':
-            #跨域处理 允许所有的域
-            allowedOrigins: "*"
-            allowedMethods:
-              - GET
-              - POST
       discovery:
         locator:
           enabled: true
