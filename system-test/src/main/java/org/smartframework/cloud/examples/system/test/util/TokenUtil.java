@@ -6,8 +6,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.DecoderException;
 import org.apache.commons.lang3.StringUtils;
 import org.assertj.core.api.Assertions;
+import org.smartframework.cloud.common.pojo.Response;
 import org.smartframework.cloud.common.pojo.enums.CommonReturnCodes;
-import org.smartframework.cloud.common.pojo.vo.RespVO;
 import org.smartframework.cloud.examples.basic.rpc.user.request.api.login.LoginInfoInsertReqVO;
 import org.smartframework.cloud.examples.basic.rpc.user.request.api.register.RegisterUserReqVO;
 import org.smartframework.cloud.examples.basic.rpc.user.request.api.user.UserInfoInsertReqVO;
@@ -59,7 +59,7 @@ public final class TokenUtil {
     private static Context login() throws IOException, NoSuchAlgorithmException, InvalidKeySpecException, DecoderException,
             IllegalBlockSizeException, BadPaddingException, NoSuchPaddingException, InvalidKeyException {
         // 1、请求服务端生成RSA秘钥
-        RespVO<GenerateClientPubKeyRespVO> generateClientPubKeyResult = SecurityApi.generateClientPubKey();
+        Response<GenerateClientPubKeyRespVO> generateClientPubKeyResult = SecurityApi.generateClientPubKey();
         Assertions.assertThat(generateClientPubKeyResult).isNotNull();
         Assertions.assertThat(generateClientPubKeyResult.getHead()).isNotNull();
         Assertions.assertThat(generateClientPubKeyResult.getHead().getCode()).isEqualTo(CommonReturnCodes.SUCCESS.getCode());
@@ -82,7 +82,7 @@ public final class TokenUtil {
         String cpubKeyExponent = RsaUtil.getPublicExponent(serverPubClientPriKeyPair);
         generateAesKeyReqVO.setEncryptedCpubKeyModulus(generateEncryptedCpubKey(clientRSAPublicKey, cpubKeyModulus));
         generateAesKeyReqVO.setEncryptedCpubKeyExponent(RsaUtil.encryptString(clientRSAPublicKey, StringUtils.reverse(cpubKeyExponent)));
-        RespVO<GenerateAesKeyRespVO> generateAesKeyResult = SecurityApi.generateAesKey(generateAesKeyReqVO);
+        Response<GenerateAesKeyRespVO> generateAesKeyResult = SecurityApi.generateAesKey(generateAesKeyReqVO);
         Assertions.assertThat(generateAesKeyResult).isNotNull();
         Assertions.assertThat(generateAesKeyResult.getHead()).isNotNull();
         Assertions.assertThat(generateAesKeyResult.getHead().getCode()).isEqualTo(CommonReturnCodes.SUCCESS.getCode());
@@ -115,7 +115,7 @@ public final class TokenUtil {
                 .userInfo(userInfo)
                 .loginInfo(loginInfo)
                 .build();
-        RespVO<RegisterUserRespVO> RegisterUserResult = RegisterApi.register(registerUserReqVO);
+        Response<RegisterUserRespVO> RegisterUserResult = RegisterApi.register(registerUserReqVO);
         Assertions.assertThat(RegisterUserResult).isNotNull();
         Assertions.assertThat(RegisterUserResult.getHead()).isNotNull();
         Assertions.assertThat(RegisterUserResult.getHead().getCode()).isEqualTo(CommonReturnCodes.SUCCESS.getCode());

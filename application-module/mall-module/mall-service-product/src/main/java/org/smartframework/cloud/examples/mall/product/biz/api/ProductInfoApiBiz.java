@@ -6,7 +6,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.smartframework.cloud.common.pojo.vo.BasePageRespVO;
+import org.smartframework.cloud.common.pojo.BasePageResponse;
 import org.smartframework.cloud.examples.common.config.constants.DataSourceName;
 import org.smartframework.cloud.examples.mall.product.entity.base.ProductInfoEntity;
 import org.smartframework.cloud.examples.mall.product.mapper.base.ProductInfoBaseMapper;
@@ -40,7 +40,7 @@ public class ProductInfoApiBiz extends BaseBiz<ProductInfoEntity> {
      * @param req
      * @return
      */
-    public BasePageRespVO<PageProductRespVO> pageProduct(PageProductReqVO req) {
+    public BasePageResponse<PageProductRespVO> pageProduct(PageProductReqVO req) {
         LambdaQueryWrapper<ProductInfoEntity> wrapper = new LambdaQueryWrapper<>();
         String name = req.getName();
         if (StringUtils.isNotBlank(name)) {
@@ -53,7 +53,7 @@ public class ProductInfoApiBiz extends BaseBiz<ProductInfoEntity> {
         List<ProductInfoEntity> entitydatas = page.getRecords();
 
         if (CollectionUtils.isEmpty(entitydatas)) {
-            return new BasePageRespVO<>(null, req.getPageNum(), req.getPageSize(), 0);
+            return new BasePageResponse<>(null, req.getPageNum(), req.getPageSize(), 0);
         }
 
         List<PageProductRespVO> pagedatas = entitydatas.stream()
@@ -65,7 +65,7 @@ public class ProductInfoApiBiz extends BaseBiz<ProductInfoEntity> {
                         .build())
                 .collect(Collectors.toList());
 
-        return new BasePageRespVO<>(pagedatas, req.getPageNum(), req.getPageSize(), page.getTotal());
+        return new BasePageResponse<>(pagedatas, req.getPageNum(), req.getPageSize(), page.getTotal());
     }
 
 }

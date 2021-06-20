@@ -1,7 +1,7 @@
 package org.smartframework.cloud.examples.support.rpc.gateway;
 
 import org.smartframework.cloud.common.pojo.Base;
-import org.smartframework.cloud.common.pojo.vo.RespVO;
+import org.smartframework.cloud.common.pojo.Response;
 import org.smartframework.cloud.examples.support.rpc.constant.RpcConstants;
 import org.smartframework.cloud.examples.support.rpc.gateway.request.rpc.CacheUserInfoReqVO;
 import org.smartframework.cloud.examples.support.rpc.gateway.request.rpc.ExitLoginReqVO;
@@ -28,7 +28,7 @@ public interface UserRpc {
      * @return
      */
     @PostMapping("gateway/rpc/user/cacheUserInfo")
-    RespVO<Base> cacheUserInfo(@RequestBody @Valid CacheUserInfoReqVO req);
+    Response<Base> cacheUserInfo(@RequestBody @Valid CacheUserInfoReqVO req);
 
     /**
      * 退出登录
@@ -37,6 +37,6 @@ public interface UserRpc {
      * @return
      */
     @PostMapping("gateway/rpc/user/exit")
-    RespVO<Base> exit(@RequestBody @Valid ExitLoginReqVO req);
+    Response<Base> exit(@RequestBody @Valid ExitLoginReqVO req);
 
 }

@@ -1,7 +1,7 @@
 package org.smartframework.cloud.examples.support.rpc.gateway;
 
 import org.smartframework.cloud.common.pojo.Base;
-import org.smartframework.cloud.common.pojo.vo.RespVO;
+import org.smartframework.cloud.common.pojo.Response;
 import org.smartframework.cloud.examples.support.rpc.constant.RpcConstants;
 import org.smartframework.cloud.examples.support.rpc.gateway.request.rpc.GatewayAuthUpdateReqVO;
 import org.smartframework.cloud.examples.support.rpc.gateway.request.rpc.GatewayAuthUploadReqVO;
@@ -28,7 +28,7 @@ public interface GatewayAuthRpc {
      * @return
      */
     @PostMapping("gateway/rpc/auth/upload")
-    RespVO<Base> upload(@RequestBody @Valid GatewayAuthUploadReqVO req);
+    Response<Base> upload(@RequestBody @Valid GatewayAuthUploadReqVO req);
 
     /**
      * 上传权限信息（更新）
@@ -37,6 +37,6 @@ public interface GatewayAuthRpc {
      * @return
      */
     @PostMapping("gateway/rpc/auth/update")
-    RespVO<Base> update(@RequestBody @Valid GatewayAuthUpdateReqVO req);
+    Response<Base> update(@RequestBody @Valid GatewayAuthUpdateReqVO req);
 
 }

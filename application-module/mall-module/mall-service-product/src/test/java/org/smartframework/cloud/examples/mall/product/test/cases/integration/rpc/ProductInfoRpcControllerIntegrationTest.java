@@ -4,8 +4,8 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.smartframework.cloud.common.pojo.Base;
+import org.smartframework.cloud.common.pojo.Response;
 import org.smartframework.cloud.common.pojo.enums.CommonReturnCodes;
-import org.smartframework.cloud.common.pojo.vo.RespVO;
 import org.smartframework.cloud.examples.mall.product.test.data.ProductInfoData;
 import org.smartframework.cloud.examples.mall.rpc.product.request.rpc.QryProductByIdReqVO;
 import org.smartframework.cloud.examples.mall.rpc.product.request.rpc.QryProductByIdsReqVO;
@@ -35,9 +35,9 @@ public class ProductInfoRpcControllerIntegrationTest extends WebMvcIntegrationTe
         QryProductByIdReqVO reqBody = new QryProductByIdReqVO();
         reqBody.setId(productId);
 
-        RespVO<QryProductByIdRespVO> result = super.get(
+        Response<QryProductByIdRespVO> result = super.get(
                 "/product/rpc/productInfo/qryProductById", reqBody,
-                new TypeReference<RespVO<QryProductByIdRespVO>>() {
+                new TypeReference<Response<QryProductByIdRespVO>>() {
                 });
 
         Assertions.assertThat(result).isNotNull();
@@ -56,9 +56,9 @@ public class ProductInfoRpcControllerIntegrationTest extends WebMvcIntegrationTe
         QryProductByIdsReqVO qryProductByIdsReqVO = new QryProductByIdsReqVO();
         qryProductByIdsReqVO.setIds(ids);
 
-        RespVO<QryProductByIdsRespVO> result = super.get(
+        Response<QryProductByIdsRespVO> result = super.get(
                 "/product/rpc/productInfo/qryProductByIds", qryProductByIdsReqVO,
-                new TypeReference<RespVO<QryProductByIdsRespVO>>() {
+                new TypeReference<Response<QryProductByIdsRespVO>>() {
                 });
 
         Assertions.assertThat(result).isNotNull();
@@ -84,8 +84,8 @@ public class ProductInfoRpcControllerIntegrationTest extends WebMvcIntegrationTe
         }
         UpdateStockReqVO updateStockReqVO = new UpdateStockReqVO(updateStockItems);
 
-        RespVO<Base> result = super.post("/product/rpc/productInfo/updateStock",
-                updateStockReqVO, new TypeReference<RespVO<Base>>() {
+        Response<Base> result = super.post("/product/rpc/productInfo/updateStock",
+                updateStockReqVO, new TypeReference<Response<Base>>() {
                 });
 
         Assertions.assertThat(result).isNotNull();

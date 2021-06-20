@@ -1,8 +1,8 @@
 package org.smartframework.cloud.examples.mall.product.service.oms;
 
 import org.smartframework.cloud.common.pojo.Base;
-import org.smartframework.cloud.common.pojo.vo.BasePageRespVO;
-import org.smartframework.cloud.common.pojo.vo.RespVO;
+import org.smartframework.cloud.common.pojo.BasePageResponse;
+import org.smartframework.cloud.common.pojo.Response;
 import org.smartframework.cloud.examples.mall.product.biz.oms.ProductInfoOmsBiz;
 import org.smartframework.cloud.examples.mall.rpc.product.request.oms.PageProductReqVO;
 import org.smartframework.cloud.examples.mall.rpc.product.request.oms.ProductDeleteReqVO;
@@ -31,7 +31,7 @@ public class ProductInfoOmsService {
 	 * @param reqBody
 	 * @return
 	 */
-	public RespVO<Base> create(ProductInsertReqVO reqBody) {
+	public Response<Base> create(ProductInsertReqVO reqBody) {
 		productOmsBiz.insert(reqBody);
 		return RespUtil.success();
 	}
@@ -42,7 +42,7 @@ public class ProductInfoOmsService {
 	 * @param reqBody
 	 * @return
 	 */
-	public RespVO<Base> update(ProductUpdateReqVO reqBody) {
+	public Response<Base> update(ProductUpdateReqVO reqBody) {
 		productOmsBiz.update(reqBody);
 		return RespUtil.success();
 	}
@@ -53,7 +53,7 @@ public class ProductInfoOmsService {
 	 * @param reqBody
 	 * @return
 	 */
-	public RespVO<Base> logicDelete(ProductDeleteReqVO reqBody) {
+	public Response<Base> logicDelete(ProductDeleteReqVO reqBody) {
 		productOmsBiz.logicDelete(reqBody.getId());
 		return RespUtil.success();
 	}
@@ -64,7 +64,7 @@ public class ProductInfoOmsService {
 	 * @param req
 	 * @return
 	 */
-	public BasePageRespVO<ProductInfoBaseRespVO> pageProduct(PageProductReqVO req) {
+	public BasePageResponse<ProductInfoBaseRespVO> pageProduct(PageProductReqVO req) {
 		return productOmsBiz.pageProduct(req);
 	}
 	

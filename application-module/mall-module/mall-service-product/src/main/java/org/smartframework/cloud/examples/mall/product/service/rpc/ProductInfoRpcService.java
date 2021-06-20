@@ -1,7 +1,7 @@
 package org.smartframework.cloud.examples.mall.product.service.rpc;
 
 import org.smartframework.cloud.common.pojo.Base;
-import org.smartframework.cloud.common.pojo.vo.RespVO;
+import org.smartframework.cloud.common.pojo.Response;
 import org.smartframework.cloud.examples.mall.product.biz.rpc.ProductInfoRpcBiz;
 import org.smartframework.cloud.examples.mall.product.enums.ProductReturnCodes;
 import org.smartframework.cloud.examples.mall.rpc.product.request.rpc.QryProductByIdReqVO;
@@ -53,7 +53,7 @@ public class ProductInfoRpcService {
 	 * @return
 	 */
 	@Transactional
-	public RespVO<Base> updateStock(UpdateStockReqVO req) {
+	public Response<Base> updateStock(UpdateStockReqVO req) {
 		boolean success = productRpcBiz.updateStock(req.getItems());
 		
 		return success ? RespUtil.success() : RespUtil.error(ProductReturnCodes.STOCK_NOT_ENOUGH);

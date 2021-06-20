@@ -1,7 +1,7 @@
 package org.smartframework.cloud.examples.mall.rpc.product;
 
 import org.smartframework.cloud.common.pojo.Base;
-import org.smartframework.cloud.common.pojo.vo.RespVO;
+import org.smartframework.cloud.common.pojo.Response;
 import org.smartframework.cloud.examples.mall.rpc.constant.RpcConstants;
 import org.smartframework.cloud.examples.mall.rpc.product.request.rpc.QryProductByIdReqVO;
 import org.smartframework.cloud.examples.mall.rpc.product.request.rpc.QryProductByIdsReqVO;
@@ -34,7 +34,7 @@ public interface ProductInfoRpc {
      * @return
      */
     @GetMapping("product/rpc/productInfo/qryProductById")
-    RespVO<QryProductByIdRespVO> qryProductById(@SpringQueryMap @Valid @NotNull QryProductByIdReqVO req);
+    Response<QryProductByIdRespVO> qryProductById(@SpringQueryMap @Valid @NotNull QryProductByIdReqVO req);
 
     /**
      * 根据ids查询商品信息
@@ -43,7 +43,7 @@ public interface ProductInfoRpc {
      * @return
      */
     @GetMapping("product/rpc/productInfo/qryProductByIds")
-    RespVO<QryProductByIdsRespVO> qryProductByIds(@SpringQueryMap @Valid @NotNull QryProductByIdsReqVO reqVO);
+    Response<QryProductByIdsRespVO> qryProductByIds(@SpringQueryMap @Valid @NotNull QryProductByIdsReqVO reqVO);
 
     /**
      * 更新库存
@@ -52,6 +52,6 @@ public interface ProductInfoRpc {
      * @return
      */
     @PostMapping("product/rpc/productInfo/updateStock")
-    RespVO<Base> updateStock(@RequestBody @Valid UpdateStockReqVO req);
+    Response<Base> updateStock(@RequestBody @Valid UpdateStockReqVO req);
 
 }

@@ -3,7 +3,7 @@ package org.smartframework.cloud.examples.api.ac.core.listener;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.smartframework.cloud.common.pojo.Base;
-import org.smartframework.cloud.common.pojo.vo.RespVO;
+import org.smartframework.cloud.common.pojo.Response;
 import org.smartframework.cloud.examples.api.ac.core.properties.ApiAccessProperties;
 import org.smartframework.cloud.examples.support.rpc.gateway.ApiMetaRpc;
 import org.smartframework.cloud.examples.support.rpc.gateway.request.rpc.NotifyFetchReqVO;
@@ -39,7 +39,7 @@ public class NotifyGatewayFetchApiMetaListener implements ApplicationListener<Ap
 
         log.info("notify gateway to fetch api meta to gateway start!");
         String serviceName = event.getApplicationContext().getEnvironment().getProperty(SERVICE_NAME_KEY);
-        RespVO<Base> result = apiMetaRpc.notifyFetch(NotifyFetchReqVO.builder().serviceName(serviceName).build());
+        Response<Base> result = apiMetaRpc.notifyFetch(NotifyFetchReqVO.builder().serviceName(serviceName).build());
         log.info("notify gateway to fetch api meta to gateway finish!");
 
         if (!RespUtil.isSuccess(result)) {

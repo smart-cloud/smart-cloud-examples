@@ -3,9 +3,9 @@ package org.smartframework.cloud.examples.mall.product.test.cases.integration.ap
 import com.fasterxml.jackson.core.type.TypeReference;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.smartframework.cloud.common.pojo.BasePageResponse;
+import org.smartframework.cloud.common.pojo.Response;
 import org.smartframework.cloud.common.pojo.enums.CommonReturnCodes;
-import org.smartframework.cloud.common.pojo.vo.BasePageRespVO;
-import org.smartframework.cloud.common.pojo.vo.RespVO;
 import org.smartframework.cloud.examples.mall.product.test.data.ProductInfoData;
 import org.smartframework.cloud.examples.mall.rpc.product.request.api.PageProductReqVO;
 import org.smartframework.cloud.examples.mall.rpc.product.response.api.PageProductRespVO;
@@ -29,8 +29,8 @@ public class ProductInfoApiControllerIntegrationTest extends WebMvcIntegrationTe
         reqVO.setPageNum(1);
         reqVO.setPageSize(10);
 
-        RespVO<BasePageRespVO<PageProductRespVO>> result = super.get("/product/api/productInfo/pageProduct",
-                reqVO, new TypeReference<RespVO<BasePageRespVO<PageProductRespVO>>>() {
+        Response<BasePageResponse<PageProductRespVO>> result = super.get("/product/api/productInfo/pageProduct",
+                reqVO, new TypeReference<Response<BasePageResponse<PageProductRespVO>>>() {
                 });
 
         Assertions.assertThat(result).isNotNull();

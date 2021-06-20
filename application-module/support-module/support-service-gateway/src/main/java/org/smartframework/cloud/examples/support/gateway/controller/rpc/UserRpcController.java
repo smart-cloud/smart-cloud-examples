@@ -1,7 +1,7 @@
 package org.smartframework.cloud.examples.support.gateway.controller.rpc;
 
 import org.smartframework.cloud.common.pojo.Base;
-import org.smartframework.cloud.common.pojo.vo.RespVO;
+import org.smartframework.cloud.common.pojo.Response;
 import org.smartframework.cloud.examples.support.gateway.service.rpc.UserRpcService;
 import org.smartframework.cloud.examples.support.rpc.gateway.UserRpc;
 import org.smartframework.cloud.examples.support.rpc.gateway.request.rpc.CacheUserInfoReqVO;
@@ -34,7 +34,7 @@ public class UserRpcController implements UserRpc {
      * @return
      */
     @Override
-    public RespVO<Base> cacheUserInfo(@RequestBody @Valid CacheUserInfoReqVO req) {
+    public Response<Base> cacheUserInfo(@RequestBody @Valid CacheUserInfoReqVO req) {
         userRpcService.cacheUserInfo(req);
         return RespUtil.success();
     }
@@ -46,7 +46,7 @@ public class UserRpcController implements UserRpc {
      * @return
      */
     @Override
-    public RespVO<Base> exit(@RequestBody @Valid ExitLoginReqVO req) {
+    public Response<Base> exit(@RequestBody @Valid ExitLoginReqVO req) {
         userRpcService.exit(req);
         return RespUtil.success();
     }

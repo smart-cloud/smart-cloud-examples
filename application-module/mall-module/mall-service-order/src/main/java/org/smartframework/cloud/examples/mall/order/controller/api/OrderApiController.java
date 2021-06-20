@@ -3,7 +3,7 @@ package org.smartframework.cloud.examples.mall.order.controller.api;
 import org.smartframework.cloud.api.core.annotation.SmartRequiresDataSecurity;
 import org.smartframework.cloud.api.core.annotation.SmartRequiresRepeatSubmitCheck;
 import org.smartframework.cloud.api.core.annotation.auth.SmartRequiresUser;
-import org.smartframework.cloud.common.pojo.vo.RespVO;
+import org.smartframework.cloud.common.pojo.Response;
 import org.smartframework.cloud.examples.mall.order.mq.producer.OrderProducer;
 import org.smartframework.cloud.examples.mall.order.service.api.OrderApiService;
 import org.smartframework.cloud.examples.mall.rpc.order.request.api.SubmitOrderReqVO;
@@ -43,7 +43,7 @@ public class OrderApiController {
     @SmartRequiresUser
     @SmartRequiresDataSecurity
     @SmartRequiresRepeatSubmitCheck
-    public RespVO<String> submit(@RequestBody @Valid SubmitOrderReqVO req) {
+    public Response<String> submit(@RequestBody @Valid SubmitOrderReqVO req) {
         return RespUtil.success(orderProducer.submitOrder(req));
     }
 
@@ -54,7 +54,7 @@ public class OrderApiController {
      * @return
      */
     @GetMapping("querySubmitResult")
-    public RespVO<QuerySubmitResultRespVO> querySubmitResult(@NotNull String orderNo) {
+    public Response<QuerySubmitResultRespVO> querySubmitResult(@NotNull String orderNo) {
         return RespUtil.success(orderApiService.querySubmitResult(orderNo));
     }
 

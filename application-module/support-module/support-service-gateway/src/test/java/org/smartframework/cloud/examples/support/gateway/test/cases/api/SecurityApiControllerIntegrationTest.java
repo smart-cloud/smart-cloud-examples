@@ -5,8 +5,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.smartframework.cloud.common.pojo.Response;
 import org.smartframework.cloud.common.pojo.enums.CommonReturnCodes;
-import org.smartframework.cloud.common.pojo.vo.RespVO;
 import org.smartframework.cloud.examples.support.gateway.enums.GatewayReturnCodes;
 import org.smartframework.cloud.examples.support.gateway.service.api.SecurityApiService;
 import org.smartframework.cloud.examples.support.rpc.gateway.request.api.GenerateAesKeyReqVO;
@@ -37,7 +37,7 @@ public class SecurityApiControllerIntegrationTest extends WebReactiveIntegration
 
     @Test
     public void testGenerateClientPubKey() throws Exception {
-        RespVO<GenerateClientPubKeyRespVO> result = post("/gateway/api/security/generateClientPubKey", null, new TypeReference<RespVO<GenerateClientPubKeyRespVO>>() {
+        Response<GenerateClientPubKeyRespVO> result = post("/gateway/api/security/generateClientPubKey", null, new TypeReference<Response<GenerateClientPubKeyRespVO>>() {
         });
         Assertions.assertThat(result).isNotNull();
         Assertions.assertThat(result.getHead()).isNotNull();
@@ -73,7 +73,7 @@ public class SecurityApiControllerIntegrationTest extends WebReactiveIntegration
         generateAesKeyReqVO.setEncryptedCpubKeyModulus(generateEncryptedCpubKey(publicKey, cpubKeyModulus));
         generateAesKeyReqVO.setEncryptedCpubKeyExponent(RsaUtil.encryptString(publicKey, StringUtils.reverse(cpubKeyExponent)));
 
-        RespVO<GenerateAesKeyRespVO> result = post("/gateway/api/security/generateAesKey", generateAesKeyReqVO, new TypeReference<RespVO<GenerateAesKeyRespVO>>() {
+        Response<GenerateAesKeyRespVO> result = post("/gateway/api/security/generateAesKey", generateAesKeyReqVO, new TypeReference<Response<GenerateAesKeyRespVO>>() {
         });
         Assertions.assertThat(result).isNotNull();
         Assertions.assertThat(result.getHead()).isNotNull();

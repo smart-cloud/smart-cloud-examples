@@ -1,7 +1,7 @@
 package org.smartframework.cloud.examples.support.gateway.controller.rpc;
 
 import org.smartframework.cloud.common.pojo.Base;
-import org.smartframework.cloud.common.pojo.vo.RespVO;
+import org.smartframework.cloud.common.pojo.Response;
 import org.smartframework.cloud.examples.support.gateway.service.rpc.GatewayAuthRpcService;
 import org.smartframework.cloud.examples.support.rpc.gateway.GatewayAuthRpc;
 import org.smartframework.cloud.examples.support.rpc.gateway.request.rpc.GatewayAuthUpdateReqVO;
@@ -22,13 +22,13 @@ public class GatewayAuthRpcController implements GatewayAuthRpc {
     private GatewayAuthRpcService gatewayAuthRpcService;
 
     @Override
-    public RespVO<Base> upload(@RequestBody @Valid GatewayAuthUploadReqVO req) {
+    public Response<Base> upload(@RequestBody @Valid GatewayAuthUploadReqVO req) {
         gatewayAuthRpcService.upload(req);
         return RespUtil.success();
     }
 
     @Override
-    public RespVO<Base> update(@RequestBody @Valid GatewayAuthUpdateReqVO req) {
+    public Response<Base> update(@RequestBody @Valid GatewayAuthUpdateReqVO req) {
         gatewayAuthRpcService.update(req);
         return RespUtil.success();
     }

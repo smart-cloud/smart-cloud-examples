@@ -2,7 +2,7 @@ package org.smartframework.cloud.examples.system.test.module.support.gateway.api
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import lombok.experimental.UtilityClass;
-import org.smartframework.cloud.common.pojo.vo.RespVO;
+import org.smartframework.cloud.common.pojo.Response;
 import org.smartframework.cloud.examples.support.rpc.gateway.request.api.GenerateAesKeyReqVO;
 import org.smartframework.cloud.examples.support.rpc.gateway.response.api.GenerateAesKeyRespVO;
 import org.smartframework.cloud.examples.support.rpc.gateway.response.api.GenerateClientPubKeyRespVO;
@@ -18,17 +18,17 @@ import java.io.IOException;
 @UtilityClass
 public class SecurityApi {
 
-    public RespVO<GenerateClientPubKeyRespVO> generateClientPubKey() throws IOException {
+    public Response<GenerateClientPubKeyRespVO> generateClientPubKey() throws IOException {
         return HttpUtil.postWithRaw(
                 SystemTestConfig.getGatewayBaseUrl() + "gateway/api/security/generateClientPubKey",
-                null, new TypeReference<RespVO<GenerateClientPubKeyRespVO>>() {
+                null, new TypeReference<Response<GenerateClientPubKeyRespVO>>() {
                 });
     }
 
-    public RespVO<GenerateAesKeyRespVO> generateAesKey(GenerateAesKeyReqVO reqVO) throws IOException {
+    public Response<GenerateAesKeyRespVO> generateAesKey(GenerateAesKeyReqVO reqVO) throws IOException {
         return HttpUtil.postWithRaw(
                 SystemTestConfig.getGatewayBaseUrl() + "gateway/api/security/generateAesKey",
-                reqVO, new TypeReference<RespVO<GenerateAesKeyRespVO>>() {
+                reqVO, new TypeReference<Response<GenerateAesKeyRespVO>>() {
                 });
     }
 

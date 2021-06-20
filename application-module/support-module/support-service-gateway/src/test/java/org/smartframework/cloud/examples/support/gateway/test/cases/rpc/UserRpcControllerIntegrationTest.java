@@ -6,8 +6,8 @@ import org.junit.jupiter.api.Test;
 import org.redisson.api.RMapCache;
 import org.redisson.api.RedissonClient;
 import org.smartframework.cloud.common.pojo.Base;
+import org.smartframework.cloud.common.pojo.Response;
 import org.smartframework.cloud.common.pojo.enums.CommonReturnCodes;
-import org.smartframework.cloud.common.pojo.vo.RespVO;
 import org.smartframework.cloud.examples.support.gateway.bo.SecurityKeyBO;
 import org.smartframework.cloud.examples.support.gateway.constants.RedisExpire;
 import org.smartframework.cloud.examples.support.gateway.util.RedisKeyHelper;
@@ -46,7 +46,7 @@ public class UserRpcControllerIntegrationTest extends WebReactiveIntegrationTest
                 .realName("张三")
                 .build();
 
-        RespVO<Base> result = post("/gateway/rpc/user/cacheUserInfo", req, new TypeReference<RespVO<Base>>() {
+        Response<Base> result = post("/gateway/rpc/user/cacheUserInfo", req, new TypeReference<Response<Base>>() {
         });
         Assertions.assertThat(result).isNotNull();
         Assertions.assertThat(result.getHead()).isNotNull();

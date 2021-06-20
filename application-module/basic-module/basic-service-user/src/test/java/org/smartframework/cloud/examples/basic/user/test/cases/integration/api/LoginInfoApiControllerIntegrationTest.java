@@ -5,8 +5,8 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentMatchers;
 import org.mockito.Mockito;
+import org.smartframework.cloud.common.pojo.Response;
 import org.smartframework.cloud.common.pojo.enums.CommonReturnCodes;
-import org.smartframework.cloud.common.pojo.vo.RespVO;
 import org.smartframework.cloud.examples.basic.rpc.user.request.api.login.ExitReqVO;
 import org.smartframework.cloud.examples.basic.rpc.user.request.api.login.LoginReqVO;
 import org.smartframework.cloud.examples.basic.rpc.user.response.api.login.LoginRespVO;
@@ -15,7 +15,6 @@ import org.smartframework.cloud.examples.basic.user.test.data.LoginInfoData;
 import org.smartframework.cloud.examples.basic.user.test.data.UserInfoData;
 import org.smartframework.cloud.examples.support.rpc.gateway.UserRpc;
 import org.smartframework.cloud.starter.core.business.util.RespUtil;
-import org.smartframework.cloud.starter.redis.component.RedisComponent;
 import org.smartframework.cloud.starter.test.integration.WebMvcIntegrationTest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -26,8 +25,6 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class LoginInfoApiControllerIntegrationTest extends WebMvcIntegrationTest {
 
-    @Autowired
-    private RedisComponent redisComponent;
     @Autowired
     private LoginInfoData loginInfoData;
     @Autowired
@@ -53,8 +50,8 @@ public class LoginInfoApiControllerIntegrationTest extends WebMvcIntegrationTest
         reqVO.setUsername(username);
         reqVO.setPassword(password);
 
-        RespVO<LoginRespVO> result = super.post("/user/api/loginInfo/login", reqVO,
-                new TypeReference<RespVO<LoginRespVO>>() {
+        Response<LoginRespVO> result = super.post("/user/api/loginInfo/login", reqVO,
+                new TypeReference<Response<LoginRespVO>>() {
                 });
 
         Assertions.assertThat(result).isNotNull();
@@ -76,8 +73,8 @@ public class LoginInfoApiControllerIntegrationTest extends WebMvcIntegrationTest
         ExitReqVO reqVO = new ExitReqVO();
         reqVO.setToken("test");
 
-        RespVO<LoginRespVO> result = super.post("/user/api/loginInfo/exit", reqVO,
-                new TypeReference<RespVO<LoginRespVO>>() {
+        Response<LoginRespVO> result = super.post("/user/api/loginInfo/exit", reqVO,
+                new TypeReference<Response<LoginRespVO>>() {
                 });
 
         Assertions.assertThat(result).isNotNull();

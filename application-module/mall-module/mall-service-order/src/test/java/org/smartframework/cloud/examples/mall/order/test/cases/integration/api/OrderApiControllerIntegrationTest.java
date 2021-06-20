@@ -4,8 +4,8 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
+import org.smartframework.cloud.common.pojo.Response;
 import org.smartframework.cloud.common.pojo.enums.CommonReturnCodes;
-import org.smartframework.cloud.common.pojo.vo.RespVO;
 import org.smartframework.cloud.examples.mall.order.util.OrderUtil;
 import org.smartframework.cloud.examples.mall.rpc.order.request.api.SubmitOrderProductInfoReqVO;
 import org.smartframework.cloud.examples.mall.rpc.order.request.api.SubmitOrderReqVO;
@@ -47,7 +47,7 @@ public class OrderApiControllerIntegrationTest extends WebMvcIntegrationTest {
         // 2、mock 行为
         mockStubbing(productInfoRpc, buyProducts);
 
-        RespVO<String> submitResp = post("/order/api/order/submit", reqVO, new TypeReference<RespVO<String>>() {
+        Response<String> submitResp = post("/order/api/order/submit", reqVO, new TypeReference<Response<String>>() {
         });
 
         // 3、断言结果
@@ -58,7 +58,7 @@ public class OrderApiControllerIntegrationTest extends WebMvcIntegrationTest {
 
         // 4、查询提单结果
         TimeUnit.SECONDS.sleep(10);
-        RespVO<QuerySubmitResultRespVO> resp = querySubmitResult(submitResp.getBody());
+        Response<QuerySubmitResultRespVO> resp = querySubmitResult(submitResp.getBody());
 
         Assertions.assertThat(resp).isNotNull();
         Assertions.assertThat(resp.getHead()).isNotNull();
@@ -69,15 +69,15 @@ public class OrderApiControllerIntegrationTest extends WebMvcIntegrationTest {
     @Test
     public void testQuerySubmitResult() throws Exception {
         String orderNo = OrderUtil.generateOrderNo(1L);
-        RespVO<QuerySubmitResultRespVO> resp = querySubmitResult(orderNo);
+        Response<QuerySubmitResultRespVO> resp = querySubmitResult(orderNo);
 
         Assertions.assertThat(resp).isNotNull();
         Assertions.assertThat(resp.getHead()).isNotNull();
         Assertions.assertThat(resp.getHead().getCode()).isEqualTo(CommonReturnCodes.SUCCESS.getCode());
     }
 
-    private RespVO<QuerySubmitResultRespVO> querySubmitResult(String orderNo) throws Exception {
-        return get("/order/api/order/querySubmitResult?orderNo=" + orderNo, null, new TypeReference<RespVO<QuerySubmitResultRespVO>>() {
+    private Response<QuerySubmitResultRespVO> querySubmitResult(String orderNo) throws Exception {
+        return get("/order/api/order/querySubmitResult?orderNo=" + orderNo, null, new TypeReference<Response<QuerySubmitResultRespVO>>() {
         });
     }
 

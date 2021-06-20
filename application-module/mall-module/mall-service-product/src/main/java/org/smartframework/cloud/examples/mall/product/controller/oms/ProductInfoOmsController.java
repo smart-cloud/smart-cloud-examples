@@ -4,8 +4,8 @@ import org.smartframework.cloud.api.core.annotation.SmartRequiresDataSecurity;
 import org.smartframework.cloud.api.core.annotation.SmartRequiresRepeatSubmitCheck;
 import org.smartframework.cloud.api.core.annotation.auth.SmartRequiresPermissions;
 import org.smartframework.cloud.common.pojo.Base;
-import org.smartframework.cloud.common.pojo.vo.BasePageRespVO;
-import org.smartframework.cloud.common.pojo.vo.RespVO;
+import org.smartframework.cloud.common.pojo.BasePageResponse;
+import org.smartframework.cloud.common.pojo.Response;
 import org.smartframework.cloud.examples.mall.product.service.oms.ProductInfoOmsService;
 import org.smartframework.cloud.examples.mall.rpc.product.request.oms.PageProductReqVO;
 import org.smartframework.cloud.examples.mall.rpc.product.request.oms.ProductDeleteReqVO;
@@ -45,7 +45,7 @@ public class ProductInfoOmsController {
     @SmartRequiresPermissions("product:productInfo:create")
     @SmartRequiresDataSecurity
     @SmartRequiresRepeatSubmitCheck
-    public RespVO<Base> create(@RequestBody @Valid ProductInsertReqVO req) {
+    public Response<Base> create(@RequestBody @Valid ProductInsertReqVO req) {
         return productOmsService.create(req);
     }
 
@@ -58,7 +58,7 @@ public class ProductInfoOmsController {
     @PostMapping("update")
     @SmartRequiresPermissions("product:productInfo:update")
     @SmartRequiresDataSecurity
-    public RespVO<Base> update(@RequestBody @Valid ProductUpdateReqVO req) {
+    public Response<Base> update(@RequestBody @Valid ProductUpdateReqVO req) {
         return productOmsService.update(req);
     }
 
@@ -71,7 +71,7 @@ public class ProductInfoOmsController {
     @PostMapping("logicDelete")
     @SmartRequiresPermissions("product:productInfo:logicDelete")
     @SmartRequiresDataSecurity
-    public RespVO<Base> logicDelete(@RequestBody @Valid ProductDeleteReqVO req) {
+    public Response<Base> logicDelete(@RequestBody @Valid ProductDeleteReqVO req) {
         return productOmsService.logicDelete(req);
     }
 
@@ -82,7 +82,7 @@ public class ProductInfoOmsController {
      * @return
      */
     @GetMapping("pageProduct")
-    public RespVO<BasePageRespVO<ProductInfoBaseRespVO>> pageProduct(@Valid @NotNull PageProductReqVO req) {
+    public Response<BasePageResponse<ProductInfoBaseRespVO>> pageProduct(@Valid @NotNull PageProductReqVO req) {
         return RespUtil.success(productOmsService.pageProduct(req));
     }
 

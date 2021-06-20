@@ -4,9 +4,9 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.smartframework.cloud.common.pojo.Base;
+import org.smartframework.cloud.common.pojo.BasePageResponse;
+import org.smartframework.cloud.common.pojo.Response;
 import org.smartframework.cloud.common.pojo.enums.CommonReturnCodes;
-import org.smartframework.cloud.common.pojo.vo.BasePageRespVO;
-import org.smartframework.cloud.common.pojo.vo.RespVO;
 import org.smartframework.cloud.examples.mall.product.test.data.ProductInfoData;
 import org.smartframework.cloud.examples.mall.rpc.product.request.oms.PageProductReqVO;
 import org.smartframework.cloud.examples.mall.rpc.product.request.oms.ProductDeleteReqVO;
@@ -32,8 +32,8 @@ public class ProductInfoOmsControllerIntegrationTest extends WebMvcIntegrationTe
         productInsertReqVO.setSellPrice(10000L);
         productInsertReqVO.setStock(200L);
 
-        RespVO<Base> result = super.post("/product/oms/productInfo/create", productInsertReqVO,
-                new TypeReference<RespVO<Base>>() {
+        Response<Base> result = super.post("/product/oms/productInfo/create", productInsertReqVO,
+                new TypeReference<Response<Base>>() {
                 });
 
         Assertions.assertThat(result).isNotNull();
@@ -52,8 +52,8 @@ public class ProductInfoOmsControllerIntegrationTest extends WebMvcIntegrationTe
         productUpdateReqVO.setSellPrice(10000L);
         productUpdateReqVO.setStock(200L);
 
-        RespVO<Base> result = super.post("/product/oms/productInfo/update", productUpdateReqVO,
-                new TypeReference<RespVO<Base>>() {
+        Response<Base> result = super.post("/product/oms/productInfo/update", productUpdateReqVO,
+                new TypeReference<Response<Base>>() {
                 });
 
         Assertions.assertThat(result).isNotNull();
@@ -69,8 +69,8 @@ public class ProductInfoOmsControllerIntegrationTest extends WebMvcIntegrationTe
         ProductDeleteReqVO productDeleteReqVO = new ProductDeleteReqVO();
         productDeleteReqVO.setId(productId);
 
-        RespVO<Base> result = super.post("/product/oms/productInfo/logicDelete",
-                productDeleteReqVO, new TypeReference<RespVO<Base>>() {
+        Response<Base> result = super.post("/product/oms/productInfo/logicDelete",
+                productDeleteReqVO, new TypeReference<Response<Base>>() {
                 });
 
         Assertions.assertThat(result).isNotNull();
@@ -86,9 +86,9 @@ public class ProductInfoOmsControllerIntegrationTest extends WebMvcIntegrationTe
         reqVO.setPageNum(1);
         reqVO.setPageSize(10);
 
-        RespVO<BasePageRespVO<ProductInfoBaseRespVO>> result = super.get(
+        Response<BasePageResponse<ProductInfoBaseRespVO>> result = super.get(
                 "/product/oms/productInfo/pageProduct", reqVO,
-                new TypeReference<RespVO<BasePageRespVO<ProductInfoBaseRespVO>>>() {
+                new TypeReference<Response<BasePageResponse<ProductInfoBaseRespVO>>>() {
                 });
 
         Assertions.assertThat(result).isNotNull();

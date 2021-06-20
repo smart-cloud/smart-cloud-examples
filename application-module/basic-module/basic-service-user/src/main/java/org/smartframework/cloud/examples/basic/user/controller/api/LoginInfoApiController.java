@@ -1,7 +1,7 @@
 package org.smartframework.cloud.examples.basic.user.controller.api;
 
 import org.smartframework.cloud.common.pojo.Base;
-import org.smartframework.cloud.common.pojo.vo.RespVO;
+import org.smartframework.cloud.common.pojo.Response;
 import org.smartframework.cloud.examples.basic.rpc.user.request.api.login.ExitReqVO;
 import org.smartframework.cloud.examples.basic.rpc.user.request.api.login.LoginReqVO;
 import org.smartframework.cloud.examples.basic.rpc.user.response.api.login.LoginRespVO;
@@ -38,7 +38,7 @@ public class LoginInfoApiController {
      * @return
      */
     @PostMapping("login")
-    public RespVO<LoginRespVO> login(@RequestBody @Valid LoginReqVO req) {
+    public Response<LoginRespVO> login(@RequestBody @Valid LoginReqVO req) {
         return RespUtil.success(loginInfoApiService.login(req));
     }
 
@@ -50,7 +50,7 @@ public class LoginInfoApiController {
      * @return
      */
     @PostMapping("exit")
-    public RespVO<Base> exit(@RequestBody @Valid ExitReqVO req) {
+    public Response<Base> exit(@RequestBody @Valid ExitReqVO req) {
         loginInfoApiService.exit(req);
         return RespUtil.success();
     }

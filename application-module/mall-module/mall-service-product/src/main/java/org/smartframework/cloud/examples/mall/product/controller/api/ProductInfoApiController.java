@@ -1,7 +1,7 @@
 package org.smartframework.cloud.examples.mall.product.controller.api;
 
-import org.smartframework.cloud.common.pojo.vo.BasePageRespVO;
-import org.smartframework.cloud.common.pojo.vo.RespVO;
+import org.smartframework.cloud.common.pojo.BasePageResponse;
+import org.smartframework.cloud.common.pojo.Response;
 import org.smartframework.cloud.examples.mall.product.service.api.ProductInfoApiService;
 import org.smartframework.cloud.examples.mall.rpc.product.request.api.PageProductReqVO;
 import org.smartframework.cloud.examples.mall.rpc.product.response.api.PageProductRespVO;
@@ -37,7 +37,7 @@ public class ProductInfoApiController {
      * @return
      */
     @GetMapping("pageProduct")
-    public RespVO<BasePageRespVO<PageProductRespVO>> pageProduct(@Valid @NotNull PageProductReqVO req) {
+    public Response<BasePageResponse<PageProductRespVO>> pageProduct(@Valid @NotNull PageProductReqVO req) {
         return RespUtil.success(productService.pageProduct(req));
     }
 

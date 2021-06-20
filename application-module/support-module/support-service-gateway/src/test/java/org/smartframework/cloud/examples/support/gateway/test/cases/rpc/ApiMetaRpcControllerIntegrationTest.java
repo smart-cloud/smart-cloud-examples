@@ -9,8 +9,8 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.smartframework.cloud.api.core.enums.SignType;
 import org.smartframework.cloud.common.pojo.Base;
+import org.smartframework.cloud.common.pojo.Response;
 import org.smartframework.cloud.common.pojo.enums.CommonReturnCodes;
-import org.smartframework.cloud.common.pojo.vo.RespVO;
 import org.smartframework.cloud.examples.api.ac.core.vo.*;
 import org.smartframework.cloud.examples.support.gateway.service.rpc.ApiMetaRpcService;
 import org.smartframework.cloud.examples.support.rpc.gateway.request.rpc.NotifyFetchReqVO;
@@ -57,11 +57,11 @@ public class ApiMetaRpcControllerIntegrationTest extends WebReactiveIntegrationT
                 .dataSecurityMeta(DataSecurityMetaRespVO.builder().requestDecrypt(true).responseEncrypt(true).sign(SignType.ALL.getType()).build())
                 .repeatSubmitCheckMeta(RepeatSubmitCheckMetaRespVO.builder().check(true).expireMillis(10000L).build()).build();
         apiAccessMapMock.put("/user/api/register/registerPOST", registerApiAccessMeta);
-        RespVO<ApiMetaFetchRespVO> apiMetaFetchRespVOMock = new RespVO(new ApiMetaFetchRespVO(apiAccessMapMock));
-        Mockito.doReturn(apiMetaFetchRespVOMock).when(apiMetaRpcService).fetchApiMeta(Mockito.anyString());
+        Response<ApiMetaFetchRespVO> apiMetaFetchResponseMock = new Response(new ApiMetaFetchRespVO(apiAccessMapMock));
+        Mockito.doReturn(apiMetaFetchResponseMock).when(apiMetaRpcService).fetchApiMeta(Mockito.anyString());
         // mock end
 
-        RespVO<Base> result = post("/gateway/rpc/apiMeta/notifyFetch", new NotifyFetchReqVO(serviceId), new TypeReference<RespVO<Base>>() {
+        Response<Base> result = post("/gateway/rpc/apiMeta/notifyFetch", new NotifyFetchReqVO(serviceId), new TypeReference<Response<Base>>() {
         });
         Assertions.assertThat(result).isNotNull();
         Assertions.assertThat(result.getHead()).isNotNull();

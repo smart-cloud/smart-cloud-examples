@@ -2,7 +2,7 @@ package org.smartframework.cloud.examples.support.gateway.controller.rpc;
 
 import lombok.extern.slf4j.Slf4j;
 import org.smartframework.cloud.common.pojo.Base;
-import org.smartframework.cloud.common.pojo.vo.RespVO;
+import org.smartframework.cloud.common.pojo.Response;
 import org.smartframework.cloud.examples.support.gateway.service.rpc.ApiMetaRpcService;
 import org.smartframework.cloud.examples.support.rpc.gateway.ApiMetaRpc;
 import org.smartframework.cloud.examples.support.rpc.gateway.request.rpc.NotifyFetchReqVO;
@@ -25,7 +25,7 @@ public class ApiMetaRpcController implements ApiMetaRpc {
     private ApiMetaRpcService apiMetaRpcService;
 
     @Override
-    public RespVO<Base> notifyFetch(@RequestBody @Valid NotifyFetchReqVO req) {
+    public Response<Base> notifyFetch(@RequestBody @Valid NotifyFetchReqVO req) {
         try {
             apiMetaRpcService.notifyFetch(req);
         } catch (IOException | NoSuchMethodException | InvocationTargetException | IllegalAccessException e) {
