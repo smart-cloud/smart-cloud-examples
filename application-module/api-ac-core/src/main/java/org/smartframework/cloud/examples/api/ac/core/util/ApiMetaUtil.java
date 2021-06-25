@@ -7,6 +7,11 @@ import org.apache.commons.lang3.ArrayUtils;
 import org.reflections.Reflections;
 import org.reflections.scanners.MethodAnnotationsScanner;
 import org.smartframework.cloud.api.core.annotation.SmartApiAcess;
+import org.smartframework.cloud.api.core.annotation.SmartRequiresDataSecurity;
+import org.smartframework.cloud.api.core.annotation.SmartRequiresRepeatSubmitCheck;
+import org.smartframework.cloud.api.core.annotation.auth.SmartRequiresPermissions;
+import org.smartframework.cloud.api.core.annotation.auth.SmartRequiresRoles;
+import org.smartframework.cloud.api.core.annotation.auth.SmartRequiresUser;
 import org.smartframework.cloud.examples.api.ac.core.vo.ApiMetaFetchRespVO;
 import org.smartframework.cloud.starter.core.constants.PackageConfig;
 import org.smartframework.cloud.starter.rpc.feign.annotation.SmartFeignClient;
@@ -62,13 +67,19 @@ public class ApiMetaUtil {
                 continue;
             }
 
-            SmartApiAcess smartApiAcess = method.getAnnotation(SmartApiAcess.class);
+            SmartRequiresDataSecurity smartRequiresDataSecurity = method.getAnnotation(SmartRequiresDataSecurity.class);
+            SmartRequiresRepeatSubmitCheck smartRequiresRepeatSubmitCheck = method.getAnnotation(SmartRequiresRepeatSubmitCheck.class);
+            // auth
+            SmartRequiresPermissions smartRequiresPermissions = method.getAnnotation(SmartRequiresPermissions.class);
+            SmartRequiresRoles smartRequiresRoles = method.getAnnotation(SmartRequiresRoles.class);
+            SmartRequiresUser smartRequiresUser = method.getAnnotation(SmartRequiresUser.class);
+
             String urlHeader = getUrlUnderClass(declaringClass);
             String[] urlTails = getUrlTails(method);
             for (String urlTail : urlTails) {
                 String urlCode = getUrlCode(urlHeader, urlTail);
                 ApiMetaFetchRespVO.ApiAccess apiAccess = null;
-                if (smartApiAcess != null) {
+                if (smartRequiresDataSecurity != null) {
                     apiAccess = buildApiAccess(smartApiAcess);
                 }
                 apiAccessMap.put(urlCode, apiAccess);

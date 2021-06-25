@@ -1,7 +1,8 @@
 package org.smartframework.cloud.examples.mall.order.controller.api;
 
-import org.smartframework.cloud.api.core.annotation.SmartApiAcess;
-import org.smartframework.cloud.api.core.enums.SignType;
+import org.smartframework.cloud.api.core.annotation.SmartRequiresDataSecurity;
+import org.smartframework.cloud.api.core.annotation.SmartRequiresRepeatSubmitCheck;
+import org.smartframework.cloud.api.core.annotation.auth.SmartRequiresUser;
 import org.smartframework.cloud.common.pojo.vo.RespVO;
 import org.smartframework.cloud.examples.mall.order.mq.producer.OrderProducer;
 import org.smartframework.cloud.examples.mall.order.service.api.OrderApiService;
@@ -39,7 +40,9 @@ public class OrderApiController {
      * @return
      */
     @PostMapping("submit")
-    @SmartApiAcess(tokenCheck = true, sign = SignType.ALL, encrypt = true, decrypt = true, auth = true, repeatSubmitCheck = true)
+    @SmartRequiresUser
+    @SmartRequiresDataSecurity
+    @SmartRequiresRepeatSubmitCheck
     public RespVO<String> submit(@RequestBody @Valid SubmitOrderReqVO req) {
         return RespUtil.success(orderProducer.submitOrder(req));
     }

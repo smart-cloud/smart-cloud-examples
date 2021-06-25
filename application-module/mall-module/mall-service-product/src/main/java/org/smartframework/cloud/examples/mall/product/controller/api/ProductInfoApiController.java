@@ -1,7 +1,5 @@
 package org.smartframework.cloud.examples.mall.product.controller.api;
 
-import org.smartframework.cloud.api.core.annotation.SmartApiAcess;
-import org.smartframework.cloud.api.core.enums.SignType;
 import org.smartframework.cloud.common.pojo.vo.BasePageRespVO;
 import org.smartframework.cloud.common.pojo.vo.RespVO;
 import org.smartframework.cloud.examples.mall.product.service.api.ProductInfoApiService;
@@ -39,7 +37,6 @@ public class ProductInfoApiController {
      * @return
      */
     @GetMapping("pageProduct")
-    @SmartApiAcess(tokenCheck = true, sign = SignType.ALL, encrypt = true, decrypt = true)
     public RespVO<BasePageRespVO<PageProductRespVO>> pageProduct(@Valid @NotNull PageProductReqVO req) {
         return RespUtil.success(productService.pageProduct(req));
     }

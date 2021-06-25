@@ -1,7 +1,8 @@
 package org.smartframework.cloud.examples.mall.product.controller.oms;
 
-import org.smartframework.cloud.api.core.annotation.SmartApiAcess;
-import org.smartframework.cloud.api.core.enums.SignType;
+import org.smartframework.cloud.api.core.annotation.SmartRequiresDataSecurity;
+import org.smartframework.cloud.api.core.annotation.SmartRequiresRepeatSubmitCheck;
+import org.smartframework.cloud.api.core.annotation.auth.SmartRequiresPermissions;
 import org.smartframework.cloud.common.pojo.Base;
 import org.smartframework.cloud.common.pojo.vo.BasePageRespVO;
 import org.smartframework.cloud.common.pojo.vo.RespVO;
@@ -17,6 +18,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 
 /**
  * 商品信息管理
@@ -40,7 +42,9 @@ public class ProductInfoOmsController {
      * @return
      */
     @PostMapping("create")
-    @SmartApiAcess(tokenCheck = true, sign = SignType.ALL, encrypt = true, decrypt = true)
+    @SmartRequiresPermissions("product:productInfo:create")
+    @SmartRequiresDataSecurity
+    @SmartRequiresRepeatSubmitCheck
     public RespVO<Base> create(@RequestBody @Valid ProductInsertReqVO req) {
         return productOmsService.create(req);
     }
@@ -52,7 +56,8 @@ public class ProductInfoOmsController {
      * @return
      */
     @PostMapping("update")
-    @SmartApiAcess(tokenCheck = true, sign = SignType.ALL, encrypt = true, decrypt = true)
+    @SmartRequiresPermissions("product:productInfo:update")
+    @SmartRequiresDataSecurity
     public RespVO<Base> update(@RequestBody @Valid ProductUpdateReqVO req) {
         return productOmsService.update(req);
     }
@@ -64,7 +69,8 @@ public class ProductInfoOmsController {
      * @return
      */
     @PostMapping("logicDelete")
-    @SmartApiAcess(tokenCheck = true, sign = SignType.ALL, encrypt = true, decrypt = true)
+    @SmartRequiresPermissions("product:productInfo:logicDelete")
+    @SmartRequiresDataSecurity
     public RespVO<Base> logicDelete(@RequestBody @Valid ProductDeleteReqVO req) {
         return productOmsService.logicDelete(req);
     }
@@ -76,7 +82,7 @@ public class ProductInfoOmsController {
      * @return
      */
     @GetMapping("pageProduct")
-    public RespVO<BasePageRespVO<ProductInfoBaseRespVO>> pageProduct(@Valid PageProductReqVO req) {
+    public RespVO<BasePageRespVO<ProductInfoBaseRespVO>> pageProduct(@Valid @NotNull PageProductReqVO req) {
         return RespUtil.success(productOmsService.pageProduct(req));
     }
 
