@@ -21,9 +21,9 @@ public interface Order {
     int API_ACCESS = Ordered.HIGHEST_PRECEDENCE + 1;
 
     /**
-     * token校验全局过滤器order
+     * 鉴权全局过滤器order
      */
-    int TOKEN_CHECK = Ordered.HIGHEST_PRECEDENCE + 2;
+    int AUTH_CHECK = Ordered.HIGHEST_PRECEDENCE + 2;
 
     /**
      * api重复提交校验

@@ -1,8 +1,9 @@
 package org.smartframework.cloud.examples.support.gateway.util;
 
 import org.smartframework.cloud.examples.support.gateway.enums.GatewayRedisKeyPrefix;
+import org.smartframework.cloud.starter.redis.enums.RedisKeyPrefix;
 
-public class RedisKeyHelper {
+public final class RedisKeyHelper {
 
     /**
      * api meta redis key
@@ -27,10 +28,11 @@ public class RedisKeyHelper {
      * 获取重复提交key
      *
      * @param token
+     * @param paramMd5
      * @return
      */
-    public static String getRepeatSubmitCheckKey(String token) {
-        return GatewayRedisKeyPrefix.REPEAT_SUBMIT_CHECK.getKey() + token;
+    public static String getRepeatSubmitCheckKey(String token, String paramMd5) {
+        return GatewayRedisKeyPrefix.REPEAT_SUBMIT_CHECK.getKey() + token + RedisKeyPrefix.REDIS_KEY_SEPARATOR.getKey() + paramMd5;
     }
 
     /**

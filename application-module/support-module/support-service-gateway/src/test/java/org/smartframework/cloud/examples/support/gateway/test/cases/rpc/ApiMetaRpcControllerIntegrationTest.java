@@ -7,10 +7,11 @@ import com.netflix.discovery.shared.Application;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
+import org.smartframework.cloud.api.core.enums.SignType;
 import org.smartframework.cloud.common.pojo.Base;
 import org.smartframework.cloud.common.pojo.enums.CommonReturnCodes;
 import org.smartframework.cloud.common.pojo.vo.RespVO;
-import org.smartframework.cloud.examples.api.ac.core.vo.ApiMetaFetchRespVO;
+import org.smartframework.cloud.examples.api.ac.core.vo.*;
 import org.smartframework.cloud.examples.support.gateway.service.rpc.ApiMetaRpcService;
 import org.smartframework.cloud.examples.support.rpc.gateway.request.rpc.NotifyFetchReqVO;
 import org.smartframework.cloud.starter.test.integration.WebReactiveIntegrationTest;
@@ -43,9 +44,19 @@ public class ApiMetaRpcControllerIntegrationTest extends WebReactiveIntegrationT
 
         Mockito.when(discoveryClient.getApplication(serviceId)).thenReturn(applicationMock);
 
-        Map<String, ApiMetaFetchRespVO.ApiAccess> apiAccessMapMock = new HashMap<>();
-        apiAccessMapMock.put("/user/api/login/checkPOST", ApiMetaFetchRespVO.ApiAccess.builder().auth(false).tokenCheck(true).decrypt(false).build());
-        apiAccessMapMock.put("/user/api/register/registerPOST", ApiMetaFetchRespVO.ApiAccess.builder().auth(false).tokenCheck(true).decrypt(false).build());
+        Map<String, ApiAccessMetaRespVO> apiAccessMapMock = new HashMap<>();
+
+        ApiAccessMetaRespVO loginApiAccessMeta = ApiAccessMetaRespVO.builder()
+                .authMeta(AuthMetaRespVO.builder().requiresUser(true).requiresPermissions(new String[0]).requiresRoles(new String[0]).build())
+                .dataSecurityMeta(DataSecurityMetaRespVO.builder().requestDecrypt(true).responseEncrypt(true).sign(SignType.ALL.getType()).build())
+                .repeatSubmitCheckMeta(RepeatSubmitCheckMetaRespVO.builder().check(true).expireMillis(10000L).build()).build();
+        apiAccessMapMock.put("/user/api/login/checkPOST", loginApiAccessMeta);
+
+        ApiAccessMetaRespVO registerApiAccessMeta = ApiAccessMetaRespVO.builder()
+                .authMeta(AuthMetaRespVO.builder().requiresUser(false).requiresPermissions(new String[0]).requiresRoles(new String[0]).build())
+                .dataSecurityMeta(DataSecurityMetaRespVO.builder().requestDecrypt(true).responseEncrypt(true).sign(SignType.ALL.getType()).build())
+                .repeatSubmitCheckMeta(RepeatSubmitCheckMetaRespVO.builder().check(true).expireMillis(10000L).build()).build();
+        apiAccessMapMock.put("/user/api/register/registerPOST", registerApiAccessMeta);
         RespVO<ApiMetaFetchRespVO> apiMetaFetchRespVOMock = new RespVO(new ApiMetaFetchRespVO(apiAccessMapMock));
         Mockito.doReturn(apiMetaFetchRespVOMock).when(apiMetaRpcService).fetchApiMeta(Mockito.anyString());
         // mock end

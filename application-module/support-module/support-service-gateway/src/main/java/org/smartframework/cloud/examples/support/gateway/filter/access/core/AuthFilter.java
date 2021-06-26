@@ -1,12 +1,14 @@
 package org.smartframework.cloud.examples.support.gateway.filter.access.core;
 
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.redisson.api.RMapCache;
 import org.redisson.api.RedissonClient;
-import org.smartframework.cloud.examples.api.ac.core.vo.ApiMetaFetchRespVO;
 import org.smartframework.cloud.examples.app.auth.core.AppAuthConstants;
 import org.smartframework.cloud.examples.app.auth.core.UserBO;
+import org.smartframework.cloud.examples.support.gateway.bo.meta.ApiAccessMetaCache;
+import org.smartframework.cloud.examples.support.gateway.bo.meta.AuthMetaCache;
 import org.smartframework.cloud.examples.support.gateway.constants.Order;
 import org.smartframework.cloud.examples.support.gateway.enums.GatewayReturnCodes;
 import org.smartframework.cloud.examples.support.gateway.filter.access.ApiAccessBO;
@@ -37,31 +39,49 @@ import java.nio.charset.StandardCharsets;
  */
 @Slf4j
 @Configuration
-public class TokenCheckFilter implements GlobalFilter, Ordered {
+public class AuthFilter implements GlobalFilter, Ordered {
 
     @Autowired
     private RedissonClient redissonClient;
 
     @Override
     public int getOrder() {
-        return Order.TOKEN_CHECK;
+        return Order.AUTH_CHECK;
     }
 
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
         ApiAccessBO apiAccessBO = ApiAccessContext.getContext();
         String token = apiAccessBO.getToken();
-        ApiMetaFetchRespVO.ApiAccess apiAC = apiAccessBO.getApiAccess();
-        // 1、token校验
-        if (apiAC == null || !apiAC.isTokenCheck()) {
+        ApiAccessMetaCache apiAccessMetaCache = apiAccessBO.getApiAccessMetaCache();
+        // 判断是否需要登陆、鉴权
+        if (apiAccessMetaCache == null || apiAccessMetaCache.getAuthMeta() == null) {
             return chain.filter(exchange);
-        } else if (StringUtils.isBlank(token)) {
+        }
+        AuthMetaCache authMetaCache = apiAccessMetaCache.getAuthMeta();
+        boolean isRequiresPermissions = CollectionUtils.isNotEmpty(authMetaCache.getRequiresPermissions());
+        boolean isRequiresRoles = CollectionUtils.isNotEmpty(authMetaCache.getRequiresRoles());
+        if (!(authMetaCache.isRequiresUser() || isRequiresPermissions
+                || isRequiresRoles)) {
+            return chain.filter(exchange);
+        }
+
+        if (StringUtils.isBlank(token)) {
             throw new DataValidateException(GatewayReturnCodes.TOKEN_MISSING);
         }
+
         RMapCache<String, UserBO> userCache = redissonClient.getMapCache(RedisKeyHelper.getUserHashKey());
         UserBO userBO = userCache.get(RedisKeyHelper.getUserKey(token));
         if (userBO == null) {
             throw new BusinessException(GatewayReturnCodes.TOKEN_EXPIRED_LOGIN_SUCCESS);
+        }
+
+        // 鉴权
+        if (isRequiresPermissions) {
+
+        }
+        if (isRequiresRoles) {
+
         }
 
         // 2、将用户信息塞入http header

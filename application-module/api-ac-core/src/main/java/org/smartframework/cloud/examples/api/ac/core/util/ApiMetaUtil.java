@@ -6,13 +6,13 @@ import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.ArrayUtils;
 import org.reflections.Reflections;
 import org.reflections.scanners.MethodAnnotationsScanner;
-import org.smartframework.cloud.api.core.annotation.SmartApiAcess;
 import org.smartframework.cloud.api.core.annotation.SmartRequiresDataSecurity;
 import org.smartframework.cloud.api.core.annotation.SmartRequiresRepeatSubmitCheck;
 import org.smartframework.cloud.api.core.annotation.auth.SmartRequiresPermissions;
 import org.smartframework.cloud.api.core.annotation.auth.SmartRequiresRoles;
 import org.smartframework.cloud.api.core.annotation.auth.SmartRequiresUser;
-import org.smartframework.cloud.examples.api.ac.core.vo.ApiMetaFetchRespVO;
+import org.smartframework.cloud.api.core.enums.SignType;
+import org.smartframework.cloud.examples.api.ac.core.vo.*;
 import org.smartframework.cloud.starter.core.constants.PackageConfig;
 import org.smartframework.cloud.starter.rpc.feign.annotation.SmartFeignClient;
 import org.springframework.cloud.openfeign.FeignClient;
@@ -59,7 +59,7 @@ public class ApiMetaUtil {
             return null;
         }
 
-        Map<String, ApiMetaFetchRespVO.ApiAccess> apiAccessMap = new HashMap<>();
+        Map<String, ApiAccessMetaRespVO> apiAccessMap = new HashMap<>();
         for (Method method : allMappingSet) {
             Class<?> declaringClass = method.getDeclaringClass();
             // 过滤掉rpc接口
@@ -67,26 +67,75 @@ public class ApiMetaUtil {
                 continue;
             }
 
-            SmartRequiresDataSecurity smartRequiresDataSecurity = method.getAnnotation(SmartRequiresDataSecurity.class);
-            SmartRequiresRepeatSubmitCheck smartRequiresRepeatSubmitCheck = method.getAnnotation(SmartRequiresRepeatSubmitCheck.class);
-            // auth
-            SmartRequiresPermissions smartRequiresPermissions = method.getAnnotation(SmartRequiresPermissions.class);
-            SmartRequiresRoles smartRequiresRoles = method.getAnnotation(SmartRequiresRoles.class);
-            SmartRequiresUser smartRequiresUser = method.getAnnotation(SmartRequiresUser.class);
-
             String urlHeader = getUrlUnderClass(declaringClass);
             String[] urlTails = getUrlTails(method);
             for (String urlTail : urlTails) {
                 String urlCode = getUrlCode(urlHeader, urlTail);
-                ApiMetaFetchRespVO.ApiAccess apiAccess = null;
-                if (smartRequiresDataSecurity != null) {
-                    apiAccess = buildApiAccess(smartApiAcess);
-                }
-                apiAccessMap.put(urlCode, apiAccess);
+
+                ApiAccessMetaRespVO apiAccessMeta = new ApiAccessMetaRespVO();
+                apiAccessMeta.setAuthMeta(buildAuthMeta(method));
+                apiAccessMeta.setDataSecurityMeta(buildDataSecurityMeta(method));
+                apiAccessMeta.setRepeatSubmitCheckMeta(buildRepeatSubmitCheckMeta(method));
+                apiAccessMap.put(urlCode, apiAccessMeta);
             }
         }
 
         return new ApiMetaFetchRespVO(apiAccessMap);
+    }
+
+    /**
+     * 重复提交校验meta
+     *
+     * @param method
+     * @return
+     */
+    private RepeatSubmitCheckMetaRespVO buildRepeatSubmitCheckMeta(Method method) {
+        SmartRequiresRepeatSubmitCheck smartRequiresRepeatSubmitCheck = method.getAnnotation(SmartRequiresRepeatSubmitCheck.class);
+
+        RepeatSubmitCheckMetaRespVO repeatSubmitCheckMeta = new RepeatSubmitCheckMetaRespVO();
+        boolean check = smartRequiresRepeatSubmitCheck != null;
+        repeatSubmitCheckMeta.setCheck(check);
+        repeatSubmitCheckMeta.setExpireMillis(check ? smartRequiresRepeatSubmitCheck.expireMillis() : 0L);
+        return repeatSubmitCheckMeta;
+    }
+
+    /**
+     * 接口安全处理meta
+     *
+     * @param method
+     * @return
+     */
+    private DataSecurityMetaRespVO buildDataSecurityMeta(Method method) {
+        SmartRequiresDataSecurity smartRequiresDataSecurity = method.getAnnotation(SmartRequiresDataSecurity.class);
+        DataSecurityMetaRespVO dataSecurityMeta = new DataSecurityMetaRespVO();
+        if (smartRequiresDataSecurity == null) {
+            dataSecurityMeta.setRequestDecrypt(false);
+            dataSecurityMeta.setResponseEncrypt(false);
+            dataSecurityMeta.setSign(SignType.NONE.getType());
+        } else {
+            dataSecurityMeta.setRequestDecrypt(smartRequiresDataSecurity.requestDecrypt());
+            dataSecurityMeta.setResponseEncrypt(smartRequiresDataSecurity.responseEncrypt());
+            dataSecurityMeta.setSign(smartRequiresDataSecurity.sign().getType());
+        }
+        return dataSecurityMeta;
+    }
+
+    /**
+     * 接口鉴权meta
+     *
+     * @param method
+     * @return
+     */
+    private AuthMetaRespVO buildAuthMeta(Method method) {
+        SmartRequiresPermissions smartRequiresPermissions = method.getAnnotation(SmartRequiresPermissions.class);
+        SmartRequiresRoles smartRequiresRoles = method.getAnnotation(SmartRequiresRoles.class);
+        SmartRequiresUser smartRequiresUser = method.getAnnotation(SmartRequiresUser.class);
+
+        AuthMetaRespVO authMeta = new AuthMetaRespVO();
+        authMeta.setRequiresUser(smartRequiresUser != null);
+        authMeta.setRequiresRoles((smartRequiresRoles != null) ? smartRequiresRoles.value() : new String[0]);
+        authMeta.setRequiresPermissions((smartRequiresPermissions != null) ? smartRequiresPermissions.value() : new String[0]);
+        return authMeta;
     }
 
     private Set<Method> getAllApiMethods(Reflections reflections) {
@@ -122,16 +171,6 @@ public class ApiMetaUtil {
             urlCode = urlHeader + urlTail;
         }
         return urlCode;
-    }
-
-    private ApiMetaFetchRespVO.ApiAccess buildApiAccess(SmartApiAcess smartApiAcess) {
-        return ApiMetaFetchRespVO.ApiAccess.builder().tokenCheck(smartApiAcess.tokenCheck())
-                .sign(smartApiAcess.sign().getType())
-                .decrypt(smartApiAcess.decrypt())
-                .encrypt(smartApiAcess.encrypt())
-                .auth(smartApiAcess.auth())
-                .repeatSubmitCheck(smartApiAcess.repeatSubmitCheck())
-                .build();
     }
 
     /**
