@@ -1,6 +1,6 @@
 package org.smartframework.cloud.examples.api.ac.core.controller;
 
-import org.smartframework.cloud.common.pojo.vo.RespVO;
+import org.smartframework.cloud.common.pojo.Response;
 import org.smartframework.cloud.examples.api.ac.core.constants.ApiMetaConstants;
 import org.smartframework.cloud.examples.api.ac.core.util.ApiMetaUtil;
 import org.smartframework.cloud.examples.api.ac.core.vo.ApiMetaFetchRespVO;
@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class ApiMetaController {
 
     @GetMapping(ApiMetaConstants.FETCH_URL)
-    public RespVO<ApiMetaFetchRespVO> fetch() {
+    public Response<ApiMetaFetchRespVO> fetch() {
         return RespUtil.success(ApiMetaUtil.collectApiMetas());
     }
 

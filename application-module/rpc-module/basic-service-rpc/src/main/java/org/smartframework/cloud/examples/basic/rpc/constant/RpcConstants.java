@@ -10,8 +10,8 @@ public class RpcConstants {
 		public static final String FEIGN_CLIENT_NAME = "${" + SERVICE_NAME + ":" + SERVICE_NAME + "}";
 	}
 
-	public static final class Security {
-		public static final String SERVICE_NAME = "basicServiceSecurity";
+	public static final class Auth {
+		public static final String SERVICE_NAME = "basicServiceAuth";
 		public static final String FEIGN_CLIENT_NAME = "${" + SERVICE_NAME + ":" + SERVICE_NAME + "}";
 	}
 

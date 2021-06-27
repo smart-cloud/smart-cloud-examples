@@ -39,31 +39,38 @@ public class RepeatSubmitCheckFilter implements GlobalFilter, Ordered {
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
         ApiAccessBO apiAccessBO = ApiAccessContext.getContext();
         ApiAccessMetaCache apiAccessMetaCache = apiAccessBO.getApiAccessMetaCache();
-        if (apiAccessMetaCache == null || apiAccessMetaCache.getRepeatSubmitCheckMeta() == null || !apiAccessMetaCache.getRepeatSubmitCheckMeta().isCheck()) {
+        if (apiAccessMetaCache == null || !apiAccessMetaCache.isRepeatSubmitCheck()) {
             return chain.filter(exchange);
         }
 
-        StringBuilder params = new StringBuilder();
-        params.append(LogContext.getApiLogBO().getQueryParams());
-        params.append(JacksonUtil.toJson(LogContext.getApiLogBO().getArgs()));
+        StringBuilder key = new StringBuilder();
+        key.append(apiAccessBO.getUrlMethod());
+        key.append(LogContext.getApiLogBO().getQueryParams());
+        key.append(JacksonUtil.toJson(LogContext.getApiLogBO().getArgs()));
 
-        String paramMd5 = Md5Util.md5Hex(params.toString());
+        String keyMd5 = Md5Util.md5Hex(key.toString());
 
-        String checkKey = RedisKeyHelper.getRepeatSubmitCheckKey(apiAccessBO.getToken(), paramMd5);
-        long expireMillis = apiAccessMetaCache.getRepeatSubmitCheckMeta().getExpireMillis();
+        String checkKey = RedisKeyHelper.getRepeatSubmitCheckKey(apiAccessBO.getToken(), keyMd5);
+        long expireMillis = apiAccessMetaCache.getRepeatSubmitExpireMillis();
         RLock lock = redissonClient.getLock(checkKey);
         boolean isPermitSubmit = false;
+        boolean executeSuccess = true;
         try {
             isPermitSubmit = lock.tryLock();
             if (!isPermitSubmit) {
                 throw new RepeatSubmitException(null);
             }
             return chain.filter(exchange);
+        } catch (Exception e) {
+            executeSuccess = false;
+            throw e;
         } finally {
             if (isPermitSubmit) {
-                // 执行完后expireMillis毫秒内不允许重复提交
-                if (expireMillis > 0) {
+                // 成功执行完后expireMillis毫秒内不允许重复提交
+                if (executeSuccess && expireMillis > 0) {
                     lock.lock(expireMillis, TimeUnit.MILLISECONDS);
+                } else {
+                    lock.unlock();
                 }
             }
         }

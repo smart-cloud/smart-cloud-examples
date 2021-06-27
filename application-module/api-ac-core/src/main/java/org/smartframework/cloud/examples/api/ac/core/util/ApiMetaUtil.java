@@ -6,11 +6,11 @@ import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.ArrayUtils;
 import org.reflections.Reflections;
 import org.reflections.scanners.MethodAnnotationsScanner;
-import org.smartframework.cloud.api.core.annotation.SmartRequiresDataSecurity;
-import org.smartframework.cloud.api.core.annotation.SmartRequiresRepeatSubmitCheck;
-import org.smartframework.cloud.api.core.annotation.auth.SmartRequiresPermissions;
-import org.smartframework.cloud.api.core.annotation.auth.SmartRequiresRoles;
-import org.smartframework.cloud.api.core.annotation.auth.SmartRequiresUser;
+import org.smartframework.cloud.api.core.annotation.RequireDataSecurity;
+import org.smartframework.cloud.api.core.annotation.RequireRepeatSubmitCheck;
+import org.smartframework.cloud.api.core.annotation.auth.RequirePermissions;
+import org.smartframework.cloud.api.core.annotation.auth.RequireRoles;
+import org.smartframework.cloud.api.core.annotation.auth.RequireUser;
 import org.smartframework.cloud.api.core.enums.SignType;
 import org.smartframework.cloud.examples.api.ac.core.vo.*;
 import org.smartframework.cloud.starter.core.constants.PackageConfig;
@@ -90,12 +90,12 @@ public class ApiMetaUtil {
      * @return
      */
     private RepeatSubmitCheckMetaRespVO buildRepeatSubmitCheckMeta(Method method) {
-        SmartRequiresRepeatSubmitCheck smartRequiresRepeatSubmitCheck = method.getAnnotation(SmartRequiresRepeatSubmitCheck.class);
+        RequireRepeatSubmitCheck RequireRepeatSubmitCheck = method.getAnnotation(RequireRepeatSubmitCheck.class);
 
         RepeatSubmitCheckMetaRespVO repeatSubmitCheckMeta = new RepeatSubmitCheckMetaRespVO();
-        boolean check = smartRequiresRepeatSubmitCheck != null;
+        boolean check = RequireRepeatSubmitCheck != null;
         repeatSubmitCheckMeta.setCheck(check);
-        repeatSubmitCheckMeta.setExpireMillis(check ? smartRequiresRepeatSubmitCheck.expireMillis() : 0L);
+        repeatSubmitCheckMeta.setExpireMillis(check ? RequireRepeatSubmitCheck.expireMillis() : 0L);
         return repeatSubmitCheckMeta;
     }
 
@@ -106,16 +106,16 @@ public class ApiMetaUtil {
      * @return
      */
     private DataSecurityMetaRespVO buildDataSecurityMeta(Method method) {
-        SmartRequiresDataSecurity smartRequiresDataSecurity = method.getAnnotation(SmartRequiresDataSecurity.class);
+        RequireDataSecurity RequireDataSecurity = method.getAnnotation(RequireDataSecurity.class);
         DataSecurityMetaRespVO dataSecurityMeta = new DataSecurityMetaRespVO();
-        if (smartRequiresDataSecurity == null) {
+        if (RequireDataSecurity == null) {
             dataSecurityMeta.setRequestDecrypt(false);
             dataSecurityMeta.setResponseEncrypt(false);
             dataSecurityMeta.setSign(SignType.NONE.getType());
         } else {
-            dataSecurityMeta.setRequestDecrypt(smartRequiresDataSecurity.requestDecrypt());
-            dataSecurityMeta.setResponseEncrypt(smartRequiresDataSecurity.responseEncrypt());
-            dataSecurityMeta.setSign(smartRequiresDataSecurity.sign().getType());
+            dataSecurityMeta.setRequestDecrypt(RequireDataSecurity.requestDecrypt());
+            dataSecurityMeta.setResponseEncrypt(RequireDataSecurity.responseEncrypt());
+            dataSecurityMeta.setSign(RequireDataSecurity.sign().getType());
         }
         return dataSecurityMeta;
     }
@@ -127,14 +127,14 @@ public class ApiMetaUtil {
      * @return
      */
     private AuthMetaRespVO buildAuthMeta(Method method) {
-        SmartRequiresPermissions smartRequiresPermissions = method.getAnnotation(SmartRequiresPermissions.class);
-        SmartRequiresRoles smartRequiresRoles = method.getAnnotation(SmartRequiresRoles.class);
-        SmartRequiresUser smartRequiresUser = method.getAnnotation(SmartRequiresUser.class);
+        RequirePermissions RequirePermissions = method.getAnnotation(RequirePermissions.class);
+        RequireRoles RequireRoles = method.getAnnotation(RequireRoles.class);
+        RequireUser RequireUser = method.getAnnotation(RequireUser.class);
 
         AuthMetaRespVO authMeta = new AuthMetaRespVO();
-        authMeta.setRequiresUser(smartRequiresUser != null);
-        authMeta.setRequiresRoles((smartRequiresRoles != null) ? smartRequiresRoles.value() : new String[0]);
-        authMeta.setRequiresPermissions((smartRequiresPermissions != null) ? smartRequiresPermissions.value() : new String[0]);
+        authMeta.setRequireUser(RequireUser != null);
+        authMeta.setRequireRoles((RequireRoles != null) ? RequireRoles.value() : new String[0]);
+        authMeta.setRequirePermissions((RequirePermissions != null) ? RequirePermissions.value() : new String[0]);
         return authMeta;
     }
 

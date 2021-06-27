@@ -3,12 +3,10 @@ package org.smartframework.cloud.examples.mall.order.biz.api;
 import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import org.smartframework.cloud.examples.mall.order.entity.base.OrderBillEntity;
-import org.smartframework.cloud.examples.mall.order.mapper.base.OrderBillBaseMapper;
 import org.smartframework.cloud.examples.mall.rpc.enums.order.OrderStatus;
 import org.smartframework.cloud.starter.mybatis.common.biz.BaseBiz;
 import org.smartframework.cloud.starter.mybatis.common.mapper.enums.DelStateEnum;
 import org.smartframework.cloud.starter.mybatis.constants.ShardingJdbcDS;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -21,11 +19,8 @@ import org.springframework.stereotype.Repository;
 @DS(ShardingJdbcDS.MASTER)
 public class OrderBillApiBiz extends BaseBiz<OrderBillEntity> {
 
-    @Autowired
-    private OrderBillBaseMapper orderBillBaseMapper;
-
     public long create(OrderBillEntity entity) {
-        orderBillBaseMapper.insert(entity);
+        super.save(entity);
         return entity.getId();
     }
 
@@ -37,7 +32,7 @@ public class OrderBillApiBiz extends BaseBiz<OrderBillEntity> {
      */
     @DS(ShardingJdbcDS.SLAVE)
     public OrderBillEntity getByOrderNo(String orderNo) {
-        return orderBillBaseMapper.selectOne(new LambdaQueryWrapper<OrderBillEntity>()
+        return super.getOne(new LambdaQueryWrapper<OrderBillEntity>()
                 .eq(OrderBillEntity::getOrderNo, orderNo)
                 .eq(OrderBillEntity::getDelState, DelStateEnum.NORMAL.getDelState()));
     }
@@ -51,7 +46,7 @@ public class OrderBillApiBiz extends BaseBiz<OrderBillEntity> {
     public void updateStatus(String orderNo, OrderStatus status) {
         OrderBillEntity entity = new OrderBillEntity();
         entity.setStatus(status.getStatus());
-        orderBillBaseMapper.update(entity, new LambdaQueryWrapper<OrderBillEntity>().eq(OrderBillEntity::getOrderNo, orderNo));
+        super.update(entity, new LambdaQueryWrapper<OrderBillEntity>().eq(OrderBillEntity::getOrderNo, orderNo));
     }
 
 }

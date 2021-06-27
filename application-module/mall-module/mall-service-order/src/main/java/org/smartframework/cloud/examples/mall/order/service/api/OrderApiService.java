@@ -4,7 +4,7 @@ import io.seata.spring.annotation.GlobalTransactional;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.smartframework.cloud.common.pojo.Base;
-import org.smartframework.cloud.common.pojo.vo.RespVO;
+import org.smartframework.cloud.common.pojo.Response;
 import org.smartframework.cloud.examples.mall.order.biz.api.OrderBillApiBiz;
 import org.smartframework.cloud.examples.mall.order.biz.api.OrderDeliveryInfoApiBiz;
 import org.smartframework.cloud.examples.mall.order.entity.base.OrderBillEntity;
@@ -71,7 +71,7 @@ public class OrderApiService {
         List<Long> productIds = products.stream().map(SubmitOrderProductInfoReqVO::getProductId).collect(Collectors.toList());
 
         QryProductByIdsReqVO qryProductByIdsReqVO = QryProductByIdsReqVO.builder().ids(productIds).build();
-        RespVO<QryProductByIdsRespVO> qryProductByIdsResp = productInfoRpc
+        Response<QryProductByIdsRespVO> qryProductByIdsResp = productInfoRpc
                 .qryProductByIds(qryProductByIdsReqVO);
         if (!RespUtil.isSuccess(qryProductByIdsResp)) {
             throw new ServerException(RespUtil.getFailMsg(qryProductByIdsResp));
@@ -96,7 +96,7 @@ public class OrderApiService {
         OrderStatus status = null;
         try {
             // 3、扣减库存
-            RespVO<Base> updateStockResp = deductStock(products);
+            Response<Base> updateStockResp = deductStock(products);
             if (RespUtil.isSuccess(updateStockResp)) {
                 // TODO:4、抵扣优惠券
 
@@ -131,7 +131,7 @@ public class OrderApiService {
      * @param products
      * @return
      */
-    private RespVO<Base> deductStock(List<SubmitOrderProductInfoReqVO> products) {
+    private Response<Base> deductStock(List<SubmitOrderProductInfoReqVO> products) {
         List<UpdateStockItem> updateStockItems = products.stream().map(item -> {
             UpdateStockItem updateStockItem = new UpdateStockItem();
             updateStockItem.setId(item.getProductId());

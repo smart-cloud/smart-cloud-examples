@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.smartframework.cloud.examples.basic.auth.mapper.oms.RolePermissionOmsMapper">
+
+    <sql id="pageRoleCommon">
+        FROM
+            t_role_info r
+        WHERE
+        r.f_sys_del_state = 1
+        <if test="roleCode!=null and roleCode!=''">
+            AND r.f_code LIKE CONCAT(#{roleCode}, '%')
+        </if>
+        <if test="roleDesc!=null and roleDesc!=''">
+            AND r.f_desc LIKE CONCAT('%', #{roleDesc}, '%')
+        </if>
+        <if test="permissonCode!=null and permissonCode!='' and permissonDesc!=null and permissonDesc!=''">
+            AND EXISTS (
+            SELECT 1
+            FROM
+            t_role_permission_rela rp
+            INNER JOIN t_permission_info p ON p.f_id = rp.t_permission_info_id AND p.f_sys_del_state = 1
+            WHERE
+            r.f_id = rp.t_role_info_id
+            AND rp.f_sys_del_state = 1
+            <if test="permissonCode!=null and permissonCode!=''">
+                AND p.f_code LIKE CONCAT(#{permissonCode}, '%')
+            </if>
+            <if test="permissonDesc!=null and permissonDesc!=''">
+                AND p.f_desc LIKE CONCAT('%', #{permissonDesc}, '%')
+            </if>
+            )
+        </if>
+    </sql>
+
+    <select id="pageRole" resultType="org.smartframework.cloud.examples.basic.auth.dataobject.RoleDO">
+        SELECT
+            r.f_id roleId,
+            r.f_code roleCode,
+            r.f_desc roleDesc
+        <include refid="pageRoleCommon"></include>
+        LIMIT (#{pageNum}-1)*#{pageSize}, #{pageSize}
+    </select>
+
+    <select id="countRole" resultType="java.lang.Long">
+        SELECT COUNT(*)
+        <include refid="pageRoleCommon"></include>
+    </select>
+
+    <select id="listPermission" resultType="org.smartframework.cloud.examples.basic.auth.dataobject.PermissionDO">
+        SELECT 1
+        FROM
+            t_role_permission_rela rp
+            INNER JOIN t_permission_info p ON p.f_id = rp.t_permission_info_id AND p.f_sys_del_state = 1
+        WHERE
+            rp.t_role_info_id IN
+            <foreach collection="roleIds" item="roleId" open="(" separator="," close=")">
+                #{roleId}
+            </foreach>
+            AND rp.f_sys_del_state = 1
+            <if test="permissonCode!=null and permissonCode!=''">
+                AND p.f_code LIKE CONCAT(#{permissonCode}, '%')
+            </if>
+            <if test="permissonDesc!=null and permissonDesc!=''">
+                AND p.f_desc LIKE CONCAT('%', #{permissonDesc}, '%')
+            </if>
+    </select>
+
+</mapper>

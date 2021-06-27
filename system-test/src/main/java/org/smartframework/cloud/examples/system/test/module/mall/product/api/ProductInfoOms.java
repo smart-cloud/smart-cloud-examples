@@ -19,10 +19,10 @@ import java.io.IOException;
 public class ProductInfoOms {
 
 
-    public Response<Base> create(ProductInsertReqVO reqVO) throws IOException {
+    public Response<Boolean> create(ProductInsertReqVO reqVO) throws IOException {
         return HttpUtil.postWithRaw(
                 SystemTestConfig.getProductBaseUrl() + "product/oms/productInfo/create", HttpHeaderUtil.build(),
-                reqVO, new TypeReference<Response<Base>>() {
+                reqVO, new TypeReference<Response<Boolean>>() {
                 });
     }
 

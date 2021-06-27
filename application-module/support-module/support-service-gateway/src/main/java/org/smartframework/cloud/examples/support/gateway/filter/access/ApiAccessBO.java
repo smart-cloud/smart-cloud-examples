@@ -24,5 +24,9 @@ public class ApiAccessBO {
      * 接口注解信息
      */
     ApiAccessMetaCache apiAccessMetaCache;
+    /**
+     * 用于重复提交
+     */
+    private String urlMethod;
 
 }

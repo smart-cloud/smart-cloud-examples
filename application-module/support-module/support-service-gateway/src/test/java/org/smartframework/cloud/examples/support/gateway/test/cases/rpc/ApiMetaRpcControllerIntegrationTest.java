@@ -34,7 +34,7 @@ public class ApiMetaRpcControllerIntegrationTest extends WebReactiveIntegrationT
     private ApiMetaRpcService apiMetaRpcService;
 
     @Test
-    public void testUpload() throws Exception {
+    public void testNotifyFetch() throws Exception {
         String serviceId = "user";
         // mock start
         InstanceInfo instanceInfo = InstanceInfo.Builder.newBuilder().setAppName(serviceId).setIPAddr("192.168.15.10").setPort(8080).build();
@@ -47,13 +47,13 @@ public class ApiMetaRpcControllerIntegrationTest extends WebReactiveIntegrationT
         Map<String, ApiAccessMetaRespVO> apiAccessMapMock = new HashMap<>();
 
         ApiAccessMetaRespVO loginApiAccessMeta = ApiAccessMetaRespVO.builder()
-                .authMeta(AuthMetaRespVO.builder().requiresUser(true).requiresPermissions(new String[0]).requiresRoles(new String[0]).build())
+                .authMeta(AuthMetaRespVO.builder().requireUser(true).requirePermissions(new String[0]).requireRoles(new String[0]).build())
                 .dataSecurityMeta(DataSecurityMetaRespVO.builder().requestDecrypt(true).responseEncrypt(true).sign(SignType.ALL.getType()).build())
                 .repeatSubmitCheckMeta(RepeatSubmitCheckMetaRespVO.builder().check(true).expireMillis(10000L).build()).build();
         apiAccessMapMock.put("/user/api/login/checkPOST", loginApiAccessMeta);
 
         ApiAccessMetaRespVO registerApiAccessMeta = ApiAccessMetaRespVO.builder()
-                .authMeta(AuthMetaRespVO.builder().requiresUser(false).requiresPermissions(new String[0]).requiresRoles(new String[0]).build())
+                .authMeta(AuthMetaRespVO.builder().requireUser(false).requirePermissions(new String[0]).requireRoles(new String[0]).build())
                 .dataSecurityMeta(DataSecurityMetaRespVO.builder().requestDecrypt(true).responseEncrypt(true).sign(SignType.ALL.getType()).build())
                 .repeatSubmitCheckMeta(RepeatSubmitCheckMetaRespVO.builder().check(true).expireMillis(10000L).build()).build();
         apiAccessMapMock.put("/user/api/register/registerPOST", registerApiAccessMeta);

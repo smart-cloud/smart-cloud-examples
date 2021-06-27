@@ -1,10 +1,10 @@
 package org.smartframework.cloud.examples.mall.order.service.api;
 
 import com.baomidou.dynamic.datasource.annotation.DS;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.smartframework.cloud.examples.mall.order.biz.api.OrderDeliveryInfoApiBiz;
 import org.smartframework.cloud.examples.mall.order.entity.base.OrderDeliveryInfoEntity;
-import org.smartframework.cloud.examples.mall.order.mapper.base.OrderDeliveryInfoBaseMapper;
 import org.smartframework.cloud.starter.mybatis.constants.ShardingJdbcDS;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,10 +17,13 @@ import java.util.List;
  */
 @Service
 @DS(ShardingJdbcDS.MASTER)
-public class OrderDeliveryInfoApiService extends ServiceImpl<OrderDeliveryInfoBaseMapper, OrderDeliveryInfoEntity> {
+public class OrderDeliveryInfoApiService {
+
+    @Autowired
+    private OrderDeliveryInfoApiBiz orderDeliveryInfoApiBiz;
 
     public boolean create(List<OrderDeliveryInfoEntity> entities) {
-        return getBaseMapper().insertBatchSomeColumn(entities) == entities.size();
+        return orderDeliveryInfoApiBiz.getBaseMapper().insertBatchSomeColumn(entities) == entities.size();
     }
 
 }

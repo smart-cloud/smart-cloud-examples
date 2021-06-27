@@ -1,6 +1,6 @@
 package org.smartframework.cloud.examples.mall.order.mq.configuration;
 
-import org.smartframework.cloud.examples.mall.order.mq.MqConstants;
+import org.smartframework.cloud.examples.mall.order.mq.OrderMqConstants;
 import org.springframework.amqp.core.Binding;
 import org.springframework.amqp.core.BindingBuilder;
 import org.springframework.amqp.core.DirectExchange;
@@ -13,12 +13,12 @@ public class OrderMqConfiguration {
 
     @Bean
     public Queue submitOrderQueue() {
-        return new Queue(MqConstants.Queue.SUBMIT_ORDER);
+        return new Queue(OrderMqConstants.SubmitOrder.QUEUE);
     }
 
     @Bean
     public DirectExchange submitOrderExchange() {
-        return new DirectExchange(MqConstants.Exchange.SUBMIT_ORDER);
+        return new DirectExchange(OrderMqConstants.SubmitOrder.EXCHANGE);
     }
 
     @Bean
@@ -27,7 +27,7 @@ public class OrderMqConfiguration {
         return BindingBuilder
                 .bind(submitOrderQueue)
                 .to(submitOrderExchange)
-                .with(MqConstants.RouteKey.SUBMIT_ORDER);
+                .with(OrderMqConstants.SubmitOrder.ROUTEKEY);
     }
 
 }

@@ -1,0 +1,15 @@
+spring:
+  datasource:
+    dynamic:
+      primary: basic-auth
+      strict: true
+      datasource:
+        basic-auth:
+          url: jdbc:mysql://127.0.0.1:3306/demo_auth?serverTimezone=Asia/Shanghai&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true
+          username: root
+          password: 123456
+          driver-class-name: com.mysql.cj.jdbc.Driver
+          type: com.zaxxer.hikari.HikariDataSource
+mybatis-plus:
+  mapper-locations:
+    - classpath*:/org/smartframework/cloud/examples/basic/auth/mapper/**/*.xml

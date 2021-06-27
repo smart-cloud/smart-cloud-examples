@@ -23,16 +23,16 @@ public class AuthMetaRespVO extends Base {
     /**
      * 是否需要登陆校验（false则不需要校验）
      */
-    private boolean requiresUser;
+    private boolean requireUser;
 
     /**
      * 访问接口需要的角色（为空则不需要校验）
      */
-    private String[] requiresRoles;
+    private String[] requireRoles;
 
     /**
      * 访问接口需要的权限（为空则不需要校验）
      */
-    private String[] requiresPermissions;
+    private String[] requirePermissions;
 
 }

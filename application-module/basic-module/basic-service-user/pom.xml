@@ -10,7 +10,7 @@
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 	<artifactId>basic-service-user</artifactId>
-	
+
 	<dependencies>
 		<dependency>
 			<groupId>org.smartframework.cloud</groupId>

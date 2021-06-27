@@ -3,10 +3,8 @@ package org.smartframework.cloud.examples.mall.order.biz.api;
 import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import org.smartframework.cloud.examples.mall.order.entity.base.OrderDeliveryInfoEntity;
-import org.smartframework.cloud.examples.mall.order.mapper.base.OrderDeliveryInfoBaseMapper;
 import org.smartframework.cloud.starter.mybatis.common.biz.BaseBiz;
 import org.smartframework.cloud.starter.mybatis.constants.ShardingJdbcDS;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -21,9 +19,6 @@ import java.util.List;
 @DS(ShardingJdbcDS.MASTER)
 public class OrderDeliveryInfoApiBiz extends BaseBiz<OrderDeliveryInfoEntity> {
 
-    @Autowired
-    private OrderDeliveryInfoBaseMapper orderDeliveryInfoBaseMapper;
-
     /**
      * 根据订单号查询运单信息
      *
@@ -32,7 +27,7 @@ public class OrderDeliveryInfoApiBiz extends BaseBiz<OrderDeliveryInfoEntity> {
      */
     @DS(ShardingJdbcDS.SLAVE)
     public List<OrderDeliveryInfoEntity> getByOrderNo(String orderNo) {
-        return orderDeliveryInfoBaseMapper.selectList(new LambdaQueryWrapper<OrderDeliveryInfoEntity>().eq(OrderDeliveryInfoEntity::getOrderNo, orderNo));
+        return super.list(new LambdaQueryWrapper<OrderDeliveryInfoEntity>().eq(OrderDeliveryInfoEntity::getOrderNo, orderNo));
     }
 
 }

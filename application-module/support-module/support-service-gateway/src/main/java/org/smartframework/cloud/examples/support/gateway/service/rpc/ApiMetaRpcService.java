@@ -6,7 +6,7 @@ import com.netflix.discovery.DiscoveryClient;
 import com.netflix.discovery.shared.Application;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.MapUtils;
-import org.smartframework.cloud.common.pojo.vo.RespVO;
+import org.smartframework.cloud.common.pojo.Response;
 import org.smartframework.cloud.examples.api.ac.core.constants.ApiMetaConstants;
 import org.smartframework.cloud.examples.api.ac.core.vo.ApiMetaFetchRespVO;
 import org.smartframework.cloud.examples.support.gateway.bo.meta.ApiAccessMetaCache;
@@ -39,7 +39,7 @@ public class ApiMetaRpcService {
 
     public void notifyFetch(NotifyFetchReqVO req) throws IOException, NoSuchMethodException, InvocationTargetException, IllegalAccessException {
         String url = getFetchUrl(req.getServiceName());
-        RespVO<ApiMetaFetchRespVO> apiMetaFetchRespVO = fetchApiMeta(url);
+        Response<ApiMetaFetchRespVO> apiMetaFetchRespVO = fetchApiMeta(url);
 
         if (!RespUtil.isSuccess(apiMetaFetchRespVO)) {
             throw new BusinessException(GatewayReturnCodes.FETCH_APIMETA_FAIL);
@@ -79,8 +79,8 @@ public class ApiMetaRpcService {
      * @return
      * @throws IOException
      */
-    public RespVO<ApiMetaFetchRespVO> fetchApiMeta(String url) throws IOException {
-        return HttpUtil.get(url, null, new TypeReference<RespVO<ApiMetaFetchRespVO>>() {
+    public Response<ApiMetaFetchRespVO> fetchApiMeta(String url) throws IOException {
+        return HttpUtil.get(url, null, new TypeReference<Response<ApiMetaFetchRespVO>>() {
         });
     }
 

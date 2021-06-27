@@ -32,13 +32,14 @@ public class ProductInfoOmsControllerIntegrationTest extends WebMvcIntegrationTe
         productInsertReqVO.setSellPrice(10000L);
         productInsertReqVO.setStock(200L);
 
-        Response<Base> result = super.post("/product/oms/productInfo/create", productInsertReqVO,
-                new TypeReference<Response<Base>>() {
+        Response<Boolean> result = super.post("/product/oms/productInfo/create", productInsertReqVO,
+                new TypeReference<Response<Boolean>>() {
                 });
 
         Assertions.assertThat(result).isNotNull();
         Assertions.assertThat(result.getHead()).isNotNull();
         Assertions.assertThat(result.getHead().getCode()).isEqualTo(CommonReturnCodes.SUCCESS.getCode());
+        Assertions.assertThat(result.getBody()).isTrue();
     }
 
     @Test
@@ -52,13 +53,14 @@ public class ProductInfoOmsControllerIntegrationTest extends WebMvcIntegrationTe
         productUpdateReqVO.setSellPrice(10000L);
         productUpdateReqVO.setStock(200L);
 
-        Response<Base> result = super.post("/product/oms/productInfo/update", productUpdateReqVO,
-                new TypeReference<Response<Base>>() {
+        Response<Boolean> result = super.post("/product/oms/productInfo/update", productUpdateReqVO,
+                new TypeReference<Response<Boolean>>() {
                 });
 
         Assertions.assertThat(result).isNotNull();
         Assertions.assertThat(result.getHead()).isNotNull();
         Assertions.assertThat(result.getHead().getCode()).isEqualTo(CommonReturnCodes.SUCCESS.getCode());
+        Assertions.assertThat(result.getBody()).isTrue();
     }
 
     @Test
@@ -69,13 +71,14 @@ public class ProductInfoOmsControllerIntegrationTest extends WebMvcIntegrationTe
         ProductDeleteReqVO productDeleteReqVO = new ProductDeleteReqVO();
         productDeleteReqVO.setId(productId);
 
-        Response<Base> result = super.post("/product/oms/productInfo/logicDelete",
-                productDeleteReqVO, new TypeReference<Response<Base>>() {
+        Response<Boolean> result = super.post("/product/oms/productInfo/logicDelete",
+                productDeleteReqVO, new TypeReference<Response<Boolean>>() {
                 });
 
         Assertions.assertThat(result).isNotNull();
         Assertions.assertThat(result.getHead()).isNotNull();
         Assertions.assertThat(result.getHead().getCode()).isEqualTo(CommonReturnCodes.SUCCESS.getCode());
+        Assertions.assertThat(result.getBody()).isTrue();
     }
 
     @Test

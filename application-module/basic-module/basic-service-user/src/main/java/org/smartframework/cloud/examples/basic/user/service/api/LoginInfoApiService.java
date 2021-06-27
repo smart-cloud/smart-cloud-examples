@@ -1,9 +1,8 @@
 package org.smartframework.cloud.examples.basic.user.service.api;
 
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.smartframework.cloud.common.pojo.Base;
-import org.smartframework.cloud.common.pojo.vo.RespVO;
+import org.smartframework.cloud.common.pojo.Response;
 import org.smartframework.cloud.examples.basic.rpc.enums.user.UserStateEnum;
 import org.smartframework.cloud.examples.basic.rpc.user.request.api.login.ExitReqVO;
 import org.smartframework.cloud.examples.basic.rpc.user.request.api.login.LoginReqVO;
@@ -16,7 +15,6 @@ import org.smartframework.cloud.examples.basic.user.config.UserParamValidateMess
 import org.smartframework.cloud.examples.basic.user.entity.base.LoginInfoEntity;
 import org.smartframework.cloud.examples.basic.user.entity.base.UserInfoEntity;
 import org.smartframework.cloud.examples.basic.user.enums.UserReturnCodes;
-import org.smartframework.cloud.examples.basic.user.mapper.base.LoginInfoBaseMapper;
 import org.smartframework.cloud.examples.support.rpc.gateway.UserRpc;
 import org.smartframework.cloud.examples.support.rpc.gateway.request.rpc.CacheUserInfoReqVO;
 import org.smartframework.cloud.examples.support.rpc.gateway.request.rpc.ExitLoginReqVO;
@@ -34,7 +32,7 @@ import java.util.Objects;
 
 @Service
 @Slf4j
-public class LoginInfoApiService extends ServiceImpl<LoginInfoBaseMapper, LoginInfoEntity> {
+public class LoginInfoApiService {
 
     @Autowired
     private LoginInfoApiBiz loginInfoApiBiz;
@@ -68,7 +66,7 @@ public class LoginInfoApiService extends ServiceImpl<LoginInfoBaseMapper, LoginI
             throw new BusinessException(UserReturnCodes.USER_DELETED);
         }
 
-        UserInfoEntity userInfoEntity = userInfoApiBiz.getUserInfoBaseMapper().selectById(loginInfoEntity.getUserId());
+        UserInfoEntity userInfoEntity = userInfoApiBiz.getById(loginInfoEntity.getUserId());
 
         LoginRespVO loginRespVO = LoginRespVO.builder()
                 .userId(userInfoEntity.getId())
@@ -91,7 +89,7 @@ public class LoginInfoApiService extends ServiceImpl<LoginInfoBaseMapper, LoginI
      * @return
      */
     public void exit(ExitReqVO req) {
-        RespVO<Base> exitLoginResp = userRpc.exit(ExitLoginReqVO.builder().token(req.getToken()).build());
+        Response<Base> exitLoginResp = userRpc.exit(ExitLoginReqVO.builder().token(req.getToken()).build());
         if (!RespUtil.isSuccess(exitLoginResp)) {
             throw new ServerException(RespUtil.getFailMsg(exitLoginResp));
         }
@@ -104,7 +102,7 @@ public class LoginInfoApiService extends ServiceImpl<LoginInfoBaseMapper, LoginI
      * @param loginRespVO
      */
     public void cacheUserInfo(String token, LoginRespVO loginRespVO) {
-        RespVO<Base> cacheUserInfoResp = userRpc.cacheUserInfo(CacheUserInfoReqVO.builder()
+        Response<Base> cacheUserInfoResp = userRpc.cacheUserInfo(CacheUserInfoReqVO.builder()
                 .token(token)
                 .userId(loginRespVO.getUserId())
                 .username(loginRespVO.getUsername())
@@ -132,14 +130,14 @@ public class LoginInfoApiService extends ServiceImpl<LoginInfoBaseMapper, LoginI
         String salt = generateRandomSalt();
         String securePassword = PasswordUtil.secure(bo.getPassword(), salt);
 
-        LoginInfoInsertBizBO loginInfoInsertDto = LoginInfoInsertBizBO.builder()
+        LoginInfoInsertBizBO loginInfoInsertBizBO = LoginInfoInsertBizBO.builder()
                 .userId(bo.getUserId())
                 .username(bo.getUsername())
                 .password(securePassword)
                 .pwdState(bo.getPwdState())
                 .salt(salt)
                 .build();
-        return loginInfoApiBiz.insert(loginInfoInsertDto);
+        return loginInfoApiBiz.insert(loginInfoInsertBizBO);
     }
 
 

@@ -1,14 +1,14 @@
 package org.smartframework.cloud.examples.basic.rpc.user.response.base;
 
-import org.smartframework.cloud.mask.MaskRule;
-import org.smartframework.cloud.mask.MaskLog;
-import java.util.Date;
-import org.smartframework.cloud.common.pojo.vo.BaseEntityRespVO;
-
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
+import org.smartframework.cloud.common.pojo.BaseEntityResponse;
+import org.smartframework.cloud.mask.MaskLog;
+import org.smartframework.cloud.mask.MaskRule;
+
+import java.util.Date;
 
 /**
  * 用户信息
@@ -20,7 +20,7 @@ import lombok.experimental.SuperBuilder;
 @Getter
 @NoArgsConstructor
 @SuperBuilder
-public class UserInfoBaseRespVO extends BaseEntityRespVO {
+public class UserInfoBaseRespVO extends BaseEntityResponse {
 
 	private static final long serialVersionUID = 1L;
 

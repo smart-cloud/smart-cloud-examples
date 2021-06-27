@@ -1,11 +1,10 @@
 package org.smartframework.cloud.examples.mall.rpc.order.response.base;
 
-import org.smartframework.cloud.common.pojo.vo.BaseEntityRespVO;
-
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
+import org.smartframework.cloud.common.pojo.BaseEntityResponse;
 
 /**
  * 订单信息
@@ -17,7 +16,7 @@ import lombok.experimental.SuperBuilder;
 @Getter
 @NoArgsConstructor
 @SuperBuilder
-public class OrderBillBaseRespVO extends BaseEntityRespVO {
+public class OrderBillBaseRespVO extends BaseEntityResponse {
 
 	private static final long serialVersionUID = 1L;
 

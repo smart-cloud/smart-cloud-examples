@@ -57,6 +57,7 @@ public class ProductInfoData {
             entity.setSellPrice(1000L);
             entity.setStock(2000L);
             entity.setInsertTime(new Date());
+            entity.setInsertUser(1L);
             entity.setDelState(DelStateEnum.NORMAL.getDelState());
 
             productInfoBaseMapper.insert(entity);

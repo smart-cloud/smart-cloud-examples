@@ -1,7 +1,6 @@
 package org.smartframework.cloud.examples.mall.product.biz.rpc;
 
 import org.smartframework.cloud.examples.mall.product.entity.base.ProductInfoEntity;
-import org.smartframework.cloud.examples.mall.product.mapper.base.ProductInfoBaseMapper;
 import org.smartframework.cloud.examples.mall.product.mapper.rpc.ProductInfoRpcMapper;
 import org.smartframework.cloud.examples.mall.rpc.product.request.rpc.QryProductByIdReqVO;
 import org.smartframework.cloud.examples.mall.rpc.product.request.rpc.QryProductByIdsReqVO;
@@ -26,8 +25,6 @@ import java.util.stream.Collectors;
 public class ProductInfoRpcBiz extends BaseBiz<ProductInfoEntity> {
 
     @Autowired
-    private ProductInfoBaseMapper productInfoBaseMapper;
-    @Autowired
     private ProductInfoRpcMapper productInfoRpcMapper;
 
     /**
@@ -37,7 +34,7 @@ public class ProductInfoRpcBiz extends BaseBiz<ProductInfoEntity> {
      * @return
      */
     public QryProductByIdRespVO qryProductById(QryProductByIdReqVO reqBody) {
-        ProductInfoEntity entity = productInfoBaseMapper.selectById(reqBody.getId());
+        ProductInfoEntity entity = super.getById(reqBody.getId());
         if (ObjectUtil.isNull(entity)) {
             return null;
         }
@@ -57,7 +54,7 @@ public class ProductInfoRpcBiz extends BaseBiz<ProductInfoEntity> {
      * @return
      */
     public QryProductByIdsRespVO qryProductByIds(QryProductByIdsReqVO reqVO) {
-        List<ProductInfoEntity> entities = productInfoBaseMapper.selectBatchIds(reqVO.getIds());
+        List<ProductInfoEntity> entities = super.listByIds(reqVO.getIds());
         if (ObjectUtil.isNull(entities)) {
             return null;
         }

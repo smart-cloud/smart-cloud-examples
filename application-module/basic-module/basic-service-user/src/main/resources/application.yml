@@ -11,15 +11,3 @@ server:
 spring:
   application:
     name: basicServiceUser
-  redis:
-    host: localhost
-    port: 6379
-    password: 123456
-    database: 0
-    timeout: 10000ms
-    jedis:
-      pool:
-        max-active: 1000
-        min-idle: 0
-        max-idle: 100
-        max-wait: 10000ms

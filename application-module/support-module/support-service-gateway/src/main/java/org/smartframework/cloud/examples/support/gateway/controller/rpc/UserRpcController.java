@@ -9,10 +9,7 @@ import org.smartframework.cloud.examples.support.rpc.gateway.request.rpc.ExitLog
 import org.smartframework.cloud.starter.core.business.util.RespUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-
-import javax.validation.Valid;
 
 /**
  * 用户
@@ -34,7 +31,7 @@ public class UserRpcController implements UserRpc {
      * @return
      */
     @Override
-    public Response<Base> cacheUserInfo(@RequestBody @Valid CacheUserInfoReqVO req) {
+    public Response<Base> cacheUserInfo(CacheUserInfoReqVO req) {
         userRpcService.cacheUserInfo(req);
         return RespUtil.success();
     }
@@ -46,7 +43,7 @@ public class UserRpcController implements UserRpc {
      * @return
      */
     @Override
-    public Response<Base> exit(@RequestBody @Valid ExitLoginReqVO req) {
+    public Response<Base> exit(ExitLoginReqVO req) {
         userRpcService.exit(req);
         return RespUtil.success();
     }

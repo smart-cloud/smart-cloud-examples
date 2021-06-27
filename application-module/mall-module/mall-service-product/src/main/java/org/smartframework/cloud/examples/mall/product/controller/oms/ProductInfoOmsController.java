@@ -1,8 +1,8 @@
 package org.smartframework.cloud.examples.mall.product.controller.oms;
 
-import org.smartframework.cloud.api.core.annotation.SmartRequiresDataSecurity;
-import org.smartframework.cloud.api.core.annotation.SmartRequiresRepeatSubmitCheck;
-import org.smartframework.cloud.api.core.annotation.auth.SmartRequiresPermissions;
+import org.smartframework.cloud.api.core.annotation.RequireDataSecurity;
+import org.smartframework.cloud.api.core.annotation.RequireRepeatSubmitCheck;
+import org.smartframework.cloud.api.core.annotation.auth.RequirePermissions;
 import org.smartframework.cloud.common.pojo.Base;
 import org.smartframework.cloud.common.pojo.BasePageResponse;
 import org.smartframework.cloud.common.pojo.Response;
@@ -42,11 +42,11 @@ public class ProductInfoOmsController {
      * @return
      */
     @PostMapping("create")
-    @SmartRequiresPermissions("product:productInfo:create")
-    @SmartRequiresDataSecurity
-    @SmartRequiresRepeatSubmitCheck
-    public Response<Base> create(@RequestBody @Valid ProductInsertReqVO req) {
-        return productOmsService.create(req);
+    @RequirePermissions("product:productInfo:create")
+    @RequireDataSecurity
+    @RequireRepeatSubmitCheck
+    public Response<Boolean> create(@RequestBody @Valid ProductInsertReqVO req) {
+        return RespUtil.success(productOmsService.create(req));
     }
 
     /**
@@ -56,10 +56,10 @@ public class ProductInfoOmsController {
      * @return
      */
     @PostMapping("update")
-    @SmartRequiresPermissions("product:productInfo:update")
-    @SmartRequiresDataSecurity
-    public Response<Base> update(@RequestBody @Valid ProductUpdateReqVO req) {
-        return productOmsService.update(req);
+    @RequirePermissions("product:productInfo:update")
+    @RequireDataSecurity
+    public Response<Boolean> update(@RequestBody @Valid ProductUpdateReqVO req) {
+        return RespUtil.success(productOmsService.update(req));
     }
 
     /**
@@ -69,10 +69,10 @@ public class ProductInfoOmsController {
      * @return
      */
     @PostMapping("logicDelete")
-    @SmartRequiresPermissions("product:productInfo:logicDelete")
-    @SmartRequiresDataSecurity
-    public Response<Base> logicDelete(@RequestBody @Valid ProductDeleteReqVO req) {
-        return productOmsService.logicDelete(req);
+    @RequirePermissions("product:productInfo:logicDelete")
+    @RequireDataSecurity
+    public Response<Boolean> logicDelete(@RequestBody @Valid ProductDeleteReqVO req) {
+        return RespUtil.success(productOmsService.logicDelete(req));
     }
 
     /**

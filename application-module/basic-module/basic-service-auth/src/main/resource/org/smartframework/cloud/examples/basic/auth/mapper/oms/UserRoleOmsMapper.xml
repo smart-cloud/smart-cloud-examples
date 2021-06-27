@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.smartframework.cloud.examples.basic.auth.mapper.oms.UserRoleOmsMapper">
+
+    <resultMap id="listRoleMap" type="org.smartframework.cloud.examples.basic.rpc.auth.response.oms.user.role.UserRoleRespVO">
+        <id column="urId" property="relaId"/>
+        <result column="roleId" property="roleId"/>
+        <result column="roleCode" property="roleCode"/>
+        <result column="roleDesc" property="roleDesc"/>
+        <collection property="permissons" ofType="org.smartframework.cloud.examples.basic.rpc.auth.response.oms.user.role.PermissionInfoRespVO">
+            <result column="permissionId" property="permissonId"/>
+            <result column="permissionCode" property="permissonCode"/>
+            <result column="permissionDesc" property="permissonDesc"/>
+        </collection>
+    </resultMap>
+
+    <select id="listRole" resultMap="listRoleMap">
+        SELECT
+            ur.f_id urId,
+            r.f_id roleId,
+            r.f_code roleCode,
+            r.f_desc roleDesc,
+            p.f_id permissionId,
+            p.f_code permissionCode,
+            p.f_desc permissionDesc
+        FROM
+            t_user_role_rela ur
+        INNER JOIN t_role_info r ON r.f_id = ur.t_role_info_id
+        AND r.f_sys_del_state = 1
+        LEFT JOIN t_role_permission_rela rp ON r.f_id = rp.t_role_info_id
+        AND rp.f_sys_del_state = 1
+        LEFT JOIN t_permission_info p ON p.f_id = rp.t_permission_info_id
+        AND p.f_sys_del_state = 1
+        WHERE
+            ur.t_user_info_id = #{uid}
+        AND ur.f_sys_del_state = 1
+    </select>
+
+</mapper>

@@ -9,10 +9,7 @@ import org.smartframework.cloud.examples.support.rpc.gateway.request.rpc.Gateway
 import org.smartframework.cloud.starter.core.business.util.RespUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-
-import javax.validation.Valid;
 
 @RestController
 @Validated
@@ -22,13 +19,13 @@ public class GatewayAuthRpcController implements GatewayAuthRpc {
     private GatewayAuthRpcService gatewayAuthRpcService;
 
     @Override
-    public Response<Base> upload(@RequestBody @Valid GatewayAuthUploadReqVO req) {
+    public Response<Base> upload(GatewayAuthUploadReqVO req) {
         gatewayAuthRpcService.upload(req);
         return RespUtil.success();
     }
 
     @Override
-    public Response<Base> update(@RequestBody @Valid GatewayAuthUpdateReqVO req) {
+    public Response<Base> update(GatewayAuthUpdateReqVO req) {
         gatewayAuthRpcService.update(req);
         return RespUtil.success();
     }

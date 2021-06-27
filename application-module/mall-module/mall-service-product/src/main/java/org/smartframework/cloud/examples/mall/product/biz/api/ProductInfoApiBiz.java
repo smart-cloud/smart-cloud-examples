@@ -9,13 +9,11 @@ import org.apache.commons.lang3.StringUtils;
 import org.smartframework.cloud.common.pojo.BasePageResponse;
 import org.smartframework.cloud.examples.common.config.constants.DataSourceName;
 import org.smartframework.cloud.examples.mall.product.entity.base.ProductInfoEntity;
-import org.smartframework.cloud.examples.mall.product.mapper.base.ProductInfoBaseMapper;
 import org.smartframework.cloud.examples.mall.rpc.product.request.api.PageProductReqVO;
 import org.smartframework.cloud.examples.mall.rpc.product.response.api.PageProductRespVO;
 import org.smartframework.cloud.starter.mybatis.common.biz.BaseBiz;
 import org.smartframework.cloud.starter.mybatis.common.mapper.entity.BaseEntity;
 import org.smartframework.cloud.starter.mybatis.common.mapper.enums.DelStateEnum;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -31,9 +29,6 @@ import java.util.stream.Collectors;
 @DS(DataSourceName.MALL_PRODUCT)
 public class ProductInfoApiBiz extends BaseBiz<ProductInfoEntity> {
 
-    @Autowired
-    private ProductInfoBaseMapper productInfoBaseMapper;
-
     /**
      * 分页查询商品信息
      *
@@ -48,8 +43,7 @@ public class ProductInfoApiBiz extends BaseBiz<ProductInfoEntity> {
         }
         wrapper.eq(BaseEntity::getDelState, DelStateEnum.NORMAL.getDelState());
         wrapper.orderByDesc(BaseEntity::getInsertTime);
-
-        IPage<ProductInfoEntity> page = productInfoBaseMapper.selectPage(new Page<>(req.getPageNum(), req.getPageSize(), true), wrapper);
+        IPage<ProductInfoEntity> page = super.page(new Page<>(req.getPageNum(), req.getPageSize(), true), wrapper);
         List<ProductInfoEntity> entitydatas = page.getRecords();
 
         if (CollectionUtils.isEmpty(entitydatas)) {

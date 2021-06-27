@@ -9,6 +9,10 @@ package org.smartframework.cloud.examples.common.config.constants;
 public class DataSourceName {
 
     /**
+     * 权限
+     */
+    public static final String BASIC_AUTH = "basic-auth";
+    /**
      * 用户
      */
     public static final String BASIC_USER = "basic-user";

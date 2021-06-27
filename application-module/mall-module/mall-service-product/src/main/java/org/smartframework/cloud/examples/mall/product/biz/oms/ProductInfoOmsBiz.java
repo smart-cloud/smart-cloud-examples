@@ -2,15 +2,11 @@ package org.smartframework.cloud.examples.mall.product.biz.oms;
 
 import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.smartframework.cloud.common.pojo.BasePageResponse;
 import org.smartframework.cloud.examples.app.auth.core.UserContext;
 import org.smartframework.cloud.examples.common.config.constants.DataSourceName;
 import org.smartframework.cloud.examples.mall.product.entity.base.ProductInfoEntity;
-import org.smartframework.cloud.examples.mall.product.mapper.base.ProductInfoBaseMapper;
 import org.smartframework.cloud.examples.mall.rpc.product.request.oms.PageProductReqVO;
 import org.smartframework.cloud.examples.mall.rpc.product.request.oms.ProductInsertReqVO;
 import org.smartframework.cloud.examples.mall.rpc.product.request.oms.ProductUpdateReqVO;
@@ -18,12 +14,9 @@ import org.smartframework.cloud.examples.mall.rpc.product.response.base.ProductI
 import org.smartframework.cloud.starter.mybatis.common.biz.BaseBiz;
 import org.smartframework.cloud.starter.mybatis.common.mapper.entity.BaseEntity;
 import org.smartframework.cloud.starter.mybatis.common.mapper.enums.DelStateEnum;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.Date;
-import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * 商品信息oms biz
@@ -34,9 +27,6 @@ import java.util.stream.Collectors;
 @Repository
 @DS(DataSourceName.MALL_PRODUCT)
 public class ProductInfoOmsBiz extends BaseBiz<ProductInfoEntity> {
-
-    @Autowired
-    private ProductInfoBaseMapper productInfoBaseMapper;
 
     /**
      * 新增
@@ -50,8 +40,7 @@ public class ProductInfoOmsBiz extends BaseBiz<ProductInfoEntity> {
         record.setSellPrice(reqBody.getSellPrice());
         record.setStock(reqBody.getStock());
         record.setInsertUser(UserContext.getUserId());
-
-        return productInfoBaseMapper.insert(record) > 0;
+        return super.save(record);
     }
 
     /**
@@ -68,8 +57,7 @@ public class ProductInfoOmsBiz extends BaseBiz<ProductInfoEntity> {
         record.setStock(reqBody.getStock());
         record.setUpdTime(new Date());
         record.setUpdUser(UserContext.getUserId());
-
-        return productInfoBaseMapper.updateById(record) > 0;
+        return super.updateById(record);
     }
 
     /**
@@ -84,7 +72,7 @@ public class ProductInfoOmsBiz extends BaseBiz<ProductInfoEntity> {
         record.setDelState(DelStateEnum.DELETED.getDelState());
         record.setDelTime(new Date());
         record.setDelUser(UserContext.getUserId());
-        return productInfoBaseMapper.updateById(record) > 0;
+        return super.updateById(record);
     }
 
     /**
@@ -101,24 +89,7 @@ public class ProductInfoOmsBiz extends BaseBiz<ProductInfoEntity> {
         }
         wrapper.eq(BaseEntity::getDelState, DelStateEnum.NORMAL.getDelState());
         wrapper.orderByDesc(BaseEntity::getInsertTime);
-
-        IPage<ProductInfoEntity> page = productInfoBaseMapper.selectPage(new Page<>(req.getPageNum(), req.getPageSize(), true), wrapper);
-        List<ProductInfoEntity> entitydatas = page.getRecords();
-
-        if (CollectionUtils.isEmpty(entitydatas)) {
-            return new BasePageResponse<>(null, req.getPageNum(), req.getPageSize(), 0);
-        }
-
-        List<ProductInfoBaseRespVO> pagedatas = entitydatas.stream()
-                .map(entity -> ProductInfoBaseRespVO.builder()
-                        .id(entity.getId())
-                        .name(entity.getName())
-                        .sellPrice(entity.getSellPrice())
-                        .stock(entity.getStock())
-                        .build())
-                .collect(Collectors.toList());
-
-        return new BasePageResponse<>(pagedatas, req.getPageNum(), req.getPageSize(), page.getTotal());
+        return super.page(req, wrapper, ProductInfoBaseRespVO.class);
     }
 
 }

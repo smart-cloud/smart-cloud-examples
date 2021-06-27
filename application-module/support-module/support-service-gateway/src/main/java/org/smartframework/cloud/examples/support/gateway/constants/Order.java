@@ -18,16 +18,21 @@ public interface Order {
     /**
      * api access注解全局过滤器order
      */
-    int API_ACCESS = Ordered.HIGHEST_PRECEDENCE + 1;
+    int API_ACCESS = REQUEST_LOG + 1;
+
+    /**
+     * 接口安全（加解密、签名）
+     */
+    int DATA_SECURITY = API_ACCESS + 1;
 
     /**
      * 鉴权全局过滤器order
      */
-    int AUTH_CHECK = Ordered.HIGHEST_PRECEDENCE + 2;
+    int AUTH_CHECK = DATA_SECURITY + 1;
 
     /**
      * api重复提交校验
      */
-    int REPEAT_SUBMIT_CHECK = Ordered.HIGHEST_PRECEDENCE + 3;
+    int REPEAT_SUBMIT_CHECK = AUTH_CHECK + 1;
 
 }

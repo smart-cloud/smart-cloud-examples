@@ -1,14 +1,12 @@
 package org.smartframework.cloud.examples.support.gateway.filter.access.core;
 
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.redisson.api.RMapCache;
 import org.redisson.api.RedissonClient;
 import org.smartframework.cloud.examples.app.auth.core.AppAuthConstants;
 import org.smartframework.cloud.examples.app.auth.core.UserBO;
 import org.smartframework.cloud.examples.support.gateway.bo.meta.ApiAccessMetaCache;
-import org.smartframework.cloud.examples.support.gateway.bo.meta.AuthMetaCache;
 import org.smartframework.cloud.examples.support.gateway.constants.Order;
 import org.smartframework.cloud.examples.support.gateway.enums.GatewayReturnCodes;
 import org.smartframework.cloud.examples.support.gateway.filter.access.ApiAccessBO;
@@ -55,14 +53,7 @@ public class AuthFilter implements GlobalFilter, Ordered {
         String token = apiAccessBO.getToken();
         ApiAccessMetaCache apiAccessMetaCache = apiAccessBO.getApiAccessMetaCache();
         // 判断是否需要登陆、鉴权
-        if (apiAccessMetaCache == null || apiAccessMetaCache.getAuthMeta() == null) {
-            return chain.filter(exchange);
-        }
-        AuthMetaCache authMetaCache = apiAccessMetaCache.getAuthMeta();
-        boolean isRequiresPermissions = CollectionUtils.isNotEmpty(authMetaCache.getRequiresPermissions());
-        boolean isRequiresRoles = CollectionUtils.isNotEmpty(authMetaCache.getRequiresRoles());
-        if (!(authMetaCache.isRequiresUser() || isRequiresPermissions
-                || isRequiresRoles)) {
+        if (apiAccessMetaCache == null || !apiAccessMetaCache.isAuth()) {
             return chain.filter(exchange);
         }
 
@@ -77,10 +68,10 @@ public class AuthFilter implements GlobalFilter, Ordered {
         }
 
         // 鉴权
-        if (isRequiresPermissions) {
+        if (apiAccessMetaCache.getRequiresPermissions().size() > 0) {
 
         }
-        if (isRequiresRoles) {
+        if (apiAccessMetaCache.getRequiresRoles().size() > 0) {
 
         }
 

@@ -153,6 +153,7 @@ sign = RSA签名签名(AES加密(head的json串) + AES加密(body json串))
 
 - 安装[redis](https://github.com/microsoftarchive/redis/releases)，并启动
 - 安装[mysql](https://www.mysql.com/downloads/)，执行/docs/sql下脚本
+- 安装[rabbitmq](https://www.rabbitmq.com)，并启动
 - 安装[seata](https://github.com/seata/seata/releases/tag/v1.4.0)服务端，并启动
   - server sql见/smart-cloud-examples/docs/sql/seata.sql
   - file.conf文件配置
@@ -196,9 +197,11 @@ sign = RSA签名签名(AES加密(head的json串) + AES加密(body json串))
   ```
 - 将[smart-cloud](https://github.com/smart-cloud/smart-cloud)相关jar install到本地仓库
   - clone下[smart-cloud](https://github.com/smart-cloud/smart-cloud)
-  - 进入smart-cloud目录，执行mvn -clean install -Dmaven.test.skip=true -T 4
+  - 进入smart-cloud目录，执行**mvn clean install -DskipDocker -Dmaven.test.skip=true -T 4**
 - 服务启动顺序
   - 启动redis
+  - 启动mysql
+  - 启动rabbitmq
   - 启动seata
   - 启动support-service-eureka
   - 启动support-service-gateway
@@ -222,6 +225,8 @@ basic-service-user | 100003 | 用户已被删除
 basic-service-user | 100004 | 用户名或密码错误
 basic-service-user | 100005 | 该手机号已存在，请换一个重新注册
 basic-service-user | 100006 | 该用户名已存在，请换一个重新注册
+basic-service-auth | 110001 | 权限编码已存在
+basic-service-auth | 110002 | 角色编码已存在
 mall-service-order | 200001 | 库存更新失败
 mall-service-order | 200002 | 商品不存在
 mall-service-product | 300001 | 库存不足，操作失败

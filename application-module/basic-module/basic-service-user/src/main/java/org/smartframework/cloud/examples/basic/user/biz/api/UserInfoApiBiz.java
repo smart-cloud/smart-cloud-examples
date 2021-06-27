@@ -2,22 +2,15 @@ package org.smartframework.cloud.examples.basic.user.biz.api;
 
 import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import lombok.Getter;
 import org.smartframework.cloud.examples.basic.rpc.user.request.api.user.UserInfoInsertReqVO;
 import org.smartframework.cloud.examples.basic.user.entity.base.UserInfoEntity;
-import org.smartframework.cloud.examples.basic.user.mapper.base.UserInfoBaseMapper;
 import org.smartframework.cloud.examples.common.config.constants.DataSourceName;
 import org.smartframework.cloud.starter.mybatis.common.biz.BaseBiz;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 @Repository
 @DS(DataSourceName.BASIC_USER)
 public class UserInfoApiBiz extends BaseBiz<UserInfoEntity> {
-
-    @Autowired
-    @Getter
-    private UserInfoBaseMapper userInfoBaseMapper;
 
     /**
      * 插入用户信息
@@ -34,7 +27,7 @@ public class UserInfoApiBiz extends BaseBiz<UserInfoEntity> {
         record.setBirthday(userInfo.getBirthday());
         record.setProfileImage(userInfo.getProfileImage());
         record.setChannel(userInfo.getChannel());
-        userInfoBaseMapper.insert(record);
+        super.save(record);
 
         return record;
     }
@@ -49,7 +42,7 @@ public class UserInfoApiBiz extends BaseBiz<UserInfoEntity> {
         LambdaQueryWrapper<UserInfoEntity> wrapper = new LambdaQueryWrapper<>();
         wrapper.select(UserInfoEntity::getId).eq(UserInfoEntity::getMobile, mobile);
 
-        return userInfoBaseMapper.selectOne(wrapper) != null;
+        return super.getOne(wrapper) != null;
     }
 
 }
