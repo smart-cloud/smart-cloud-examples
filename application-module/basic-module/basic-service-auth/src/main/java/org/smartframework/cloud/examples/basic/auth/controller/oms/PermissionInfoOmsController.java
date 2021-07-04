@@ -65,16 +65,16 @@ public class PermissionInfoOmsController {
     }
 
     /**
-     * 逻辑删除角色
+     * 删除角色
      *
      * @param id 权限主键id
      * @return
      */
-    @PostMapping("logicDelete")
+    @PostMapping("delete")
     @RequireRoles(Role.ADMIN)
-    @RequirePermissions("auth:permission:logicDelete")
+    @RequirePermissions("auth:permission:delete")
     @RequireDataSecurity
-    public Response<Boolean> logicDelete(@RequestBody @NotNull Long id) {
+    public Response<Boolean> delete(@RequestBody @NotNull Long id) {
         return RespUtil.success(permissionInfoOmsService.logicDelete(id));
     }
 

@@ -1,6 +1,7 @@
 package org.smartframework.cloud.examples.mall.product.biz.rpc;
 
 import org.smartframework.cloud.examples.mall.product.entity.base.ProductInfoEntity;
+import org.smartframework.cloud.examples.mall.product.mapper.base.ProductInfoBaseMapper;
 import org.smartframework.cloud.examples.mall.product.mapper.rpc.ProductInfoRpcMapper;
 import org.smartframework.cloud.examples.mall.rpc.product.request.rpc.QryProductByIdReqVO;
 import org.smartframework.cloud.examples.mall.rpc.product.request.rpc.QryProductByIdsReqVO;
@@ -22,7 +23,7 @@ import java.util.stream.Collectors;
  * @date 2019-03-31
  */
 @Repository
-public class ProductInfoRpcBiz extends BaseBiz<ProductInfoEntity> {
+public class ProductInfoRpcBiz extends BaseBiz<ProductInfoBaseMapper, ProductInfoEntity> {
 
     @Autowired
     private ProductInfoRpcMapper productInfoRpcMapper;

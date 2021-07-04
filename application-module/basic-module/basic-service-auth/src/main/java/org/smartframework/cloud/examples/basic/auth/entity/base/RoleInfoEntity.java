@@ -28,7 +28,7 @@ public class RoleInfoEntity extends BaseEntity {
 	private String code;
 	
     /** 角色描述 */
-    @TableField(value = "f_desc")
-	private String desc;
+    @TableField(value = "f_description")
+	private String description;
 	
 }

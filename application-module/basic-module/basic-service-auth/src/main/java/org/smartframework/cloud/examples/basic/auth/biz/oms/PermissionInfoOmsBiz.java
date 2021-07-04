@@ -29,14 +29,19 @@ public class PermissionInfoOmsBiz extends BaseBiz<PermissionInfoBaseMapper, Perm
     /**
      * 判断权限编码是否已存在
      *
+     * @param id   权限主键id
      * @param code
      * @return
      */
-    public Boolean exist(String code) {
-        return super.getOne(new LambdaQueryWrapper<PermissionInfoEntity>()
-                .select(PermissionInfoEntity::getId)
+    public Boolean exist(Long id, String code) {
+        LambdaQueryWrapper<PermissionInfoEntity> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.select(PermissionInfoEntity::getId)
                 .eq(PermissionInfoEntity::getCode, code)
-                .eq(PermissionInfoEntity::getDelState, DelStateEnum.NORMAL.getDelState())) != null;
+                .eq(PermissionInfoEntity::getDelState, DelStateEnum.NORMAL.getDelState());
+        if (id != null) {
+            queryWrapper.ne(PermissionInfoEntity::getId, id);
+        }
+        return super.getOne(queryWrapper) != null;
     }
 
     /**
@@ -48,7 +53,7 @@ public class PermissionInfoOmsBiz extends BaseBiz<PermissionInfoBaseMapper, Perm
     public Boolean create(PermissionCreateReqVO req) {
         PermissionInfoEntity entity = create();
         entity.setCode(req.getCode());
-        entity.setDesc(req.getDesc());
+        entity.setDescription(req.getDesc());
         entity.setInsertUser(UserContext.getUserId());
 
         return super.save(entity);
@@ -64,7 +69,7 @@ public class PermissionInfoOmsBiz extends BaseBiz<PermissionInfoBaseMapper, Perm
         PermissionInfoEntity entity = new PermissionInfoEntity();
         entity.setId(req.getId());
         entity.setCode(req.getCode());
-        entity.setDesc(req.getDesc());
+        entity.setDescription(req.getDesc());
         entity.setUpdTime(new Date());
         entity.setInsertUser(UserContext.getUserId());
         entity.setUpdUser(UserContext.getUserId());
@@ -82,11 +87,11 @@ public class PermissionInfoOmsBiz extends BaseBiz<PermissionInfoBaseMapper, Perm
         LambdaQueryWrapper<PermissionInfoEntity> wrapper = new LambdaQueryWrapper<>();
         String code = req.getCode();
         if (StringUtils.isNotBlank(code)) {
-            wrapper.likeLeft(PermissionInfoEntity::getCode, code);
+            wrapper.likeRight(PermissionInfoEntity::getCode, code);
         }
         String desc = req.getDesc();
         if (StringUtils.isNotBlank(desc)) {
-            wrapper.like(PermissionInfoEntity::getDesc, desc);
+            wrapper.like(PermissionInfoEntity::getDescription, desc);
         }
         wrapper.eq(BaseEntity::getDelState, DelStateEnum.NORMAL.getDelState());
         wrapper.orderByDesc(BaseEntity::getInsertTime);

@@ -48,7 +48,7 @@ public class RoleInfoOmsBiz extends BaseBiz<RoleInfoBaseMapper, RoleInfoEntity> 
     public Boolean create(RoleCreateReqVO req) {
         RoleInfoEntity entity = create();
         entity.setCode(req.getCode());
-        entity.setDesc(req.getDesc());
+        entity.setDescription(req.getDesc());
         entity.setInsertUser(UserContext.getUserId());
 
         return super.save(entity);
@@ -64,7 +64,7 @@ public class RoleInfoOmsBiz extends BaseBiz<RoleInfoBaseMapper, RoleInfoEntity> 
         RoleInfoEntity entity = new RoleInfoEntity();
         entity.setId(req.getId());
         entity.setCode(req.getCode());
-        entity.setDesc(req.getDesc());
+        entity.setDescription(req.getDesc());
         entity.setUpdTime(new Date());
         entity.setInsertUser(UserContext.getUserId());
         entity.setUpdUser(UserContext.getUserId());
@@ -82,11 +82,11 @@ public class RoleInfoOmsBiz extends BaseBiz<RoleInfoBaseMapper, RoleInfoEntity> 
         LambdaQueryWrapper<RoleInfoEntity> wrapper = new LambdaQueryWrapper<>();
         String code = req.getCode();
         if (StringUtils.isNotBlank(code)) {
-            wrapper.likeLeft(RoleInfoEntity::getCode, code);
+            wrapper.likeRight(RoleInfoEntity::getCode, code);
         }
         String desc = req.getDesc();
         if (StringUtils.isNotBlank(desc)) {
-            wrapper.like(RoleInfoEntity::getDesc, desc);
+            wrapper.like(RoleInfoEntity::getDescription, desc);
         }
         wrapper.eq(BaseEntity::getDelState, DelStateEnum.NORMAL.getDelState());
         wrapper.orderByDesc(BaseEntity::getInsertTime);

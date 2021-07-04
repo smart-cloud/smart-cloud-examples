@@ -86,6 +86,7 @@ public class ProductInfoOmsControllerIntegrationTest extends WebMvcIntegrationTe
         productInfoData.batchInsertTestData();
 
         PageProductReqVO reqVO = new PageProductReqVO();
+        reqVO.setName("iphone");
         reqVO.setPageNum(1);
         reqVO.setPageSize(10);
 

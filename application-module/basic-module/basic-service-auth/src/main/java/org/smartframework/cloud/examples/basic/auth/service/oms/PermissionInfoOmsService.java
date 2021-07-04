@@ -25,7 +25,7 @@ public class PermissionInfoOmsService {
      * @return
      */
     public Boolean create(PermissionCreateReqVO req) {
-        if (permissionInfoOmsBiz.exist(req.getCode())) {
+        if (permissionInfoOmsBiz.exist(null, req.getCode())) {
             throw new DataValidateException(AuthReturnCodes.PERMISSION_CODE_EXIST);
         }
         return permissionInfoOmsBiz.create(req);
@@ -38,7 +38,7 @@ public class PermissionInfoOmsService {
      * @return
      */
     public Boolean update(PermissionUpdateReqVO req) {
-        if (permissionInfoOmsBiz.exist(req.getCode())) {
+        if (permissionInfoOmsBiz.exist(req.getId(), req.getCode())) {
             throw new DataValidateException(AuthReturnCodes.PERMISSION_CODE_EXIST);
         }
         return permissionInfoOmsBiz.update(req);

@@ -28,7 +28,7 @@ public class PermissionInfoEntity extends BaseEntity {
 	private String code;
 	
     /** 权限描述 */
-    @TableField(value = "f_desc")
-	private String desc;
+    @TableField(value = "f_description")
+	private String description;
 	
 }

@@ -2,7 +2,7 @@ DROP TABLE IF EXISTS `t_permission_info`;
 CREATE TABLE `t_permission_info` (
   `f_id` bigint(20) unsigned NOT NULL,
   `f_code` varchar(32) NOT NULL COMMENT ''权限编码'',
-  `f_desc` varchar(64) NOT NULL COMMENT ''权限描述'',
+  `f_description` varchar(64) NOT NULL COMMENT ''权限描述'',
   `f_sys_insert_time` datetime NOT NULL COMMENT ''创建时间'',
   `f_sys_upd_time` datetime DEFAULT NULL COMMENT ''更新时间'',
   `f_sys_del_time` datetime DEFAULT NULL COMMENT ''删除时间'',
@@ -21,7 +21,7 @@ DROP TABLE IF EXISTS `t_role_info`;
 CREATE TABLE `t_role_info` (
   `f_id` bigint(20) unsigned NOT NULL,
   `f_code` varchar(32) NOT NULL COMMENT ''角色编码'',
-  `f_desc` varchar(128) NOT NULL COMMENT ''角色描述'',
+  `f_description` varchar(128) NOT NULL COMMENT ''角色描述'',
   `f_sys_insert_time` datetime NOT NULL COMMENT ''创建时间'',
   `f_sys_upd_time` datetime DEFAULT NULL COMMENT ''更新时间'',
   `f_sys_del_time` datetime DEFAULT NULL COMMENT ''删除时间'',
