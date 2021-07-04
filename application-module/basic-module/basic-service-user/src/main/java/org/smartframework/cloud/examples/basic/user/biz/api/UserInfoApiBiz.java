@@ -4,13 +4,14 @@ import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import org.smartframework.cloud.examples.basic.rpc.user.request.api.user.UserInfoInsertReqVO;
 import org.smartframework.cloud.examples.basic.user.entity.base.UserInfoEntity;
+import org.smartframework.cloud.examples.basic.user.mapper.base.UserInfoBaseMapper;
 import org.smartframework.cloud.examples.common.config.constants.DataSourceName;
 import org.smartframework.cloud.starter.mybatis.common.biz.BaseBiz;
 import org.springframework.stereotype.Repository;
 
 @Repository
 @DS(DataSourceName.BASIC_USER)
-public class UserInfoApiBiz extends BaseBiz<UserInfoEntity> {
+public class UserInfoApiBiz extends BaseBiz<UserInfoBaseMapper, UserInfoEntity> {
 
     /**
      * 插入用户信息

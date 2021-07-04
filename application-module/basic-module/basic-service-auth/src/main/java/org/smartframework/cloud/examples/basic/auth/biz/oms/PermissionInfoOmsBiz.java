@@ -6,6 +6,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.smartframework.cloud.common.pojo.BasePageResponse;
 import org.smartframework.cloud.examples.app.auth.core.UserContext;
 import org.smartframework.cloud.examples.basic.auth.entity.base.PermissionInfoEntity;
+import org.smartframework.cloud.examples.basic.auth.mapper.base.PermissionInfoBaseMapper;
 import org.smartframework.cloud.examples.basic.rpc.auth.request.oms.permisson.PagePermissionReqVO;
 import org.smartframework.cloud.examples.basic.rpc.auth.request.oms.permisson.PermissionCreateReqVO;
 import org.smartframework.cloud.examples.basic.rpc.auth.request.oms.permisson.PermissionUpdateReqVO;
@@ -23,7 +24,7 @@ import java.util.stream.Collectors;
 
 @Repository
 @DS(DataSourceName.BASIC_AUTH)
-public class PermissionInfoOmsBiz extends BaseBiz<PermissionInfoEntity> {
+public class PermissionInfoOmsBiz extends BaseBiz<PermissionInfoBaseMapper, PermissionInfoEntity> {
 
     /**
      * 判断权限编码是否已存在

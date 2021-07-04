@@ -6,6 +6,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.smartframework.cloud.common.pojo.BasePageResponse;
 import org.smartframework.cloud.examples.app.auth.core.UserContext;
 import org.smartframework.cloud.examples.basic.auth.entity.base.RoleInfoEntity;
+import org.smartframework.cloud.examples.basic.auth.mapper.base.RoleInfoBaseMapper;
 import org.smartframework.cloud.examples.basic.rpc.auth.request.oms.role.PageRoleReqVO;
 import org.smartframework.cloud.examples.basic.rpc.auth.request.oms.role.RoleCreateReqVO;
 import org.smartframework.cloud.examples.basic.rpc.auth.request.oms.role.RoleUpdateReqVO;
@@ -23,7 +24,7 @@ import java.util.stream.Collectors;
 
 @Repository
 @DS(DataSourceName.BASIC_AUTH)
-public class RoleInfoOmsBiz extends BaseBiz<RoleInfoEntity> {
+public class RoleInfoOmsBiz extends BaseBiz<RoleInfoBaseMapper, RoleInfoEntity> {
 
     /**
      * 判断角色编码是否已存在

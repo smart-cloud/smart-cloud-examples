@@ -9,6 +9,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.smartframework.cloud.common.pojo.BasePageResponse;
 import org.smartframework.cloud.examples.common.config.constants.DataSourceName;
 import org.smartframework.cloud.examples.mall.product.entity.base.ProductInfoEntity;
+import org.smartframework.cloud.examples.mall.product.mapper.base.ProductInfoBaseMapper;
 import org.smartframework.cloud.examples.mall.rpc.product.request.api.PageProductReqVO;
 import org.smartframework.cloud.examples.mall.rpc.product.response.api.PageProductRespVO;
 import org.smartframework.cloud.starter.mybatis.common.biz.BaseBiz;
@@ -27,7 +28,7 @@ import java.util.stream.Collectors;
  */
 @Repository
 @DS(DataSourceName.MALL_PRODUCT)
-public class ProductInfoApiBiz extends BaseBiz<ProductInfoEntity> {
+public class ProductInfoApiBiz extends BaseBiz<ProductInfoBaseMapper, ProductInfoEntity> {
 
     /**
      * 分页查询商品信息

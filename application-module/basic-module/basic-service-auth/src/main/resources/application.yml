@@ -1,0 +1,13 @@
+smart:
+  dataMachineId: 4
+  async: true
+  log:
+    rpclog: true
+    apilog: true
+
+server:
+  port: 20032
+  
+spring:
+  application:
+    name: basicServiceAuth

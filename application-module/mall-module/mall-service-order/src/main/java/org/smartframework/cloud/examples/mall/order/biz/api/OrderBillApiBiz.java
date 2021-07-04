@@ -3,6 +3,7 @@ package org.smartframework.cloud.examples.mall.order.biz.api;
 import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import org.smartframework.cloud.examples.mall.order.entity.base.OrderBillEntity;
+import org.smartframework.cloud.examples.mall.order.mapper.base.OrderBillBaseMapper;
 import org.smartframework.cloud.examples.mall.rpc.enums.order.OrderStatus;
 import org.smartframework.cloud.starter.mybatis.common.biz.BaseBiz;
 import org.smartframework.cloud.starter.mybatis.common.mapper.enums.DelStateEnum;
@@ -17,7 +18,7 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 @DS(ShardingJdbcDS.MASTER)
-public class OrderBillApiBiz extends BaseBiz<OrderBillEntity> {
+public class OrderBillApiBiz extends BaseBiz<OrderBillBaseMapper, OrderBillEntity> {
 
     public long create(OrderBillEntity entity) {
         super.save(entity);

@@ -9,6 +9,7 @@ import org.smartframework.cloud.examples.basic.auth.dataobject.PermissionDO;
 import org.smartframework.cloud.examples.basic.auth.dataobject.RoleDO;
 import org.smartframework.cloud.examples.basic.auth.dataobject.param.PermissionReqDO;
 import org.smartframework.cloud.examples.basic.auth.entity.base.RolePermissionRelaEntity;
+import org.smartframework.cloud.examples.basic.auth.mapper.base.RolePermissionRelaBaseMapper;
 import org.smartframework.cloud.examples.basic.auth.mapper.oms.RolePermissionOmsMapper;
 import org.smartframework.cloud.examples.basic.rpc.auth.request.oms.role.permisson.PageRolePermissonReqVO;
 import org.smartframework.cloud.examples.basic.rpc.auth.response.oms.role.permisson.PermissionInfoRespVO;
@@ -27,7 +28,7 @@ import java.util.stream.Collectors;
 
 @Repository
 @DS(DataSourceName.BASIC_AUTH)
-public class RolePermissionOmsBiz extends BaseBiz<RolePermissionRelaEntity> {
+public class RolePermissionOmsBiz extends BaseBiz<RolePermissionRelaBaseMapper, RolePermissionRelaEntity> {
 
     @Autowired
     private RolePermissionOmsMapper rolePermissionOmsMapper;
