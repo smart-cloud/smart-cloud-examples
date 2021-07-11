@@ -23,7 +23,7 @@ import org.smartframework.cloud.starter.core.business.exception.ParamValidateExc
 import org.smartframework.cloud.starter.core.business.exception.ServerException;
 import org.smartframework.cloud.starter.core.business.util.PasswordUtil;
 import org.smartframework.cloud.starter.core.business.util.RespUtil;
-import org.smartframework.cloud.starter.mybatis.common.mapper.enums.DelStateEnum;
+import org.smartframework.cloud.starter.mybatis.common.mapper.constants.DelState;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -62,7 +62,7 @@ public class LoginInfoApiService {
         if (Objects.equals(loginInfoEntity.getUserState(), UserStateEnum.UNENABLE.getValue())) {
             throw new BusinessException(UserReturnCodes.USER_UNENABLE);
         }
-        if (Objects.equals(loginInfoEntity.getDelState(), DelStateEnum.DELETED.getDelState())) {
+        if (Objects.equals(loginInfoEntity.getDelState(), DelState.DELETED)) {
             throw new BusinessException(UserReturnCodes.USER_DELETED);
         }
 

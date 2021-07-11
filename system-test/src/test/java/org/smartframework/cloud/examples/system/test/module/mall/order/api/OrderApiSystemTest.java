@@ -20,10 +20,10 @@ import org.smartframework.cloud.utility.RandomUtil;
 import java.io.IOException;
 import java.util.Arrays;
 
-public class OrderApiSystemTest extends AbstractSystemTest {
+class OrderApiSystemTest extends AbstractSystemTest {
 
     @Test
-    public void testSubmit() throws IOException {
+    void testSubmit() throws IOException {
         // 1、创建商品
         ProductInsertReqVO productInsertReqVO = new ProductInsertReqVO();
         String name = "商品" + RandomUtil.generateRandom(false, 10);

@@ -115,13 +115,13 @@ public final class TokenUtil {
                 .userInfo(userInfo)
                 .loginInfo(loginInfo)
                 .build();
-        Response<RegisterUserRespVO> RegisterUserResult = RegisterApi.register(registerUserReqVO);
-        Assertions.assertThat(RegisterUserResult).isNotNull();
-        Assertions.assertThat(RegisterUserResult.getHead()).isNotNull();
-        Assertions.assertThat(RegisterUserResult.getHead().getCode()).isEqualTo(CommonReturnCodes.SUCCESS.getCode());
-        Assertions.assertThat(RegisterUserResult.getBody()).isNotNull();
+        Response<RegisterUserRespVO> registerUserResult = RegisterApi.register(registerUserReqVO);
+        Assertions.assertThat(registerUserResult).isNotNull();
+        Assertions.assertThat(registerUserResult.getHead()).isNotNull();
+        Assertions.assertThat(registerUserResult.getHead().getCode()).isEqualTo(CommonReturnCodes.SUCCESS.getCode());
+        Assertions.assertThat(registerUserResult.getBody()).isNotNull();
 
-        context.setLoginRespVO(RegisterUserResult.getBody());
+        context.setLoginRespVO(registerUserResult.getBody());
 
         return context;
     }

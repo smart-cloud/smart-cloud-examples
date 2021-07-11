@@ -90,12 +90,12 @@ public class ApiMetaUtil {
      * @return
      */
     private RepeatSubmitCheckMetaRespVO buildRepeatSubmitCheckMeta(Method method) {
-        RequireRepeatSubmitCheck RequireRepeatSubmitCheck = method.getAnnotation(RequireRepeatSubmitCheck.class);
+        RequireRepeatSubmitCheck requireRepeatSubmitCheck = method.getAnnotation(RequireRepeatSubmitCheck.class);
 
         RepeatSubmitCheckMetaRespVO repeatSubmitCheckMeta = new RepeatSubmitCheckMetaRespVO();
-        boolean check = RequireRepeatSubmitCheck != null;
+        boolean check = requireRepeatSubmitCheck != null;
         repeatSubmitCheckMeta.setCheck(check);
-        repeatSubmitCheckMeta.setExpireMillis(check ? RequireRepeatSubmitCheck.expireMillis() : 0L);
+        repeatSubmitCheckMeta.setExpireMillis(check ? requireRepeatSubmitCheck.expireMillis() : 0L);
         return repeatSubmitCheckMeta;
     }
 
@@ -106,16 +106,16 @@ public class ApiMetaUtil {
      * @return
      */
     private DataSecurityMetaRespVO buildDataSecurityMeta(Method method) {
-        RequireDataSecurity RequireDataSecurity = method.getAnnotation(RequireDataSecurity.class);
+        RequireDataSecurity requireDataSecurity = method.getAnnotation(RequireDataSecurity.class);
         DataSecurityMetaRespVO dataSecurityMeta = new DataSecurityMetaRespVO();
-        if (RequireDataSecurity == null) {
+        if (requireDataSecurity == null) {
             dataSecurityMeta.setRequestDecrypt(false);
             dataSecurityMeta.setResponseEncrypt(false);
             dataSecurityMeta.setSign(SignType.NONE.getType());
         } else {
-            dataSecurityMeta.setRequestDecrypt(RequireDataSecurity.requestDecrypt());
-            dataSecurityMeta.setResponseEncrypt(RequireDataSecurity.responseEncrypt());
-            dataSecurityMeta.setSign(RequireDataSecurity.sign().getType());
+            dataSecurityMeta.setRequestDecrypt(requireDataSecurity.requestDecrypt());
+            dataSecurityMeta.setResponseEncrypt(requireDataSecurity.responseEncrypt());
+            dataSecurityMeta.setSign(requireDataSecurity.sign().getType());
         }
         return dataSecurityMeta;
     }
@@ -127,14 +127,14 @@ public class ApiMetaUtil {
      * @return
      */
     private AuthMetaRespVO buildAuthMeta(Method method) {
-        RequirePermissions RequirePermissions = method.getAnnotation(RequirePermissions.class);
-        RequireRoles RequireRoles = method.getAnnotation(RequireRoles.class);
-        RequireUser RequireUser = method.getAnnotation(RequireUser.class);
+        RequirePermissions requirePermissions = method.getAnnotation(RequirePermissions.class);
+        RequireRoles requireRoles = method.getAnnotation(RequireRoles.class);
+        RequireUser requireUser = method.getAnnotation(RequireUser.class);
 
         AuthMetaRespVO authMeta = new AuthMetaRespVO();
-        authMeta.setRequireUser(RequireUser != null);
-        authMeta.setRequireRoles((RequireRoles != null) ? RequireRoles.value() : new String[0]);
-        authMeta.setRequirePermissions((RequirePermissions != null) ? RequirePermissions.value() : new String[0]);
+        authMeta.setRequireUser(requireUser != null);
+        authMeta.setRequireRoles((requireRoles != null) ? requireRoles.value() : new String[0]);
+        authMeta.setRequirePermissions((requirePermissions != null) ? requirePermissions.value() : new String[0]);
         return authMeta;
     }
 

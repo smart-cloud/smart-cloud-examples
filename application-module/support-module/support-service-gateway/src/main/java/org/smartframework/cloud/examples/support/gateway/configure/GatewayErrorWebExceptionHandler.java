@@ -34,9 +34,9 @@ public class GatewayErrorWebExceptionHandler implements ErrorWebExceptionHandler
 
         ServerHttpResponse serverHttpResponse = exchange.getResponse();
         serverHttpResponse.getHeaders().setContentType(MediaType.APPLICATION_JSON);
-        return serverHttpResponse.writeWith(Mono.fromSupplier(() -> {
-            return serverHttpResponse.bufferFactory().wrap(result.getBytes(StandardCharsets.UTF_8));
-        }));
+        return serverHttpResponse.writeWith(Mono.fromSupplier(() ->
+                serverHttpResponse.bufferFactory().wrap(result.getBytes(StandardCharsets.UTF_8))
+        ));
     }
 
     /**

@@ -13,8 +13,7 @@ import org.smartframework.cloud.examples.mall.rpc.product.request.oms.ProductIns
 import org.smartframework.cloud.examples.mall.rpc.product.request.oms.ProductUpdateReqVO;
 import org.smartframework.cloud.examples.mall.rpc.product.response.base.ProductInfoBaseRespVO;
 import org.smartframework.cloud.starter.mybatis.common.biz.BaseBiz;
-import org.smartframework.cloud.starter.mybatis.common.mapper.entity.BaseEntity;
-import org.smartframework.cloud.starter.mybatis.common.mapper.enums.DelStateEnum;
+import org.smartframework.cloud.starter.mybatis.common.mapper.constants.DelState;
 import org.springframework.stereotype.Repository;
 
 import java.util.Date;
@@ -36,12 +35,12 @@ public class ProductInfoOmsBiz extends BaseBiz<ProductInfoBaseMapper, ProductInf
      * @return
      */
     public boolean insert(ProductInsertReqVO reqBody) {
-        ProductInfoEntity record = create();
-        record.setName(reqBody.getName());
-        record.setSellPrice(reqBody.getSellPrice());
-        record.setStock(reqBody.getStock());
-        record.setInsertUser(UserContext.getUserId());
-        return super.save(record);
+        ProductInfoEntity productInfoEntity = create();
+        productInfoEntity.setName(reqBody.getName());
+        productInfoEntity.setSellPrice(reqBody.getSellPrice());
+        productInfoEntity.setStock(reqBody.getStock());
+        productInfoEntity.setInsertUser(UserContext.getUserId());
+        return super.save(productInfoEntity);
     }
 
     /**
@@ -51,14 +50,14 @@ public class ProductInfoOmsBiz extends BaseBiz<ProductInfoBaseMapper, ProductInf
      * @return
      */
     public boolean update(ProductUpdateReqVO reqBody) {
-        ProductInfoEntity record = new ProductInfoEntity();
-        record.setId(reqBody.getId());
-        record.setName(reqBody.getName());
-        record.setSellPrice(reqBody.getSellPrice());
-        record.setStock(reqBody.getStock());
-        record.setUpdTime(new Date());
-        record.setUpdUser(UserContext.getUserId());
-        return super.updateById(record);
+        ProductInfoEntity productInfoEntity = new ProductInfoEntity();
+        productInfoEntity.setId(reqBody.getId());
+        productInfoEntity.setName(reqBody.getName());
+        productInfoEntity.setSellPrice(reqBody.getSellPrice());
+        productInfoEntity.setStock(reqBody.getStock());
+        productInfoEntity.setUpdTime(new Date());
+        productInfoEntity.setUpdUser(UserContext.getUserId());
+        return super.updateById(productInfoEntity);
     }
 
     /**
@@ -68,12 +67,7 @@ public class ProductInfoOmsBiz extends BaseBiz<ProductInfoBaseMapper, ProductInf
      * @return
      */
     public boolean logicDelete(long id) {
-        ProductInfoEntity record = new ProductInfoEntity();
-        record.setId(id);
-        record.setDelState(DelStateEnum.DELETED.getDelState());
-        record.setDelTime(new Date());
-        record.setDelUser(UserContext.getUserId());
-        return super.updateById(record);
+        return super.logicDelete(id, UserContext.getUserId());
     }
 
     /**
@@ -88,8 +82,8 @@ public class ProductInfoOmsBiz extends BaseBiz<ProductInfoBaseMapper, ProductInf
         if (StringUtils.isNotBlank(name)) {
             wrapper.like(ProductInfoEntity::getName, name);
         }
-        wrapper.eq(BaseEntity::getDelState, DelStateEnum.NORMAL.getDelState());
-        wrapper.orderByDesc(BaseEntity::getInsertTime);
+        wrapper.eq(ProductInfoEntity::getDelState, DelState.NORMAL);
+        wrapper.orderByDesc(ProductInfoEntity::getInsertTime);
         return super.page(req, wrapper, ProductInfoBaseRespVO.class);
     }
 

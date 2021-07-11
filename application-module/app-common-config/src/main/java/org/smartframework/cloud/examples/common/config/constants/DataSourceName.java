@@ -6,19 +6,19 @@ package org.smartframework.cloud.examples.common.config.constants;
  * @author liyulin
  * @date 2020-09-28
  */
-public class DataSourceName {
+public interface DataSourceName {
 
     /**
      * 权限
      */
-    public static final String BASIC_AUTH = "basic-auth";
+    String BASIC_AUTH = "basic-auth";
     /**
      * 用户
      */
-    public static final String BASIC_USER = "basic-user";
+    String BASIC_USER = "basic-user";
     /**
      * 商品
      */
-    public static final String MALL_PRODUCT = "mall-product";
+    String MALL_PRODUCT = "mall-product";
 
 }

@@ -24,7 +24,7 @@ spring:
         max-idle: 100
         max-wait: 10000ms
   profiles:
-    include: common-config,discovery
+    include: common-config,discovery,feign
   cloud:
     gateway:
       discovery:

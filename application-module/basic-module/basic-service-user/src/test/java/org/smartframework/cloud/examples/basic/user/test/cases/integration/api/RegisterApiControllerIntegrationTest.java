@@ -24,7 +24,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Rollback
 @Transactional
-public class RegisterApiControllerIntegrationTest extends WebMvcIntegrationTest {
+class RegisterApiControllerIntegrationTest extends WebMvcIntegrationTest {
 
     @MockBean
     private LoginInfoApiService loginInfoApiService;
@@ -32,7 +32,7 @@ public class RegisterApiControllerIntegrationTest extends WebMvcIntegrationTest 
     private UserRpc userRpc;
 
     @Test
-    public void testRegister() throws Exception {
+    void testRegister() throws Exception {
         // mock start
         Mockito.when(userRpc.cacheUserInfo(ArgumentMatchers.any())).thenReturn(RespUtil.success());
         // mock end

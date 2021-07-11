@@ -27,7 +27,7 @@ import org.smartframework.cloud.starter.core.business.exception.BusinessExceptio
 import org.smartframework.cloud.starter.core.business.exception.ServerException;
 import org.smartframework.cloud.starter.core.business.util.RespUtil;
 import org.smartframework.cloud.starter.core.business.util.SnowFlakeIdUtil;
-import org.smartframework.cloud.starter.mybatis.common.mapper.enums.DelStateEnum;
+import org.smartframework.cloud.starter.mybatis.common.mapper.constants.DelState;
 import org.smartframework.cloud.utility.ObjectUtil;
 import org.smartframework.cloud.utility.spring.SpringContextUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -190,7 +190,7 @@ public class OrderApiService {
             entity.setProductName(productInfo.getName());
 
             entity.setInsertTime(new Date());
-            entity.setDelState(DelStateEnum.NORMAL.getDelState());
+            entity.setDelState(DelState.NORMAL);
 
             return entity;
         }).collect(Collectors.toList());
@@ -211,7 +211,7 @@ public class OrderApiService {
         orderBillEntity.setPayState(PayStateEnum.PENDING_PAY.getValue());
         orderBillEntity.setBuyer(userId);
         orderBillEntity.setInsertTime(new Date());
-        orderBillEntity.setDelState(DelStateEnum.NORMAL.getDelState());
+        orderBillEntity.setDelState(DelState.NORMAL);
 
         orderBillApiBiz.create(orderBillEntity);
 

@@ -1,18 +1,15 @@
 package org.smartframework.cloud.examples.support.rpc.constant;
 
-import lombok.experimental.UtilityClass;
+public interface RpcConstants {
 
-@UtilityClass
-public class RpcConstants {
+    interface Eureka {
+        String SERVICE_NAME = "supportServiceEureka";
+        String FEIGN_CLIENT_NAME = "${" + SERVICE_NAME + ":" + SERVICE_NAME + "}";
+    }
 
-	public static final class Eureka {
-		public static final String SERVICE_NAME = "supportServiceEureka";
-		public static final String FEIGN_CLIENT_NAME = "${" + SERVICE_NAME + ":" + SERVICE_NAME + "}";
-	}
-
-	public static final class Gateway {
-		public static final String SERVICE_NAME = "supportServiceGateway";
-		public static final String FEIGN_CLIENT_NAME = "${" + SERVICE_NAME + ":" + SERVICE_NAME + "}";
-	}
+    interface Gateway {
+        String SERVICE_NAME = "supportServiceGateway";
+        String FEIGN_CLIENT_NAME = "${" + SERVICE_NAME + ":" + SERVICE_NAME + "}";
+    }
 
 }

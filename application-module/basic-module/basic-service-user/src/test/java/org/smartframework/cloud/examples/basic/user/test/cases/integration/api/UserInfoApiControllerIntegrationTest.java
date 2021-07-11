@@ -14,13 +14,13 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Rollback
 @Transactional
-public class UserInfoApiControllerIntegrationTest extends WebMvcIntegrationTest {
+class UserInfoApiControllerIntegrationTest extends WebMvcIntegrationTest {
 
     @Autowired
     private UserInfoData userInfoData;
 
     @Test
-    public void testQuery() throws Exception {
+    void testQuery() throws Exception {
         Long userId = 1L;
         userInfoData.insertTestData(userId);
 

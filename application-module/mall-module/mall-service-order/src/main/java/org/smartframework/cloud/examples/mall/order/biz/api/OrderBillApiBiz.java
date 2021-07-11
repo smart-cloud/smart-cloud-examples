@@ -6,7 +6,7 @@ import org.smartframework.cloud.examples.mall.order.entity.base.OrderBillEntity;
 import org.smartframework.cloud.examples.mall.order.mapper.base.OrderBillBaseMapper;
 import org.smartframework.cloud.examples.mall.rpc.enums.order.OrderStatus;
 import org.smartframework.cloud.starter.mybatis.common.biz.BaseBiz;
-import org.smartframework.cloud.starter.mybatis.common.mapper.enums.DelStateEnum;
+import org.smartframework.cloud.starter.mybatis.common.mapper.constants.DelState;
 import org.smartframework.cloud.starter.mybatis.constants.ShardingJdbcDS;
 import org.springframework.stereotype.Repository;
 
@@ -35,7 +35,7 @@ public class OrderBillApiBiz extends BaseBiz<OrderBillBaseMapper, OrderBillEntit
     public OrderBillEntity getByOrderNo(String orderNo) {
         return super.getOne(new LambdaQueryWrapper<OrderBillEntity>()
                 .eq(OrderBillEntity::getOrderNo, orderNo)
-                .eq(OrderBillEntity::getDelState, DelStateEnum.NORMAL.getDelState()));
+                .eq(OrderBillEntity::getDelState, DelState.NORMAL));
     }
 
     /**

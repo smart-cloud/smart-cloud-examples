@@ -13,8 +13,7 @@ import org.smartframework.cloud.examples.basic.rpc.auth.request.oms.role.RoleUpd
 import org.smartframework.cloud.examples.basic.rpc.auth.response.base.RoleInfoBaseRespVO;
 import org.smartframework.cloud.examples.common.config.constants.DataSourceName;
 import org.smartframework.cloud.starter.mybatis.common.biz.BaseBiz;
-import org.smartframework.cloud.starter.mybatis.common.mapper.entity.BaseEntity;
-import org.smartframework.cloud.starter.mybatis.common.mapper.enums.DelStateEnum;
+import org.smartframework.cloud.starter.mybatis.common.mapper.constants.DelState;
 import org.springframework.stereotype.Repository;
 
 import java.util.Date;
@@ -32,11 +31,11 @@ public class RoleInfoOmsBiz extends BaseBiz<RoleInfoBaseMapper, RoleInfoEntity> 
      * @param code
      * @return
      */
-    public Boolean exist(String code) {
+    public boolean exist(String code) {
         return super.getOne(new LambdaQueryWrapper<RoleInfoEntity>()
                 .select(RoleInfoEntity::getId)
                 .eq(RoleInfoEntity::getCode, code)
-                .eq(RoleInfoEntity::getDelState, DelStateEnum.NORMAL.getDelState())) != null;
+                .eq(RoleInfoEntity::getDelState, DelState.NORMAL)) != null;
     }
 
     /**
@@ -88,8 +87,8 @@ public class RoleInfoOmsBiz extends BaseBiz<RoleInfoBaseMapper, RoleInfoEntity> 
         if (StringUtils.isNotBlank(desc)) {
             wrapper.like(RoleInfoEntity::getDescription, desc);
         }
-        wrapper.eq(BaseEntity::getDelState, DelStateEnum.NORMAL.getDelState());
-        wrapper.orderByDesc(BaseEntity::getInsertTime);
+        wrapper.eq(RoleInfoEntity::getDelState, DelState.NORMAL);
+        wrapper.orderByDesc(RoleInfoEntity::getInsertTime);
 
         return super.page(req, wrapper, RoleInfoBaseRespVO.class);
     }

@@ -2,7 +2,6 @@ package org.smartframework.cloud.examples.system.test.module.mall.product.api;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import lombok.experimental.UtilityClass;
-import org.smartframework.cloud.common.pojo.Base;
 import org.smartframework.cloud.common.pojo.Response;
 import org.smartframework.cloud.examples.mall.rpc.product.request.oms.ProductInsertReqVO;
 import org.smartframework.cloud.examples.system.test.config.SystemTestConfig;
@@ -17,7 +16,6 @@ import java.io.IOException;
  */
 @UtilityClass
 public class ProductInfoOms {
-
 
     public Response<Boolean> create(ProductInsertReqVO reqVO) throws IOException {
         return HttpUtil.postWithRaw(

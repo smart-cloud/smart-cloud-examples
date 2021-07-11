@@ -30,13 +30,13 @@ import java.security.interfaces.RSAPublicKey;
  * @date 2020-09-11
  */
 @Slf4j
-public class SecurityApiControllerIntegrationTest extends WebReactiveIntegrationTest {
+class SecurityApiControllerIntegrationTest extends WebReactiveIntegrationTest {
 
     @Autowired
     private SecurityApiService securityApiService;
 
     @Test
-    public void testGenerateClientPubKey() throws Exception {
+    void testGenerateClientPubKey() throws Exception {
         Response<GenerateClientPubKeyRespVO> result = post("/gateway/api/security/generateClientPubKey", null, new TypeReference<Response<GenerateClientPubKeyRespVO>>() {
         });
         Assertions.assertThat(result).isNotNull();
@@ -48,7 +48,7 @@ public class SecurityApiControllerIntegrationTest extends WebReactiveIntegration
     }
 
     @Test
-    public void testGenerateAesKey() throws Exception {
+    void testGenerateAesKey() throws Exception {
         // 客户端公钥（校验签名）、服务端私钥
         GenerateClientPubKeyRespVO generateClientPubKeyRespVO = securityApiService.generateClientPubKey();
 
@@ -82,7 +82,7 @@ public class SecurityApiControllerIntegrationTest extends WebReactiveIntegration
 
         // 解密AES key
         String aesKey = RsaUtil.decryptString(clientPriServerPubKeyPair.getPrivate(), result.getBody().getEncryptedAesKey());
-        Assertions.assertThat(aesKey.length()).isEqualTo(8);
+        Assertions.assertThat(aesKey).hasSize(8);
     }
 
     private String[] generateEncryptedCpubKey(RSAPublicKey publicKey, String cpubKeyText) throws InvalidKeyException,

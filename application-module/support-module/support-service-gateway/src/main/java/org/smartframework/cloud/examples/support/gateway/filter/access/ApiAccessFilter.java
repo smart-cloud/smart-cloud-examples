@@ -42,10 +42,8 @@ public class ApiAccessFilter implements GlobalFilter, Ordered {
                 .setApiAccessMetaCache(apiAccessMetaCache)
                 .setUrlMethod(urlMethod);
         ApiAccessContext.setContext(apiAccessBO);
-        return chain.filter(exchange).doFinally(s -> {
-            // 使用完清理，避免内存泄漏
-            ApiAccessContext.clear();
-        });
+        // 使用完清理，避免内存泄漏
+        return chain.filter(exchange).doFinally(s -> ApiAccessContext.clear());
     }
 
     @Override

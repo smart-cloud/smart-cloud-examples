@@ -26,7 +26,7 @@ import java.util.Map;
  * @author liyulin
  * @date 2020-09-12
  */
-public class ApiMetaRpcControllerIntegrationTest extends WebReactiveIntegrationTest {
+class ApiMetaRpcControllerIntegrationTest extends WebReactiveIntegrationTest {
 
     @MockBean
     private DiscoveryClient discoveryClient;
@@ -34,7 +34,7 @@ public class ApiMetaRpcControllerIntegrationTest extends WebReactiveIntegrationT
     private ApiMetaRpcService apiMetaRpcService;
 
     @Test
-    public void testNotifyFetch() throws Exception {
+    void testNotifyFetch() throws Exception {
         String serviceId = "user";
         // mock start
         InstanceInfo instanceInfo = InstanceInfo.Builder.newBuilder().setAppName(serviceId).setIPAddr("192.168.15.10").setPort(8080).build();

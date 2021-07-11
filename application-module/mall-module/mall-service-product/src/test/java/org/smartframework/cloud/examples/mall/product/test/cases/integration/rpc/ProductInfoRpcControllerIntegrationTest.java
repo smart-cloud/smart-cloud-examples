@@ -23,13 +23,13 @@ import java.util.List;
 
 @Rollback
 @Transactional
-public class ProductInfoRpcControllerIntegrationTest extends WebMvcIntegrationTest {
+class ProductInfoRpcControllerIntegrationTest extends WebMvcIntegrationTest {
 
     @Autowired
     private ProductInfoData productInfoData;
 
     @Test
-    public void testQryProductById() throws Exception {
+    void testQryProductById() throws Exception {
         Long productId = 200L;
         productInfoData.insertTestData(productId);
         QryProductByIdReqVO reqBody = new QryProductByIdReqVO();
@@ -46,7 +46,7 @@ public class ProductInfoRpcControllerIntegrationTest extends WebMvcIntegrationTe
     }
 
     @Test
-    public void testQryProductByIds() throws Exception {
+    void testQryProductByIds() throws Exception {
         List<Long> ids = new ArrayList<>();
         for (long id = 200; id < 211; id++) {
             ids.add(id);
@@ -69,7 +69,7 @@ public class ProductInfoRpcControllerIntegrationTest extends WebMvcIntegrationTe
     }
 
     @Test
-    public void testUpdateStock() throws Exception {
+    void testUpdateStock() throws Exception {
         // create test data
         List<Long> ids = new ArrayList<>();
         for (long id = 300; id < 301; id++) {

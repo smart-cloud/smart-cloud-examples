@@ -17,17 +17,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.concurrent.TimeUnit;
 
-/**
- * @author liyulin
- * @date 2020-09-14
- */
-public class UserRpcControllerIntegrationTest extends WebReactiveIntegrationTest {
+class UserRpcControllerIntegrationTest extends WebReactiveIntegrationTest {
 
     @Autowired
     private RedissonClient redissonClient;
 
     @Test
-    public void testCacheUserInfo() throws Exception {
+    void testCacheUserInfo() throws Exception {
         String token = "12341234";
         Long userId = 1L;
         // mock start

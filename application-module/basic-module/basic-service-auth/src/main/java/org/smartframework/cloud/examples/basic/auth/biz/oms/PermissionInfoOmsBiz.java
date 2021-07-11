@@ -13,8 +13,7 @@ import org.smartframework.cloud.examples.basic.rpc.auth.request.oms.permisson.Pe
 import org.smartframework.cloud.examples.basic.rpc.auth.response.base.PermissionInfoBaseRespVO;
 import org.smartframework.cloud.examples.common.config.constants.DataSourceName;
 import org.smartframework.cloud.starter.mybatis.common.biz.BaseBiz;
-import org.smartframework.cloud.starter.mybatis.common.mapper.entity.BaseEntity;
-import org.smartframework.cloud.starter.mybatis.common.mapper.enums.DelStateEnum;
+import org.smartframework.cloud.starter.mybatis.common.mapper.constants.DelState;
 import org.springframework.stereotype.Repository;
 
 import java.util.Date;
@@ -33,11 +32,11 @@ public class PermissionInfoOmsBiz extends BaseBiz<PermissionInfoBaseMapper, Perm
      * @param code
      * @return
      */
-    public Boolean exist(Long id, String code) {
+    public boolean exist(Long id, String code) {
         LambdaQueryWrapper<PermissionInfoEntity> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.select(PermissionInfoEntity::getId)
                 .eq(PermissionInfoEntity::getCode, code)
-                .eq(PermissionInfoEntity::getDelState, DelStateEnum.NORMAL.getDelState());
+                .eq(PermissionInfoEntity::getDelState, DelState.NORMAL);
         if (id != null) {
             queryWrapper.ne(PermissionInfoEntity::getId, id);
         }
@@ -93,8 +92,8 @@ public class PermissionInfoOmsBiz extends BaseBiz<PermissionInfoBaseMapper, Perm
         if (StringUtils.isNotBlank(desc)) {
             wrapper.like(PermissionInfoEntity::getDescription, desc);
         }
-        wrapper.eq(BaseEntity::getDelState, DelStateEnum.NORMAL.getDelState());
-        wrapper.orderByDesc(BaseEntity::getInsertTime);
+        wrapper.eq(PermissionInfoEntity::getDelState, DelState.NORMAL);
+        wrapper.orderByDesc(PermissionInfoEntity::getInsertTime);
 
         return super.page(req, wrapper, PermissionInfoBaseRespVO.class);
     }

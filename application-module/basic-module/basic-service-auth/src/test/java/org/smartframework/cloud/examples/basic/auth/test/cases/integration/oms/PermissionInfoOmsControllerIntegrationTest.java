@@ -14,16 +14,18 @@ import org.smartframework.cloud.examples.basic.rpc.auth.request.oms.permisson.Pe
 import org.smartframework.cloud.examples.basic.rpc.auth.response.base.PermissionInfoBaseRespVO;
 import org.smartframework.cloud.starter.test.integration.WebMvcIntegrationTest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.annotation.Rollback;
+import org.springframework.transaction.annotation.Transactional;
 
-//@Rollback
-//@Transactional
-public class PermissionInfoOmsControllerIntegrationTest extends WebMvcIntegrationTest {
+@Rollback
+@Transactional
+class PermissionInfoOmsControllerIntegrationTest extends WebMvcIntegrationTest {
 
     @Autowired
     private PermissionInfoData permissionInfoData;
 
     @Test
-    public void testCreate() throws Exception {
+    void testCreate() throws Exception {
         PermissionCreateReqVO reqVO = new PermissionCreateReqVO();
         reqVO.setCode("/auth/oms/permission/create");
         reqVO.setDesc("创建权限");
@@ -40,7 +42,7 @@ public class PermissionInfoOmsControllerIntegrationTest extends WebMvcIntegratio
     }
 
     @Test
-    public void testUpdate() throws Exception {
+    void testUpdate() throws Exception {
         PermissionInfoEntity entity = permissionInfoData.insert();
         PermissionUpdateReqVO reqVO = new PermissionUpdateReqVO();
         reqVO.setId(entity.getId());
@@ -59,7 +61,7 @@ public class PermissionInfoOmsControllerIntegrationTest extends WebMvcIntegratio
     }
 
     @Test
-    public void testDelete() throws Exception {
+    void testDelete() throws Exception {
         PermissionInfoEntity entity = permissionInfoData.insert();
         Long id = entity.getId();
         Response<Boolean> result = super.post("/auth/oms/permission/delete", id,
@@ -74,7 +76,7 @@ public class PermissionInfoOmsControllerIntegrationTest extends WebMvcIntegratio
     }
 
     @Test
-    public void testPage() throws Exception {
+    void testPage() throws Exception {
         PermissionInfoEntity entity = permissionInfoData.insert();
         PagePermissionReqVO reqVO = new PagePermissionReqVO();
         reqVO.setPageNum(1);

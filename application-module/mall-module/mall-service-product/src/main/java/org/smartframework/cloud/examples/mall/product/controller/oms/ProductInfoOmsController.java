@@ -3,7 +3,6 @@ package org.smartframework.cloud.examples.mall.product.controller.oms;
 import org.smartframework.cloud.api.core.annotation.RequireDataSecurity;
 import org.smartframework.cloud.api.core.annotation.RequireRepeatSubmitCheck;
 import org.smartframework.cloud.api.core.annotation.auth.RequirePermissions;
-import org.smartframework.cloud.common.pojo.Base;
 import org.smartframework.cloud.common.pojo.BasePageResponse;
 import org.smartframework.cloud.common.pojo.Response;
 import org.smartframework.cloud.examples.mall.product.service.oms.ProductInfoOmsService;

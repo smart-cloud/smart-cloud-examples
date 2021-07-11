@@ -14,10 +14,10 @@ import java.io.IOException;
  * @author liyulin
  * @date 2020-10-10
  */
-public class ProductInfoOmsSystemTest extends AbstractSystemTest {
+class ProductInfoOmsSystemTest extends AbstractSystemTest {
 
     @Test
-    public void testCreate() throws IOException {
+    void testCreate() throws IOException {
         ProductInsertReqVO reqVO = new ProductInsertReqVO();
         reqVO.setName("商品" + RandomUtil.generateRandom(false, 10));
         reqVO.setSellPrice(1000L);

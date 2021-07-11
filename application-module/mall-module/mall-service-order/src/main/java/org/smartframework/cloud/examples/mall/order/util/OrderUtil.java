@@ -36,23 +36,23 @@ public class OrderUtil {
                 .append(StringUtils.leftPad(String.valueOf(whichTable(uid)), 2, '0')).toString();
     }
 
-    public final static Long whichDB(Long uid) {
+    public static final Long whichDB(Long uid) {
         return uid / DB_DATA_LIMIT;
     }
 
-    public final static Long whichTable(Long uid) {
+    public static final Long whichTable(Long uid) {
         return uid % DB_TABLE_NUM;
     }
 
-    public final static Long whichDB(String orderNo) {
+    public static final Long whichDB(String orderNo) {
         return shardingByOrderNo(orderNo, orderNo.length() - 10, orderNo.length() - 2);
     }
 
-    public final static Long whichTable(String orderNo) {
+    public static final Long whichTable(String orderNo) {
         return shardingByOrderNo(orderNo, orderNo.length() - 2, orderNo.length());
     }
 
-    private final static Long shardingByOrderNo(String orderNo, int start, int end) {
+    private static final Long shardingByOrderNo(String orderNo, int start, int end) {
         if (orderNo == null || orderNo.length() == 0) {
             return null;
         }

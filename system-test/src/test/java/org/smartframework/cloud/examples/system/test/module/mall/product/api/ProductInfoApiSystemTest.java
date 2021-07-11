@@ -11,10 +11,10 @@ import org.smartframework.cloud.starter.test.AbstractSystemTest;
 
 import java.io.IOException;
 
-public class ProductInfoApiSystemTest extends AbstractSystemTest {
+class ProductInfoApiSystemTest extends AbstractSystemTest {
 
     @Test
-    public void testPageProduct() throws IOException {
+    void testPageProduct() throws IOException {
         PageProductReqVO reqVO = new PageProductReqVO();
         reqVO.setPageNum(1);
         reqVO.setPageSize(10);

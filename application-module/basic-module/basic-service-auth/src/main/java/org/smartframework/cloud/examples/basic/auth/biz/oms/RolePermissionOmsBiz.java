@@ -16,7 +16,7 @@ import org.smartframework.cloud.examples.basic.rpc.auth.response.oms.role.permis
 import org.smartframework.cloud.examples.basic.rpc.auth.response.oms.role.permisson.RolePermissionRespVO;
 import org.smartframework.cloud.examples.common.config.constants.DataSourceName;
 import org.smartframework.cloud.starter.mybatis.common.biz.BaseBiz;
-import org.smartframework.cloud.starter.mybatis.common.mapper.enums.DelStateEnum;
+import org.smartframework.cloud.starter.mybatis.common.mapper.constants.DelState;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -63,10 +63,10 @@ public class RolePermissionOmsBiz extends BaseBiz<RolePermissionRelaBaseMapper, 
         RolePermissionRelaEntity deletedEntity = new RolePermissionRelaEntity();
         deletedEntity.setDelUser(UserContext.getUserId());
         deletedEntity.setDelTime(new Date());
-        deletedEntity.setDelState(DelStateEnum.DELETED.getDelState());
+        deletedEntity.setDelState(DelState.DELETED);
         return super.update(deletedEntity, new LambdaQueryWrapper<RolePermissionRelaEntity>()
                 .eq(RolePermissionRelaEntity::getRoleInfoId, roleId)
-                .eq(RolePermissionRelaEntity::getDelState, DelStateEnum.NORMAL.getDelState()));
+                .eq(RolePermissionRelaEntity::getDelState, DelState.NORMAL));
     }
 
     /**
@@ -126,7 +126,7 @@ public class RolePermissionOmsBiz extends BaseBiz<RolePermissionRelaBaseMapper, 
         List<RolePermissionRelaEntity> rolePermissionRelaEntities = super.list(new LambdaQueryWrapper<RolePermissionRelaEntity>()
                 .select(RolePermissionRelaEntity::getPermissionInfoId)
                 .in(RolePermissionRelaEntity::getRoleInfoId, roleIds)
-                .eq(RolePermissionRelaEntity::getDelState, DelStateEnum.NORMAL.getDelState()));
+                .eq(RolePermissionRelaEntity::getDelState, DelState.NORMAL));
         if (CollectionUtils.isEmpty(rolePermissionRelaEntities)) {
             return new HashSet<>(0);
         }

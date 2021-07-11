@@ -2,7 +2,7 @@ package org.smartframework.cloud.examples.mall.product.test.data;
 
 import org.smartframework.cloud.examples.mall.product.entity.base.ProductInfoEntity;
 import org.smartframework.cloud.examples.mall.product.mapper.base.ProductInfoBaseMapper;
-import org.smartframework.cloud.starter.mybatis.common.mapper.enums.DelStateEnum;
+import org.smartframework.cloud.starter.mybatis.common.mapper.constants.DelState;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,7 +29,7 @@ public class ProductInfoData {
         entity.setSellPrice(1000L);
         entity.setStock(2000L);
         entity.setInsertTime(new Date());
-        entity.setDelState(DelStateEnum.NORMAL.getDelState());
+        entity.setDelState(DelState.NORMAL);
         productInfoBaseMapper.insert(entity);
     }
 
@@ -58,7 +58,7 @@ public class ProductInfoData {
             entity.setStock(2000L);
             entity.setInsertTime(new Date());
             entity.setInsertUser(1L);
-            entity.setDelState(DelStateEnum.NORMAL.getDelState());
+            entity.setDelState(DelState.NORMAL);
 
             productInfoBaseMapper.insert(entity);
         }

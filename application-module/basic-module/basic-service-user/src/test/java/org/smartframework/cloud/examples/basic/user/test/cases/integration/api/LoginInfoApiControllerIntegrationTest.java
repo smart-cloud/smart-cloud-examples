@@ -23,7 +23,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Rollback
 @Transactional
-public class LoginInfoApiControllerIntegrationTest extends WebMvcIntegrationTest {
+class LoginInfoApiControllerIntegrationTest extends WebMvcIntegrationTest {
 
     @Autowired
     private LoginInfoData loginInfoData;
@@ -33,7 +33,7 @@ public class LoginInfoApiControllerIntegrationTest extends WebMvcIntegrationTest
     private UserRpc userRpc;
 
     @Test
-    public void testLogin() throws Exception {
+    void testLogin() throws Exception {
         // mock start
         Mockito.when(userRpc.cacheUserInfo(ArgumentMatchers.any())).thenReturn(RespUtil.success());
         // mock end
@@ -64,7 +64,7 @@ public class LoginInfoApiControllerIntegrationTest extends WebMvcIntegrationTest
     }
 
     @Test
-    public void testExit() throws Exception {
+    void testExit() throws Exception {
         // mock start
         Mockito.when(userRpc.exit(ArgumentMatchers.any())).thenReturn(RespUtil.success());
         // mock end

@@ -16,13 +16,13 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Rollback
 @Transactional
-public class ProductInfoApiControllerIntegrationTest extends WebMvcIntegrationTest {
+class ProductInfoApiControllerIntegrationTest extends WebMvcIntegrationTest {
 
     @Autowired
     private ProductInfoData productInfoData;
 
     @Test
-    public void testPageProduct() throws Exception {
+    void testPageProduct() throws Exception {
         productInfoData.batchInsertTestData();
 
         PageProductReqVO reqVO = new PageProductReqVO();

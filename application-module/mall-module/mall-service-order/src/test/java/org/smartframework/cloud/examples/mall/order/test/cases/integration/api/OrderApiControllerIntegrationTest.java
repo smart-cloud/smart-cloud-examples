@@ -23,13 +23,13 @@ import java.util.concurrent.TimeUnit;
 
 //@Rollback
 //@Transactional
-public class OrderApiControllerIntegrationTest extends WebMvcIntegrationTest {
+class OrderApiControllerIntegrationTest extends WebMvcIntegrationTest {
 
     @MockBean
     private ProductInfoRpc productInfoRpc;
 
     @Test
-    public void testSubmit() throws Exception {
+    void testSubmit() throws Exception {
         // 1、构建请求
         // build args
         List<SubmitOrderProductInfoReqVO> buyProducts = new ArrayList<>();
@@ -67,7 +67,7 @@ public class OrderApiControllerIntegrationTest extends WebMvcIntegrationTest {
     }
 
     @Test
-    public void testQuerySubmitResult() throws Exception {
+    void testQuerySubmitResult() throws Exception {
         String orderNo = OrderUtil.generateOrderNo(1L);
         Response<QuerySubmitResultRespVO> resp = querySubmitResult(orderNo);
 

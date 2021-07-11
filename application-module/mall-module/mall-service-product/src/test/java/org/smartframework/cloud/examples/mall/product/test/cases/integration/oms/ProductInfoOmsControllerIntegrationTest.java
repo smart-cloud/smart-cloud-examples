@@ -20,13 +20,13 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Rollback
 @Transactional
-public class ProductInfoOmsControllerIntegrationTest extends WebMvcIntegrationTest {
+class ProductInfoOmsControllerIntegrationTest extends WebMvcIntegrationTest {
 
     @Autowired
     private ProductInfoData productInfoData;
 
     @Test
-    public void testCreate() throws Exception {
+    void testCreate() throws Exception {
         ProductInsertReqVO productInsertReqVO = new ProductInsertReqVO();
         productInsertReqVO.setName("iphone10");
         productInsertReqVO.setSellPrice(10000L);
@@ -43,7 +43,7 @@ public class ProductInfoOmsControllerIntegrationTest extends WebMvcIntegrationTe
     }
 
     @Test
-    public void testUpdate() throws Exception {
+    void testUpdate() throws Exception {
         Long productId = 1L;
         productInfoData.insertTestData(productId);
 
@@ -64,7 +64,7 @@ public class ProductInfoOmsControllerIntegrationTest extends WebMvcIntegrationTe
     }
 
     @Test
-    public void testLogicDelete() throws Exception {
+    void testLogicDelete() throws Exception {
         Long productId = 2L;
         productInfoData.insertTestData(productId);
 
@@ -82,7 +82,7 @@ public class ProductInfoOmsControllerIntegrationTest extends WebMvcIntegrationTe
     }
 
     @Test
-    public void testPageProduct() throws Exception {
+    void testPageProduct() throws Exception {
         productInfoData.batchInsertTestData();
 
         PageProductReqVO reqVO = new PageProductReqVO();

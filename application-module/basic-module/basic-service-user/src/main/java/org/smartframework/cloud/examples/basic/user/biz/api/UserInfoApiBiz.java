@@ -20,17 +20,17 @@ public class UserInfoApiBiz extends BaseBiz<UserInfoBaseMapper, UserInfoEntity> 
      * @return
      */
     public UserInfoEntity insert(UserInfoInsertReqVO userInfo) {
-        UserInfoEntity record = create();
-        record.setMobile(userInfo.getMobile());
-        record.setNickName(userInfo.getNickname());
-        record.setRealName(userInfo.getRealname());
-        record.setSex(userInfo.getSex());
-        record.setBirthday(userInfo.getBirthday());
-        record.setProfileImage(userInfo.getProfileImage());
-        record.setChannel(userInfo.getChannel());
-        super.save(record);
+        UserInfoEntity userInfoEntity = create();
+        userInfoEntity.setMobile(userInfo.getMobile());
+        userInfoEntity.setNickName(userInfo.getNickname());
+        userInfoEntity.setRealName(userInfo.getRealname());
+        userInfoEntity.setSex(userInfo.getSex());
+        userInfoEntity.setBirthday(userInfo.getBirthday());
+        userInfoEntity.setProfileImage(userInfo.getProfileImage());
+        userInfoEntity.setChannel(userInfo.getChannel());
+        super.save(userInfoEntity);
 
-        return record;
+        return userInfoEntity;
     }
 
     /**

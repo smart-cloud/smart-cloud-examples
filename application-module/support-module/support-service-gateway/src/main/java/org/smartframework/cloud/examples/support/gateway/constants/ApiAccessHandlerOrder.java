@@ -15,10 +15,10 @@ public final class ApiAccessHandlerOrder {
     /**
      * 接口鉴权
      */
-    public static final int AUTH_CHECK = 2;
+    public static final int AUTH_CHECK = DATA_SECURITY + 1;
     /**
      * 重复提交校验
      */
-    public static final int REPEAT_SUBMIT_CHECK = 3;
+    public static final int REPEAT_SUBMIT_CHECK = AUTH_CHECK + 1;
 
 }
