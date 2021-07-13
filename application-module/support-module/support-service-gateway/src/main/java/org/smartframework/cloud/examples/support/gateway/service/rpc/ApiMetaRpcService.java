@@ -13,7 +13,7 @@ import org.smartframework.cloud.examples.support.gateway.bo.meta.ApiAccessMetaCa
 import org.smartframework.cloud.examples.support.gateway.enums.GatewayReturnCodes;
 import org.smartframework.cloud.examples.support.gateway.util.RedisKeyHelper;
 import org.smartframework.cloud.examples.support.rpc.gateway.request.rpc.NotifyFetchReqVO;
-import org.smartframework.cloud.starter.core.business.exception.BusinessException;
+import org.smartframework.cloud.exception.BusinessException;
 import org.smartframework.cloud.starter.core.business.util.RespUtil;
 import org.smartframework.cloud.utility.HttpUtil;
 import org.smartframework.cloud.utility.spring.SpringContextUtil;

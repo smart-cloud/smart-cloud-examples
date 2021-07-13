@@ -8,7 +8,7 @@ import org.smartframework.cloud.examples.basic.rpc.auth.request.oms.role.PageRol
 import org.smartframework.cloud.examples.basic.rpc.auth.request.oms.role.RoleCreateReqVO;
 import org.smartframework.cloud.examples.basic.rpc.auth.request.oms.role.RoleUpdateReqVO;
 import org.smartframework.cloud.examples.basic.rpc.auth.response.base.RoleInfoBaseRespVO;
-import org.smartframework.cloud.starter.core.business.exception.DataValidateException;
+import org.smartframework.cloud.exception.DataValidateException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

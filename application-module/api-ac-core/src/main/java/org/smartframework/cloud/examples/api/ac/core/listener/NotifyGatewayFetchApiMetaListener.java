@@ -7,7 +7,7 @@ import org.smartframework.cloud.common.pojo.Response;
 import org.smartframework.cloud.examples.api.ac.core.properties.ApiAccessProperties;
 import org.smartframework.cloud.examples.support.rpc.gateway.ApiMetaRpc;
 import org.smartframework.cloud.examples.support.rpc.gateway.request.rpc.NotifyFetchReqVO;
-import org.smartframework.cloud.starter.core.business.exception.ServerException;
+import org.smartframework.cloud.exception.ServerException;
 import org.smartframework.cloud.starter.core.business.util.RespUtil;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.ApplicationListener;

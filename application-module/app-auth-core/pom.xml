@@ -22,7 +22,15 @@
         </dependency>
         <dependency>
             <groupId>org.smartframework.cloud</groupId>
-            <artifactId>smart-api-core</artifactId>
+            <artifactId>smart-user-context</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.smartframework.cloud</groupId>
+            <artifactId>smart-common-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.smartframework.cloud</groupId>
+            <artifactId>smart-exception</artifactId>
         </dependency>
         <dependency>
             <groupId>javax.servlet</groupId>

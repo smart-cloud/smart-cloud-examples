@@ -4,7 +4,7 @@ import com.google.common.collect.Sets;
 import io.netty.buffer.UnpooledByteBufAllocator;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.IOUtils;
-import org.smartframework.cloud.starter.core.constants.ProtostuffConstant;
+import org.smartframework.cloud.examples.support.gateway.constants.ProtostuffConstant;
 import org.smartframework.cloud.starter.log.util.LogUtil;
 import org.springframework.core.io.buffer.DataBuffer;
 import org.springframework.core.io.buffer.NettyDataBufferFactory;

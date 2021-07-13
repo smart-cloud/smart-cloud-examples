@@ -6,7 +6,7 @@ import org.smartframework.cloud.examples.basic.rpc.user.response.base.UserInfoBa
 import org.smartframework.cloud.examples.basic.user.biz.api.UserInfoApiBiz;
 import org.smartframework.cloud.examples.basic.user.config.UserParamValidateMessage;
 import org.smartframework.cloud.examples.basic.user.entity.base.UserInfoEntity;
-import org.smartframework.cloud.starter.core.business.exception.ParamValidateException;
+import org.smartframework.cloud.exception.ParamValidateException;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

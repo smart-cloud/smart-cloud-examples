@@ -1,9 +1,9 @@
 package org.smartframework.cloud.examples.app.auth.core;
 
-import org.smartframework.cloud.api.core.user.AbstractUserContext;
-import org.smartframework.cloud.api.core.user.ParentUserBO;
+import org.smartframework.cloud.api.core.user.context.AbstractUserContext;
+import org.smartframework.cloud.api.core.user.context.ParentUserBO;
+import org.smartframework.cloud.common.web.util.WebServletUtil;
 import org.smartframework.cloud.examples.app.auth.core.exception.UserBOMissingException;
-import org.smartframework.cloud.starter.core.business.util.WebServletUtil;
 import org.smartframework.cloud.utility.JacksonUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.lang.NonNull;

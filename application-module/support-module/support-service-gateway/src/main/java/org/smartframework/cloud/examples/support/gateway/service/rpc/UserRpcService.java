@@ -10,7 +10,7 @@ import org.smartframework.cloud.examples.support.gateway.enums.GatewayReturnCode
 import org.smartframework.cloud.examples.support.gateway.util.RedisKeyHelper;
 import org.smartframework.cloud.examples.support.rpc.gateway.request.rpc.CacheUserInfoReqVO;
 import org.smartframework.cloud.examples.support.rpc.gateway.request.rpc.ExitLoginReqVO;
-import org.smartframework.cloud.starter.core.business.exception.ServerException;
+import org.smartframework.cloud.exception.ServerException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

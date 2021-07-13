@@ -8,7 +8,7 @@ import org.smartframework.cloud.examples.basic.rpc.auth.request.oms.permisson.Pa
 import org.smartframework.cloud.examples.basic.rpc.auth.request.oms.permisson.PermissionCreateReqVO;
 import org.smartframework.cloud.examples.basic.rpc.auth.request.oms.permisson.PermissionUpdateReqVO;
 import org.smartframework.cloud.examples.basic.rpc.auth.response.base.PermissionInfoBaseRespVO;
-import org.smartframework.cloud.starter.core.business.exception.DataValidateException;
+import org.smartframework.cloud.exception.DataValidateException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

@@ -12,8 +12,8 @@ import org.smartframework.cloud.examples.support.gateway.enums.GatewayReturnCode
 import org.smartframework.cloud.examples.support.gateway.filter.access.ApiAccessBO;
 import org.smartframework.cloud.examples.support.gateway.filter.access.ApiAccessContext;
 import org.smartframework.cloud.examples.support.gateway.util.RedisKeyHelper;
-import org.smartframework.cloud.starter.core.business.exception.BusinessException;
-import org.smartframework.cloud.starter.core.business.exception.DataValidateException;
+import org.smartframework.cloud.exception.BusinessException;
+import org.smartframework.cloud.exception.DataValidateException;
 import org.smartframework.cloud.utility.JacksonUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;

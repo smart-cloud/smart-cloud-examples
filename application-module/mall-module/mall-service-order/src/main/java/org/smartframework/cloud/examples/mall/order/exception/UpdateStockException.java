@@ -1,7 +1,7 @@
 package org.smartframework.cloud.examples.mall.order.exception;
 
 import org.smartframework.cloud.examples.mall.order.enums.OrderReturnCodes;
-import org.smartframework.cloud.starter.core.business.exception.BaseException;
+import org.smartframework.cloud.exception.BaseException;
 
 /**
  * 库存更新异常

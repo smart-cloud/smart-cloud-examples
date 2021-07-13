@@ -14,7 +14,12 @@
 	<dependencies>
 		<dependency>
 			<groupId>org.smartframework.cloud</groupId>
-			<artifactId>smart-api-core</artifactId>
+			<artifactId>smart-api-annotation</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.smartframework.cloud</groupId>
+			<artifactId>smart-exception</artifactId>
 		</dependency>
 		
 		<dependency>

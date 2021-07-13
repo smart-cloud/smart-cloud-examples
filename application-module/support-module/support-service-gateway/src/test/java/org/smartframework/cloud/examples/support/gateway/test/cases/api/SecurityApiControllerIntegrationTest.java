@@ -12,7 +12,7 @@ import org.smartframework.cloud.examples.support.gateway.service.api.SecurityApi
 import org.smartframework.cloud.examples.support.rpc.gateway.request.api.GenerateAesKeyReqVO;
 import org.smartframework.cloud.examples.support.rpc.gateway.response.api.GenerateAesKeyRespVO;
 import org.smartframework.cloud.examples.support.rpc.gateway.response.api.GenerateClientPubKeyRespVO;
-import org.smartframework.cloud.starter.core.business.exception.ServerException;
+import org.smartframework.cloud.exception.ServerException;
 import org.smartframework.cloud.starter.test.integration.WebReactiveIntegrationTest;
 import org.smartframework.cloud.utility.security.RsaUtil;
 import org.springframework.beans.factory.annotation.Autowired;

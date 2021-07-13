@@ -9,7 +9,7 @@ import org.smartframework.cloud.examples.support.gateway.filter.access.ApiAccess
 import org.smartframework.cloud.examples.support.gateway.filter.access.ApiAccessContext;
 import org.smartframework.cloud.examples.support.gateway.filter.log.LogContext;
 import org.smartframework.cloud.examples.support.gateway.util.RedisKeyHelper;
-import org.smartframework.cloud.starter.core.business.exception.RepeatSubmitException;
+import org.smartframework.cloud.exception.RepeatSubmitException;
 import org.smartframework.cloud.utility.JacksonUtil;
 import org.smartframework.cloud.utility.security.Md5Util;
 import org.springframework.beans.factory.annotation.Autowired;
