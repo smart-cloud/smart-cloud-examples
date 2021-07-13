@@ -4,9 +4,11 @@ import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import org.apache.commons.collections4.CollectionUtils;
 import org.smartframework.cloud.common.pojo.BasePageResponse;
+import org.smartframework.cloud.common.pojo.util.PageUtil;
 import org.smartframework.cloud.examples.app.auth.core.UserContext;
 import org.smartframework.cloud.examples.basic.auth.dataobject.PermissionDO;
 import org.smartframework.cloud.examples.basic.auth.dataobject.RoleDO;
+import org.smartframework.cloud.examples.basic.auth.dataobject.param.PageRolePermissonReqDO;
 import org.smartframework.cloud.examples.basic.auth.dataobject.param.PermissionReqDO;
 import org.smartframework.cloud.examples.basic.auth.entity.base.RolePermissionRelaEntity;
 import org.smartframework.cloud.examples.basic.auth.mapper.base.RolePermissionRelaBaseMapper;
@@ -79,14 +81,21 @@ public class RolePermissionOmsBiz extends BaseBiz<RolePermissionRelaBaseMapper, 
         long count = rolePermissionOmsMapper.countRole(req);
         List<RolePermissionRespVO> datas = null;
         if (count > 0) {
-            List<RoleDO> roles = rolePermissionOmsMapper.pageRole(req);
+            PageRolePermissonReqDO pageRolePermissonReqDO = new PageRolePermissonReqDO();
+            pageRolePermissonReqDO.setRoleCode(req.getRoleCode());
+            pageRolePermissonReqDO.setRoleDesc(req.getRoleDesc());
+            pageRolePermissonReqDO.setPermissonCode(req.getPermissonCode());
+            pageRolePermissonReqDO.setPermissonDesc(req.getPermissonDesc());
+            PageUtil.initLimitParams(pageRolePermissonReqDO, req);
+
+            List<RoleDO> roles = rolePermissionOmsMapper.pageRole(pageRolePermissonReqDO);
             Set<Long> roleIds = roles.stream().map(RoleDO::getRoleId).collect(Collectors.toSet());
 
-            PermissionReqDO reqDO = new PermissionReqDO();
-            reqDO.setRoleIds(roleIds);
-            reqDO.setPermissonCode(req.getPermissonCode());
-            reqDO.setPermissonDesc(req.getPermissonDesc());
-            List<PermissionDO> permissions = rolePermissionOmsMapper.listPermission(reqDO);
+            PermissionReqDO permissionReqDO = new PermissionReqDO();
+            permissionReqDO.setRoleIds(roleIds);
+            permissionReqDO.setPermissonCode(req.getPermissonCode());
+            permissionReqDO.setPermissonDesc(req.getPermissonDesc());
+            List<PermissionDO> permissions = rolePermissionOmsMapper.listPermission(permissionReqDO);
 
             datas = roles.stream().map(role -> {
                 RolePermissionRespVO respVO = new RolePermissionRespVO();

@@ -38,7 +38,7 @@
             r.f_code roleCode,
             r.f_description roleDesc
         <include refid="pageRoleCommon"></include>
-        LIMIT (#{pageNum}-1)*#{pageSize}, #{pageSize}
+        LIMIT #{offset}, #{rows}
     </select>
 
     <select id="countRole" resultType="java.lang.Long">
@@ -47,7 +47,11 @@
     </select>
 
     <select id="listPermission" resultType="org.smartframework.cloud.examples.basic.auth.dataobject.PermissionDO">
-        SELECT 1
+        SELECT
+            rp.t_role_info_id roleId,
+            p.f_id permissonId,
+            p.f_code permissonCode,
+            p.f_description permissonDesc
         FROM
             t_role_permission_rela rp
             INNER JOIN t_permission_info p ON p.f_id = rp.t_permission_info_id AND p.f_sys_del_state = 1

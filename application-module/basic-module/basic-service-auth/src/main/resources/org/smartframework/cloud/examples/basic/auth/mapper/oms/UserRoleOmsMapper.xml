@@ -19,10 +19,10 @@
             ur.f_id urId,
             r.f_id roleId,
             r.f_code roleCode,
-            r.f_desc roleDesc,
+            r.f_description roleDesc,
             p.f_id permissionId,
             p.f_code permissionCode,
-            p.f_desc permissionDesc
+            p.f_description permissionDesc
         FROM
             t_user_role_rela ur
         INNER JOIN t_role_info r ON r.f_id = ur.t_role_info_id
