@@ -16,4 +16,6 @@ import org.smartframework.cloud.api.core.user.context.ParentUserBO;
 @ToString
 public class SmartUser extends ParentUserBO {
 
+    // 各应用用户信息
+
 }
