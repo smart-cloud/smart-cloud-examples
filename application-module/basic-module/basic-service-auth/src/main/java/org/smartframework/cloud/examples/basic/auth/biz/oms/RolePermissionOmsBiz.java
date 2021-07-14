@@ -44,13 +44,13 @@ public class RolePermissionOmsBiz extends BaseBiz<RolePermissionRelaBaseMapper, 
      * @return
      */
     public Boolean create(Long roleId, Set<Long> permissonIds, Long uid) {
-        Set<RolePermissionRelaEntity> rolePermissionRelaEntities = permissonIds.stream().map(permissonId -> {
+        List<RolePermissionRelaEntity> rolePermissionRelaEntities = permissonIds.stream().map(permissonId -> {
             RolePermissionRelaEntity entity = super.create();
             entity.setRoleInfoId(roleId);
             entity.setPermissionInfoId(permissonId);
             entity.setInsertUser(uid);
             return entity;
-        }).collect(Collectors.toSet());
+        }).collect(Collectors.toList());
 
         return super.saveBatch(rolePermissionRelaEntities);
     }

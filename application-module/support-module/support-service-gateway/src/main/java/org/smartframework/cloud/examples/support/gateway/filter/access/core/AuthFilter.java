@@ -5,7 +5,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.redisson.api.RMapCache;
 import org.redisson.api.RedissonClient;
 import org.smartframework.cloud.examples.app.auth.core.AppAuthConstants;
-import org.smartframework.cloud.examples.app.auth.core.UserBO;
+import org.smartframework.cloud.examples.app.auth.core.SmartUser;
 import org.smartframework.cloud.examples.support.gateway.bo.meta.ApiAccessMetaCache;
 import org.smartframework.cloud.examples.support.gateway.constants.Order;
 import org.smartframework.cloud.examples.support.gateway.enums.GatewayReturnCodes;
@@ -61,9 +61,9 @@ public class AuthFilter implements GlobalFilter, Ordered {
             throw new DataValidateException(GatewayReturnCodes.TOKEN_MISSING);
         }
 
-        RMapCache<String, UserBO> userCache = redissonClient.getMapCache(RedisKeyHelper.getUserHashKey());
-        UserBO userBO = userCache.get(RedisKeyHelper.getUserKey(token));
-        if (userBO == null) {
+        RMapCache<String, SmartUser> userCache = redissonClient.getMapCache(RedisKeyHelper.getUserHashKey());
+        SmartUser smartUser = userCache.get(RedisKeyHelper.getUserKey(token));
+        if (smartUser == null) {
             throw new BusinessException(GatewayReturnCodes.TOKEN_EXPIRED_LOGIN_SUCCESS);
         }
 
@@ -76,7 +76,7 @@ public class AuthFilter implements GlobalFilter, Ordered {
         }
 
         // 2、将用户信息塞入http header
-        ServerHttpRequest newServerHttpRequest = fillUserInHeader(exchange.getRequest(), userBO);
+        ServerHttpRequest newServerHttpRequest = fillUserInHeader(exchange.getRequest(), smartUser);
         return chain.filter(exchange.mutate().request(newServerHttpRequest).build());
     }
 
@@ -84,11 +84,11 @@ public class AuthFilter implements GlobalFilter, Ordered {
      * 将用户登录相关信息塞进http header中，供后续服务使用（后续服务将从header中取）
      *
      * @param request
-     * @param userBO
+     * @param smartUser
      */
-    public ServerHttpRequest fillUserInHeader(ServerHttpRequest request, UserBO userBO) {
+    public ServerHttpRequest fillUserInHeader(ServerHttpRequest request, SmartUser smartUser) {
         // base64处理，解决中文乱码
-        String authUserBase64 = Base64Utils.encodeToUrlSafeString(JacksonUtil.toJson(userBO).getBytes(StandardCharsets.UTF_8));
+        String authUserBase64 = Base64Utils.encodeToUrlSafeString(JacksonUtil.toJson(smartUser).getBytes(StandardCharsets.UTF_8));
         return request.mutate().header(AppAuthConstants.HEADER_USER, authUserBase64).build();
     }
 

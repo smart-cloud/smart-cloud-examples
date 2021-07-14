@@ -29,7 +29,7 @@ public class RegisterApiService {
      * @param req
      * @return
      */
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public RegisterUserRespVO register(RegisterUserReqVO req) {
         // 用户信息
         UserInfoEntity userInfoEntity = userInfoApiService.insert(req.getUserInfo());

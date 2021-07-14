@@ -2,6 +2,7 @@ package org.smartframework.cloud.examples.support.gateway.filter.log;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.smartframework.cloud.common.web.pojo.LogAspectDO;
 import org.smartframework.cloud.examples.support.gateway.constants.GatewayConstants;
 import org.smartframework.cloud.examples.support.gateway.constants.Order;
 import org.springframework.core.Ordered;
@@ -37,14 +38,14 @@ public class GatewayLogFilter implements WebFilter, Ordered {
 
         return chain.filter(exchange.mutate().request(requestDecorator).response(responseWrapper).build()).doFinally(signalType -> {
             if (SignalType.ON_ERROR.compareTo(signalType) != 0) {
-                ApiLogDO apiLogDO = LogContext.getApiLogBO();
-                if (apiLogDO != null) {
-                    apiLogDO.setCost(System.currentTimeMillis() - apiLogDO.getCost());
+                LogAspectDO logAspectDO = LogContext.getApiLogBO();
+                if (logAspectDO != null) {
+                    logAspectDO.setCost(System.currentTimeMillis() - logAspectDO.getCost());
                     if (log.isDebugEnabled()) {
-                        log.debug("gateway.log=>{}", apiLogDO);
-                    } else if (apiLogDO.getUrl() != null && apiLogDO.getUrl().startsWith(GatewayConstants.GATEWAY_API_URL_PREFIX)) {
+                        log.debug("gateway.log=>{}", logAspectDO);
+                    } else if (logAspectDO.getUrl() != null && logAspectDO.getUrl().startsWith(GatewayConstants.GATEWAY_API_URL_PREFIX)) {
                         // gateway本身的接口打印
-                        log.info("gateway.log=>{}", apiLogDO);
+                        log.info("gateway.log=>{}", logAspectDO);
                     }
                 }
             }
@@ -56,13 +57,13 @@ public class GatewayLogFilter implements WebFilter, Ordered {
         final String path = request.getURI().getPath();
         final String query = request.getURI().getQuery();
 
-        ApiLogDO apiLogDO = new ApiLogDO();
+        LogAspectDO logAspectDO = new LogAspectDO();
         // 此处cost存储请求开始时间
-        apiLogDO.setCost(System.currentTimeMillis());
-        apiLogDO.setMethod(request.getMethod().name());
-        apiLogDO.setUrl(path + (StringUtils.isBlank(query) ? "" : "?" + query));
-        apiLogDO.setHead(request.getHeaders());
-        LogContext.setContext(apiLogDO);
+        logAspectDO.setCost(System.currentTimeMillis());
+        logAspectDO.setMethod(request.getMethod().name());
+        logAspectDO.setUrl(path + (StringUtils.isBlank(query) ? "" : "?" + query));
+        logAspectDO.setHead(request.getHeaders());
+        LogContext.setContext(logAspectDO);
     }
 
 }

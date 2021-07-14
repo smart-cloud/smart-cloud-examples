@@ -14,6 +14,7 @@ import org.smartframework.cloud.api.core.annotation.auth.RequireUser;
 import org.smartframework.cloud.api.core.enums.SignType;
 import org.smartframework.cloud.examples.api.ac.core.vo.*;
 import org.smartframework.cloud.starter.core.constants.PackageConfig;
+import org.smartframework.cloud.starter.core.constants.SymbolConstant;
 import org.smartframework.cloud.starter.rpc.feign.annotation.SmartFeignClient;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;
@@ -63,7 +64,7 @@ public class ApiMetaUtil {
         for (Method method : allMappingSet) {
             Class<?> declaringClass = method.getDeclaringClass();
             // 过滤掉rpc接口
-            if (declaringClass.isInterface() && (declaringClass.isAnnotationPresent(SmartFeignClient.class) || declaringClass.isAnnotationPresent(FeignClient.class))) {
+            if (isRpc(declaringClass)) {
                 continue;
             }
 
@@ -81,6 +82,10 @@ public class ApiMetaUtil {
         }
 
         return new ApiMetaFetchRespVO(apiAccessMap);
+    }
+
+    private boolean isRpc(Class<?> declaringClass) {
+        return declaringClass.isInterface() && (declaringClass.isAnnotationPresent(SmartFeignClient.class) || declaringClass.isAnnotationPresent(FeignClient.class));
     }
 
     /**
@@ -159,13 +164,13 @@ public class ApiMetaUtil {
      */
     private String getUrlCode(String urlHeader, String urlTail) {
         urlHeader = (urlHeader == null) ? "" : urlHeader;
-        if (!urlHeader.startsWith("/")) {
-            urlHeader = "/" + urlHeader;
+        if (!urlHeader.startsWith(SymbolConstant.DIAGONAL_BAR)) {
+            urlHeader = SymbolConstant.DIAGONAL_BAR + urlHeader;
         }
         String urlCode;
-        if (!urlHeader.endsWith("/") && !urlTail.startsWith("/")) {
-            urlCode = urlHeader + "/" + urlTail;
-        } else if (urlHeader.endsWith("/") && urlTail.startsWith("/")) {
+        if (!urlHeader.endsWith(SymbolConstant.DIAGONAL_BAR) && !urlTail.startsWith(SymbolConstant.DIAGONAL_BAR)) {
+            urlCode = urlHeader + SymbolConstant.DIAGONAL_BAR + urlTail;
+        } else if (urlHeader.endsWith(SymbolConstant.DIAGONAL_BAR) && urlTail.startsWith(SymbolConstant.DIAGONAL_BAR)) {
             urlCode = urlHeader + urlTail.substring(1);
         } else {
             urlCode = urlHeader + urlTail;
@@ -233,8 +238,7 @@ public class ApiMetaUtil {
             return urlTails;
         }
 
-        throw new UnsupportedOperationException(
-                method.getDeclaringClass().getName() + "|" + method.getName() + ":" + "http method is not supprted!");
+        throw new UnsupportedOperationException(String.format("%s|%s:%s", method.getDeclaringClass().getName(), method.getName(), "http method is not supprted!"));
     }
 
     private String getUrlUnderClass(Class<?> c) {

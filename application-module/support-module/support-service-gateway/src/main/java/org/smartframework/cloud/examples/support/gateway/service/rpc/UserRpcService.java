@@ -3,7 +3,7 @@ package org.smartframework.cloud.examples.support.gateway.service.rpc;
 import org.apache.commons.lang3.StringUtils;
 import org.redisson.api.RMapCache;
 import org.redisson.api.RedissonClient;
-import org.smartframework.cloud.examples.app.auth.core.UserBO;
+import org.smartframework.cloud.examples.app.auth.core.SmartUser;
 import org.smartframework.cloud.examples.support.gateway.bo.SecurityKeyBO;
 import org.smartframework.cloud.examples.support.gateway.constants.RedisExpire;
 import org.smartframework.cloud.examples.support.gateway.enums.GatewayReturnCodes;
@@ -44,14 +44,14 @@ public class UserRpcService {
         authCache.put(RedisKeyHelper.getSecurityKey(req.getToken()), securityKeyBO, RedisExpire.SECURITY_KEY_EXPIRE_MILLIS_LOGIN_SUCCESS, TimeUnit.SECONDS);
 
         // 2、缓存用户信息
-        UserBO userBO = new UserBO();
-        userBO.setId(req.getUserId());
-        userBO.setUsername(req.getUsername());
-        userBO.setRealName(req.getRealName());
-        userBO.setMobile(req.getMobile());
+        SmartUser smartUser = new SmartUser();
+        smartUser.setId(req.getUserId());
+        smartUser.setUsername(req.getUsername());
+        smartUser.setRealName(req.getRealName());
+        smartUser.setMobile(req.getMobile());
 
-        RMapCache<String, UserBO> userCache = redissonClient.getMapCache(RedisKeyHelper.getUserHashKey());
-        userCache.put(RedisKeyHelper.getUserKey(req.getToken()), userBO, RedisExpire.USER_EXPIRE_MILLIS_LOGIN_SUCCESS, TimeUnit.SECONDS);
+        RMapCache<String, SmartUser> userCache = redissonClient.getMapCache(RedisKeyHelper.getUserHashKey());
+        userCache.put(RedisKeyHelper.getUserKey(req.getToken()), smartUser, RedisExpire.USER_EXPIRE_MILLIS_LOGIN_SUCCESS, TimeUnit.SECONDS);
 
         // 3、删除上一次登录的信息（如果存在）
         RMapCache<Long, String> userTokenCache = redissonClient.getMapCache(RedisKeyHelper.getUserTokenRelationHashKey());
@@ -80,7 +80,7 @@ public class UserRpcService {
         authCache.remove(RedisKeyHelper.getSecurityKey(token));
 
         // 2、删除用户信息
-        RMapCache<String, UserBO> userCache = redissonClient.getMapCache(RedisKeyHelper.getUserHashKey());
+        RMapCache<String, SmartUser> userCache = redissonClient.getMapCache(RedisKeyHelper.getUserHashKey());
         userCache.remove(RedisKeyHelper.getUserKey(token));
     }
 

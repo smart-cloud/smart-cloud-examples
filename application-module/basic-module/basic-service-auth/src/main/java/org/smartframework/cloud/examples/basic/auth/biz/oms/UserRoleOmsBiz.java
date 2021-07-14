@@ -36,13 +36,13 @@ public class UserRoleOmsBiz extends BaseBiz<UserRoleRelaBaseMapper, UserRoleRela
      * @return
      */
     public Boolean create(Long uid, Set<Long> roleIds, Long createUid) {
-        Set<UserRoleRelaEntity> userRoleRelaEntities = roleIds.stream().map(roleId -> {
+        List<UserRoleRelaEntity> userRoleRelaEntities = roleIds.stream().map(roleId -> {
             UserRoleRelaEntity entity = super.create();
             entity.setRoleInfoId(roleId);
             entity.setUserInfoId(uid);
             entity.setInsertUser(createUid);
             return entity;
-        }).collect(Collectors.toSet());
+        }).collect(Collectors.toList());
 
         return super.saveBatch(userRoleRelaEntities);
     }

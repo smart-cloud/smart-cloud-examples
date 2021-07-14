@@ -6,19 +6,19 @@ package org.smartframework.cloud.examples.support.gateway.constants;
  * @author collin
  * @date 2021-06-28
  */
-public final class ApiAccessHandlerOrder {
+public interface ApiAccessHandlerOrder {
 
     /**
      * 接口安全（加解密、签名）
      */
-    public static final int DATA_SECURITY = 1;
+    int DATA_SECURITY = 1;
     /**
      * 接口鉴权
      */
-    public static final int AUTH_CHECK = DATA_SECURITY + 1;
+    int AUTH_CHECK = DATA_SECURITY + 1;
     /**
      * 重复提交校验
      */
-    public static final int REPEAT_SUBMIT_CHECK = AUTH_CHECK + 1;
+    int REPEAT_SUBMIT_CHECK = AUTH_CHECK + 1;
 
 }

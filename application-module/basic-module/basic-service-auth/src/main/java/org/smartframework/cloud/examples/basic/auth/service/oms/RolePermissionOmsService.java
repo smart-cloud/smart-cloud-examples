@@ -33,7 +33,7 @@ public class RolePermissionOmsService {
      * @param req
      * @return
      */
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public Boolean update(RolePermissonUpdateReqVO req) {
         rolePermissionOmsBiz.logicDelete(req.getRoleId());
         rolePermissionOmsBiz.create(req.getRoleId(), req.getPermissonIds(), UserContext.getUserId());

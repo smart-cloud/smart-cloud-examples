@@ -3,7 +3,7 @@ package org.smartframework.cloud.examples.app.auth.core;
 import org.smartframework.cloud.api.core.user.context.AbstractUserContext;
 import org.smartframework.cloud.api.core.user.context.ParentUserBO;
 import org.smartframework.cloud.common.web.util.WebServletUtil;
-import org.smartframework.cloud.examples.app.auth.core.exception.UserBOMissingException;
+import org.smartframework.cloud.examples.app.auth.core.exception.SmartUserMissingException;
 import org.smartframework.cloud.utility.JacksonUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.lang.NonNull;
@@ -27,13 +27,13 @@ public class UserContext extends AbstractUserContext {
      * @return
      */
     @NonNull
-    public static UserBO getContext() {
-        UserBO userBO = getContextable();
-        if (userBO == null) {
-            throw new UserBOMissingException();
+    public static SmartUser getContext() {
+        SmartUser smartUser = getContextable();
+        if (smartUser == null) {
+            throw new SmartUserMissingException();
         }
 
-        return userBO;
+        return smartUser;
     }
 
     /**
@@ -42,15 +42,15 @@ public class UserContext extends AbstractUserContext {
      * @return
      */
     @Nullable
-    public static UserBO getContextable() {
+    public static SmartUser getContextable() {
         ParentUserBO parentUserBO = USER_THREAD_LOCAL.get();
         if (parentUserBO != null) {
-            if (parentUserBO instanceof UserBO) {
-                return (UserBO) parentUserBO;
+            if (parentUserBO instanceof SmartUser) {
+                return (SmartUser) parentUserBO;
             } else {
-                UserBO userBO = new UserBO();
-                BeanUtils.copyProperties(parentUserBO, userBO);
-                return userBO;
+                SmartUser smartUser = new SmartUser();
+                BeanUtils.copyProperties(parentUserBO, smartUser);
+                return smartUser;
             }
         }
 
@@ -63,9 +63,9 @@ public class UserContext extends AbstractUserContext {
             return null;
         }
 
-        UserBO userBO = JacksonUtil.parseObject(new String(Base64Utils.decodeFromUrlSafeString(userJson), StandardCharsets.UTF_8), UserBO.class);
-        USER_THREAD_LOCAL.set(userBO);
-        return userBO;
+        SmartUser smartUser = JacksonUtil.parseObject(new String(Base64Utils.decodeFromUrlSafeString(userJson), StandardCharsets.UTF_8), SmartUser.class);
+        USER_THREAD_LOCAL.set(smartUser);
+        return smartUser;
     }
 
     /**
