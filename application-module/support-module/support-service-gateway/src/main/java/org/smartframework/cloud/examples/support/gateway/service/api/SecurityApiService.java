@@ -4,7 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.DecoderException;
 import org.redisson.api.RMapCache;
 import org.redisson.api.RedissonClient;
-import org.smartframework.cloud.examples.support.gateway.bo.SecurityKeyBO;
+import org.smartframework.cloud.examples.support.gateway.cache.SecurityKeyCache;
 import org.smartframework.cloud.examples.support.gateway.constants.RedisExpire;
 import org.smartframework.cloud.examples.support.gateway.enums.GatewayReturnCodes;
 import org.smartframework.cloud.examples.support.gateway.util.RedisKeyHelper;
@@ -61,12 +61,12 @@ public class SecurityApiService {
         respVO.setToken(token);
 
         // 2、cache to redis
-        SecurityKeyBO securityKeyBO = new SecurityKeyBO();
-        securityKeyBO.setSpriKeyModulus(RsaUtil.getModulus(clientPubServerPriKeyPair));
-        securityKeyBO.setSpriKeyExponent(RsaUtil.getPrivateExponent(clientPubServerPriKeyPair));
+        SecurityKeyCache securityKeyCache = new SecurityKeyCache();
+        securityKeyCache.setSpriKeyModulus(RsaUtil.getModulus(clientPubServerPriKeyPair));
+        securityKeyCache.setSpriKeyExponent(RsaUtil.getPrivateExponent(clientPubServerPriKeyPair));
 
-        RMapCache<String, SecurityKeyBO> authCache = redissonClient.getMapCache(RedisKeyHelper.getSecurityHashKey());
-        authCache.put(RedisKeyHelper.getSecurityKey(token), securityKeyBO, RedisExpire.SECURITY_KEY_EXPIRE_MILLIS_NON_LOGIN, TimeUnit.SECONDS);
+        RMapCache<String, SecurityKeyCache> authCache = redissonClient.getMapCache(RedisKeyHelper.getSecurityHashKey());
+        authCache.put(RedisKeyHelper.getSecurityKey(token), securityKeyCache, RedisExpire.SECURITY_KEY_EXPIRE_MILLIS_NON_LOGIN, TimeUnit.SECONDS);
 
         return respVO;
     }
@@ -74,22 +74,22 @@ public class SecurityApiService {
     public GenerateAesKeyRespVO generateAesKey(GenerateAesKeyReqVO req) throws InvalidKeySpecException, NoSuchAlgorithmException,
             DecoderException, IllegalBlockSizeException, BadPaddingException, NoSuchPaddingException, InvalidKeyException {
         // 1、解密客户端生成的公钥
-        RMapCache<String, SecurityKeyBO> authCache = redissonClient.getMapCache(RedisKeyHelper.getSecurityHashKey());
-        SecurityKeyBO securityKeyBO = authCache.get(RedisKeyHelper.getSecurityKey(req.getToken()));
-        if (securityKeyBO == null) {
+        RMapCache<String, SecurityKeyCache> authCache = redissonClient.getMapCache(RedisKeyHelper.getSecurityHashKey());
+        SecurityKeyCache securityKeyCache = authCache.get(RedisKeyHelper.getSecurityKey(req.getToken()));
+        if (securityKeyCache == null) {
             throw new ServerException(GatewayReturnCodes.TOKEN_EXPIRED_BEFORE_LOGIN);
         }
 
-        RSAPrivateKey rsaPrivateKey = RsaUtil.getRSAPrivateKey(securityKeyBO.getSpriKeyModulus(), securityKeyBO.getSpriKeyExponent());
+        RSAPrivateKey rsaPrivateKey = RsaUtil.getRSAPrivateKey(securityKeyCache.getSpriKeyModulus(), securityKeyCache.getSpriKeyExponent());
 
         String cpubKeyModulus = decryptStringByJs(rsaPrivateKey, req.getEncryptedCpubKeyModulus());
         String cpubKeyExponent = RsaUtil.decryptStringByJs(rsaPrivateKey, req.getEncryptedCpubKeyExponent());
         // 2、cache to redis
-        securityKeyBO.setCpubKeyModulus(cpubKeyModulus);
-        securityKeyBO.setCpubKeyExponent(cpubKeyExponent);
+        securityKeyCache.setCpubKeyModulus(cpubKeyModulus);
+        securityKeyCache.setCpubKeyExponent(cpubKeyExponent);
         String aesKey = RandomUtil.generateRandom(false, 8);
-        securityKeyBO.setAesKey(aesKey);
-        authCache.put(RedisKeyHelper.getSecurityKey(req.getToken()), securityKeyBO, RedisExpire.SECURITY_KEY_EXPIRE_MILLIS_NON_LOGIN, TimeUnit.SECONDS);
+        securityKeyCache.setAesKey(aesKey);
+        authCache.put(RedisKeyHelper.getSecurityKey(req.getToken()), securityKeyCache, RedisExpire.SECURITY_KEY_EXPIRE_MILLIS_NON_LOGIN, TimeUnit.SECONDS);
 
         // 3、加密aes key
         // 客户端生成的公钥

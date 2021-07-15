@@ -1,4 +1,4 @@
-package org.smartframework.cloud.examples.support.gateway.bo;
+package org.smartframework.cloud.examples.support.gateway.cache;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -12,7 +12,7 @@ import org.smartframework.cloud.common.pojo.Base;
  */
 @Getter
 @Setter
-public class SecurityKeyBO extends Base {
+public class SecurityKeyCache extends Base {
 
     /**
      * 客户端生成的公钥对应的系数，用于客户端签名校验

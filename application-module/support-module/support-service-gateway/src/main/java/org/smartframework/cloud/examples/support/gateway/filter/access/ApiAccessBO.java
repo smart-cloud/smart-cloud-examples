@@ -3,7 +3,7 @@ package org.smartframework.cloud.examples.support.gateway.filter.access;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
-import org.smartframework.cloud.examples.support.gateway.bo.meta.ApiAccessMetaCache;
+import org.smartframework.cloud.examples.support.gateway.cache.ApiAccessMetaCache;
 
 /**
  * smart cloud自定义注解处理时需要的对应入参，供后续filter使用

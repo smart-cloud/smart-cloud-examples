@@ -3,6 +3,9 @@ package org.smartframework.cloud.examples.basic.user.service.api;
 import lombok.extern.slf4j.Slf4j;
 import org.smartframework.cloud.common.pojo.Base;
 import org.smartframework.cloud.common.pojo.Response;
+import org.smartframework.cloud.common.pojo.ResponseHead;
+import org.smartframework.cloud.examples.basic.rpc.auth.AuthRpc;
+import org.smartframework.cloud.examples.basic.rpc.auth.response.rpc.AuthRespVO;
 import org.smartframework.cloud.examples.basic.rpc.enums.user.UserStateEnum;
 import org.smartframework.cloud.examples.basic.rpc.user.request.api.login.ExitReqVO;
 import org.smartframework.cloud.examples.basic.rpc.user.request.api.login.LoginReqVO;
@@ -20,6 +23,7 @@ import org.smartframework.cloud.examples.support.rpc.gateway.request.rpc.CacheUs
 import org.smartframework.cloud.examples.support.rpc.gateway.request.rpc.ExitLoginReqVO;
 import org.smartframework.cloud.exception.BusinessException;
 import org.smartframework.cloud.exception.ParamValidateException;
+import org.smartframework.cloud.exception.RpcException;
 import org.smartframework.cloud.exception.ServerException;
 import org.smartframework.cloud.starter.core.business.util.PasswordUtil;
 import org.smartframework.cloud.starter.core.business.util.RespUtil;
@@ -40,6 +44,8 @@ public class LoginInfoApiService {
     private UserInfoApiBiz userInfoApiBiz;
     @Autowired
     private UserRpc userRpc;
+    @Autowired
+    private AuthRpc authRpc;
 
     /**
      * 登陆校验
@@ -102,13 +108,29 @@ public class LoginInfoApiService {
      * @param loginRespVO
      */
     public void cacheUserInfo(String token, LoginRespVO loginRespVO) {
-        Response<Base> cacheUserInfoResp = userRpc.cacheUserInfo(CacheUserInfoReqVO.builder()
+        Response<AuthRespVO> authResponse = authRpc.listByUid(loginRespVO.getUserId());
+        if (!RespUtil.isSuccess(authResponse)) {
+            if (authResponse == null || authResponse.getHead() == null) {
+                throw new RpcException();
+            }
+            ResponseHead head = authResponse.getHead();
+            throw new RpcException(head.getCode(), head.getMessage());
+        }
+
+        CacheUserInfoReqVO cacheUserInfoReqVO = CacheUserInfoReqVO.builder()
                 .token(token)
                 .userId(loginRespVO.getUserId())
                 .username(loginRespVO.getUsername())
                 .realName(loginRespVO.getRealName())
                 .mobile(loginRespVO.getMobile())
-                .build());
+                .build();
+        AuthRespVO authRespVO = authResponse.getBody();
+        if (authRespVO != null) {
+            cacheUserInfoReqVO.setRoles(authRespVO.getRoles());
+            cacheUserInfoReqVO.setPermissions(authRespVO.getPermissions());
+        }
+
+        Response<Base> cacheUserInfoResp = userRpc.cacheUserInfo(cacheUserInfoReqVO);
         if (!RespUtil.isSuccess(cacheUserInfoResp)) {
             throw new ServerException(RespUtil.getFailMsg(cacheUserInfoResp));
         }

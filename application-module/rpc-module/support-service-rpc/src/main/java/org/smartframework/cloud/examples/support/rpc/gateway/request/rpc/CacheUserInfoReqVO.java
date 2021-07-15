@@ -11,6 +11,7 @@ import org.smartframework.cloud.mask.MaskRule;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -51,5 +52,14 @@ public class CacheUserInfoReqVO extends Base {
      */
     @MaskLog(MaskRule.MOBILE)
     private String mobile;
+
+    /**
+     * 用户所拥有的角色
+     */
+    private Set<String> roles;
+    /**
+     * 用户所拥有的权限
+     */
+    private Set<String> permissions;
 
 }

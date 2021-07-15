@@ -1,14 +1,17 @@
 package org.smartframework.cloud.examples.support.gateway.filter.access.core;
 
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.redisson.api.RMapCache;
 import org.redisson.api.RedissonClient;
 import org.smartframework.cloud.examples.app.auth.core.AppAuthConstants;
 import org.smartframework.cloud.examples.app.auth.core.SmartUser;
-import org.smartframework.cloud.examples.support.gateway.bo.meta.ApiAccessMetaCache;
+import org.smartframework.cloud.examples.support.gateway.cache.ApiAccessMetaCache;
+import org.smartframework.cloud.examples.support.gateway.cache.AuthCache;
 import org.smartframework.cloud.examples.support.gateway.constants.Order;
 import org.smartframework.cloud.examples.support.gateway.enums.GatewayReturnCodes;
+import org.smartframework.cloud.examples.support.gateway.exception.AuthenticationException;
 import org.smartframework.cloud.examples.support.gateway.filter.access.ApiAccessBO;
 import org.smartframework.cloud.examples.support.gateway.filter.access.ApiAccessContext;
 import org.smartframework.cloud.examples.support.gateway.util.RedisKeyHelper;
@@ -26,6 +29,7 @@ import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
 import java.nio.charset.StandardCharsets;
+import java.util.Set;
 
 /**
  * 用户token信息处理
@@ -49,6 +53,7 @@ public class AuthFilter implements GlobalFilter, Ordered {
 
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
+        // TODO:二级缓存
         ApiAccessBO apiAccessBO = ApiAccessContext.getContext();
         String token = apiAccessBO.getToken();
         ApiAccessMetaCache apiAccessMetaCache = apiAccessBO.getApiAccessMetaCache();
@@ -68,16 +73,45 @@ public class AuthFilter implements GlobalFilter, Ordered {
         }
 
         // 鉴权
-        if (apiAccessMetaCache.getRequiresPermissions().size() > 0) {
-
-        }
-        if (apiAccessMetaCache.getRequiresRoles().size() > 0) {
-
-        }
+        checkAuth(apiAccessMetaCache, token);
 
         // 2、将用户信息塞入http header
         ServerHttpRequest newServerHttpRequest = fillUserInHeader(exchange.getRequest(), smartUser);
         return chain.filter(exchange.mutate().request(newServerHttpRequest).build());
+    }
+
+    private void checkAuth(ApiAccessMetaCache apiAccessMetaCache, String token) {
+        // 鉴权
+        boolean requirePermission = CollectionUtils.isNotEmpty(apiAccessMetaCache.getRequiresPermissions());
+        boolean requireRole = CollectionUtils.isNotEmpty(apiAccessMetaCache.getRequiresRoles());
+        if (!requirePermission && !requireRole) {
+            return;
+        }
+        RMapCache<String, AuthCache> authMapCache = redissonClient.getMapCache(RedisKeyHelper.getAuthHashKey());
+        AuthCache authCache = authMapCache.get(RedisKeyHelper.getAuthKey(token));
+        if (authCache == null || (requirePermission && CollectionUtils.isEmpty(authCache.getPermissions()))
+                || (requireRole && CollectionUtils.isEmpty(authCache.getRoles()))) {
+            throw new AuthenticationException();
+        }
+
+        if (requirePermission && CollectionUtils.isNotEmpty(authCache.getPermissions())) {
+            Set<String> requiresPermissions = apiAccessMetaCache.getRequiresPermissions();
+            for (String requiresPermission : requiresPermissions) {
+                if (authCache.getPermissions().contains(requiresPermission)) {
+                    return;
+                }
+            }
+        }
+
+        if (requireRole && CollectionUtils.isNotEmpty(authCache.getRoles())) {
+            Set<String> requiresRoles = apiAccessMetaCache.getRequiresRoles();
+            for (String requiresRole : requiresRoles) {
+                if (authCache.getRoles().contains(requiresRole)) {
+                    return;
+                }
+            }
+        }
+        throw new AuthenticationException();
     }
 
     /**

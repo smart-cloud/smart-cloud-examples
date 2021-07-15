@@ -29,25 +29,25 @@ public enum GatewayRedisKeyPrefix {
      */
     API_META(RedisKeyUtil.buildKey(GATEWAY_DATA_REDIS_KEY_PREFIX.getKey(), "apimeta")),
     /**
-     * 权限
-     */
-    AUTH(RedisKeyUtil.buildKey(GATEWAY_DATA_REDIS_KEY_PREFIX.getKey(), "auth", RedisKeyPrefix.REDIS_KEY_SEPARATOR.getKey())),
-    /**
      * auth user cache
      */
     REPEAT_SUBMIT_CHECK(RedisKeyUtil.buildKey(GATEWAY_LOCK_REDIS_KEY_PREFIX.getKey(), "rsc", RedisKeyPrefix.REDIS_KEY_SEPARATOR.getKey())),
     /**
      * 签名相关key
      */
-    SECURITY_HASH_KEY(RedisKeyUtil.buildKey(GATEWAY_DATA_REDIS_KEY_PREFIX.getKey(), "security:key")),
+    SECURITY_HASH_KEY(RedisKeyUtil.buildKey(GATEWAY_DATA_REDIS_KEY_PREFIX.getKey(), "security")),
     /**
      * 用户信息key
      */
-    USER_HASH_KEY(RedisKeyUtil.buildKey(GATEWAY_DATA_REDIS_KEY_PREFIX.getKey(), "user:key")),
+    USER_HASH_KEY(RedisKeyUtil.buildKey(GATEWAY_DATA_REDIS_KEY_PREFIX.getKey(), "user")),
     /**
      * 用户、token信息key
      */
-    USER_TOKEN_RELATION_HASH_KEY(RedisKeyUtil.buildKey(GATEWAY_DATA_REDIS_KEY_PREFIX.getKey(), "usertoken:key"));
+    USER_TOKEN_RELATION_HASH_KEY(RedisKeyUtil.buildKey(GATEWAY_DATA_REDIS_KEY_PREFIX.getKey(), "usertoken")),
+    /**
+     * 权限信息key
+     */
+    AUTH_HASH_KEY(RedisKeyUtil.buildKey(GATEWAY_DATA_REDIS_KEY_PREFIX.getKey(), "auth"));
 
     /**
      * redis key prefix

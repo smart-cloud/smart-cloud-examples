@@ -1,6 +1,6 @@
 package org.smartframework.cloud.examples.support.gateway.filter.access;
 
-import org.smartframework.cloud.examples.support.gateway.bo.meta.ApiAccessMetaCache;
+import org.smartframework.cloud.examples.support.gateway.cache.ApiAccessMetaCache;
 import org.smartframework.cloud.examples.support.gateway.constants.GatewayConstants;
 import org.smartframework.cloud.examples.support.gateway.constants.Order;
 import org.smartframework.cloud.examples.support.gateway.util.RedisKeyHelper;

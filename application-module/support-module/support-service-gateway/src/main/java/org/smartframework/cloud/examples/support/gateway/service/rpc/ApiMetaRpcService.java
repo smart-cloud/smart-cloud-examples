@@ -9,7 +9,7 @@ import org.apache.commons.collections4.MapUtils;
 import org.smartframework.cloud.common.pojo.Response;
 import org.smartframework.cloud.examples.api.ac.core.constants.ApiMetaConstants;
 import org.smartframework.cloud.examples.api.ac.core.vo.ApiMetaFetchRespVO;
-import org.smartframework.cloud.examples.support.gateway.bo.meta.ApiAccessMetaCache;
+import org.smartframework.cloud.examples.support.gateway.cache.ApiAccessMetaCache;
 import org.smartframework.cloud.examples.support.gateway.enums.GatewayReturnCodes;
 import org.smartframework.cloud.examples.support.gateway.util.RedisKeyHelper;
 import org.smartframework.cloud.examples.support.rpc.gateway.request.rpc.NotifyFetchReqVO;

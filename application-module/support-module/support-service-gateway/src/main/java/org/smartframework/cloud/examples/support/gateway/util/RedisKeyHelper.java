@@ -74,6 +74,25 @@ public final class RedisKeyHelper {
     }
 
     /**
+     * 获取权限信息的hashkey
+     *
+     * @return
+     */
+    public static String getAuthHashKey() {
+        return GatewayRedisKeyPrefix.AUTH_HASH_KEY.getKey();
+    }
+
+    /**
+     * 获取权限信息的key
+     *
+     * @param token
+     * @return
+     */
+    public static String getAuthKey(String token) {
+        return token;
+    }
+
+    /**
      * 获取用户、token关联信息的hashkey
      *
      * @return
