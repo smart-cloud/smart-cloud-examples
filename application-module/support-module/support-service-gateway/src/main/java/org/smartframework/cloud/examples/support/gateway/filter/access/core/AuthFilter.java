@@ -10,6 +10,7 @@ import org.smartframework.cloud.examples.app.auth.core.SmartUser;
 import org.smartframework.cloud.examples.support.gateway.cache.ApiAccessMetaCache;
 import org.smartframework.cloud.examples.support.gateway.cache.AuthCache;
 import org.smartframework.cloud.examples.support.gateway.constants.Order;
+import org.smartframework.cloud.examples.support.gateway.constants.RedisExpire;
 import org.smartframework.cloud.examples.support.gateway.enums.GatewayReturnCodes;
 import org.smartframework.cloud.examples.support.gateway.exception.AuthenticationException;
 import org.smartframework.cloud.examples.support.gateway.filter.access.ApiAccessBO;
@@ -30,11 +31,13 @@ import reactor.core.publisher.Mono;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 
 /**
  * 用户token信息处理
  * <p>1、校验token</p>
- * <p>2、将用户信息从缓存中塞进http header中，供后序服务使用</p>
+ * <p>2、鉴权</p>
+ * <p>3、将用户信息从缓存中塞进http header中，供后序服务使用</p>
  *
  * @author liyulin
  * @date 2020-09-11
@@ -53,9 +56,9 @@ public class AuthFilter implements GlobalFilter, Ordered {
 
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
-        // TODO:二级缓存
         ApiAccessBO apiAccessBO = ApiAccessContext.getContext();
         String token = apiAccessBO.getToken();
+
         ApiAccessMetaCache apiAccessMetaCache = apiAccessBO.getApiAccessMetaCache();
         // 判断是否需要登陆、鉴权
         if (apiAccessMetaCache == null || !apiAccessMetaCache.isAuth()) {
@@ -72,33 +75,54 @@ public class AuthFilter implements GlobalFilter, Ordered {
             throw new BusinessException(GatewayReturnCodes.TOKEN_EXPIRED_LOGIN_SUCCESS);
         }
 
-        // 鉴权
-        checkAuth(apiAccessMetaCache, token);
+        // 1、先从二级缓存判断
+        RMapCache<String, Boolean> userAuthSecondaryCacheMapCache = redissonClient.getMapCache(RedisKeyHelper.getUserAuthSecondaryCacheHashKey(token));
+        if (userAuthSecondaryCacheMapCache != null) {
+            Boolean userAuthSecondaryCachePass = userAuthSecondaryCacheMapCache.get(apiAccessBO.getUrlMethod());
+            if (userAuthSecondaryCachePass != null) {
+                if (userAuthSecondaryCachePass) {
+                    return chain.filter(exchange);
+                }
+                throw new AuthenticationException();
+            }
+        }
+        // 2、再从一级缓存判断
+        boolean pass = checkAuth(apiAccessMetaCache, token);
+        userAuthSecondaryCacheMapCache.put(apiAccessBO.getUrlMethod(), pass, RedisExpire.USER_EXPIRE_MILLIS_LOGIN_SUCCESS, TimeUnit.SECONDS);
+        if (!pass) {
+            throw new AuthenticationException();
+        }
 
-        // 2、将用户信息塞入http header
+        // 3、将用户信息塞入http header
         ServerHttpRequest newServerHttpRequest = fillUserInHeader(exchange.getRequest(), smartUser);
         return chain.filter(exchange.mutate().request(newServerHttpRequest).build());
     }
 
-    private void checkAuth(ApiAccessMetaCache apiAccessMetaCache, String token) {
-        // 鉴权
+    /**
+     * 鉴权
+     *
+     * @param apiAccessMetaCache
+     * @param token
+     * @return
+     */
+    private boolean checkAuth(ApiAccessMetaCache apiAccessMetaCache, String token) {
         boolean requirePermission = CollectionUtils.isNotEmpty(apiAccessMetaCache.getRequiresPermissions());
         boolean requireRole = CollectionUtils.isNotEmpty(apiAccessMetaCache.getRequiresRoles());
         if (!requirePermission && !requireRole) {
-            return;
+            return true;
         }
         RMapCache<String, AuthCache> authMapCache = redissonClient.getMapCache(RedisKeyHelper.getAuthHashKey());
         AuthCache authCache = authMapCache.get(RedisKeyHelper.getAuthKey(token));
         if (authCache == null || (requirePermission && CollectionUtils.isEmpty(authCache.getPermissions()))
                 || (requireRole && CollectionUtils.isEmpty(authCache.getRoles()))) {
-            throw new AuthenticationException();
+            return false;
         }
 
         if (requirePermission && CollectionUtils.isNotEmpty(authCache.getPermissions())) {
             Set<String> requiresPermissions = apiAccessMetaCache.getRequiresPermissions();
             for (String requiresPermission : requiresPermissions) {
                 if (authCache.getPermissions().contains(requiresPermission)) {
-                    return;
+                    return true;
                 }
             }
         }
@@ -107,11 +131,11 @@ public class AuthFilter implements GlobalFilter, Ordered {
             Set<String> requiresRoles = apiAccessMetaCache.getRequiresRoles();
             for (String requiresRole : requiresRoles) {
                 if (authCache.getRoles().contains(requiresRole)) {
-                    return;
+                    return true;
                 }
             }
         }
-        throw new AuthenticationException();
+        return false;
     }
 
     /**

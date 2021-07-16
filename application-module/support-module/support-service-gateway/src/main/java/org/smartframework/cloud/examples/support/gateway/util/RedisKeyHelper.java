@@ -111,4 +111,14 @@ public final class RedisKeyHelper {
         return userId;
     }
 
+    /**
+     * 用户权限信息二级缓存hashkey
+     *
+     * @param token
+     * @return
+     */
+    public static String getUserAuthSecondaryCacheHashKey(String token) {
+        return GatewayRedisKeyPrefix.USER_AUTH_SECONDARY_CACHE_HASH_KEY.getKey() + token;
+    }
+
 }
