@@ -1,5 +1,6 @@
 package org.smartframework.cloud.examples.basic.user.controller.api;
 
+import org.smartframework.cloud.api.core.annotation.RequireDataSecurity;
 import org.smartframework.cloud.common.pojo.Response;
 import org.smartframework.cloud.examples.basic.rpc.user.request.api.register.RegisterUserReqVO;
 import org.smartframework.cloud.examples.basic.rpc.user.response.api.register.RegisterUserRespVO;
@@ -36,6 +37,7 @@ public class RegisterApiController {
      * @return
      */
     @PostMapping("register")
+    @RequireDataSecurity
     public Response<RegisterUserRespVO> register(@RequestBody @Valid RegisterUserReqVO req) {
         return RespUtil.success(registerApiService.register(req));
     }

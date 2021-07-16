@@ -1,5 +1,6 @@
 package org.smartframework.cloud.examples.basic.user.controller.api;
 
+import org.smartframework.cloud.api.core.annotation.RequireDataSecurity;
 import org.smartframework.cloud.common.pojo.Base;
 import org.smartframework.cloud.common.pojo.Response;
 import org.smartframework.cloud.examples.basic.rpc.user.request.api.login.ExitReqVO;
@@ -38,6 +39,7 @@ public class LoginInfoApiController {
      * @return
      */
     @PostMapping("login")
+    @RequireDataSecurity
     public Response<LoginRespVO> login(@RequestBody @Valid LoginReqVO req) {
         return RespUtil.success(loginInfoApiService.login(req));
     }
