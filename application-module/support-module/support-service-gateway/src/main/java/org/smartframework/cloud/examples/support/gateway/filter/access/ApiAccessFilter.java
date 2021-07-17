@@ -1,7 +1,7 @@
 package org.smartframework.cloud.examples.support.gateway.filter.access;
 
+import org.smartframework.cloud.common.web.constants.SmartHttpHeaders;
 import org.smartframework.cloud.examples.support.gateway.cache.ApiAccessMetaCache;
-import org.smartframework.cloud.examples.support.gateway.constants.GatewayConstants;
 import org.smartframework.cloud.examples.support.gateway.constants.Order;
 import org.smartframework.cloud.examples.support.gateway.util.RedisKeyHelper;
 import org.smartframework.cloud.examples.support.gateway.util.WebUtil;
@@ -34,7 +34,7 @@ public class ApiAccessFilter implements GlobalFilter, Ordered {
         ApiAccessMetaCache apiAccessMetaCache = (ApiAccessMetaCache) redisTemplate.opsForHash().get(RedisKeyHelper.getApiMetaKey(),
                 RedisKeyHelper.getApiMetaHashKey(urlMethod));
 
-        String token = WebUtil.getFromRequestHeader(request, GatewayConstants.AccessConstants.TOKEN);
+        String token = WebUtil.getFromRequestHeader(request, SmartHttpHeaders.TOKEN);
 
         // 将数据塞入当前context，供后面filter使用
         ApiAccessBO apiAccessBO = new ApiAccessBO()

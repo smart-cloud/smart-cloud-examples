@@ -13,19 +13,4 @@ public interface GatewayConstants {
      */
     String GATEWAY_API_URL_PREFIX = "/gateway";
 
-    interface AccessConstants {
-        /**
-         * http header timestamp
-         */
-        String TIMESTAMP = "smart-timestamp";
-        /**
-         * http header nonce
-         */
-        String NONCE = "smart-nonce";
-        /**
-         * http header token
-         */
-        String TOKEN = "smart-token";
-    }
-
 }

@@ -1,5 +1,6 @@
 package org.smartframework.cloud.examples.support.gateway.filter.access.core;
 
+import org.smartframework.cloud.api.core.enums.SignType;
 import org.smartframework.cloud.examples.support.gateway.cache.ApiAccessMetaCache;
 import org.smartframework.cloud.examples.support.gateway.constants.Order;
 import org.smartframework.cloud.examples.support.gateway.filter.access.ApiAccessBO;
@@ -16,7 +17,7 @@ import reactor.core.publisher.Mono;
  * @author collin
  * @date 2021-07-16
  */
-public class SecurityFilter implements GlobalFilter, Ordered {
+public class DataSecurityFilter implements GlobalFilter, Ordered {
 
     @Override
     public int getOrder() {
@@ -31,13 +32,29 @@ public class SecurityFilter implements GlobalFilter, Ordered {
             return chain.filter(exchange);
         }
 
-        //请求参数是否需要解密
-        boolean requestDecrypt = apiAccessMetaCache.isRequestDecrypt();
-        //响应信息是否需要加密
-        boolean responseEncrypt = apiAccessMetaCache.isResponseEncrypt();
         //接口签名类型
         byte signType = apiAccessMetaCache.getSignType();
-        // TODO:
+        // 请求信息验签
+        if (SignType.REQUEST.getType() == signType || SignType.ALL.getType() == signType) {
+
+        }
+
+        //请求参数是否需要解密
+        boolean requestDecrypt = apiAccessMetaCache.isRequestDecrypt();
+        if (requestDecrypt) {
+
+        }
+
+        //响应信息是否需要加密
+        boolean responseEncrypt = apiAccessMetaCache.isResponseEncrypt();
+        if (responseEncrypt) {
+
+        }
+
+        // 响应信息签名
+        if (SignType.RESPONSE.getType() == signType || SignType.ALL.getType() == signType) {
+
+        }
         return chain.filter(exchange);
     }
 

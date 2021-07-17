@@ -116,6 +116,10 @@ public class UserRpcService {
         // 3、删除权限信息
         RMapCache<String, AuthCache> authMapCache = redissonClient.getMapCache(RedisKeyHelper.getAuthHashKey());
         authMapCache.remove(RedisKeyHelper.getAuthKey(token));
+
+        // 4、删除用户权限二级缓存
+        RMapCache<String, Boolean> userAuthSecondaryCacheMapCache = redissonClient.getMapCache(RedisKeyHelper.getUserAuthSecondaryCacheHashKey(token));
+        userAuthSecondaryCacheMapCache.clear();
     }
 
 }
