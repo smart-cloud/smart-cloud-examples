@@ -8,10 +8,11 @@ import org.reflections.Reflections;
 import org.reflections.scanners.MethodAnnotationsScanner;
 import org.smartframework.cloud.api.core.annotation.RequireDataSecurity;
 import org.smartframework.cloud.api.core.annotation.RequireRepeatSubmitCheck;
+import org.smartframework.cloud.api.core.annotation.RequireTimestamp;
 import org.smartframework.cloud.api.core.annotation.auth.RequirePermissions;
 import org.smartframework.cloud.api.core.annotation.auth.RequireRoles;
 import org.smartframework.cloud.api.core.annotation.auth.RequireUser;
-import org.smartframework.cloud.api.core.enums.SignType;
+import org.smartframework.cloud.api.core.annotation.enums.SignType;
 import org.smartframework.cloud.examples.api.ac.core.vo.*;
 import org.smartframework.cloud.starter.core.constants.PackageConfig;
 import org.smartframework.cloud.starter.core.constants.SymbolConstant;
@@ -77,6 +78,7 @@ public class ApiMetaUtil {
                 apiAccessMeta.setAuthMeta(buildAuthMeta(method));
                 apiAccessMeta.setDataSecurityMeta(buildDataSecurityMeta(method));
                 apiAccessMeta.setRepeatSubmitCheckMeta(buildRepeatSubmitCheckMeta(method));
+                apiAccessMeta.setRequestValidMillis(getRequestValidMillis(method));
                 apiAccessMap.put(urlCode, apiAccessMeta);
             }
         }
@@ -102,6 +104,17 @@ public class ApiMetaUtil {
         repeatSubmitCheckMeta.setCheck(check);
         repeatSubmitCheckMeta.setExpireMillis(check ? requireRepeatSubmitCheck.expireMillis() : 0L);
         return repeatSubmitCheckMeta;
+    }
+
+    /**
+     * 请求有效间隔meta
+     *
+     * @param method
+     * @return
+     */
+    private Long getRequestValidMillis(Method method) {
+        RequireTimestamp requireTimestamp = method.getAnnotation(RequireTimestamp.class);
+        return requireTimestamp == null ? null : requireTimestamp.validMillis();
     }
 
     /**

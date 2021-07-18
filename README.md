@@ -237,3 +237,6 @@ support-service-gateway | 400004 | 登录成功后token失效
 support-service-gateway | 400005 | 请求参数中token缺失
 support-service-gateway | 400006 | 当前用户暂未登陆，获取userId失败
 support-service-gateway | 400007 | 未获取到登陆缓存信息
+support-service-gateway | 400008 | 请求时间戳不能为空
+support-service-gateway | 400009 | 请求时间戳格式错误
+support-service-gateway | 400010 | 请求时间戳非法

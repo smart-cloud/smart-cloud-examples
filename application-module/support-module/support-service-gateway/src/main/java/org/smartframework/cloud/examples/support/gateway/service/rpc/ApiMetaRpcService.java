@@ -26,8 +26,9 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 /**
+ * 接口元数据（签名、加解密、权限等）处理
+ *
  * @author liyulin
- * @desc 接口元数据（签名、加解密、权限等）处理
  * @date 2020/04/28
  */
 @Service

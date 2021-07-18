@@ -36,4 +36,9 @@ public class ApiAccessMetaRespVO extends Base {
      */
     private RepeatSubmitCheckMetaRespVO repeatSubmitCheckMeta;
 
+    /**
+     * 请求有效间隔
+     */
+    private Long requestValidMillis;
+
 }

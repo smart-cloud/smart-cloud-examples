@@ -3,7 +3,7 @@ package org.smartframework.cloud.examples.support.gateway.cache;
 import lombok.Getter;
 import lombok.Setter;
 import org.apache.commons.collections4.SetUtils;
-import org.smartframework.cloud.api.core.enums.SignType;
+import org.smartframework.cloud.api.core.annotation.enums.SignType;
 import org.smartframework.cloud.common.pojo.Base;
 import org.smartframework.cloud.examples.api.ac.core.vo.ApiAccessMetaRespVO;
 import org.smartframework.cloud.examples.api.ac.core.vo.AuthMetaRespVO;
@@ -68,6 +68,11 @@ public class ApiAccessMetaCache extends Base {
     private long repeatSubmitExpireMillis;
     //-----------------------重复提交校验metameta end-----------------------
 
+    /**
+     * 请求有效间隔
+     */
+    private Long requestValidMillis;
+
     public ApiAccessMetaCache() {
 
     }
@@ -81,6 +86,7 @@ public class ApiAccessMetaCache extends Base {
             setAuth(respVO.getAuthMeta());
             setDataSecurity(respVO.getDataSecurityMeta());
             setRepeatSubmitCheck(respVO.getRepeatSubmitCheckMeta());
+            this.requestValidMillis = respVO.getRequestValidMillis();
         }
     }
 

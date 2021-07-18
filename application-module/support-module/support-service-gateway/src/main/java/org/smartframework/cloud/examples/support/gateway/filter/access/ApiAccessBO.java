@@ -29,4 +29,9 @@ public class ApiAccessBO {
      */
     private String urlMethod;
 
+    /**
+     * 请求有效间隔
+     */
+    private Long requestValidMillis;
+
 }

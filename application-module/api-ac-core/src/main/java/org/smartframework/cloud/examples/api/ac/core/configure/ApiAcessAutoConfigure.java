@@ -14,7 +14,7 @@ import org.springframework.core.annotation.Order;
 
 @Configuration
 @EnableConfigurationProperties(ApiAccessProperties.class)
-public class ApiAcAutoConfigure {
+public class ApiAcessAutoConfigure {
 
     @Autowired
     @Bean

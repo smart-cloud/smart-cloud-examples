@@ -21,9 +21,14 @@ public interface Order {
     int API_ACCESS = REQUEST_LOG + 1;
 
     /**
+     * api access注解全局过滤器order
+     */
+    int REQUEST_TIMESTAMP_CHECK = API_ACCESS + 1;
+
+    /**
      * 接口安全（加解密、签名）
      */
-    int DATA_SECURITY = API_ACCESS + 1;
+    int DATA_SECURITY = REQUEST_TIMESTAMP_CHECK + 1;
 
     /**
      * 鉴权全局过滤器order

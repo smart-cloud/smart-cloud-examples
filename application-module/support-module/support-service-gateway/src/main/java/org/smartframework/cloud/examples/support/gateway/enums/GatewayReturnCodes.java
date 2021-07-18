@@ -36,7 +36,19 @@ public enum GatewayReturnCodes implements IBaseReturnCodes {
     /**
      * 未获取到登陆缓存信息
      */
-    LOGIN_CACHE_MISSING("400007");
+    LOGIN_CACHE_MISSING("400007"),
+    /**
+     * 请求时间戳为空
+     */
+    REQUEST_TIMESTAMP_MISSING("400008"),
+    /**
+     * 请求时间戳格式错误
+     */
+    REQUEST_TIMESTAMP_FORMAT_INVALID("400009"),
+    /**
+     * 请求时间戳非法
+     */
+    REQUEST_TIMESTAMP_ILLEGAL("400010");
 
     /**
      * 状态码
