@@ -1,5 +1,6 @@
 package org.smartframework.cloud.examples.mall.product.controller.api;
 
+import org.smartframework.cloud.api.core.annotation.RequireTimestamp;
 import org.smartframework.cloud.common.pojo.BasePageResponse;
 import org.smartframework.cloud.common.pojo.Response;
 import org.smartframework.cloud.examples.mall.product.service.api.ProductInfoApiService;
@@ -37,6 +38,7 @@ public class ProductInfoApiController {
      * @return
      */
     @GetMapping("pageProduct")
+    @RequireTimestamp
     public Response<BasePageResponse<PageProductRespVO>> pageProduct(@Valid @NotNull PageProductReqVO req) {
         return RespUtil.success(productService.pageProduct(req));
     }

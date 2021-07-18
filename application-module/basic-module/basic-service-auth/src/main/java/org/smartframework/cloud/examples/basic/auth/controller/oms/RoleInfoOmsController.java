@@ -2,9 +2,10 @@ package org.smartframework.cloud.examples.basic.auth.controller.oms;
 
 import org.smartframework.cloud.api.core.annotation.RequireDataSecurity;
 import org.smartframework.cloud.api.core.annotation.RequireRepeatSubmitCheck;
+import org.smartframework.cloud.api.core.annotation.RequireTimestamp;
 import org.smartframework.cloud.api.core.annotation.auth.RequirePermissions;
 import org.smartframework.cloud.api.core.annotation.auth.RequireRoles;
-import org.smartframework.cloud.api.core.enums.Role;
+import org.smartframework.cloud.api.core.annotation.enums.Role;
 import org.smartframework.cloud.common.pojo.BasePageResponse;
 import org.smartframework.cloud.common.pojo.Response;
 import org.smartframework.cloud.examples.basic.auth.service.oms.RoleInfoOmsService;
@@ -46,6 +47,7 @@ public class RoleInfoOmsController {
     @RequirePermissions("auth:role:create")
     @RequireDataSecurity
     @RequireRepeatSubmitCheck
+    @RequireTimestamp
     public Response<Boolean> create(@RequestBody @Valid RoleCreateReqVO req) {
         return RespUtil.success(roleInfoOmsService.create(req));
     }
@@ -60,6 +62,7 @@ public class RoleInfoOmsController {
     @RequireRoles(Role.ADMIN)
     @RequirePermissions("auth:role:update")
     @RequireDataSecurity
+    @RequireTimestamp
     public Response<Boolean> update(@RequestBody @Valid RoleUpdateReqVO req) {
         return RespUtil.success(roleInfoOmsService.update(req));
     }
@@ -74,6 +77,7 @@ public class RoleInfoOmsController {
     @RequireRoles(Role.ADMIN)
     @RequirePermissions("auth:role:delete")
     @RequireDataSecurity
+    @RequireTimestamp
     public Response<Boolean> delete(@RequestBody @NotNull Long id) {
         return RespUtil.success(roleInfoOmsService.logicDelete(id));
     }
@@ -87,6 +91,7 @@ public class RoleInfoOmsController {
     @GetMapping("page")
     @RequireRoles(Role.ADMIN)
     @RequirePermissions("auth:role:page")
+    @RequireTimestamp
     public Response<BasePageResponse<RoleInfoBaseRespVO>> page(@Valid @NotNull PageRoleReqVO req) {
         return RespUtil.success(roleInfoOmsService.page(req));
     }

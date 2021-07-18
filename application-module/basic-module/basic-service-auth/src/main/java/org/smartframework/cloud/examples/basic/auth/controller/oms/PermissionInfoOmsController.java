@@ -2,9 +2,10 @@ package org.smartframework.cloud.examples.basic.auth.controller.oms;
 
 import org.smartframework.cloud.api.core.annotation.RequireDataSecurity;
 import org.smartframework.cloud.api.core.annotation.RequireRepeatSubmitCheck;
+import org.smartframework.cloud.api.core.annotation.RequireTimestamp;
 import org.smartframework.cloud.api.core.annotation.auth.RequirePermissions;
 import org.smartframework.cloud.api.core.annotation.auth.RequireRoles;
-import org.smartframework.cloud.api.core.enums.Role;
+import org.smartframework.cloud.api.core.annotation.enums.Role;
 import org.smartframework.cloud.common.pojo.BasePageResponse;
 import org.smartframework.cloud.common.pojo.Response;
 import org.smartframework.cloud.examples.basic.auth.service.oms.PermissionInfoOmsService;
@@ -46,6 +47,7 @@ public class PermissionInfoOmsController {
     @RequirePermissions("auth:permission:create")
     @RequireDataSecurity
     @RequireRepeatSubmitCheck
+    @RequireTimestamp
     public Response<Boolean> create(@RequestBody @Valid PermissionCreateReqVO req) {
         return RespUtil.success(permissionInfoOmsService.create(req));
     }
@@ -60,6 +62,7 @@ public class PermissionInfoOmsController {
     @RequireRoles(Role.ADMIN)
     @RequirePermissions("auth:permission:update")
     @RequireDataSecurity
+    @RequireTimestamp
     public Response<Boolean> update(@RequestBody @Valid PermissionUpdateReqVO req) {
         return RespUtil.success(permissionInfoOmsService.update(req));
     }
@@ -74,6 +77,7 @@ public class PermissionInfoOmsController {
     @RequireRoles(Role.ADMIN)
     @RequirePermissions("auth:permission:delete")
     @RequireDataSecurity
+    @RequireTimestamp
     public Response<Boolean> delete(@RequestBody @NotNull Long id) {
         return RespUtil.success(permissionInfoOmsService.logicDelete(id));
     }
@@ -87,6 +91,7 @@ public class PermissionInfoOmsController {
     @GetMapping("page")
     @RequireRoles(Role.ADMIN)
     @RequirePermissions("auth:permission:page")
+    @RequireTimestamp
     public Response<BasePageResponse<PermissionInfoBaseRespVO>> page(@Valid @NotNull PagePermissionReqVO req) {
         return RespUtil.success(permissionInfoOmsService.page(req));
     }

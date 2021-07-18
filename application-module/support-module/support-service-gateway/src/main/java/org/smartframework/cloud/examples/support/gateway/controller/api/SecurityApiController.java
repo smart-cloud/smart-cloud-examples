@@ -1,6 +1,7 @@
 package org.smartframework.cloud.examples.support.gateway.controller.api;
 
 import org.apache.commons.codec.DecoderException;
+import org.smartframework.cloud.api.core.annotation.RequireTimestamp;
 import org.smartframework.cloud.common.pojo.Response;
 import org.smartframework.cloud.examples.support.gateway.service.api.SecurityApiService;
 import org.smartframework.cloud.examples.support.rpc.gateway.request.api.GenerateAesKeyReqVO;
@@ -43,6 +44,7 @@ public class SecurityApiController {
      * @return
      */
     @PostMapping("generateClientPubKey")
+    @RequireTimestamp
     public Response<GenerateClientPubKeyRespVO> generateClientPubKey() {
         return RespUtil.success(securityApiService.generateClientPubKey());
     }
@@ -61,6 +63,7 @@ public class SecurityApiController {
      * @throws InvalidKeySpecException
      */
     @PostMapping("generateAesKey")
+    @RequireTimestamp
     public Response<GenerateAesKeyRespVO> generateAesKey(@RequestBody @Valid GenerateAesKeyReqVO req) throws BadPaddingException,
             NoSuchAlgorithmException, IllegalBlockSizeException, DecoderException, NoSuchPaddingException,
             InvalidKeyException, InvalidKeySpecException {

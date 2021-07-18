@@ -1,6 +1,7 @@
 package org.smartframework.cloud.examples.basic.user.controller.api;
 
 import org.smartframework.cloud.api.core.annotation.RequireDataSecurity;
+import org.smartframework.cloud.api.core.annotation.RequireTimestamp;
 import org.smartframework.cloud.common.pojo.Base;
 import org.smartframework.cloud.common.pojo.Response;
 import org.smartframework.cloud.examples.basic.rpc.user.request.api.login.ExitReqVO;
@@ -52,6 +53,7 @@ public class LoginInfoApiController {
      * @return
      */
     @PostMapping("exit")
+    @RequireTimestamp
     public Response<Base> exit(@RequestBody @Valid ExitReqVO req) {
         loginInfoApiService.exit(req);
         return RespUtil.success();

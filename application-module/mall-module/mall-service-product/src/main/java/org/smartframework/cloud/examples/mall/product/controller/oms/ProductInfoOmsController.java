@@ -2,6 +2,7 @@ package org.smartframework.cloud.examples.mall.product.controller.oms;
 
 import org.smartframework.cloud.api.core.annotation.RequireDataSecurity;
 import org.smartframework.cloud.api.core.annotation.RequireRepeatSubmitCheck;
+import org.smartframework.cloud.api.core.annotation.RequireTimestamp;
 import org.smartframework.cloud.api.core.annotation.auth.RequirePermissions;
 import org.smartframework.cloud.common.pojo.BasePageResponse;
 import org.smartframework.cloud.common.pojo.Response;
@@ -44,6 +45,7 @@ public class ProductInfoOmsController {
     @RequirePermissions("product:productInfo:create")
     @RequireDataSecurity
     @RequireRepeatSubmitCheck
+    @RequireTimestamp
     public Response<Boolean> create(@RequestBody @Valid ProductInsertReqVO req) {
         return RespUtil.success(productOmsService.create(req));
     }
@@ -57,6 +59,7 @@ public class ProductInfoOmsController {
     @PostMapping("update")
     @RequirePermissions("product:productInfo:update")
     @RequireDataSecurity
+    @RequireTimestamp
     public Response<Boolean> update(@RequestBody @Valid ProductUpdateReqVO req) {
         return RespUtil.success(productOmsService.update(req));
     }
@@ -70,6 +73,7 @@ public class ProductInfoOmsController {
     @PostMapping("logicDelete")
     @RequirePermissions("product:productInfo:logicDelete")
     @RequireDataSecurity
+    @RequireTimestamp
     public Response<Boolean> logicDelete(@RequestBody @Valid ProductDeleteReqVO req) {
         return RespUtil.success(productOmsService.logicDelete(req));
     }
@@ -81,6 +85,7 @@ public class ProductInfoOmsController {
      * @return
      */
     @GetMapping("pageProduct")
+    @RequireTimestamp
     public Response<BasePageResponse<ProductInfoBaseRespVO>> pageProduct(@Valid @NotNull PageProductReqVO req) {
         return RespUtil.success(productOmsService.pageProduct(req));
     }

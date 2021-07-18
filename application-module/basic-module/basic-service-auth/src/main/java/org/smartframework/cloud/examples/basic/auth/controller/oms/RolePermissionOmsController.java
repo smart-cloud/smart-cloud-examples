@@ -2,9 +2,10 @@ package org.smartframework.cloud.examples.basic.auth.controller.oms;
 
 import org.smartframework.cloud.api.core.annotation.RequireDataSecurity;
 import org.smartframework.cloud.api.core.annotation.RequireRepeatSubmitCheck;
+import org.smartframework.cloud.api.core.annotation.RequireTimestamp;
 import org.smartframework.cloud.api.core.annotation.auth.RequirePermissions;
 import org.smartframework.cloud.api.core.annotation.auth.RequireRoles;
-import org.smartframework.cloud.api.core.enums.Role;
+import org.smartframework.cloud.api.core.annotation.enums.Role;
 import org.smartframework.cloud.common.pojo.BasePageResponse;
 import org.smartframework.cloud.common.pojo.Response;
 import org.smartframework.cloud.examples.basic.auth.service.oms.RolePermissionOmsService;
@@ -46,6 +47,7 @@ public class RolePermissionOmsController {
     @RequirePermissions("auth:role:permission:create")
     @RequireDataSecurity
     @RequireRepeatSubmitCheck
+    @RequireTimestamp
     public Response<Boolean> create(@RequestBody @Valid RolePermissonCreateReqVO req) {
         return RespUtil.success(rolePermissionOmsService.create(req));
     }
@@ -60,6 +62,7 @@ public class RolePermissionOmsController {
     @RequireRoles(Role.ADMIN)
     @RequirePermissions("auth:role:permission:update")
     @RequireDataSecurity
+    @RequireTimestamp
     public Response<Boolean> update(@RequestBody @Valid RolePermissonUpdateReqVO req) {
         return RespUtil.success(rolePermissionOmsService.update(req));
     }
@@ -73,6 +76,7 @@ public class RolePermissionOmsController {
     @GetMapping("page")
     @RequireRoles(Role.ADMIN)
     @RequirePermissions("auth:role:permission:page")
+    @RequireTimestamp
     public Response<BasePageResponse<RolePermissionRespVO>> page(@Valid @NotNull PageRolePermissonReqVO req) {
         return RespUtil.success(rolePermissionOmsService.page(req));
     }

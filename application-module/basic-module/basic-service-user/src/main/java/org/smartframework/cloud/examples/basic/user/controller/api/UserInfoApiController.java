@@ -1,6 +1,7 @@
 package org.smartframework.cloud.examples.basic.user.controller.api;
 
 import org.smartframework.cloud.api.core.annotation.RequireDataSecurity;
+import org.smartframework.cloud.api.core.annotation.RequireTimestamp;
 import org.smartframework.cloud.api.core.annotation.auth.RequireUser;
 import org.smartframework.cloud.common.pojo.Response;
 import org.smartframework.cloud.examples.basic.rpc.user.response.base.UserInfoBaseRespVO;
@@ -35,6 +36,7 @@ public class UserInfoApiController {
     @GetMapping("query")
     @RequireUser
     @RequireDataSecurity
+    @RequireTimestamp
     public Response<UserInfoBaseRespVO> query() {
         return RespUtil.success(userInfoApIService.queryById());
     }

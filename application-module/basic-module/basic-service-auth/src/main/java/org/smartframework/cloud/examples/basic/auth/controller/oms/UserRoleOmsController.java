@@ -2,9 +2,10 @@ package org.smartframework.cloud.examples.basic.auth.controller.oms;
 
 import org.smartframework.cloud.api.core.annotation.RequireDataSecurity;
 import org.smartframework.cloud.api.core.annotation.RequireRepeatSubmitCheck;
+import org.smartframework.cloud.api.core.annotation.RequireTimestamp;
 import org.smartframework.cloud.api.core.annotation.auth.RequirePermissions;
 import org.smartframework.cloud.api.core.annotation.auth.RequireRoles;
-import org.smartframework.cloud.api.core.enums.Role;
+import org.smartframework.cloud.api.core.annotation.enums.Role;
 import org.smartframework.cloud.common.pojo.Response;
 import org.smartframework.cloud.examples.basic.auth.service.oms.UserRoleOmsService;
 import org.smartframework.cloud.examples.basic.rpc.auth.request.oms.user.role.UserRoleCreateReqVO;
@@ -45,6 +46,7 @@ public class UserRoleOmsController {
     @RequirePermissions("auth:user:role:create")
     @RequireDataSecurity
     @RequireRepeatSubmitCheck
+    @RequireTimestamp
     public Response<Boolean> create(@RequestBody @Valid UserRoleCreateReqVO req) {
         return RespUtil.success(userRoleOmsService.create(req));
     }
@@ -59,6 +61,7 @@ public class UserRoleOmsController {
     @RequireRoles(Role.ADMIN)
     @RequirePermissions("auth:user:role:update")
     @RequireDataSecurity
+    @RequireTimestamp
     public Response<Boolean> update(@RequestBody @Valid UserRoleUpdateReqVO req) {
         return RespUtil.success(userRoleOmsService.update(req));
     }
@@ -72,6 +75,7 @@ public class UserRoleOmsController {
     @GetMapping("listRole")
     @RequireRoles(Role.ADMIN)
     @RequirePermissions("auth:user:role:listRole")
+    @RequireTimestamp
     public Response<List<UserRoleRespVO>> listRole(@NotNull Long uid) {
         return RespUtil.success(userRoleOmsService.listRole(uid));
     }

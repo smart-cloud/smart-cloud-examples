@@ -2,6 +2,7 @@ package org.smartframework.cloud.examples.mall.order.controller.api;
 
 import org.smartframework.cloud.api.core.annotation.RequireDataSecurity;
 import org.smartframework.cloud.api.core.annotation.RequireRepeatSubmitCheck;
+import org.smartframework.cloud.api.core.annotation.RequireTimestamp;
 import org.smartframework.cloud.api.core.annotation.auth.RequireUser;
 import org.smartframework.cloud.common.pojo.Response;
 import org.smartframework.cloud.examples.mall.order.mq.producer.OrderProducer;
@@ -43,6 +44,7 @@ public class OrderApiController {
     @RequireUser
     @RequireDataSecurity
     @RequireRepeatSubmitCheck
+    @RequireTimestamp
     public Response<String> submit(@RequestBody @Valid SubmitOrderReqVO req) {
         return RespUtil.success(orderProducer.submitOrder(req));
     }
@@ -55,6 +57,7 @@ public class OrderApiController {
      */
     @GetMapping("querySubmitResult")
     @RequireUser
+    @RequireTimestamp
     public Response<QuerySubmitResultRespVO> querySubmitResult(@NotNull String orderNo) {
         return RespUtil.success(orderApiService.querySubmitResult(orderNo));
     }
