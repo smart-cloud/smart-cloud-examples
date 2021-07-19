@@ -9,6 +9,7 @@ import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
+import org.springframework.http.HttpMethod;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
@@ -30,7 +31,12 @@ public class DataSecurityFilter implements GlobalFilter, Ordered {
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
         ApiAccessBO apiAccessBO = ApiAccessContext.getContext();
         ApiAccessMetaCache apiAccessMetaCache = apiAccessBO.getApiAccessMetaCache();
-        if (apiAccessMetaCache == null || !apiAccessMetaCache.isRepeatSubmitCheck()) {
+        if (apiAccessMetaCache == null || !apiAccessMetaCache.isDataSecurity()) {
+            return chain.filter(exchange);
+        }
+        HttpMethod httpMethod = exchange.getRequest().getMethod();
+        // GET、POST以外的请求不做加解密、签名处理
+        if (httpMethod != HttpMethod.POST && httpMethod != HttpMethod.GET) {
             return chain.filter(exchange);
         }
 
@@ -47,17 +53,18 @@ public class DataSecurityFilter implements GlobalFilter, Ordered {
 
         }
 
-        //响应信息是否需要加密
-        boolean responseEncrypt = apiAccessMetaCache.isResponseEncrypt();
-        if (responseEncrypt) {
+        return chain.filter(exchange).doFinally(s -> {
+            //响应信息是否需要加密
+            boolean responseEncrypt = apiAccessMetaCache.isResponseEncrypt();
+            if (responseEncrypt) {
 
-        }
+            }
 
-        // 响应信息签名
-        if (SignType.RESPONSE.getType() == signType || SignType.ALL.getType() == signType) {
+            // 响应信息签名
+            if (SignType.RESPONSE.getType() == signType || SignType.ALL.getType() == signType) {
 
-        }
-        return chain.filter(exchange);
+            }
+        });
     }
 
 }
