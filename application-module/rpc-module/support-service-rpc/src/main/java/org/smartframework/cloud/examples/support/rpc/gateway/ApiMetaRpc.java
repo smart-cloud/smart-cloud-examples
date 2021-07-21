@@ -3,7 +3,7 @@ package org.smartframework.cloud.examples.support.rpc.gateway;
 import org.smartframework.cloud.common.pojo.Base;
 import org.smartframework.cloud.common.pojo.Response;
 import org.smartframework.cloud.examples.support.rpc.constant.RpcConstants;
-import org.smartframework.cloud.examples.support.rpc.gateway.request.rpc.NotifyFetchReqVO;
+import org.smartframework.cloud.examples.support.rpc.gateway.request.rpc.NotifyFetchReqDTO;
 import org.smartframework.cloud.starter.rpc.feign.annotation.SmartFeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -27,6 +27,6 @@ public interface ApiMetaRpc {
      * @return
      */
     @PostMapping("gateway/rpc/apiMeta/notifyFetch")
-    Response<Base> notifyFetch(@RequestBody @Valid NotifyFetchReqVO req) ;
+    Response<Base> notifyFetch(@RequestBody @Valid NotifyFetchReqDTO req) ;
 
 }

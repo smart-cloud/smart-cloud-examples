@@ -1,7 +1,7 @@
 package org.smartframework.cloud.examples.basic.rpc.auth;
 
 import org.smartframework.cloud.common.pojo.Response;
-import org.smartframework.cloud.examples.basic.rpc.auth.response.rpc.AuthRespVO;
+import org.smartframework.cloud.examples.basic.rpc.auth.response.rpc.AuthRespDTO;
 import org.smartframework.cloud.examples.basic.rpc.constant.RpcConstants;
 import org.smartframework.cloud.starter.rpc.feign.annotation.SmartFeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,6 +25,6 @@ public interface AuthRpc {
      * @return
      */
     @GetMapping("auth/rpc/auth/listByUid")
-    Response<AuthRespVO> listByUid(@NotNull Long uid);
+    Response<AuthRespDTO> listByUid(@NotNull Long uid);
 
 }

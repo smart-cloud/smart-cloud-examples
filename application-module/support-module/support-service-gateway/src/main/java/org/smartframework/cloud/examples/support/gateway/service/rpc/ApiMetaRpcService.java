@@ -12,7 +12,7 @@ import org.smartframework.cloud.examples.api.ac.core.vo.ApiMetaFetchRespVO;
 import org.smartframework.cloud.examples.support.gateway.cache.ApiAccessMetaCache;
 import org.smartframework.cloud.examples.support.gateway.enums.GatewayReturnCodes;
 import org.smartframework.cloud.examples.support.gateway.util.RedisKeyHelper;
-import org.smartframework.cloud.examples.support.rpc.gateway.request.rpc.NotifyFetchReqVO;
+import org.smartframework.cloud.examples.support.rpc.gateway.request.rpc.NotifyFetchReqDTO;
 import org.smartframework.cloud.exception.BusinessException;
 import org.smartframework.cloud.starter.core.business.util.RespUtil;
 import org.smartframework.cloud.utility.HttpUtil;
@@ -38,7 +38,7 @@ public class ApiMetaRpcService {
     @Autowired
     private RedisTemplate redisTemplate;
 
-    public void notifyFetch(NotifyFetchReqVO req) throws IOException, NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+    public void notifyFetch(NotifyFetchReqDTO req) throws IOException, NoSuchMethodException, InvocationTargetException, IllegalAccessException {
         String url = getFetchUrl(req.getServiceName());
         Response<ApiMetaFetchRespVO> apiMetaFetchRespVO = fetchApiMeta(url);
 

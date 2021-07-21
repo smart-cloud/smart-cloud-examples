@@ -18,11 +18,11 @@ import org.smartframework.cloud.examples.mall.rpc.order.request.api.SubmitOrderP
 import org.smartframework.cloud.examples.mall.rpc.order.response.api.OrderDeliveryRespVO;
 import org.smartframework.cloud.examples.mall.rpc.order.response.api.QuerySubmitResultRespVO;
 import org.smartframework.cloud.examples.mall.rpc.product.ProductInfoRpc;
-import org.smartframework.cloud.examples.mall.rpc.product.request.rpc.QryProductByIdsReqVO;
-import org.smartframework.cloud.examples.mall.rpc.product.request.rpc.UpdateStockReqVO;
-import org.smartframework.cloud.examples.mall.rpc.product.request.rpc.UpdateStockReqVO.UpdateStockItem;
-import org.smartframework.cloud.examples.mall.rpc.product.response.rpc.QryProductByIdRespVO;
-import org.smartframework.cloud.examples.mall.rpc.product.response.rpc.QryProductByIdsRespVO;
+import org.smartframework.cloud.examples.mall.rpc.product.request.rpc.QryProductByIdsReqDTO;
+import org.smartframework.cloud.examples.mall.rpc.product.request.rpc.UpdateStockReqDTO;
+import org.smartframework.cloud.examples.mall.rpc.product.request.rpc.UpdateStockReqDTO.UpdateStockItem;
+import org.smartframework.cloud.examples.mall.rpc.product.response.rpc.QryProductByIdRespDTO;
+import org.smartframework.cloud.examples.mall.rpc.product.response.rpc.QryProductByIdsRespDTO;
 import org.smartframework.cloud.exception.BusinessException;
 import org.smartframework.cloud.exception.ServerException;
 import org.smartframework.cloud.starter.core.business.util.RespUtil;
@@ -70,9 +70,9 @@ public class OrderApiService {
         // 1、查询商品信息
         List<Long> productIds = products.stream().map(SubmitOrderProductInfoReqVO::getProductId).collect(Collectors.toList());
 
-        QryProductByIdsReqVO qryProductByIdsReqVO = QryProductByIdsReqVO.builder().ids(productIds).build();
-        Response<QryProductByIdsRespVO> qryProductByIdsResp = productInfoRpc
-                .qryProductByIds(qryProductByIdsReqVO);
+        QryProductByIdsReqDTO qryProductByIdsReqDTO = QryProductByIdsReqDTO.builder().ids(productIds).build();
+        Response<QryProductByIdsRespDTO> qryProductByIdsResp = productInfoRpc
+                .qryProductByIds(qryProductByIdsReqDTO);
         if (!RespUtil.isSuccess(qryProductByIdsResp)) {
             throw new ServerException(RespUtil.getFailMsg(qryProductByIdsResp));
         }
@@ -81,7 +81,7 @@ public class OrderApiService {
                 || qryProductByIdsResp.getBody().getProductInfos().size() != products.size()) {
             throw new BusinessException(OrderReturnCodes.PRODUCT_NOT_EXIST);
         }
-        List<QryProductByIdRespVO> productInfos = qryProductByIdsResp.getBody().getProductInfos();
+        List<QryProductByIdRespDTO> productInfos = qryProductByIdsResp.getBody().getProductInfos();
 
         OrderApiService orderApiService = SpringContextUtil.getBean(OrderApiService.class);
         // 2、创建订单信息
@@ -120,7 +120,7 @@ public class OrderApiService {
      * @param productInfos
      */
     @Transactional(rollbackFor = Exception.class)
-    public void createOrder(String orderNo, Long userId, List<SubmitOrderProductInfoReqVO> products, List<QryProductByIdRespVO> productInfos) {
+    public void createOrder(String orderNo, Long userId, List<SubmitOrderProductInfoReqVO> products, List<QryProductByIdRespDTO> productInfos) {
         List<OrderDeliveryInfoEntity> entities = saveOrderDeliveryInfo(orderNo, products, productInfos);
         saveOrderBill(orderNo, userId, entities);
     }
@@ -139,7 +139,7 @@ public class OrderApiService {
             return updateStockItem;
         }).collect(Collectors.toList());
 
-        return productInfoRpc.updateStock(new UpdateStockReqVO(updateStockItems));
+        return productInfoRpc.updateStock(new UpdateStockReqDTO(updateStockItems));
     }
 
     /**
@@ -177,7 +177,7 @@ public class OrderApiService {
     }
 
     private List<OrderDeliveryInfoEntity> saveOrderDeliveryInfo(String orderNo,
-                                                                List<SubmitOrderProductInfoReqVO> products, List<QryProductByIdRespVO> productInfos) {
+                                                                List<SubmitOrderProductInfoReqVO> products, List<QryProductByIdRespDTO> productInfos) {
         List<OrderDeliveryInfoEntity> entities = products.stream().map(item -> {
             OrderDeliveryInfoEntity entity = new OrderDeliveryInfoEntity();
             entity.setId(SnowFlakeIdUtil.getInstance().nextId());
@@ -185,7 +185,7 @@ public class OrderApiService {
             entity.setProductInfoId(item.getProductId());
             entity.setBuyCount(item.getBuyCount());
 
-            QryProductByIdRespVO productInfo = getproductInfo(productInfos, item.getProductId());
+            QryProductByIdRespDTO productInfo = getproductInfo(productInfos, item.getProductId());
             entity.setPrice(productInfo.getSellPrice());
             entity.setProductName(productInfo.getName());
 
@@ -218,8 +218,8 @@ public class OrderApiService {
         return orderBillEntity;
     }
 
-    private QryProductByIdRespVO getproductInfo(List<QryProductByIdRespVO> productInfos, Long productId) {
-        for (QryProductByIdRespVO productInfo : productInfos) {
+    private QryProductByIdRespDTO getproductInfo(List<QryProductByIdRespDTO> productInfos, Long productId) {
+        for (QryProductByIdRespDTO productInfo : productInfos) {
             if (productInfo.getId().compareTo(productId) == 0) {
                 return productInfo;
             }

@@ -9,7 +9,7 @@ import org.mockito.Mockito;
 import org.smartframework.cloud.common.pojo.Response;
 import org.smartframework.cloud.common.pojo.enums.CommonReturnCodes;
 import org.smartframework.cloud.examples.basic.rpc.auth.AuthRpc;
-import org.smartframework.cloud.examples.basic.rpc.auth.response.rpc.AuthRespVO;
+import org.smartframework.cloud.examples.basic.rpc.auth.response.rpc.AuthRespDTO;
 import org.smartframework.cloud.examples.basic.rpc.user.request.api.login.ExitReqVO;
 import org.smartframework.cloud.examples.basic.rpc.user.request.api.login.LoginReqVO;
 import org.smartframework.cloud.examples.basic.rpc.user.response.api.login.LoginRespVO;
@@ -42,7 +42,7 @@ class LoginInfoApiControllerIntegrationTest extends WebMvcIntegrationTest {
         // mock start
         Mockito.when(userRpc.cacheUserInfo(ArgumentMatchers.any())).thenReturn(RespUtil.success());
         Mockito.when(authRpc.listByUid(ArgumentMatchers.any()))
-                .thenReturn(RespUtil.success(AuthRespVO.builder()
+                .thenReturn(RespUtil.success(AuthRespDTO.builder()
                         .roles(Sets.newHashSet("admin"))
                         .permissions(Sets.newHashSet("/user/api/register/register"))
                         .build()));

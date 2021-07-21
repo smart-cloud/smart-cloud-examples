@@ -8,7 +8,7 @@ import lombok.experimental.SuperBuilder;
 import org.smartframework.cloud.common.pojo.Base;
 
 /**
- * 修改权限信息
+ * 上传权限信息
  *
  * @author liyulin
  * @date 2020-09-10
@@ -18,10 +18,10 @@ import org.smartframework.cloud.common.pojo.Base;
 @NoArgsConstructor
 @AllArgsConstructor
 @SuperBuilder
-public class GatewayAuthUpdateReqVO extends Base {
-	
-	private static final long serialVersionUID = 1L;
-	
-	private long userId;
+public class GatewayAuthUploadReqDTO extends Base {
+
+    private static final long serialVersionUID = 1L;
+
+    private long token;
 
 }

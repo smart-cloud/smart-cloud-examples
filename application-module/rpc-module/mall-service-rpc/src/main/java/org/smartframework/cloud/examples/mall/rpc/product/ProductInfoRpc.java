@@ -3,11 +3,11 @@ package org.smartframework.cloud.examples.mall.rpc.product;
 import org.smartframework.cloud.common.pojo.Base;
 import org.smartframework.cloud.common.pojo.Response;
 import org.smartframework.cloud.examples.mall.rpc.constant.RpcConstants;
-import org.smartframework.cloud.examples.mall.rpc.product.request.rpc.QryProductByIdReqVO;
-import org.smartframework.cloud.examples.mall.rpc.product.request.rpc.QryProductByIdsReqVO;
-import org.smartframework.cloud.examples.mall.rpc.product.request.rpc.UpdateStockReqVO;
-import org.smartframework.cloud.examples.mall.rpc.product.response.rpc.QryProductByIdRespVO;
-import org.smartframework.cloud.examples.mall.rpc.product.response.rpc.QryProductByIdsRespVO;
+import org.smartframework.cloud.examples.mall.rpc.product.request.rpc.QryProductByIdReqDTO;
+import org.smartframework.cloud.examples.mall.rpc.product.request.rpc.QryProductByIdsReqDTO;
+import org.smartframework.cloud.examples.mall.rpc.product.request.rpc.UpdateStockReqDTO;
+import org.smartframework.cloud.examples.mall.rpc.product.response.rpc.QryProductByIdRespDTO;
+import org.smartframework.cloud.examples.mall.rpc.product.response.rpc.QryProductByIdsRespDTO;
 import org.smartframework.cloud.starter.rpc.feign.annotation.SmartFeignClient;
 import org.springframework.cloud.openfeign.SpringQueryMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -34,7 +34,7 @@ public interface ProductInfoRpc {
      * @return
      */
     @GetMapping("product/rpc/productInfo/qryProductById")
-    Response<QryProductByIdRespVO> qryProductById(@SpringQueryMap @Valid @NotNull QryProductByIdReqVO req);
+    Response<QryProductByIdRespDTO> qryProductById(@SpringQueryMap @Valid @NotNull QryProductByIdReqDTO req);
 
     /**
      * 根据ids查询商品信息
@@ -43,7 +43,7 @@ public interface ProductInfoRpc {
      * @return
      */
     @GetMapping("product/rpc/productInfo/qryProductByIds")
-    Response<QryProductByIdsRespVO> qryProductByIds(@SpringQueryMap @Valid @NotNull QryProductByIdsReqVO reqVO);
+    Response<QryProductByIdsRespDTO> qryProductByIds(@SpringQueryMap @Valid @NotNull QryProductByIdsReqDTO reqVO);
 
     /**
      * 更新库存
@@ -52,6 +52,6 @@ public interface ProductInfoRpc {
      * @return
      */
     @PostMapping("product/rpc/productInfo/updateStock")
-    Response<Base> updateStock(@RequestBody @Valid UpdateStockReqVO req);
+    Response<Base> updateStock(@RequestBody @Valid UpdateStockReqDTO req);
 
 }

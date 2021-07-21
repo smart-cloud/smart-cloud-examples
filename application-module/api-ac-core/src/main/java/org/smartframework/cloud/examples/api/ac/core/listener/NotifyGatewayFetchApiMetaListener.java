@@ -6,7 +6,7 @@ import org.smartframework.cloud.common.pojo.Base;
 import org.smartframework.cloud.common.pojo.Response;
 import org.smartframework.cloud.examples.api.ac.core.properties.ApiAccessProperties;
 import org.smartframework.cloud.examples.support.rpc.gateway.ApiMetaRpc;
-import org.smartframework.cloud.examples.support.rpc.gateway.request.rpc.NotifyFetchReqVO;
+import org.smartframework.cloud.examples.support.rpc.gateway.request.rpc.NotifyFetchReqDTO;
 import org.smartframework.cloud.exception.ServerException;
 import org.smartframework.cloud.starter.core.business.util.RespUtil;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
@@ -39,7 +39,7 @@ public class NotifyGatewayFetchApiMetaListener implements ApplicationListener<Ap
 
         log.info("notify gateway to fetch api meta to gateway start!");
         String serviceName = event.getApplicationContext().getEnvironment().getProperty(SERVICE_NAME_KEY);
-        Response<Base> result = apiMetaRpc.notifyFetch(NotifyFetchReqVO.builder().serviceName(serviceName).build());
+        Response<Base> result = apiMetaRpc.notifyFetch(NotifyFetchReqDTO.builder().serviceName(serviceName).build());
         log.info("notify gateway to fetch api meta to gateway finish!");
 
         if (!RespUtil.isSuccess(result)) {

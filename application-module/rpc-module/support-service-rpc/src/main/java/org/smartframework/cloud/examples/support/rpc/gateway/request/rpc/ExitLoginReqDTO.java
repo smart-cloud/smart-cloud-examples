@@ -1,6 +1,5 @@
 package org.smartframework.cloud.examples.support.rpc.gateway.request.rpc;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -11,16 +10,20 @@ import javax.validation.constraints.NotBlank;
 
 /**
  * @author liyulin
- * @date 2020-09-18
+ * @date 2020-09-11
  */
-@Getter
 @Setter
+@Getter
 @NoArgsConstructor
-@AllArgsConstructor
 @SuperBuilder
-public class NotifyFetchReqVO extends Base {
+public class ExitLoginReqDTO extends Base {
 
+    private static final long serialVersionUID = 1L;
+
+    /**
+     * 访问令牌
+     */
     @NotBlank
-    private String serviceName;
+    private String token;
 
 }

@@ -11,7 +11,7 @@ import org.smartframework.cloud.examples.basic.auth.test.data.PermissionInfoData
 import org.smartframework.cloud.examples.basic.auth.test.data.RoleInfoData;
 import org.smartframework.cloud.examples.basic.auth.test.data.RolePermissionRelaData;
 import org.smartframework.cloud.examples.basic.auth.test.data.UserRoleRelaData;
-import org.smartframework.cloud.examples.basic.rpc.auth.response.rpc.AuthRespVO;
+import org.smartframework.cloud.examples.basic.rpc.auth.response.rpc.AuthRespDTO;
 import org.smartframework.cloud.starter.test.integration.WebMvcIntegrationTest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.annotation.Rollback;
@@ -40,8 +40,8 @@ class AuthRpcControllerIntegrationTest extends WebMvcIntegrationTest {
         rolePermissionRelaData.insert(roleInfoEntity.getId(), Arrays.asList(permissionInfoEntity.getId()));
         userRoleRelaData.insert(uid, Arrays.asList(roleInfoEntity.getId()));
 
-        Response<AuthRespVO> result = super.get("/auth/rpc/auth/listByUid?uid=" + uid, null,
-                new TypeReference<Response<AuthRespVO>>() {
+        Response<AuthRespDTO> result = super.get("/auth/rpc/auth/listByUid?uid=" + uid, null,
+                new TypeReference<Response<AuthRespDTO>>() {
                 });
 
         Assertions.assertThat(result).isNotNull();

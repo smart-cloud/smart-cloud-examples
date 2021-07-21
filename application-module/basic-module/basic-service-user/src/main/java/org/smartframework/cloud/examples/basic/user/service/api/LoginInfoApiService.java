@@ -5,7 +5,7 @@ import org.smartframework.cloud.common.pojo.Base;
 import org.smartframework.cloud.common.pojo.Response;
 import org.smartframework.cloud.common.pojo.ResponseHead;
 import org.smartframework.cloud.examples.basic.rpc.auth.AuthRpc;
-import org.smartframework.cloud.examples.basic.rpc.auth.response.rpc.AuthRespVO;
+import org.smartframework.cloud.examples.basic.rpc.auth.response.rpc.AuthRespDTO;
 import org.smartframework.cloud.examples.basic.rpc.enums.user.UserStateEnum;
 import org.smartframework.cloud.examples.basic.rpc.user.request.api.login.ExitReqVO;
 import org.smartframework.cloud.examples.basic.rpc.user.request.api.login.LoginReqVO;
@@ -19,8 +19,8 @@ import org.smartframework.cloud.examples.basic.user.entity.base.LoginInfoEntity;
 import org.smartframework.cloud.examples.basic.user.entity.base.UserInfoEntity;
 import org.smartframework.cloud.examples.basic.user.enums.UserReturnCodes;
 import org.smartframework.cloud.examples.support.rpc.gateway.UserRpc;
-import org.smartframework.cloud.examples.support.rpc.gateway.request.rpc.CacheUserInfoReqVO;
-import org.smartframework.cloud.examples.support.rpc.gateway.request.rpc.ExitLoginReqVO;
+import org.smartframework.cloud.examples.support.rpc.gateway.request.rpc.CacheUserInfoReqDTO;
+import org.smartframework.cloud.examples.support.rpc.gateway.request.rpc.ExitLoginReqDTO;
 import org.smartframework.cloud.exception.BusinessException;
 import org.smartframework.cloud.exception.ParamValidateException;
 import org.smartframework.cloud.exception.RpcException;
@@ -95,7 +95,7 @@ public class LoginInfoApiService {
      * @return
      */
     public void exit(ExitReqVO req) {
-        Response<Base> exitLoginResp = userRpc.exit(ExitLoginReqVO.builder().token(req.getToken()).build());
+        Response<Base> exitLoginResp = userRpc.exit(ExitLoginReqDTO.builder().token(req.getToken()).build());
         if (!RespUtil.isSuccess(exitLoginResp)) {
             throw new ServerException(RespUtil.getFailMsg(exitLoginResp));
         }
@@ -108,7 +108,7 @@ public class LoginInfoApiService {
      * @param loginRespVO
      */
     public void cacheUserInfo(String token, LoginRespVO loginRespVO) {
-        Response<AuthRespVO> authResponse = authRpc.listByUid(loginRespVO.getUserId());
+        Response<AuthRespDTO> authResponse = authRpc.listByUid(loginRespVO.getUserId());
         if (!RespUtil.isSuccess(authResponse)) {
             if (authResponse == null || authResponse.getHead() == null) {
                 throw new RpcException();
@@ -117,17 +117,17 @@ public class LoginInfoApiService {
             throw new RpcException(head.getCode(), head.getMessage());
         }
 
-        CacheUserInfoReqVO cacheUserInfoReqVO = CacheUserInfoReqVO.builder()
+        CacheUserInfoReqDTO cacheUserInfoReqVO = CacheUserInfoReqDTO.builder()
                 .token(token)
                 .userId(loginRespVO.getUserId())
                 .username(loginRespVO.getUsername())
                 .realName(loginRespVO.getRealName())
                 .mobile(loginRespVO.getMobile())
                 .build();
-        AuthRespVO authRespVO = authResponse.getBody();
-        if (authRespVO != null) {
-            cacheUserInfoReqVO.setRoles(authRespVO.getRoles());
-            cacheUserInfoReqVO.setPermissions(authRespVO.getPermissions());
+        AuthRespDTO authRespDTO = authResponse.getBody();
+        if (authRespDTO != null) {
+            cacheUserInfoReqVO.setRoles(authRespDTO.getRoles());
+            cacheUserInfoReqVO.setPermissions(authRespDTO.getPermissions());
         }
 
         Response<Base> cacheUserInfoResp = userRpc.cacheUserInfo(cacheUserInfoReqVO);

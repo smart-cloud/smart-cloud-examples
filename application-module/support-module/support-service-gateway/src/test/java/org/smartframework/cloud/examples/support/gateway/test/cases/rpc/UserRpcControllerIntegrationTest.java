@@ -12,7 +12,7 @@ import org.smartframework.cloud.common.pojo.enums.CommonReturnCodes;
 import org.smartframework.cloud.examples.support.gateway.cache.SecurityKeyCache;
 import org.smartframework.cloud.examples.support.gateway.constants.RedisExpire;
 import org.smartframework.cloud.examples.support.gateway.util.RedisKeyHelper;
-import org.smartframework.cloud.examples.support.rpc.gateway.request.rpc.CacheUserInfoReqVO;
+import org.smartframework.cloud.examples.support.rpc.gateway.request.rpc.CacheUserInfoReqDTO;
 import org.smartframework.cloud.starter.test.integration.WebReactiveIntegrationTest;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -35,7 +35,7 @@ class UserRpcControllerIntegrationTest extends WebReactiveIntegrationTest {
         userTokenCache.put(RedisKeyHelper.getUserTokenRelationKey(userId), "12313", RedisExpire.USER_EXPIRE_MILLIS_LOGIN_SUCCESS, TimeUnit.SECONDS);
         // mock end
 
-        CacheUserInfoReqVO req = CacheUserInfoReqVO.builder()
+        CacheUserInfoReqDTO req = CacheUserInfoReqDTO.builder()
                 .token(token)
                 .userId(userId)
                 .username("zhangsan")

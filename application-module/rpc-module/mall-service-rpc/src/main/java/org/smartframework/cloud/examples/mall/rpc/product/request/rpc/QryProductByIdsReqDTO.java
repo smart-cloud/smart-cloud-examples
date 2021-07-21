@@ -1,4 +1,4 @@
-package org.smartframework.cloud.examples.mall.rpc.product.response.rpc;
+package org.smartframework.cloud.examples.mall.rpc.product.request.rpc;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -7,26 +7,28 @@ import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 import org.smartframework.cloud.common.pojo.Base;
 
+import javax.validation.constraints.NotEmpty;
 import java.util.List;
 
 /**
- * 根据ids查询商品信息响应信息
+ * 根据ids查询商品信息请求参数
  *
  * @author liyulin
  * @date 2020-09-10
  */
-@Setter
 @Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @SuperBuilder
-public class QryProductByIdsRespVO extends Base {
+public class QryProductByIdsReqDTO extends Base {
 
     private static final long serialVersionUID = 1L;
 
     /**
-     * 商品信息
+     * 商品id
      */
-    private List<QryProductByIdRespVO> productInfos;
+    @NotEmpty
+    private List<Long> ids;
 
 }

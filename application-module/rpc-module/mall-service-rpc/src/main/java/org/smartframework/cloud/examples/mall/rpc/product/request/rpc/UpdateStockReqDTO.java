@@ -24,7 +24,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @SuperBuilder
-public class UpdateStockReqVO extends Base {
+public class UpdateStockReqDTO extends Base {
 
     private static final long serialVersionUID = 1L;
 

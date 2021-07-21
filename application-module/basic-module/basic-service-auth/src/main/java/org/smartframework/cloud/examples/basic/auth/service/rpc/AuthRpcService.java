@@ -5,7 +5,7 @@ import org.smartframework.cloud.examples.basic.auth.biz.oms.PermissionInfoOmsBiz
 import org.smartframework.cloud.examples.basic.auth.biz.oms.RoleInfoOmsBiz;
 import org.smartframework.cloud.examples.basic.auth.biz.oms.RolePermissionOmsBiz;
 import org.smartframework.cloud.examples.basic.auth.biz.oms.UserRoleOmsBiz;
-import org.smartframework.cloud.examples.basic.rpc.auth.response.rpc.AuthRespVO;
+import org.smartframework.cloud.examples.basic.rpc.auth.response.rpc.AuthRespDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,7 +29,7 @@ public class AuthRpcService {
      * @param uid
      * @return
      */
-    public AuthRespVO listByUid(Long uid) {
+    public AuthRespDTO listByUid(Long uid) {
         Set<Long> roleIds = userRoleOmsBiz.listRoleId(uid);
         if (CollectionUtils.isEmpty(roleIds)) {
             return null;
@@ -46,11 +46,11 @@ public class AuthRpcService {
             permissionCodes = permissionInfoOmsBiz.listCode(permissionIds);
         }
 
-        AuthRespVO authRespVO = new AuthRespVO();
-        authRespVO.setRoles(roleCodes);
-        authRespVO.setPermissions(permissionCodes);
+        AuthRespDTO authRespDTO = new AuthRespDTO();
+        authRespDTO.setRoles(roleCodes);
+        authRespDTO.setPermissions(permissionCodes);
 
-        return authRespVO;
+        return authRespDTO;
     }
 
 }

@@ -9,8 +9,8 @@ import org.smartframework.cloud.examples.support.gateway.cache.SecurityKeyCache;
 import org.smartframework.cloud.examples.support.gateway.constants.RedisExpire;
 import org.smartframework.cloud.examples.support.gateway.enums.GatewayReturnCodes;
 import org.smartframework.cloud.examples.support.gateway.util.RedisKeyHelper;
-import org.smartframework.cloud.examples.support.rpc.gateway.request.rpc.CacheUserInfoReqVO;
-import org.smartframework.cloud.examples.support.rpc.gateway.request.rpc.ExitLoginReqVO;
+import org.smartframework.cloud.examples.support.rpc.gateway.request.rpc.CacheUserInfoReqDTO;
+import org.smartframework.cloud.examples.support.rpc.gateway.request.rpc.ExitLoginReqDTO;
 import org.smartframework.cloud.exception.ServerException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -35,7 +35,7 @@ public class UserRpcService {
      * @param req
      * @return
      */
-    public void cacheUserInfo(CacheUserInfoReqVO req) {
+    public void cacheUserInfo(CacheUserInfoReqDTO req) {
         // 1、更新security key有效期
         delaySecurityKeyExpire(req.getToken());
 
@@ -61,7 +61,7 @@ public class UserRpcService {
         securityKeyMapCache.put(RedisKeyHelper.getSecurityKey(token), securityKeyCache, RedisExpire.SECURITY_KEY_EXPIRE_MILLIS_LOGIN_SUCCESS, TimeUnit.SECONDS);
     }
 
-    private void cacheUser(CacheUserInfoReqVO req) {
+    private void cacheUser(CacheUserInfoReqDTO req) {
         SmartUser smartUserCache = new SmartUser();
         Long uid = req.getUserId();
         smartUserCache.setId(uid);
@@ -73,7 +73,7 @@ public class UserRpcService {
         userMapCache.put(RedisKeyHelper.getUserKey(req.getToken()), smartUserCache, RedisExpire.USER_EXPIRE_MILLIS_LOGIN_SUCCESS, TimeUnit.SECONDS);
     }
 
-    private void cacheAuth(CacheUserInfoReqVO req) {
+    private void cacheAuth(CacheUserInfoReqDTO req) {
         AuthCache authCache = new AuthCache();
         authCache.setRoles(req.getRoles());
         authCache.setPermissions(req.getPermissions());
@@ -100,7 +100,7 @@ public class UserRpcService {
      * @param req
      * @return
      */
-    public void exit(ExitLoginReqVO req) {
+    public void exit(ExitLoginReqDTO req) {
         removeSession(req.getToken());
     }
 

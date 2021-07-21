@@ -1,29 +1,27 @@
 package org.smartframework.cloud.examples.support.rpc.gateway.request.rpc;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 import org.smartframework.cloud.common.pojo.Base;
 
-import javax.validation.constraints.NotBlank;
-
 /**
+ * 修改权限信息
+ *
  * @author liyulin
- * @date 2020-09-11
+ * @date 2020-09-10
  */
-@Setter
 @Getter
+@Setter
 @NoArgsConstructor
+@AllArgsConstructor
 @SuperBuilder
-public class ExitLoginReqVO extends Base {
-
-    private static final long serialVersionUID = 1L;
-
-    /**
-     * 访问令牌
-     */
-    @NotBlank
-    private String token;
+public class GatewayAuthUpdateReqDTO extends Base {
+	
+	private static final long serialVersionUID = 1L;
+	
+	private long userId;
 
 }

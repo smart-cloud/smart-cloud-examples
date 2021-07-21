@@ -13,7 +13,7 @@ import org.smartframework.cloud.common.pojo.Response;
 import org.smartframework.cloud.common.pojo.enums.CommonReturnCodes;
 import org.smartframework.cloud.examples.api.ac.core.vo.*;
 import org.smartframework.cloud.examples.support.gateway.service.rpc.ApiMetaRpcService;
-import org.smartframework.cloud.examples.support.rpc.gateway.request.rpc.NotifyFetchReqVO;
+import org.smartframework.cloud.examples.support.rpc.gateway.request.rpc.NotifyFetchReqDTO;
 import org.smartframework.cloud.starter.test.integration.WebReactiveIntegrationTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.boot.test.mock.mockito.SpyBean;
@@ -61,7 +61,7 @@ class ApiMetaRpcControllerIntegrationTest extends WebReactiveIntegrationTest {
         Mockito.doReturn(apiMetaFetchResponseMock).when(apiMetaRpcService).fetchApiMeta(Mockito.anyString());
         // mock end
 
-        Response<Base> result = post("/gateway/rpc/apiMeta/notifyFetch", new NotifyFetchReqVO(serviceId), new TypeReference<Response<Base>>() {
+        Response<Base> result = post("/gateway/rpc/apiMeta/notifyFetch", new NotifyFetchReqDTO(serviceId), new TypeReference<Response<Base>>() {
         });
         Assertions.assertThat(result).isNotNull();
         Assertions.assertThat(result.getHead()).isNotNull();

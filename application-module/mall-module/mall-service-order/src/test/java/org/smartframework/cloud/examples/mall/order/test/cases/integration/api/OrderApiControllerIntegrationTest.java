@@ -11,8 +11,8 @@ import org.smartframework.cloud.examples.mall.rpc.order.request.api.SubmitOrderP
 import org.smartframework.cloud.examples.mall.rpc.order.request.api.SubmitOrderReqVO;
 import org.smartframework.cloud.examples.mall.rpc.order.response.api.QuerySubmitResultRespVO;
 import org.smartframework.cloud.examples.mall.rpc.product.ProductInfoRpc;
-import org.smartframework.cloud.examples.mall.rpc.product.response.rpc.QryProductByIdRespVO;
-import org.smartframework.cloud.examples.mall.rpc.product.response.rpc.QryProductByIdsRespVO;
+import org.smartframework.cloud.examples.mall.rpc.product.response.rpc.QryProductByIdRespDTO;
+import org.smartframework.cloud.examples.mall.rpc.product.response.rpc.QryProductByIdsRespDTO;
 import org.smartframework.cloud.starter.core.business.util.RespUtil;
 import org.smartframework.cloud.starter.test.integration.WebMvcIntegrationTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -84,19 +84,19 @@ class OrderApiControllerIntegrationTest extends WebMvcIntegrationTest {
     private void mockStubbing(ProductInfoRpc productInfoRpc, List<SubmitOrderProductInfoReqVO> buyProducts) {
         // 2.1qryProductByIds
         // response
-        List<QryProductByIdRespVO> productInfos = new ArrayList<>();
+        List<QryProductByIdRespDTO> productInfos = new ArrayList<>();
         for (SubmitOrderProductInfoReqVO buyProduct : buyProducts) {
             Long productId = buyProduct.getProductId();
 
             // response
-            QryProductByIdRespVO qryProductByIdRespVO = new QryProductByIdRespVO();
-            qryProductByIdRespVO.setId(productId);
-            qryProductByIdRespVO.setName("手机" + productId);
-            qryProductByIdRespVO.setSellPrice(productId * 10000);
-            qryProductByIdRespVO.setStock(productId * 10000);
-            productInfos.add(qryProductByIdRespVO);
+            QryProductByIdRespDTO qryProductByIdRespDTO = new QryProductByIdRespDTO();
+            qryProductByIdRespDTO.setId(productId);
+            qryProductByIdRespDTO.setName("手机" + productId);
+            qryProductByIdRespDTO.setSellPrice(productId * 10000);
+            qryProductByIdRespDTO.setStock(productId * 10000);
+            productInfos.add(qryProductByIdRespDTO);
         }
-        QryProductByIdsRespVO qryProductByIdsRespVO = new QryProductByIdsRespVO(productInfos);
+        QryProductByIdsRespDTO qryProductByIdsRespVO = new QryProductByIdsRespDTO(productInfos);
         // stubbing
         Mockito.when(productInfoRpc.qryProductByIds(Mockito.any())).thenReturn(RespUtil.success(qryProductByIdsRespVO));
 

@@ -21,7 +21,7 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 @AllArgsConstructor
 @SuperBuilder
-public class QryProductByIdReqVO extends Base {
+public class QryProductByIdReqDTO extends Base {
 
     private static final long serialVersionUID = 1L;
 

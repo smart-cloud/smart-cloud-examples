@@ -7,12 +7,12 @@ import org.smartframework.cloud.common.pojo.Base;
 import org.smartframework.cloud.common.pojo.Response;
 import org.smartframework.cloud.common.pojo.enums.CommonReturnCodes;
 import org.smartframework.cloud.examples.mall.product.test.data.ProductInfoData;
-import org.smartframework.cloud.examples.mall.rpc.product.request.rpc.QryProductByIdReqVO;
-import org.smartframework.cloud.examples.mall.rpc.product.request.rpc.QryProductByIdsReqVO;
-import org.smartframework.cloud.examples.mall.rpc.product.request.rpc.UpdateStockReqVO;
-import org.smartframework.cloud.examples.mall.rpc.product.request.rpc.UpdateStockReqVO.UpdateStockItem;
-import org.smartframework.cloud.examples.mall.rpc.product.response.rpc.QryProductByIdRespVO;
-import org.smartframework.cloud.examples.mall.rpc.product.response.rpc.QryProductByIdsRespVO;
+import org.smartframework.cloud.examples.mall.rpc.product.request.rpc.QryProductByIdReqDTO;
+import org.smartframework.cloud.examples.mall.rpc.product.request.rpc.QryProductByIdsReqDTO;
+import org.smartframework.cloud.examples.mall.rpc.product.request.rpc.UpdateStockReqDTO;
+import org.smartframework.cloud.examples.mall.rpc.product.request.rpc.UpdateStockReqDTO.UpdateStockItem;
+import org.smartframework.cloud.examples.mall.rpc.product.response.rpc.QryProductByIdRespDTO;
+import org.smartframework.cloud.examples.mall.rpc.product.response.rpc.QryProductByIdsRespDTO;
 import org.smartframework.cloud.starter.test.integration.WebMvcIntegrationTest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.annotation.Rollback;
@@ -32,12 +32,12 @@ class ProductInfoRpcControllerIntegrationTest extends WebMvcIntegrationTest {
     void testQryProductById() throws Exception {
         Long productId = 200L;
         productInfoData.insertTestData(productId);
-        QryProductByIdReqVO reqBody = new QryProductByIdReqVO();
+        QryProductByIdReqDTO reqBody = new QryProductByIdReqDTO();
         reqBody.setId(productId);
 
-        Response<QryProductByIdRespVO> result = super.get(
+        Response<QryProductByIdRespDTO> result = super.get(
                 "/product/rpc/productInfo/qryProductById", reqBody,
-                new TypeReference<Response<QryProductByIdRespVO>>() {
+                new TypeReference<Response<QryProductByIdRespDTO>>() {
                 });
 
         Assertions.assertThat(result).isNotNull();
@@ -53,12 +53,12 @@ class ProductInfoRpcControllerIntegrationTest extends WebMvcIntegrationTest {
         }
         productInfoData.batchInsertTestData(ids);
 
-        QryProductByIdsReqVO qryProductByIdsReqVO = new QryProductByIdsReqVO();
-        qryProductByIdsReqVO.setIds(ids);
+        QryProductByIdsReqDTO qryProductByIdsReqDTO = new QryProductByIdsReqDTO();
+        qryProductByIdsReqDTO.setIds(ids);
 
-        Response<QryProductByIdsRespVO> result = super.get(
-                "/product/rpc/productInfo/qryProductByIds", qryProductByIdsReqVO,
-                new TypeReference<Response<QryProductByIdsRespVO>>() {
+        Response<QryProductByIdsRespDTO> result = super.get(
+                "/product/rpc/productInfo/qryProductByIds", qryProductByIdsReqDTO,
+                new TypeReference<Response<QryProductByIdsRespDTO>>() {
                 });
 
         Assertions.assertThat(result).isNotNull();
@@ -82,10 +82,10 @@ class ProductInfoRpcControllerIntegrationTest extends WebMvcIntegrationTest {
         for (Long id : ids) {
             updateStockItems.add(new UpdateStockItem(id, 3));
         }
-        UpdateStockReqVO updateStockReqVO = new UpdateStockReqVO(updateStockItems);
+        UpdateStockReqDTO updateStockReqDTO = new UpdateStockReqDTO(updateStockItems);
 
         Response<Base> result = super.post("/product/rpc/productInfo/updateStock",
-                updateStockReqVO, new TypeReference<Response<Base>>() {
+                updateStockReqDTO, new TypeReference<Response<Base>>() {
                 });
 
         Assertions.assertThat(result).isNotNull();

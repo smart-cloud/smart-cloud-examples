@@ -7,21 +7,20 @@ import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 import org.smartframework.cloud.common.pojo.Base;
 
+import javax.validation.constraints.NotBlank;
+
 /**
- * 上传权限信息
- *
  * @author liyulin
- * @date 2020-09-10
+ * @date 2020-09-18
  */
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @SuperBuilder
-public class GatewayAuthUploadReqVO extends Base {
+public class NotifyFetchReqDTO extends Base {
 
-    private static final long serialVersionUID = 1L;
-
-    private long token;
+    @NotBlank
+    private String serviceName;
 
 }

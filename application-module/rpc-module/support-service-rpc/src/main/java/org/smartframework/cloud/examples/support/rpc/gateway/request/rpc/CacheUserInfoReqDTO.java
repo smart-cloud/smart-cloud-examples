@@ -18,7 +18,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @SuperBuilder
-public class CacheUserInfoReqVO extends Base {
+public class CacheUserInfoReqDTO extends Base {
 
     private static final long serialVersionUID = 1L;
 

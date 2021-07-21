@@ -3,11 +3,11 @@ package org.smartframework.cloud.examples.mall.product.biz.rpc;
 import org.smartframework.cloud.examples.mall.product.entity.base.ProductInfoEntity;
 import org.smartframework.cloud.examples.mall.product.mapper.base.ProductInfoBaseMapper;
 import org.smartframework.cloud.examples.mall.product.mapper.rpc.ProductInfoRpcMapper;
-import org.smartframework.cloud.examples.mall.rpc.product.request.rpc.QryProductByIdReqVO;
-import org.smartframework.cloud.examples.mall.rpc.product.request.rpc.QryProductByIdsReqVO;
-import org.smartframework.cloud.examples.mall.rpc.product.request.rpc.UpdateStockReqVO.UpdateStockItem;
-import org.smartframework.cloud.examples.mall.rpc.product.response.rpc.QryProductByIdRespVO;
-import org.smartframework.cloud.examples.mall.rpc.product.response.rpc.QryProductByIdsRespVO;
+import org.smartframework.cloud.examples.mall.rpc.product.request.rpc.QryProductByIdReqDTO;
+import org.smartframework.cloud.examples.mall.rpc.product.request.rpc.QryProductByIdsReqDTO;
+import org.smartframework.cloud.examples.mall.rpc.product.request.rpc.UpdateStockReqDTO.UpdateStockItem;
+import org.smartframework.cloud.examples.mall.rpc.product.response.rpc.QryProductByIdRespDTO;
+import org.smartframework.cloud.examples.mall.rpc.product.response.rpc.QryProductByIdsRespDTO;
 import org.smartframework.cloud.starter.mybatis.common.biz.BaseBiz;
 import org.smartframework.cloud.utility.ObjectUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,13 +34,13 @@ public class ProductInfoRpcBiz extends BaseBiz<ProductInfoBaseMapper, ProductInf
      * @param reqBody
      * @return
      */
-    public QryProductByIdRespVO qryProductById(QryProductByIdReqVO reqBody) {
+    public QryProductByIdRespDTO qryProductById(QryProductByIdReqDTO reqBody) {
         ProductInfoEntity entity = super.getById(reqBody.getId());
         if (ObjectUtil.isNull(entity)) {
             return null;
         }
 
-        return QryProductByIdRespVO.builder()
+        return QryProductByIdRespDTO.builder()
                 .id(entity.getId())
                 .name(entity.getName())
                 .sellPrice(entity.getSellPrice())
@@ -54,14 +54,14 @@ public class ProductInfoRpcBiz extends BaseBiz<ProductInfoBaseMapper, ProductInf
      * @param reqVO
      * @return
      */
-    public QryProductByIdsRespVO qryProductByIds(QryProductByIdsReqVO reqVO) {
+    public QryProductByIdsRespDTO qryProductByIds(QryProductByIdsReqDTO reqVO) {
         List<ProductInfoEntity> entities = super.listByIds(reqVO.getIds());
         if (ObjectUtil.isNull(entities)) {
             return null;
         }
 
-        List<QryProductByIdRespVO> productInfos = entities.stream()
-                .map(entity -> QryProductByIdRespVO.builder()
+        List<QryProductByIdRespDTO> productInfos = entities.stream()
+                .map(entity -> QryProductByIdRespDTO.builder()
                         .id(entity.getId())
                         .name(entity.getName())
                         .sellPrice(entity.getSellPrice())
@@ -69,7 +69,7 @@ public class ProductInfoRpcBiz extends BaseBiz<ProductInfoBaseMapper, ProductInf
                         .build())
                 .collect(Collectors.toList());
 
-        return new QryProductByIdsRespVO(productInfos);
+        return new QryProductByIdsRespDTO(productInfos);
     }
 
     /**

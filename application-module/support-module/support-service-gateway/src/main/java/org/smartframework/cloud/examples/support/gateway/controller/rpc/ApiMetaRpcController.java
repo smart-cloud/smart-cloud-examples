@@ -5,7 +5,7 @@ import org.smartframework.cloud.common.pojo.Base;
 import org.smartframework.cloud.common.pojo.Response;
 import org.smartframework.cloud.examples.support.gateway.service.rpc.ApiMetaRpcService;
 import org.smartframework.cloud.examples.support.rpc.gateway.ApiMetaRpc;
-import org.smartframework.cloud.examples.support.rpc.gateway.request.rpc.NotifyFetchReqVO;
+import org.smartframework.cloud.examples.support.rpc.gateway.request.rpc.NotifyFetchReqDTO;
 import org.smartframework.cloud.starter.core.business.util.RespUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -23,7 +23,7 @@ public class ApiMetaRpcController implements ApiMetaRpc {
     private ApiMetaRpcService apiMetaRpcService;
 
     @Override
-    public Response<Base> notifyFetch(NotifyFetchReqVO req) {
+    public Response<Base> notifyFetch(NotifyFetchReqDTO req) {
         try {
             apiMetaRpcService.notifyFetch(req);
         } catch (IOException | NoSuchMethodException | InvocationTargetException | IllegalAccessException e) {

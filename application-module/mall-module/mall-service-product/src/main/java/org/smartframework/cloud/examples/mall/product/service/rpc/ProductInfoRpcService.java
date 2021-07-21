@@ -1,11 +1,11 @@
 package org.smartframework.cloud.examples.mall.product.service.rpc;
 
 import org.smartframework.cloud.examples.mall.product.biz.rpc.ProductInfoRpcBiz;
-import org.smartframework.cloud.examples.mall.rpc.product.request.rpc.QryProductByIdReqVO;
-import org.smartframework.cloud.examples.mall.rpc.product.request.rpc.QryProductByIdsReqVO;
-import org.smartframework.cloud.examples.mall.rpc.product.request.rpc.UpdateStockReqVO;
-import org.smartframework.cloud.examples.mall.rpc.product.response.rpc.QryProductByIdRespVO;
-import org.smartframework.cloud.examples.mall.rpc.product.response.rpc.QryProductByIdsRespVO;
+import org.smartframework.cloud.examples.mall.rpc.product.request.rpc.QryProductByIdReqDTO;
+import org.smartframework.cloud.examples.mall.rpc.product.request.rpc.QryProductByIdsReqDTO;
+import org.smartframework.cloud.examples.mall.rpc.product.request.rpc.UpdateStockReqDTO;
+import org.smartframework.cloud.examples.mall.rpc.product.response.rpc.QryProductByIdRespDTO;
+import org.smartframework.cloud.examples.mall.rpc.product.response.rpc.QryProductByIdsRespDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,7 +28,7 @@ public class ProductInfoRpcService {
      * @param reqBody
      * @return
      */
-    public QryProductByIdRespVO qryProductById(QryProductByIdReqVO reqBody) {
+    public QryProductByIdRespDTO qryProductById(QryProductByIdReqDTO reqBody) {
         return productRpcBiz.qryProductById(reqBody);
     }
 
@@ -38,7 +38,7 @@ public class ProductInfoRpcService {
      * @param reqVO
      * @return
      */
-    public QryProductByIdsRespVO qryProductByIds(QryProductByIdsReqVO reqVO) {
+    public QryProductByIdsRespDTO qryProductByIds(QryProductByIdsReqDTO reqVO) {
         return productRpcBiz.qryProductByIds(reqVO);
     }
 
@@ -49,7 +49,7 @@ public class ProductInfoRpcService {
      * @return
      */
     @Transactional
-    public Boolean updateStock(UpdateStockReqVO req) {
+    public Boolean updateStock(UpdateStockReqDTO req) {
         return productRpcBiz.updateStock(req.getItems());
     }
 
