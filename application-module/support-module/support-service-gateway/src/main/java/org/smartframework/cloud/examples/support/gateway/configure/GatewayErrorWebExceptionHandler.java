@@ -3,8 +3,6 @@ package org.smartframework.cloud.examples.support.gateway.configure;
 import lombok.extern.slf4j.Slf4j;
 import org.smartframework.cloud.common.pojo.Base;
 import org.smartframework.cloud.common.pojo.Response;
-import org.smartframework.cloud.common.web.pojo.LogAspectDO;
-import org.smartframework.cloud.examples.support.gateway.filter.log.LogContext;
 import org.smartframework.cloud.starter.web.exception.ExceptionHandlerContext;
 import org.springframework.boot.web.reactive.error.ErrorWebExceptionHandler;
 import org.springframework.context.annotation.Configuration;
@@ -27,30 +25,15 @@ public class GatewayErrorWebExceptionHandler implements ErrorWebExceptionHandler
 
     @Override
     public Mono<Void> handle(ServerWebExchange exchange, Throwable throwable) {
-        log.error("gateway.errorlog", throwable);
-        Response<Base> response = new Response<>(ExceptionHandlerContext.transRespHead(throwable));
-        String result = response.toString();
-        printErrorLog(result);
+        log.error("gateway.exception", throwable);
 
         ServerHttpResponse serverHttpResponse = exchange.getResponse();
         serverHttpResponse.getHeaders().setContentType(MediaType.APPLICATION_JSON);
-        return serverHttpResponse.writeWith(Mono.fromSupplier(() ->
-                serverHttpResponse.bufferFactory().wrap(result.getBytes(StandardCharsets.UTF_8))
+        return serverHttpResponse.writeWith(Mono.fromSupplier(() -> {
+                    Response<Base> response = new Response<>(ExceptionHandlerContext.transRespHead(throwable));
+                    return serverHttpResponse.bufferFactory().wrap(response.toString().getBytes(StandardCharsets.UTF_8));
+                }
         ));
-    }
-
-    /**
-     * 错误请求日志打印
-     *
-     * @param response
-     */
-    private void printErrorLog(String response) {
-        LogAspectDO logAspectDO = LogContext.getApiLogBO();
-        if (logAspectDO != null) {
-            logAspectDO.setCost(System.currentTimeMillis() - logAspectDO.getCost());
-            logAspectDO.setResult(response);
-            log.info("gateway.log.error=>{}", logAspectDO);
-        }
     }
 
 }

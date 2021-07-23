@@ -1,23 +1,20 @@
 package org.smartframework.cloud.examples.support.gateway.filter.access.core;
 
-import lombok.extern.slf4j.Slf4j;
 import org.redisson.api.RLock;
 import org.redisson.api.RedissonClient;
 import org.smartframework.cloud.examples.support.gateway.cache.ApiAccessMetaCache;
 import org.smartframework.cloud.examples.support.gateway.constants.Order;
-import org.smartframework.cloud.examples.support.gateway.filter.access.ApiAccessBO;
-import org.smartframework.cloud.examples.support.gateway.filter.access.ApiAccessContext;
-import org.smartframework.cloud.examples.support.gateway.filter.log.LogContext;
+import org.smartframework.cloud.examples.support.gateway.filter.FilterContext;
+import org.smartframework.cloud.examples.support.gateway.filter.access.AbstractFilter;
+import org.smartframework.cloud.examples.support.gateway.filter.rewrite.RewriteServerHttpRequestDecorator;
 import org.smartframework.cloud.examples.support.gateway.util.RedisKeyHelper;
 import org.smartframework.cloud.exception.RepeatSubmitException;
-import org.smartframework.cloud.utility.JacksonUtil;
 import org.smartframework.cloud.utility.security.Md5Util;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cloud.gateway.filter.GatewayFilterChain;
-import org.springframework.cloud.gateway.filter.GlobalFilter;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.core.Ordered;
+import org.springframework.http.server.reactive.ServerHttpRequest;
+import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
+import org.springframework.web.server.WebFilterChain;
 import reactor.core.publisher.Mono;
 
 import java.util.concurrent.TimeUnit;
@@ -28,29 +25,31 @@ import java.util.concurrent.TimeUnit;
  * @author liyulin
  * @date 2020-09-05
  */
-@Slf4j
-@Configuration
-public class RepeatSubmitCheckFilter implements GlobalFilter, Ordered {
+@Component
+public class RepeatSubmitCheckFilter extends AbstractFilter {
 
     @Autowired
     private RedissonClient redissonClient;
 
     @Override
-    public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
-        ApiAccessBO apiAccessBO = ApiAccessContext.getContext();
-        ApiAccessMetaCache apiAccessMetaCache = apiAccessBO.getApiAccessMetaCache();
+    protected Mono<Void> filter(ServerWebExchange exchange, WebFilterChain chain, FilterContext filterContext) {
+        ApiAccessMetaCache apiAccessMetaCache = filterContext.getApiAccessMetaCache();
         if (apiAccessMetaCache == null || !apiAccessMetaCache.isRepeatSubmitCheck()) {
             return chain.filter(exchange);
         }
+        ServerHttpRequest request = exchange.getRequest();
 
         StringBuilder key = new StringBuilder();
-        key.append(apiAccessBO.getUrlMethod());
-        key.append(LogContext.getApiLogBO().getQueryParams());
-        key.append(JacksonUtil.toJson(LogContext.getApiLogBO().getArgs()));
+        key.append(filterContext.getUrlMethod());
+        key.append(request.getURI().getQuery());
+        if (request instanceof RewriteServerHttpRequestDecorator) {
+            RewriteServerHttpRequestDecorator rewriteServerHttpRequest = (RewriteServerHttpRequestDecorator) request;
+            key.append(rewriteServerHttpRequest.getBodyStr());
+        }
 
         String keyMd5 = Md5Util.md5Hex(key.toString());
 
-        String checkKey = RedisKeyHelper.getRepeatSubmitCheckKey(apiAccessBO.getToken(), keyMd5);
+        String checkKey = RedisKeyHelper.getRepeatSubmitCheckKey(filterContext.getToken(), keyMd5);
         long expireMillis = apiAccessMetaCache.getRepeatSubmitExpireMillis();
         RLock lock = redissonClient.getLock(checkKey);
         boolean isPermitSubmit = false;

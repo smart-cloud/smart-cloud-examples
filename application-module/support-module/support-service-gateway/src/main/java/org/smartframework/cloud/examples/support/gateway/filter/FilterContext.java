@@ -1,4 +1,4 @@
-package org.smartframework.cloud.examples.support.gateway.filter.access;
+package org.smartframework.cloud.examples.support.gateway.filter;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -6,15 +6,15 @@ import lombok.experimental.Accessors;
 import org.smartframework.cloud.examples.support.gateway.cache.ApiAccessMetaCache;
 
 /**
- * smart cloud自定义注解处理时需要的对应入参，供后续filter使用
+ * 网关过滤器内部请求参数
  *
- * @author liyulin
- * @date 2020-09-08
+ * @author collin
+ * @date 2021-07-21
  */
 @Getter
 @Setter
 @Accessors(chain = true)
-public class ApiAccessBO {
+public class FilterContext {
 
     /**
      * token
@@ -28,10 +28,5 @@ public class ApiAccessBO {
      * 用于重复提交
      */
     private String urlMethod;
-
-    /**
-     * 请求有效间隔
-     */
-    private Long requestValidMillis;
 
 }

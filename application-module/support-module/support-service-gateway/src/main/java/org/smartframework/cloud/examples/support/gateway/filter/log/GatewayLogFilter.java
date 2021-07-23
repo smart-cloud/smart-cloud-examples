@@ -1,12 +1,14 @@
 package org.smartframework.cloud.examples.support.gateway.filter.log;
 
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
 import org.smartframework.cloud.common.web.pojo.LogAspectDO;
 import org.smartframework.cloud.examples.support.gateway.constants.GatewayConstants;
 import org.smartframework.cloud.examples.support.gateway.constants.Order;
+import org.smartframework.cloud.examples.support.gateway.filter.rewrite.RewriteServerHttpRequestDecorator;
+import org.smartframework.cloud.examples.support.gateway.filter.rewrite.RewriteServerHttpResponseDecorator;
 import org.springframework.core.Ordered;
 import org.springframework.http.server.reactive.ServerHttpRequest;
+import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
 import org.springframework.web.server.WebFilter;
@@ -31,39 +33,39 @@ public class GatewayLogFilter implements WebFilter, Ordered {
 
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, WebFilterChain chain) {
-        fillLog(exchange.getRequest());
-
-        LogServerHttpRequestDecorator requestDecorator = new LogServerHttpRequestDecorator(exchange.getRequest());
-        LogServerHttpResponseDecorator responseWrapper = new LogServerHttpResponseDecorator(exchange.getResponse());
-
-        return chain.filter(exchange.mutate().request(requestDecorator).response(responseWrapper).build()).doFinally(signalType -> {
-            if (SignalType.ON_ERROR.compareTo(signalType) != 0) {
-                LogAspectDO logAspectDO = LogContext.getApiLogBO();
-                if (logAspectDO != null) {
-                    logAspectDO.setCost(System.currentTimeMillis() - logAspectDO.getCost());
-                    if (log.isDebugEnabled()) {
-                        log.debug("gateway.log=>{}", logAspectDO);
-                    } else if (logAspectDO.getUrl() != null && logAspectDO.getUrl().startsWith(GatewayConstants.GATEWAY_API_URL_PREFIX)) {
-                        // gateway本身的接口打印
-                        log.info("gateway.log=>{}", logAspectDO);
-                    }
-                }
-            }
-            LogContext.remove();
-        });
-    }
-
-    private void fillLog(ServerHttpRequest request) {
-        final String path = request.getURI().getPath();
-        final String query = request.getURI().getQuery();
+        ServerHttpRequest request = exchange.getRequest();
 
         LogAspectDO logAspectDO = new LogAspectDO();
         // 此处cost存储请求开始时间
-        logAspectDO.setCost(System.currentTimeMillis());
+        long startTime = System.currentTimeMillis();
         logAspectDO.setMethod(request.getMethod().name());
-        logAspectDO.setUrl(path + (StringUtils.isBlank(query) ? "" : "?" + query));
+        logAspectDO.setUrl(request.getURI().getPath());
+        logAspectDO.setQueryParams(request.getURI().getQuery());
         logAspectDO.setHead(request.getHeaders());
-        LogContext.setContext(logAspectDO);
+        if (request instanceof RewriteServerHttpRequestDecorator) {
+            RewriteServerHttpRequestDecorator rewriteServerHttpRequest = (RewriteServerHttpRequestDecorator) request;
+            logAspectDO.setArgs(rewriteServerHttpRequest.getBodyStr());
+        }
+
+        return chain.filter(exchange).doFinally(signalType -> {
+            ServerHttpResponse response = exchange.getResponse();
+            if (response instanceof RewriteServerHttpResponseDecorator) {
+                RewriteServerHttpResponseDecorator rewriteServerHttpResponse = (RewriteServerHttpResponseDecorator) exchange.getResponse();
+                logAspectDO.setResult(rewriteServerHttpResponse.getBodyStr());
+            }
+            logAspectDO.setCost(System.currentTimeMillis() - startTime);
+
+            if (SignalType.ON_ERROR.compareTo(signalType) != 0) {
+                if (log.isDebugEnabled()) {
+                    log.debug("gateway.log=>{}", logAspectDO);
+                } else if (logAspectDO.getUrl() != null && logAspectDO.getUrl().startsWith(GatewayConstants.GATEWAY_API_URL_PREFIX)) {
+                    // gateway本身的接口打印
+                    log.info("gateway.log=>{}", logAspectDO);
+                }
+            } else {
+                log.error("gateway.error=>{}", logAspectDO);
+            }
+        });
     }
 
 }

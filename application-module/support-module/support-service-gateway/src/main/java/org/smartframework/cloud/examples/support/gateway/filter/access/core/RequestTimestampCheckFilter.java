@@ -5,14 +5,12 @@ import org.smartframework.cloud.common.web.constants.SmartHttpHeaders;
 import org.smartframework.cloud.examples.support.gateway.constants.Order;
 import org.smartframework.cloud.examples.support.gateway.enums.GatewayReturnCodes;
 import org.smartframework.cloud.examples.support.gateway.exception.RequestTimestampException;
-import org.smartframework.cloud.examples.support.gateway.filter.access.ApiAccessBO;
-import org.smartframework.cloud.examples.support.gateway.filter.access.ApiAccessContext;
+import org.smartframework.cloud.examples.support.gateway.filter.FilterContext;
+import org.smartframework.cloud.examples.support.gateway.filter.access.AbstractFilter;
 import org.smartframework.cloud.examples.support.gateway.util.WebUtil;
-import org.springframework.cloud.gateway.filter.GatewayFilterChain;
-import org.springframework.cloud.gateway.filter.GlobalFilter;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.core.Ordered;
+import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
+import org.springframework.web.server.WebFilterChain;
 import reactor.core.publisher.Mono;
 
 /**
@@ -21,8 +19,8 @@ import reactor.core.publisher.Mono;
  * @author collin
  * @date 2021-07-17
  */
-@Configuration
-public class RequestTimestampCheckFilter implements GlobalFilter, Ordered {
+@Component
+public class RequestTimestampCheckFilter extends AbstractFilter {
 
     @Override
     public int getOrder() {
@@ -30,9 +28,8 @@ public class RequestTimestampCheckFilter implements GlobalFilter, Ordered {
     }
 
     @Override
-    public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
-        ApiAccessBO apiAccessBO = ApiAccessContext.getContext();
-        Long requestValidMillis = apiAccessBO.getRequestValidMillis();
+    protected Mono<Void> filter(ServerWebExchange exchange, WebFilterChain chain, FilterContext filterContext) {
+        Long requestValidMillis = filterContext.getApiAccessMetaCache().getRequestValidMillis();
         if (requestValidMillis == null || requestValidMillis <= 0) {
             return chain.filter(exchange);
         }

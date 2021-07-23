@@ -11,9 +11,13 @@ import org.springframework.core.Ordered;
 public interface Order {
 
     /**
+     * http请求重写
+     */
+    int REWRITE_HTTP = Ordered.HIGHEST_PRECEDENCE;
+    /**
      * 请求日志order
      */
-    int REQUEST_LOG = Ordered.HIGHEST_PRECEDENCE;
+    int REQUEST_LOG = REWRITE_HTTP + 1;
 
     /**
      * api access注解全局过滤器order
@@ -26,18 +30,18 @@ public interface Order {
     int REQUEST_TIMESTAMP_CHECK = API_ACCESS + 1;
 
     /**
+     * api重复提交校验
+     */
+    int REPEAT_SUBMIT_CHECK = REQUEST_TIMESTAMP_CHECK + 1;
+
+    /**
      * 接口安全（加解密、签名）
      */
-    int DATA_SECURITY = REQUEST_TIMESTAMP_CHECK + 1;
+    int DATA_SECURITY = REPEAT_SUBMIT_CHECK + 1;
 
     /**
      * 鉴权全局过滤器order
      */
     int AUTH_CHECK = DATA_SECURITY + 1;
-
-    /**
-     * api重复提交校验
-     */
-    int REPEAT_SUBMIT_CHECK = AUTH_CHECK + 1;
 
 }

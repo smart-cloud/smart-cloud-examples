@@ -1,6 +1,5 @@
 package org.smartframework.cloud.examples.support.gateway.filter.access.core;
 
-import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.redisson.api.RMapCache;
@@ -13,20 +12,18 @@ import org.smartframework.cloud.examples.support.gateway.constants.Order;
 import org.smartframework.cloud.examples.support.gateway.constants.RedisExpire;
 import org.smartframework.cloud.examples.support.gateway.enums.GatewayReturnCodes;
 import org.smartframework.cloud.examples.support.gateway.exception.AuthenticationException;
-import org.smartframework.cloud.examples.support.gateway.filter.access.ApiAccessBO;
-import org.smartframework.cloud.examples.support.gateway.filter.access.ApiAccessContext;
+import org.smartframework.cloud.examples.support.gateway.filter.FilterContext;
+import org.smartframework.cloud.examples.support.gateway.filter.access.AbstractFilter;
 import org.smartframework.cloud.examples.support.gateway.util.RedisKeyHelper;
 import org.smartframework.cloud.exception.BusinessException;
 import org.smartframework.cloud.exception.DataValidateException;
 import org.smartframework.cloud.utility.JacksonUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cloud.gateway.filter.GatewayFilterChain;
-import org.springframework.cloud.gateway.filter.GlobalFilter;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.core.Ordered;
 import org.springframework.http.server.reactive.ServerHttpRequest;
+import org.springframework.stereotype.Component;
 import org.springframework.util.Base64Utils;
 import org.springframework.web.server.ServerWebExchange;
+import org.springframework.web.server.WebFilterChain;
 import reactor.core.publisher.Mono;
 
 import java.nio.charset.StandardCharsets;
@@ -42,9 +39,8 @@ import java.util.concurrent.TimeUnit;
  * @author liyulin
  * @date 2020-09-11
  */
-@Slf4j
-@Configuration
-public class AuthFilter implements GlobalFilter, Ordered {
+@Component
+public class AuthFilter extends AbstractFilter {
 
     @Autowired
     private RedissonClient redissonClient;
@@ -55,11 +51,10 @@ public class AuthFilter implements GlobalFilter, Ordered {
     }
 
     @Override
-    public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
-        ApiAccessBO apiAccessBO = ApiAccessContext.getContext();
-        String token = apiAccessBO.getToken();
+    protected Mono<Void> filter(ServerWebExchange exchange, WebFilterChain chain, FilterContext filterContext) {
+        String token = filterContext.getToken();
 
-        ApiAccessMetaCache apiAccessMetaCache = apiAccessBO.getApiAccessMetaCache();
+        ApiAccessMetaCache apiAccessMetaCache = filterContext.getApiAccessMetaCache();
         // 判断是否需要登陆、鉴权
         if (apiAccessMetaCache == null || !apiAccessMetaCache.isAuth()) {
             return chain.filter(exchange);
@@ -78,7 +73,7 @@ public class AuthFilter implements GlobalFilter, Ordered {
         // 1、先从二级缓存判断
         RMapCache<String, Boolean> userAuthSecondaryCacheMapCache = redissonClient.getMapCache(RedisKeyHelper.getUserAuthSecondaryCacheHashKey(token));
         if (userAuthSecondaryCacheMapCache != null) {
-            Boolean userAuthSecondaryCachePass = userAuthSecondaryCacheMapCache.get(apiAccessBO.getUrlMethod());
+            Boolean userAuthSecondaryCachePass = userAuthSecondaryCacheMapCache.get(filterContext.getUrlMethod());
             if (userAuthSecondaryCachePass != null) {
                 if (userAuthSecondaryCachePass) {
                     return chain.filter(exchange);
@@ -88,7 +83,7 @@ public class AuthFilter implements GlobalFilter, Ordered {
         }
         // 2、再从一级缓存判断
         boolean pass = checkAuth(apiAccessMetaCache, token);
-        userAuthSecondaryCacheMapCache.put(apiAccessBO.getUrlMethod(), pass, RedisExpire.USER_EXPIRE_MILLIS_LOGIN_SUCCESS, TimeUnit.SECONDS);
+        userAuthSecondaryCacheMapCache.put(filterContext.getUrlMethod(), pass, RedisExpire.USER_EXPIRE_MILLIS_LOGIN_SUCCESS, TimeUnit.SECONDS);
         if (!pass) {
             throw new AuthenticationException();
         }

@@ -3,14 +3,14 @@ package org.smartframework.cloud.examples.support.gateway.filter.access.core;
 import org.smartframework.cloud.api.core.annotation.enums.SignType;
 import org.smartframework.cloud.examples.support.gateway.cache.ApiAccessMetaCache;
 import org.smartframework.cloud.examples.support.gateway.constants.Order;
-import org.smartframework.cloud.examples.support.gateway.filter.access.ApiAccessBO;
-import org.smartframework.cloud.examples.support.gateway.filter.access.ApiAccessContext;
-import org.springframework.cloud.gateway.filter.GatewayFilterChain;
-import org.springframework.cloud.gateway.filter.GlobalFilter;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.core.Ordered;
+import org.smartframework.cloud.examples.support.gateway.filter.FilterContext;
+import org.smartframework.cloud.examples.support.gateway.filter.access.AbstractFilter;
+import org.smartframework.cloud.examples.support.gateway.filter.rewrite.RewriteServerHttpRequestDecorator;
+import org.smartframework.cloud.examples.support.gateway.filter.rewrite.RewriteServerHttpResponseDecorator;
 import org.springframework.http.HttpMethod;
+import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
+import org.springframework.web.server.WebFilterChain;
 import reactor.core.publisher.Mono;
 
 /**
@@ -19,8 +19,8 @@ import reactor.core.publisher.Mono;
  * @author collin
  * @date 2021-07-16
  */
-@Configuration
-public class DataSecurityFilter implements GlobalFilter, Ordered {
+@Component
+public class DataSecurityFilter extends AbstractFilter {
 
     @Override
     public int getOrder() {
@@ -28,9 +28,8 @@ public class DataSecurityFilter implements GlobalFilter, Ordered {
     }
 
     @Override
-    public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
-        ApiAccessBO apiAccessBO = ApiAccessContext.getContext();
-        ApiAccessMetaCache apiAccessMetaCache = apiAccessBO.getApiAccessMetaCache();
+    protected Mono<Void> filter(ServerWebExchange exchange, WebFilterChain chain, FilterContext filterContext) {
+        ApiAccessMetaCache apiAccessMetaCache = filterContext.getApiAccessMetaCache();
         if (apiAccessMetaCache == null || !apiAccessMetaCache.isDataSecurity()) {
             return chain.filter(exchange);
         }
@@ -40,11 +39,16 @@ public class DataSecurityFilter implements GlobalFilter, Ordered {
             return chain.filter(exchange);
         }
 
+        // TODO:
+        // request：GET、POST（application/x-www-form-urlencoded、application/json）
+        // response：application/json
+
         //接口签名类型
         byte signType = apiAccessMetaCache.getSignType();
         // 请求信息验签
         if (SignType.REQUEST.getType() == signType || SignType.ALL.getType() == signType) {
-
+            RewriteServerHttpRequestDecorator rewriteServerHttpRequestDecorator = (RewriteServerHttpRequestDecorator) exchange.getRequest();
+            String requestBodyStr = rewriteServerHttpRequestDecorator.getBodyStr();
         }
 
         //请求参数是否需要解密
@@ -57,7 +61,8 @@ public class DataSecurityFilter implements GlobalFilter, Ordered {
             //响应信息是否需要加密
             boolean responseEncrypt = apiAccessMetaCache.isResponseEncrypt();
             if (responseEncrypt) {
-
+                RewriteServerHttpResponseDecorator rewriteServerHttpResponseDecorator = (RewriteServerHttpResponseDecorator) exchange.getResponse();
+                String responseBodyStr = rewriteServerHttpResponseDecorator.getBodyStr();
             }
 
             // 响应信息签名
