@@ -66,7 +66,7 @@ public class SecurityApiService {
         securityKeyCache.setSpriKeyExponent(RsaUtil.getPrivateExponent(clientPubServerPriKeyPair));
 
         RMapCache<String, SecurityKeyCache> authCache = redissonClient.getMapCache(RedisKeyHelper.getSecurityHashKey());
-        authCache.put(RedisKeyHelper.getSecurityKey(token), securityKeyCache, RedisExpire.SECURITY_KEY_EXPIRE_MILLIS_NON_LOGIN, TimeUnit.SECONDS);
+        authCache.put(RedisKeyHelper.getSecurityKey(token), securityKeyCache, RedisExpire.SECURITY_KEY_EXPIRE_SECONDS_NON_LOGIN, TimeUnit.SECONDS);
 
         return respVO;
     }
@@ -89,7 +89,7 @@ public class SecurityApiService {
         securityKeyCache.setCpubKeyExponent(cpubKeyExponent);
         String aesKey = RandomUtil.generateRandom(false, 8);
         securityKeyCache.setAesKey(aesKey);
-        authCache.put(RedisKeyHelper.getSecurityKey(req.getToken()), securityKeyCache, RedisExpire.SECURITY_KEY_EXPIRE_MILLIS_NON_LOGIN, TimeUnit.SECONDS);
+        authCache.put(RedisKeyHelper.getSecurityKey(req.getToken()), securityKeyCache, RedisExpire.SECURITY_KEY_EXPIRE_SECONDS_NON_LOGIN, TimeUnit.SECONDS);
 
         // 3、加密aes key
         // 客户端生成的公钥

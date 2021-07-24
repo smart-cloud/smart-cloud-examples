@@ -29,10 +29,10 @@ class UserRpcControllerIntegrationTest extends WebReactiveIntegrationTest {
         Long userId = 1L;
         // mock start
         RMapCache<String, SecurityKeyCache> authCache = redissonClient.getMapCache(RedisKeyHelper.getSecurityHashKey());
-        authCache.put(RedisKeyHelper.getSecurityKey(token), new SecurityKeyCache(), RedisExpire.SECURITY_KEY_EXPIRE_MILLIS_NON_LOGIN, TimeUnit.SECONDS);
+        authCache.put(RedisKeyHelper.getSecurityKey(token), new SecurityKeyCache(), RedisExpire.SECURITY_KEY_EXPIRE_SECONDS_NON_LOGIN, TimeUnit.SECONDS);
 
         RMapCache<Long, String> userTokenCache = redissonClient.getMapCache(RedisKeyHelper.getUserTokenRelationHashKey());
-        userTokenCache.put(RedisKeyHelper.getUserTokenRelationKey(userId), "12313", RedisExpire.USER_EXPIRE_MILLIS_LOGIN_SUCCESS, TimeUnit.SECONDS);
+        userTokenCache.put(RedisKeyHelper.getUserTokenRelationKey(userId), "12313", RedisExpire.USER_EXPIRE_SECONDS_LOGIN_SUCCESS, TimeUnit.SECONDS);
         // mock end
 
         CacheUserInfoReqDTO req = CacheUserInfoReqDTO.builder()

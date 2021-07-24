@@ -83,7 +83,7 @@ public class AuthFilter extends AbstractFilter {
         }
         // 2、再从一级缓存判断
         boolean pass = checkAuth(apiAccessMetaCache, token);
-        userAuthSecondaryCacheMapCache.put(filterContext.getUrlMethod(), pass, RedisExpire.USER_EXPIRE_MILLIS_LOGIN_SUCCESS, TimeUnit.SECONDS);
+        userAuthSecondaryCacheMapCache.put(filterContext.getUrlMethod(), pass, RedisExpire.USER_EXPIRE_SECONDS_LOGIN_SUCCESS, TimeUnit.SECONDS);
         if (!pass) {
             throw new AuthenticationException();
         }

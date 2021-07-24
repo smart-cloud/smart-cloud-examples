@@ -58,7 +58,7 @@ public class UserRpcService {
         if (securityKeyCache == null) {
             throw new ServerException(GatewayReturnCodes.TOKEN_EXPIRED_BEFORE_LOGIN);
         }
-        securityKeyMapCache.put(RedisKeyHelper.getSecurityKey(token), securityKeyCache, RedisExpire.SECURITY_KEY_EXPIRE_MILLIS_LOGIN_SUCCESS, TimeUnit.SECONDS);
+        securityKeyMapCache.put(RedisKeyHelper.getSecurityKey(token), securityKeyCache, RedisExpire.SECURITY_KEY_EXPIRE_SECONDS_LOGIN_SUCCESS, TimeUnit.SECONDS);
     }
 
     private void cacheUser(CacheUserInfoReqDTO req) {
@@ -70,7 +70,7 @@ public class UserRpcService {
         smartUserCache.setMobile(req.getMobile());
 
         RMapCache<String, SmartUser> userMapCache = redissonClient.getMapCache(RedisKeyHelper.getUserHashKey());
-        userMapCache.put(RedisKeyHelper.getUserKey(req.getToken()), smartUserCache, RedisExpire.USER_EXPIRE_MILLIS_LOGIN_SUCCESS, TimeUnit.SECONDS);
+        userMapCache.put(RedisKeyHelper.getUserKey(req.getToken()), smartUserCache, RedisExpire.USER_EXPIRE_SECONDS_LOGIN_SUCCESS, TimeUnit.SECONDS);
     }
 
     private void cacheAuth(CacheUserInfoReqDTO req) {
@@ -79,7 +79,7 @@ public class UserRpcService {
         authCache.setPermissions(req.getPermissions());
 
         RMapCache<String, AuthCache> authMapCache = redissonClient.getMapCache(RedisKeyHelper.getAuthHashKey());
-        authMapCache.put(RedisKeyHelper.getAuthKey(req.getToken()), authCache, RedisExpire.USER_EXPIRE_MILLIS_LOGIN_SUCCESS, TimeUnit.SECONDS);
+        authMapCache.put(RedisKeyHelper.getAuthKey(req.getToken()), authCache, RedisExpire.USER_EXPIRE_SECONDS_LOGIN_SUCCESS, TimeUnit.SECONDS);
     }
 
     private void deleteOldCacheAndSaveRela(Long uid, String token) {
@@ -91,7 +91,7 @@ public class UserRpcService {
         }
 
         // 2、保存新的token与userId关系
-        userTokenCache.put(RedisKeyHelper.getUserTokenRelationKey(uid), token, RedisExpire.USER_EXPIRE_MILLIS_LOGIN_SUCCESS, TimeUnit.SECONDS);
+        userTokenCache.put(RedisKeyHelper.getUserTokenRelationKey(uid), token, RedisExpire.USER_EXPIRE_SECONDS_LOGIN_SUCCESS, TimeUnit.SECONDS);
     }
 
     /**
