@@ -4,6 +4,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.redisson.api.RMapCache;
 import org.redisson.api.RedissonClient;
 import org.smartframework.cloud.api.core.annotation.enums.SignType;
+import org.smartframework.cloud.common.web.constants.SmartHttpHeaders;
 import org.smartframework.cloud.examples.support.gateway.cache.ApiAccessMetaCache;
 import org.smartframework.cloud.examples.support.gateway.cache.SecurityKeyCache;
 import org.smartframework.cloud.examples.support.gateway.constants.GatewayConstants;
@@ -14,7 +15,10 @@ import org.smartframework.cloud.examples.support.gateway.filter.access.AbstractF
 import org.smartframework.cloud.examples.support.gateway.filter.rewrite.RewriteServerHttpRequestDecorator;
 import org.smartframework.cloud.examples.support.gateway.filter.rewrite.RewriteServerHttpResponseDecorator;
 import org.smartframework.cloud.examples.support.gateway.util.RedisKeyHelper;
+import org.smartframework.cloud.examples.support.gateway.util.WebUtil;
+import org.smartframework.cloud.exception.DataValidateException;
 import org.smartframework.cloud.exception.ParamValidateException;
+import org.smartframework.cloud.utility.security.RsaUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
@@ -23,6 +27,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
 import org.springframework.web.server.WebFilterChain;
 import reactor.core.publisher.Mono;
+
+import java.security.interfaces.RSAPublicKey;
 
 /**
  * 数据安全（加解密、签名）处理过滤器
@@ -69,6 +75,10 @@ public class DataSecurityFilter extends AbstractFilter {
         byte signType = apiAccessMetaCache.getSignType();
         // 请求信息验签
         if (SignType.REQUEST.getType() == signType || SignType.ALL.getType() == signType) {
+            String sign = WebUtil.getFromRequestHeader(request, SmartHttpHeaders.SIGN);
+            if (StringUtils.isBlank(sign)) {
+                throw new ParamValidateException(GatewayReturnCodes.REQUEST_SIGN_MISSING);
+            }
             String requestStr = null;
             if (httpMethod == HttpMethod.GET) {
                 requestStr = request.getQueryParams().getFirst(GatewayConstants.REQUEST_ENCRYPT_PARAM_NAME);
@@ -83,6 +93,11 @@ public class DataSecurityFilter extends AbstractFilter {
             if (StringUtils.isNotBlank(requestStr)) {
                 RMapCache<String, SecurityKeyCache> authCache = redissonClient.getMapCache(RedisKeyHelper.getSecurityHashKey());
                 SecurityKeyCache securityKeyCache = authCache.get(RedisKeyHelper.getSecurityKey(token));
+                if (securityKeyCache == null) {
+                    throw new DataValidateException(GatewayReturnCodes.SECURITY_KEY_EXPIRED);
+                }
+//                RSAPublicKey publicKey = RsaUtil.getRSAPublidKey(securityKeyCache.getCpubKeyModulus(), securityKeyCache.getCpubKeyExponent());
+//                RsaUtil.checkSign(requestStr, sign, publicKey);
             }
         }
 
