@@ -35,11 +35,11 @@ public class ProductInfoRpcService {
     /**
      * 根据ids查询商品信息
      *
-     * @param reqVO
+     * @param reqDTO
      * @return
      */
-    public QryProductByIdsRespDTO qryProductByIds(QryProductByIdsReqDTO reqVO) {
-        return productRpcBiz.qryProductByIds(reqVO);
+    public QryProductByIdsRespDTO qryProductByIds(QryProductByIdsReqDTO reqDTO) {
+        return productRpcBiz.qryProductByIds(reqDTO);
     }
 
     /**

@@ -13,7 +13,7 @@ public interface Order {
     /**
      * http请求重写
      */
-    int REWRITE_HTTP = Ordered.HIGHEST_PRECEDENCE;
+    int REWRITE_HTTP = 1;
     /**
      * 请求日志order
      */

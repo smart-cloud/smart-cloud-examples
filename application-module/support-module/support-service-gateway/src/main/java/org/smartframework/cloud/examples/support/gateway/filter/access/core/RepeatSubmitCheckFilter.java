@@ -34,7 +34,7 @@ public class RepeatSubmitCheckFilter extends AbstractFilter {
     @Override
     protected Mono<Void> filter(ServerWebExchange exchange, WebFilterChain chain, FilterContext filterContext) {
         ApiAccessMetaCache apiAccessMetaCache = filterContext.getApiAccessMetaCache();
-        if (apiAccessMetaCache == null || !apiAccessMetaCache.isRepeatSubmitCheck()) {
+        if (!apiAccessMetaCache.isRepeatSubmitCheck()) {
             return chain.filter(exchange);
         }
         ServerHttpRequest request = exchange.getRequest();

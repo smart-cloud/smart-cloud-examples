@@ -11,10 +11,12 @@ import org.smartframework.cloud.examples.support.gateway.enums.GatewayReturnCode
 import org.smartframework.cloud.examples.support.gateway.util.RedisKeyHelper;
 import org.smartframework.cloud.examples.support.rpc.gateway.request.rpc.CacheUserInfoReqDTO;
 import org.smartframework.cloud.examples.support.rpc.gateway.request.rpc.ExitLoginReqDTO;
-import org.smartframework.cloud.exception.ServerException;
+import org.smartframework.cloud.exception.DataValidateException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
 
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -41,7 +43,7 @@ public class UserRpcService {
 
         // 2、缓存用户信息
         cacheUser(req);
-        cacheAuth(req);
+        cacheAuth(req.getToken(), req.getRoles(), req.getPermissions());
 
         // 3、删除上一次登录的信息（如果存在） && 保存新的token与userId关系
         deleteOldCacheAndSaveRela(req.getUserId(), req.getToken());
@@ -56,7 +58,7 @@ public class UserRpcService {
         RMapCache<String, SecurityKeyCache> securityKeyMapCache = redissonClient.getMapCache(RedisKeyHelper.getSecurityHashKey());
         SecurityKeyCache securityKeyCache = securityKeyMapCache.get(RedisKeyHelper.getSecurityKey(token));
         if (securityKeyCache == null) {
-            throw new ServerException(GatewayReturnCodes.TOKEN_EXPIRED_BEFORE_LOGIN);
+            throw new DataValidateException(GatewayReturnCodes.TOKEN_EXPIRED_BEFORE_LOGIN);
         }
         securityKeyMapCache.put(RedisKeyHelper.getSecurityKey(token), securityKeyCache, RedisExpire.SECURITY_KEY_EXPIRE_SECONDS_LOGIN_SUCCESS, TimeUnit.SECONDS);
     }
@@ -73,13 +75,13 @@ public class UserRpcService {
         userMapCache.put(RedisKeyHelper.getUserKey(req.getToken()), smartUserCache, RedisExpire.USER_EXPIRE_SECONDS_LOGIN_SUCCESS, TimeUnit.SECONDS);
     }
 
-    private void cacheAuth(CacheUserInfoReqDTO req) {
+    public void cacheAuth(@NonNull String token, Set<String> roles, Set<String> permissions) {
         AuthCache authCache = new AuthCache();
-        authCache.setRoles(req.getRoles());
-        authCache.setPermissions(req.getPermissions());
+        authCache.setRoles(roles);
+        authCache.setPermissions(permissions);
 
         RMapCache<String, AuthCache> authMapCache = redissonClient.getMapCache(RedisKeyHelper.getAuthHashKey());
-        authMapCache.put(RedisKeyHelper.getAuthKey(req.getToken()), authCache, RedisExpire.USER_EXPIRE_SECONDS_LOGIN_SUCCESS, TimeUnit.SECONDS);
+        authMapCache.put(RedisKeyHelper.getAuthKey(token), authCache, RedisExpire.USER_EXPIRE_SECONDS_LOGIN_SUCCESS, TimeUnit.SECONDS);
     }
 
     private void deleteOldCacheAndSaveRela(Long uid, String token) {

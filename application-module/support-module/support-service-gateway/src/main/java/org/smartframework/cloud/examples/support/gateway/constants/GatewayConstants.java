@@ -18,5 +18,9 @@ public interface GatewayConstants {
      * 过滤器上下文key
      */
     String FILTER_CONTEXT_KEY = FilterContext.class.getSimpleName();
+    /**
+     * http get、post（application/x-www-form-urlencoded）请求参数加密后的key名
+     */
+    String REQUEST_ENCRYPT_PARAM_NAME = "q";
 
 }

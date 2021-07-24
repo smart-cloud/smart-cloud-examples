@@ -11,6 +11,7 @@ import org.smartframework.cloud.examples.support.gateway.util.RedisKeyHelper;
 import org.smartframework.cloud.examples.support.rpc.gateway.request.api.GenerateAesKeyReqVO;
 import org.smartframework.cloud.examples.support.rpc.gateway.response.api.GenerateAesKeyRespVO;
 import org.smartframework.cloud.examples.support.rpc.gateway.response.api.GenerateClientPubKeyRespVO;
+import org.smartframework.cloud.exception.DataValidateException;
 import org.smartframework.cloud.exception.ServerException;
 import org.smartframework.cloud.utility.RandomUtil;
 import org.smartframework.cloud.utility.security.RsaUtil;
@@ -77,7 +78,7 @@ public class SecurityApiService {
         RMapCache<String, SecurityKeyCache> authCache = redissonClient.getMapCache(RedisKeyHelper.getSecurityHashKey());
         SecurityKeyCache securityKeyCache = authCache.get(RedisKeyHelper.getSecurityKey(req.getToken()));
         if (securityKeyCache == null) {
-            throw new ServerException(GatewayReturnCodes.TOKEN_EXPIRED_BEFORE_LOGIN);
+            throw new DataValidateException(GatewayReturnCodes.TOKEN_EXPIRED_BEFORE_LOGIN);
         }
 
         RSAPrivateKey rsaPrivateKey = RsaUtil.getRSAPrivateKey(securityKeyCache.getSpriKeyModulus(), securityKeyCache.getSpriKeyExponent());

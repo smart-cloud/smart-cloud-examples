@@ -95,9 +95,9 @@ public class LoginInfoApiService {
      * @return
      */
     public void exit(ExitReqVO req) {
-        Response<Base> exitLoginResp = userRpc.exit(ExitLoginReqDTO.builder().token(req.getToken()).build());
-        if (!RespUtil.isSuccess(exitLoginResp)) {
-            throw new ServerException(RespUtil.getFailMsg(exitLoginResp));
+        Response<Base> exitLoginResponse = userRpc.exit(ExitLoginReqDTO.builder().token(req.getToken()).build());
+        if (!RespUtil.isSuccess(exitLoginResponse)) {
+            throw new ServerException(RespUtil.getFailMsg(exitLoginResponse));
         }
     }
 
@@ -117,7 +117,7 @@ public class LoginInfoApiService {
             throw new RpcException(head.getCode(), head.getMessage());
         }
 
-        CacheUserInfoReqDTO cacheUserInfoReqVO = CacheUserInfoReqDTO.builder()
+        CacheUserInfoReqDTO cacheUserInfoReqDTO = CacheUserInfoReqDTO.builder()
                 .token(token)
                 .userId(loginRespVO.getUserId())
                 .username(loginRespVO.getUsername())
@@ -126,13 +126,13 @@ public class LoginInfoApiService {
                 .build();
         AuthRespDTO authRespDTO = authResponse.getBody();
         if (authRespDTO != null) {
-            cacheUserInfoReqVO.setRoles(authRespDTO.getRoles());
-            cacheUserInfoReqVO.setPermissions(authRespDTO.getPermissions());
+            cacheUserInfoReqDTO.setRoles(authRespDTO.getRoles());
+            cacheUserInfoReqDTO.setPermissions(authRespDTO.getPermissions());
         }
 
-        Response<Base> cacheUserInfoResp = userRpc.cacheUserInfo(cacheUserInfoReqVO);
-        if (!RespUtil.isSuccess(cacheUserInfoResp)) {
-            throw new ServerException(RespUtil.getFailMsg(cacheUserInfoResp));
+        Response<Base> cacheUserInfoResponse = userRpc.cacheUserInfo(cacheUserInfoReqDTO);
+        if (!RespUtil.isSuccess(cacheUserInfoResponse)) {
+            throw new ServerException(RespUtil.getFailMsg(cacheUserInfoResponse));
         }
     }
 

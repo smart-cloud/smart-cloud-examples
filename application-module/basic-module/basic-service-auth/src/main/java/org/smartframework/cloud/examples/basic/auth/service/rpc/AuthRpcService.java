@@ -32,12 +32,12 @@ public class AuthRpcService {
     public AuthRespDTO listByUid(Long uid) {
         Set<Long> roleIds = userRoleOmsBiz.listRoleId(uid);
         if (CollectionUtils.isEmpty(roleIds)) {
-            return null;
+            return new AuthRespDTO();
         }
 
         Set<String> roleCodes = roleInfoOmsBiz.listCode(roleIds);
         if (CollectionUtils.isEmpty(roleCodes)) {
-            return null;
+            return new AuthRespDTO();
         }
 
         Set<Long> permissionIds = rolePermissionOmsBiz.listPermissionIds(roleIds);

@@ -4,8 +4,12 @@ import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.redisson.api.RMapCache;
 import org.redisson.api.RedissonClient;
+import org.smartframework.cloud.common.pojo.Response;
+import org.smartframework.cloud.common.pojo.ResponseHead;
 import org.smartframework.cloud.examples.app.auth.core.AppAuthConstants;
 import org.smartframework.cloud.examples.app.auth.core.SmartUser;
+import org.smartframework.cloud.examples.basic.rpc.auth.AuthRpc;
+import org.smartframework.cloud.examples.basic.rpc.auth.response.rpc.AuthRespDTO;
 import org.smartframework.cloud.examples.support.gateway.cache.ApiAccessMetaCache;
 import org.smartframework.cloud.examples.support.gateway.cache.AuthCache;
 import org.smartframework.cloud.examples.support.gateway.constants.Order;
@@ -14,12 +18,16 @@ import org.smartframework.cloud.examples.support.gateway.enums.GatewayReturnCode
 import org.smartframework.cloud.examples.support.gateway.exception.AuthenticationException;
 import org.smartframework.cloud.examples.support.gateway.filter.FilterContext;
 import org.smartframework.cloud.examples.support.gateway.filter.access.AbstractFilter;
+import org.smartframework.cloud.examples.support.gateway.service.rpc.UserRpcService;
 import org.smartframework.cloud.examples.support.gateway.util.RedisKeyHelper;
 import org.smartframework.cloud.exception.BusinessException;
 import org.smartframework.cloud.exception.DataValidateException;
+import org.smartframework.cloud.exception.RpcException;
+import org.smartframework.cloud.starter.core.business.util.RespUtil;
 import org.smartframework.cloud.utility.JacksonUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.server.reactive.ServerHttpRequest;
+import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Base64Utils;
 import org.springframework.web.server.ServerWebExchange;
@@ -44,6 +52,10 @@ public class AuthFilter extends AbstractFilter {
 
     @Autowired
     private RedissonClient redissonClient;
+    @Autowired
+    private AuthRpc authRpc;
+    @Autowired
+    private UserRpcService userRpcService;
 
     @Override
     public int getOrder() {
@@ -52,14 +64,13 @@ public class AuthFilter extends AbstractFilter {
 
     @Override
     protected Mono<Void> filter(ServerWebExchange exchange, WebFilterChain chain, FilterContext filterContext) {
-        String token = filterContext.getToken();
-
         ApiAccessMetaCache apiAccessMetaCache = filterContext.getApiAccessMetaCache();
         // 判断是否需要登陆、鉴权
-        if (apiAccessMetaCache == null || !apiAccessMetaCache.isAuth()) {
+        if (!apiAccessMetaCache.isAuth()) {
             return chain.filter(exchange);
         }
 
+        String token = filterContext.getToken();
         if (StringUtils.isBlank(token)) {
             throw new DataValidateException(GatewayReturnCodes.TOKEN_MISSING);
         }
@@ -82,7 +93,7 @@ public class AuthFilter extends AbstractFilter {
             }
         }
         // 2、再从一级缓存判断
-        boolean pass = checkAuth(apiAccessMetaCache, token);
+        boolean pass = checkAuth(apiAccessMetaCache, token, smartUser.getId());
         userAuthSecondaryCacheMapCache.put(filterContext.getUrlMethod(), pass, RedisExpire.USER_EXPIRE_SECONDS_LOGIN_SUCCESS, TimeUnit.SECONDS);
         if (!pass) {
             throw new AuthenticationException();
@@ -98,16 +109,17 @@ public class AuthFilter extends AbstractFilter {
      *
      * @param apiAccessMetaCache
      * @param token
+     * @param uid
      * @return
      */
-    private boolean checkAuth(ApiAccessMetaCache apiAccessMetaCache, String token) {
+    private boolean checkAuth(ApiAccessMetaCache apiAccessMetaCache, @NonNull String token, @NonNull Long uid) {
         boolean requirePermission = CollectionUtils.isNotEmpty(apiAccessMetaCache.getRequiresPermissions());
         boolean requireRole = CollectionUtils.isNotEmpty(apiAccessMetaCache.getRequiresRoles());
         if (!requirePermission && !requireRole) {
             return true;
         }
-        RMapCache<String, AuthCache> authMapCache = redissonClient.getMapCache(RedisKeyHelper.getAuthHashKey());
-        AuthCache authCache = authMapCache.get(RedisKeyHelper.getAuthKey(token));
+
+        AuthCache authCache = getAuthCache(token, uid);
         if (authCache == null || (requirePermission && CollectionUtils.isEmpty(authCache.getPermissions()))
                 || (requireRole && CollectionUtils.isEmpty(authCache.getRoles()))) {
             return false;
@@ -131,6 +143,40 @@ public class AuthFilter extends AbstractFilter {
             }
         }
         return false;
+    }
+
+    /**
+     * 获取用户权限信息
+     *
+     * @param token
+     * @param uid
+     * @return
+     */
+    private AuthCache getAuthCache(@NonNull String token, @NonNull Long uid) {
+        RMapCache<String, AuthCache> authMapCache = redissonClient.getMapCache(RedisKeyHelper.getAuthHashKey());
+        AuthCache authCache = authMapCache.get(RedisKeyHelper.getAuthKey(token));
+        if (authCache != null) {
+            return authCache;
+        }
+
+        // 如果缓存中没有，则rpc查数据库
+        Response<AuthRespDTO> authResponse = authRpc.listByUid(uid);
+        if (!RespUtil.isSuccess(authResponse)) {
+            if (authResponse == null || authResponse.getHead() == null) {
+                throw new RpcException();
+            }
+            ResponseHead head = authResponse.getHead();
+            throw new RpcException(head.getCode(), head.getMessage());
+        }
+        AuthRespDTO authRespDTO = authResponse.getBody();
+        if (authRespDTO == null) {
+            authCache = new AuthCache();
+        } else {
+            authCache.setRoles(authRespDTO.getRoles());
+            authCache.setPermissions(authRespDTO.getPermissions());
+        }
+        userRpcService.cacheAuth(token, authCache.getRoles(), authCache.getPermissions());
+        return authCache;
     }
 
     /**

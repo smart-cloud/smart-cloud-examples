@@ -51,11 +51,11 @@ public class ProductInfoRpcBiz extends BaseBiz<ProductInfoBaseMapper, ProductInf
     /**
      * 根据ids查询商品信息
      *
-     * @param reqVO
+     * @param reqDTO
      * @return
      */
-    public QryProductByIdsRespDTO qryProductByIds(QryProductByIdsReqDTO reqVO) {
-        List<ProductInfoEntity> entities = super.listByIds(reqVO.getIds());
+    public QryProductByIdsRespDTO qryProductByIds(QryProductByIdsReqDTO reqDTO) {
+        List<ProductInfoEntity> entities = super.listByIds(reqDTO.getIds());
         if (ObjectUtil.isNull(entities)) {
             return null;
         }

@@ -28,8 +28,8 @@ public class ProductInfoRpcController implements ProductInfoRpc {
     }
 
     @Override
-    public Response<QryProductByIdsRespDTO> qryProductByIds(QryProductByIdsReqDTO reqVO) {
-        return RespUtil.success(productInfoRpcService.qryProductByIds(reqVO));
+    public Response<QryProductByIdsRespDTO> qryProductByIds(QryProductByIdsReqDTO reqDTO) {
+        return RespUtil.success(productInfoRpcService.qryProductByIds(reqDTO));
     }
 
     @Override

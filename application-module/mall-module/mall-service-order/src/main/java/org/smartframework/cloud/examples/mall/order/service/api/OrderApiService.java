@@ -71,17 +71,17 @@ public class OrderApiService {
         List<Long> productIds = products.stream().map(SubmitOrderProductInfoReqVO::getProductId).collect(Collectors.toList());
 
         QryProductByIdsReqDTO qryProductByIdsReqDTO = QryProductByIdsReqDTO.builder().ids(productIds).build();
-        Response<QryProductByIdsRespDTO> qryProductByIdsResp = productInfoRpc
+        Response<QryProductByIdsRespDTO> qryProductByIdsResponse = productInfoRpc
                 .qryProductByIds(qryProductByIdsReqDTO);
-        if (!RespUtil.isSuccess(qryProductByIdsResp)) {
-            throw new ServerException(RespUtil.getFailMsg(qryProductByIdsResp));
+        if (!RespUtil.isSuccess(qryProductByIdsResponse)) {
+            throw new ServerException(RespUtil.getFailMsg(qryProductByIdsResponse));
         }
-        if (ObjectUtil.isNull(qryProductByIdsResp.getBody())
-                || CollectionUtils.isEmpty(qryProductByIdsResp.getBody().getProductInfos())
-                || qryProductByIdsResp.getBody().getProductInfos().size() != products.size()) {
+        if (ObjectUtil.isNull(qryProductByIdsResponse.getBody())
+                || CollectionUtils.isEmpty(qryProductByIdsResponse.getBody().getProductInfos())
+                || qryProductByIdsResponse.getBody().getProductInfos().size() != products.size()) {
             throw new BusinessException(OrderReturnCodes.PRODUCT_NOT_EXIST);
         }
-        List<QryProductByIdRespDTO> productInfos = qryProductByIdsResp.getBody().getProductInfos();
+        List<QryProductByIdRespDTO> productInfos = qryProductByIdsResponse.getBody().getProductInfos();
 
         OrderApiService orderApiService = SpringContextUtil.getBean(OrderApiService.class);
         // 2、创建订单信息
@@ -96,8 +96,8 @@ public class OrderApiService {
         OrderStatus status = null;
         try {
             // 3、扣减库存
-            Response<Base> updateStockResp = deductStock(products);
-            if (RespUtil.isSuccess(updateStockResp)) {
+            Response<Base> updateStockResponse = deductStock(products);
+            if (RespUtil.isSuccess(updateStockResponse)) {
                 // TODO:4、抵扣优惠券
 
                 status = OrderStatus.PAY_TODO;

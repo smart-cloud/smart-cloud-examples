@@ -1,13 +1,24 @@
 package org.smartframework.cloud.examples.support.gateway.filter.access.core;
 
+import org.apache.commons.lang3.StringUtils;
+import org.redisson.api.RMapCache;
+import org.redisson.api.RedissonClient;
 import org.smartframework.cloud.api.core.annotation.enums.SignType;
 import org.smartframework.cloud.examples.support.gateway.cache.ApiAccessMetaCache;
+import org.smartframework.cloud.examples.support.gateway.cache.SecurityKeyCache;
+import org.smartframework.cloud.examples.support.gateway.constants.GatewayConstants;
 import org.smartframework.cloud.examples.support.gateway.constants.Order;
+import org.smartframework.cloud.examples.support.gateway.enums.GatewayReturnCodes;
 import org.smartframework.cloud.examples.support.gateway.filter.FilterContext;
 import org.smartframework.cloud.examples.support.gateway.filter.access.AbstractFilter;
 import org.smartframework.cloud.examples.support.gateway.filter.rewrite.RewriteServerHttpRequestDecorator;
 import org.smartframework.cloud.examples.support.gateway.filter.rewrite.RewriteServerHttpResponseDecorator;
+import org.smartframework.cloud.examples.support.gateway.util.RedisKeyHelper;
+import org.smartframework.cloud.exception.ParamValidateException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
+import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
 import org.springframework.web.server.WebFilterChain;
@@ -22,6 +33,9 @@ import reactor.core.publisher.Mono;
 @Component
 public class DataSecurityFilter extends AbstractFilter {
 
+    @Autowired
+    private RedissonClient redissonClient;
+
     @Override
     public int getOrder() {
         return Order.DATA_SECURITY;
@@ -30,12 +44,20 @@ public class DataSecurityFilter extends AbstractFilter {
     @Override
     protected Mono<Void> filter(ServerWebExchange exchange, WebFilterChain chain, FilterContext filterContext) {
         ApiAccessMetaCache apiAccessMetaCache = filterContext.getApiAccessMetaCache();
-        if (apiAccessMetaCache == null || !apiAccessMetaCache.isDataSecurity()) {
+        if (!apiAccessMetaCache.isDataSecurity()) {
             return chain.filter(exchange);
         }
+
+        String token = filterContext.getToken();
+        if (StringUtils.isBlank(token)) {
+            throw new ParamValidateException(GatewayReturnCodes.TOKEN_MISSING);
+        }
+
+        ServerHttpRequest request = exchange.getRequest();
         HttpMethod httpMethod = exchange.getRequest().getMethod();
         // GET、POST以外的请求不做加解密、签名处理
-        if (httpMethod != HttpMethod.POST && httpMethod != HttpMethod.GET) {
+        MediaType contentType = exchange.getRequest().getHeaders().getContentType();
+        if (!match(contentType, httpMethod)) {
             return chain.filter(exchange);
         }
 
@@ -47,8 +69,21 @@ public class DataSecurityFilter extends AbstractFilter {
         byte signType = apiAccessMetaCache.getSignType();
         // 请求信息验签
         if (SignType.REQUEST.getType() == signType || SignType.ALL.getType() == signType) {
-            RewriteServerHttpRequestDecorator rewriteServerHttpRequestDecorator = (RewriteServerHttpRequestDecorator) exchange.getRequest();
-            String requestBodyStr = rewriteServerHttpRequestDecorator.getBodyStr();
+            String requestStr = null;
+            if (httpMethod == HttpMethod.GET) {
+                requestStr = request.getQueryParams().getFirst(GatewayConstants.REQUEST_ENCRYPT_PARAM_NAME);
+            } else if (httpMethod == HttpMethod.POST) {
+                if (MediaType.APPLICATION_FORM_URLENCODED_VALUE.equals(contentType.toString())) {
+                    requestStr = request.getQueryParams().getFirst(GatewayConstants.REQUEST_ENCRYPT_PARAM_NAME);
+                } else if (MediaType.APPLICATION_JSON_VALUE.equals(contentType.toString())) {
+                    RewriteServerHttpRequestDecorator rewriteServerHttpRequestDecorator = (RewriteServerHttpRequestDecorator) exchange.getRequest();
+                    requestStr = rewriteServerHttpRequestDecorator.getBodyStr();
+                }
+            }
+            if (StringUtils.isNotBlank(requestStr)) {
+                RMapCache<String, SecurityKeyCache> authCache = redissonClient.getMapCache(RedisKeyHelper.getSecurityHashKey());
+                SecurityKeyCache securityKeyCache = authCache.get(RedisKeyHelper.getSecurityKey(token));
+            }
         }
 
         //请求参数是否需要解密
@@ -70,6 +105,20 @@ public class DataSecurityFilter extends AbstractFilter {
 
             }
         });
+    }
+
+    /**
+     * 加解密、签名匹配条件
+     *
+     * @param contentType
+     * @param httpMethod
+     * @return
+     */
+    private boolean match(MediaType contentType, HttpMethod httpMethod) {
+        return (contentType != null
+                && ((httpMethod == HttpMethod.POST && (MediaType.APPLICATION_JSON_VALUE.equals(contentType.toString())
+                || MediaType.APPLICATION_FORM_URLENCODED_VALUE.equals(contentType.toString())))
+                || httpMethod == HttpMethod.GET));
     }
 
 }

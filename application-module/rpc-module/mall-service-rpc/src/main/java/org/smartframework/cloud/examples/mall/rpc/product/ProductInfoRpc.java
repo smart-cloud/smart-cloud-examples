@@ -39,11 +39,11 @@ public interface ProductInfoRpc {
     /**
      * 根据ids查询商品信息
      *
-     * @param reqVO
+     * @param reqDTO
      * @return
      */
     @GetMapping("product/rpc/productInfo/qryProductByIds")
-    Response<QryProductByIdsRespDTO> qryProductByIds(@SpringQueryMap @Valid @NotNull QryProductByIdsReqDTO reqVO);
+    Response<QryProductByIdsRespDTO> qryProductByIds(@SpringQueryMap @Valid @NotNull QryProductByIdsReqDTO reqDTO);
 
     /**
      * 更新库存

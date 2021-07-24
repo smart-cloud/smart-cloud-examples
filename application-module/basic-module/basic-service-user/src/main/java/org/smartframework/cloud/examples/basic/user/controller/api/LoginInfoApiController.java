@@ -41,6 +41,7 @@ public class LoginInfoApiController {
      */
     @PostMapping("login")
     @RequireDataSecurity
+    @RequireTimestamp
     public Response<LoginRespVO> login(@RequestBody @Valid LoginReqVO req) {
         return RespUtil.success(loginInfoApiService.login(req));
     }
