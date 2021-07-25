@@ -236,9 +236,10 @@ support-service-gateway | 400003 | 登录前token失效
 support-service-gateway | 400004 | 登录成功后token失效
 support-service-gateway | 400005 | 请求参数中token缺失
 support-service-gateway | 400006 | 请求签名缺失
-support-service-gateway | 400007 | 当前用户暂未登陆，获取userId失败
-support-service-gateway | 400008 | 未获取到登陆缓存信息
-support-service-gateway | 400009 | 请求时间戳不能为空
-support-service-gateway | 400010 | 请求时间戳格式错误
-support-service-gateway | 400011 | 请求时间戳非法
-support-service-gateway | 400012 | security key过期
+support-service-gateway | 400007 | 请求参数签名校验失败
+support-service-gateway | 400008 | 当前用户暂未登陆，获取userId失败
+support-service-gateway | 400009 | 未获取到登陆缓存信息
+support-service-gateway | 400010 | 请求时间戳不能为空
+support-service-gateway | 400011 | 请求时间戳格式错误
+support-service-gateway | 400012 | 请求时间戳非法
+support-service-gateway | 400013 | security key过期

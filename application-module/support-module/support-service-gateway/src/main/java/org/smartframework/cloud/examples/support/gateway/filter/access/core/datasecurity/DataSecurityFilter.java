@@ -1,5 +1,6 @@
-package org.smartframework.cloud.examples.support.gateway.filter.access.core;
+package org.smartframework.cloud.examples.support.gateway.filter.access.core.datasecurity;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.redisson.api.RMapCache;
 import org.redisson.api.RedissonClient;
@@ -10,6 +11,7 @@ import org.smartframework.cloud.examples.support.gateway.cache.SecurityKeyCache;
 import org.smartframework.cloud.examples.support.gateway.constants.GatewayConstants;
 import org.smartframework.cloud.examples.support.gateway.constants.Order;
 import org.smartframework.cloud.examples.support.gateway.enums.GatewayReturnCodes;
+import org.smartframework.cloud.examples.support.gateway.exception.RequestSignFailException;
 import org.smartframework.cloud.examples.support.gateway.filter.FilterContext;
 import org.smartframework.cloud.examples.support.gateway.filter.access.AbstractFilter;
 import org.smartframework.cloud.examples.support.gateway.filter.rewrite.RewriteServerHttpRequestDecorator;
@@ -23,6 +25,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.http.server.reactive.ServerHttpRequest;
+import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
 import org.springframework.web.server.WebFilterChain;
@@ -36,6 +39,7 @@ import java.security.interfaces.RSAPublicKey;
  * @author collin
  * @date 2021-07-16
  */
+@Slf4j
 @Component
 public class DataSecurityFilter extends AbstractFilter {
 
@@ -74,32 +78,7 @@ public class DataSecurityFilter extends AbstractFilter {
         //接口签名类型
         byte signType = apiAccessMetaCache.getSignType();
         // 请求信息验签
-        if (SignType.REQUEST.getType() == signType || SignType.ALL.getType() == signType) {
-            String sign = WebUtil.getFromRequestHeader(request, SmartHttpHeaders.SIGN);
-            if (StringUtils.isBlank(sign)) {
-                throw new ParamValidateException(GatewayReturnCodes.REQUEST_SIGN_MISSING);
-            }
-            String requestStr = null;
-            if (httpMethod == HttpMethod.GET) {
-                requestStr = request.getQueryParams().getFirst(GatewayConstants.REQUEST_ENCRYPT_PARAM_NAME);
-            } else if (httpMethod == HttpMethod.POST) {
-                if (MediaType.APPLICATION_FORM_URLENCODED_VALUE.equals(contentType.toString())) {
-                    requestStr = request.getQueryParams().getFirst(GatewayConstants.REQUEST_ENCRYPT_PARAM_NAME);
-                } else if (MediaType.APPLICATION_JSON_VALUE.equals(contentType.toString())) {
-                    RewriteServerHttpRequestDecorator rewriteServerHttpRequestDecorator = (RewriteServerHttpRequestDecorator) exchange.getRequest();
-                    requestStr = rewriteServerHttpRequestDecorator.getBodyStr();
-                }
-            }
-            if (StringUtils.isNotBlank(requestStr)) {
-                RMapCache<String, SecurityKeyCache> authCache = redissonClient.getMapCache(RedisKeyHelper.getSecurityHashKey());
-                SecurityKeyCache securityKeyCache = authCache.get(RedisKeyHelper.getSecurityKey(token));
-                if (securityKeyCache == null) {
-                    throw new DataValidateException(GatewayReturnCodes.SECURITY_KEY_EXPIRED);
-                }
-//                RSAPublicKey publicKey = RsaUtil.getRSAPublidKey(securityKeyCache.getCpubKeyModulus(), securityKeyCache.getCpubKeyExponent());
-//                RsaUtil.checkSign(requestStr, sign, publicKey);
-            }
-        }
+        checkRequestSign(request, signType, token);
 
         //请求参数是否需要解密
         boolean requestDecrypt = apiAccessMetaCache.isRequestDecrypt();
@@ -120,6 +99,48 @@ public class DataSecurityFilter extends AbstractFilter {
 
             }
         });
+    }
+
+    private void checkRequestSign(ServerHttpRequest request, byte signType, @NonNull String token) {
+        if (SignType.REQUEST.getType() != signType && SignType.ALL.getType() != signType) {
+            return;
+        }
+        String sign = WebUtil.getFromRequestHeader(request, SmartHttpHeaders.SIGN);
+        if (StringUtils.isBlank(sign)) {
+            throw new ParamValidateException(GatewayReturnCodes.REQUEST_SIGN_MISSING);
+        }
+
+        MediaType contentType = request.getHeaders().getContentType();
+        String requestStr = null;
+        HttpMethod httpMethod = request.getMethod();
+        if (httpMethod == HttpMethod.GET) {
+            requestStr = request.getQueryParams().getFirst(GatewayConstants.REQUEST_ENCRYPT_PARAM_NAME);
+        } else if (httpMethod == HttpMethod.POST) {
+            if (MediaType.APPLICATION_FORM_URLENCODED_VALUE.equals(contentType.toString())) {
+                requestStr = request.getQueryParams().getFirst(GatewayConstants.REQUEST_ENCRYPT_PARAM_NAME);
+            } else if (MediaType.APPLICATION_JSON_VALUE.equals(contentType.toString())) {
+                RewriteServerHttpRequestDecorator rewriteServerHttpRequestDecorator = (RewriteServerHttpRequestDecorator) request;
+                requestStr = rewriteServerHttpRequestDecorator.getBodyStr();
+            }
+        }
+        if (StringUtils.isBlank(requestStr)) {
+            return;
+        }
+        RMapCache<String, SecurityKeyCache> authCache = redissonClient.getMapCache(RedisKeyHelper.getSecurityHashKey());
+        SecurityKeyCache securityKeyCache = authCache.get(RedisKeyHelper.getSecurityKey(token));
+        if (securityKeyCache == null) {
+            throw new DataValidateException(GatewayReturnCodes.SECURITY_KEY_EXPIRED);
+        }
+        boolean signCheckResult = false;
+        try {
+            RSAPublicKey publicKey = RsaUtil.getRSAPublidKey(securityKeyCache.getCpubKeyModulus(), securityKeyCache.getCpubKeyExponent());
+            signCheckResult = RsaUtil.checkSign(requestStr, sign, publicKey);
+        } catch (Exception e) {
+            log.error("sign.check.error", e);
+        }
+        if (!signCheckResult) {
+            throw new RequestSignFailException();
+        }
     }
 
     /**

@@ -1,7 +1,5 @@
 package org.smartframework.cloud.examples.support.gateway.constants;
 
-import org.springframework.core.Ordered;
-
 /**
  * order
  *
