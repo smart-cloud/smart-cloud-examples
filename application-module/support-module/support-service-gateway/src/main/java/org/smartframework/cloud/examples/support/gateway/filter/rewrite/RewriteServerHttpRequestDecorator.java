@@ -28,10 +28,10 @@ public class RewriteServerHttpRequestDecorator extends ServerHttpRequestDecorato
             flux.subscribe(buffer -> {
                 byte[] bytes = RewriteHttpUtil.convert(buffer);
                 bodyStr = new String(bytes, StandardCharsets.UTF_8);
-                body = Flux.just(RewriteHttpUtil.convert(bytes));
+                this.body = Flux.just(RewriteHttpUtil.convert(bytes));
             });
         } else {
-            body = flux;
+            this.body = flux;
         }
     }
 

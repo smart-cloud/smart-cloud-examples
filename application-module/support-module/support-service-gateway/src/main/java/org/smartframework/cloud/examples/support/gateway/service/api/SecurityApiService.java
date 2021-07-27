@@ -75,8 +75,8 @@ public class SecurityApiService {
     public GenerateAesKeyRespVO generateAesKey(GenerateAesKeyReqVO req) throws InvalidKeySpecException, NoSuchAlgorithmException,
             DecoderException, IllegalBlockSizeException, BadPaddingException, NoSuchPaddingException, InvalidKeyException {
         // 1、解密客户端生成的公钥
-        RMapCache<String, SecurityKeyCache> authCache = redissonClient.getMapCache(RedisKeyHelper.getSecurityHashKey());
-        SecurityKeyCache securityKeyCache = authCache.get(RedisKeyHelper.getSecurityKey(req.getToken()));
+        RMapCache<String, SecurityKeyCache> securityKeyMapCache = redissonClient.getMapCache(RedisKeyHelper.getSecurityHashKey());
+        SecurityKeyCache securityKeyCache = securityKeyMapCache.get(RedisKeyHelper.getSecurityKey(req.getToken()));
         if (securityKeyCache == null) {
             throw new DataValidateException(GatewayReturnCodes.TOKEN_EXPIRED_BEFORE_LOGIN);
         }
@@ -90,7 +90,7 @@ public class SecurityApiService {
         securityKeyCache.setCpubKeyExponent(cpubKeyExponent);
         String aesKey = RandomUtil.generateRandom(false, 8);
         securityKeyCache.setAesKey(aesKey);
-        authCache.put(RedisKeyHelper.getSecurityKey(req.getToken()), securityKeyCache, RedisExpire.SECURITY_KEY_EXPIRE_SECONDS_NON_LOGIN, TimeUnit.SECONDS);
+        securityKeyMapCache.put(RedisKeyHelper.getSecurityKey(req.getToken()), securityKeyCache, RedisExpire.SECURITY_KEY_EXPIRE_SECONDS_NON_LOGIN, TimeUnit.SECONDS);
 
         // 3、加密aes key
         // 客户端生成的公钥

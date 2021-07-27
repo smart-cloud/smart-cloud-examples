@@ -2,36 +2,21 @@ package org.smartframework.cloud.examples.support.gateway.filter.access.core.dat
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
-import org.redisson.api.RMapCache;
 import org.redisson.api.RedissonClient;
-import org.smartframework.cloud.api.core.annotation.enums.SignType;
-import org.smartframework.cloud.common.web.constants.SmartHttpHeaders;
 import org.smartframework.cloud.examples.support.gateway.cache.ApiAccessMetaCache;
-import org.smartframework.cloud.examples.support.gateway.cache.SecurityKeyCache;
-import org.smartframework.cloud.examples.support.gateway.constants.GatewayConstants;
 import org.smartframework.cloud.examples.support.gateway.constants.Order;
 import org.smartframework.cloud.examples.support.gateway.enums.GatewayReturnCodes;
-import org.smartframework.cloud.examples.support.gateway.exception.RequestSignFailException;
 import org.smartframework.cloud.examples.support.gateway.filter.FilterContext;
 import org.smartframework.cloud.examples.support.gateway.filter.access.AbstractFilter;
-import org.smartframework.cloud.examples.support.gateway.filter.rewrite.RewriteServerHttpRequestDecorator;
-import org.smartframework.cloud.examples.support.gateway.filter.rewrite.RewriteServerHttpResponseDecorator;
-import org.smartframework.cloud.examples.support.gateway.util.RedisKeyHelper;
-import org.smartframework.cloud.examples.support.gateway.util.WebUtil;
-import org.smartframework.cloud.exception.DataValidateException;
 import org.smartframework.cloud.exception.ParamValidateException;
-import org.smartframework.cloud.utility.security.RsaUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.http.server.reactive.ServerHttpRequest;
-import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
 import org.springframework.web.server.WebFilterChain;
 import reactor.core.publisher.Mono;
-
-import java.security.interfaces.RSAPublicKey;
 
 /**
  * 数据安全（加解密、签名）处理过滤器
@@ -63,84 +48,17 @@ public class DataSecurityFilter extends AbstractFilter {
             throw new ParamValidateException(GatewayReturnCodes.TOKEN_MISSING);
         }
 
-        ServerHttpRequest request = exchange.getRequest();
         HttpMethod httpMethod = exchange.getRequest().getMethod();
-        // GET、POST以外的请求不做加解密、签名处理
         MediaType contentType = exchange.getRequest().getHeaders().getContentType();
         if (!match(contentType, httpMethod)) {
             return chain.filter(exchange);
         }
 
-        // TODO:
-        // request：GET、POST（application/x-www-form-urlencoded、application/json）
-        // response：application/json
-
-        //接口签名类型
-        byte signType = apiAccessMetaCache.getSignType();
-        // 请求信息验签
-        checkRequestSign(request, signType, token);
-
-        //请求参数是否需要解密
-        boolean requestDecrypt = apiAccessMetaCache.isRequestDecrypt();
-        if (requestDecrypt) {
-
-        }
-
-        return chain.filter(exchange).doFinally(s -> {
-            //响应信息是否需要加密
-            boolean responseEncrypt = apiAccessMetaCache.isResponseEncrypt();
-            if (responseEncrypt) {
-                RewriteServerHttpResponseDecorator rewriteServerHttpResponseDecorator = (RewriteServerHttpResponseDecorator) exchange.getResponse();
-                String responseBodyStr = rewriteServerHttpResponseDecorator.getBodyStr();
-            }
-
-            // 响应信息签名
-            if (SignType.RESPONSE.getType() == signType || SignType.ALL.getType() == signType) {
-
-            }
-        });
-    }
-
-    private void checkRequestSign(ServerHttpRequest request, byte signType, @NonNull String token) {
-        if (SignType.REQUEST.getType() != signType && SignType.ALL.getType() != signType) {
-            return;
-        }
-        String sign = WebUtil.getFromRequestHeader(request, SmartHttpHeaders.SIGN);
-        if (StringUtils.isBlank(sign)) {
-            throw new ParamValidateException(GatewayReturnCodes.REQUEST_SIGN_MISSING);
-        }
-
-        MediaType contentType = request.getHeaders().getContentType();
-        String requestStr = null;
-        HttpMethod httpMethod = request.getMethod();
-        if (httpMethod == HttpMethod.GET) {
-            requestStr = request.getQueryParams().getFirst(GatewayConstants.REQUEST_ENCRYPT_PARAM_NAME);
-        } else if (httpMethod == HttpMethod.POST) {
-            if (MediaType.APPLICATION_FORM_URLENCODED_VALUE.equals(contentType.toString())) {
-                requestStr = request.getQueryParams().getFirst(GatewayConstants.REQUEST_ENCRYPT_PARAM_NAME);
-            } else if (MediaType.APPLICATION_JSON_VALUE.equals(contentType.toString())) {
-                RewriteServerHttpRequestDecorator rewriteServerHttpRequestDecorator = (RewriteServerHttpRequestDecorator) request;
-                requestStr = rewriteServerHttpRequestDecorator.getBodyStr();
-            }
-        }
-        if (StringUtils.isBlank(requestStr)) {
-            return;
-        }
-        RMapCache<String, SecurityKeyCache> authCache = redissonClient.getMapCache(RedisKeyHelper.getSecurityHashKey());
-        SecurityKeyCache securityKeyCache = authCache.get(RedisKeyHelper.getSecurityKey(token));
-        if (securityKeyCache == null) {
-            throw new DataValidateException(GatewayReturnCodes.SECURITY_KEY_EXPIRED);
-        }
-        boolean signCheckResult = false;
-        try {
-            RSAPublicKey publicKey = RsaUtil.getRSAPublidKey(securityKeyCache.getCpubKeyModulus(), securityKeyCache.getCpubKeyExponent());
-            signCheckResult = RsaUtil.checkSign(requestStr, sign, publicKey);
-        } catch (Exception e) {
-            log.error("sign.check.error", e);
-        }
-        if (!signCheckResult) {
-            throw new RequestSignFailException();
-        }
+        return chain.filter(exchange.mutate()
+                .request(new DataSecurityServerHttpRequestDecorator(exchange.getRequest(), token, apiAccessMetaCache.isRequestDecrypt(),
+                        apiAccessMetaCache.getSignType(), redissonClient))
+                .response(new DataSecurityServerHttpResponseDecorator(exchange.getResponse(), apiAccessMetaCache.isResponseEncrypt(), apiAccessMetaCache.getSignType()))
+                .build());
     }
 
     /**
@@ -151,6 +69,7 @@ public class DataSecurityFilter extends AbstractFilter {
      * @return
      */
     private boolean match(MediaType contentType, HttpMethod httpMethod) {
+        // GET、POST以外的请求不做加解密、签名处理
         return (contentType != null
                 && ((httpMethod == HttpMethod.POST && (MediaType.APPLICATION_JSON_VALUE.equals(contentType.toString())
                 || MediaType.APPLICATION_FORM_URLENCODED_VALUE.equals(contentType.toString())))

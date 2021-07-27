@@ -60,7 +60,11 @@ public enum GatewayReturnCodes implements IBaseReturnCodes {
     /**
      * security key过期
      */
-    SECURITY_KEY_EXPIRED("400013");
+    SECURITY_KEY_EXPIRED("400013"),
+    /**
+     * AES key获取失败
+     */
+    AES_KEY_NOT_FOUND("400014");
 
     /**
      * 状态码

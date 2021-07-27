@@ -243,3 +243,4 @@ support-service-gateway | 400010 | 请求时间戳不能为空
 support-service-gateway | 400011 | 请求时间戳格式错误
 support-service-gateway | 400012 | 请求时间戳非法
 support-service-gateway | 400013 | security key过期
+support-service-gateway | 400014 | AES key获取失败
