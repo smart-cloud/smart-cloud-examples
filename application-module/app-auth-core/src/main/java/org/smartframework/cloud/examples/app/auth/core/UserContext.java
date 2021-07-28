@@ -1,7 +1,7 @@
 package org.smartframework.cloud.examples.app.auth.core;
 
 import org.smartframework.cloud.api.core.user.context.AbstractUserContext;
-import org.smartframework.cloud.api.core.user.context.ParentUserBO;
+import org.smartframework.cloud.api.core.user.context.SmartUser;
 import org.smartframework.cloud.common.web.util.WebServletUtil;
 import org.smartframework.cloud.examples.app.auth.core.exception.SmartUserMissingException;
 import org.smartframework.cloud.utility.JacksonUtil;
@@ -12,6 +12,7 @@ import org.springframework.util.Base64Utils;
 
 import javax.servlet.http.HttpServletRequest;
 import java.nio.charset.StandardCharsets;
+import java.util.Optional;
 
 /**
  * 用户上下文
@@ -27,13 +28,9 @@ public class UserContext extends AbstractUserContext {
      * @return
      */
     @NonNull
-    public static SmartUser getContext() {
-        SmartUser smartUser = getContextable();
-        if (smartUser == null) {
-            throw new SmartUserMissingException();
-        }
-
-        return smartUser;
+    public static MySmartUser getContext() {
+        return Optional.ofNullable(getContextable())
+                .orElseThrow(() -> new SmartUserMissingException());
     }
 
     /**
@@ -42,15 +39,15 @@ public class UserContext extends AbstractUserContext {
      * @return
      */
     @Nullable
-    public static SmartUser getContextable() {
-        ParentUserBO parentUserBO = USER_THREAD_LOCAL.get();
-        if (parentUserBO != null) {
-            if (parentUserBO instanceof SmartUser) {
-                return (SmartUser) parentUserBO;
+    public static MySmartUser getContextable() {
+        SmartUser smartUser = USER_THREAD_LOCAL.get();
+        if (smartUser != null) {
+            if (smartUser instanceof MySmartUser) {
+                return (MySmartUser) smartUser;
             } else {
-                SmartUser smartUser = new SmartUser();
-                BeanUtils.copyProperties(parentUserBO, smartUser);
-                return smartUser;
+                MySmartUser mySmartUser = new MySmartUser();
+                BeanUtils.copyProperties(smartUser, mySmartUser);
+                return mySmartUser;
             }
         }
 
@@ -63,9 +60,9 @@ public class UserContext extends AbstractUserContext {
             return null;
         }
 
-        SmartUser smartUser = JacksonUtil.parseObject(new String(Base64Utils.decodeFromUrlSafeString(userJson), StandardCharsets.UTF_8), SmartUser.class);
-        USER_THREAD_LOCAL.set(smartUser);
-        return smartUser;
+        MySmartUser mySmartUser = JacksonUtil.parseObject(new String(Base64Utils.decodeFromUrlSafeString(userJson), StandardCharsets.UTF_8), MySmartUser.class);
+        USER_THREAD_LOCAL.set(mySmartUser);
+        return mySmartUser;
     }
 
     /**

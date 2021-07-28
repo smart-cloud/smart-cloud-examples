@@ -7,7 +7,7 @@ import org.redisson.api.RedissonClient;
 import org.smartframework.cloud.common.pojo.Response;
 import org.smartframework.cloud.common.pojo.ResponseHead;
 import org.smartframework.cloud.examples.app.auth.core.AppAuthConstants;
-import org.smartframework.cloud.examples.app.auth.core.SmartUser;
+import org.smartframework.cloud.examples.app.auth.core.MySmartUser;
 import org.smartframework.cloud.examples.basic.rpc.auth.AuthRpc;
 import org.smartframework.cloud.examples.basic.rpc.auth.response.rpc.AuthRespDTO;
 import org.smartframework.cloud.examples.support.gateway.cache.ApiAccessMetaCache;
@@ -75,9 +75,9 @@ public class AuthFilter extends AbstractFilter {
             throw new DataValidateException(GatewayReturnCodes.TOKEN_MISSING);
         }
 
-        RMapCache<String, SmartUser> userCache = redissonClient.getMapCache(RedisKeyHelper.getUserHashKey());
-        SmartUser smartUser = userCache.get(RedisKeyHelper.getUserKey(token));
-        if (smartUser == null) {
+        RMapCache<String, MySmartUser> userCache = redissonClient.getMapCache(RedisKeyHelper.getUserHashKey());
+        MySmartUser mySmartUser = userCache.get(RedisKeyHelper.getUserKey(token));
+        if (mySmartUser == null) {
             throw new BusinessException(GatewayReturnCodes.TOKEN_EXPIRED_LOGIN_SUCCESS);
         }
 
@@ -93,14 +93,14 @@ public class AuthFilter extends AbstractFilter {
             }
         }
         // 2、再从一级缓存判断
-        boolean pass = checkAuth(apiAccessMetaCache, token, smartUser.getId());
+        boolean pass = checkAuth(apiAccessMetaCache, token, mySmartUser.getId());
         userAuthSecondaryCacheMapCache.put(filterContext.getUrlMethod(), pass, RedisExpire.USER_EXPIRE_SECONDS_LOGIN_SUCCESS, TimeUnit.SECONDS);
         if (!pass) {
             throw new AuthenticationException();
         }
 
         // 3、将用户信息塞入http header
-        ServerHttpRequest newServerHttpRequest = fillUserInHeader(exchange.getRequest(), smartUser);
+        ServerHttpRequest newServerHttpRequest = fillUserInHeader(exchange.getRequest(), mySmartUser);
         return chain.filter(exchange.mutate().request(newServerHttpRequest).build());
     }
 
@@ -183,11 +183,11 @@ public class AuthFilter extends AbstractFilter {
      * 将用户登录相关信息塞进http header中，供后续服务使用（后续服务将从header中取）
      *
      * @param request
-     * @param smartUser
+     * @param mySmartUser
      */
-    public ServerHttpRequest fillUserInHeader(ServerHttpRequest request, SmartUser smartUser) {
+    public ServerHttpRequest fillUserInHeader(ServerHttpRequest request, MySmartUser mySmartUser) {
         // base64处理，解决中文乱码
-        String authUserBase64 = Base64Utils.encodeToUrlSafeString(JacksonUtil.toJson(smartUser).getBytes(StandardCharsets.UTF_8));
+        String authUserBase64 = Base64Utils.encodeToUrlSafeString(JacksonUtil.toJson(mySmartUser).getBytes(StandardCharsets.UTF_8));
         return request.mutate().header(AppAuthConstants.HEADER_USER, authUserBase64).build();
     }
 

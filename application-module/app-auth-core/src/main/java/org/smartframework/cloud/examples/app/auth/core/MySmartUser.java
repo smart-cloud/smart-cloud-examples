@@ -3,7 +3,7 @@ package org.smartframework.cloud.examples.app.auth.core;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import org.smartframework.cloud.api.core.user.context.ParentUserBO;
+import org.smartframework.cloud.api.core.user.context.SmartUser;
 
 /**
  * 用户信息
@@ -14,7 +14,7 @@ import org.smartframework.cloud.api.core.user.context.ParentUserBO;
 @Getter
 @Setter
 @ToString
-public class SmartUser extends ParentUserBO {
+public class MySmartUser extends SmartUser {
 
     // 各应用用户信息
 
