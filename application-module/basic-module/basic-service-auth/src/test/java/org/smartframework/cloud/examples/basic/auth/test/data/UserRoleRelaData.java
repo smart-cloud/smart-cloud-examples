@@ -2,7 +2,7 @@ package org.smartframework.cloud.examples.basic.auth.test.data;
 
 import org.smartframework.cloud.examples.basic.auth.biz.oms.UserRoleOmsBiz;
 import org.smartframework.cloud.examples.basic.auth.entity.base.UserRoleRelaEntity;
-import org.smartframework.cloud.starter.mybatis.common.mapper.constants.DelState;
+import org.smartframework.cloud.starter.mybatis.plus.common.mapper.constants.DelState;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

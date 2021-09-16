@@ -26,7 +26,7 @@ import org.smartframework.cloud.exception.ParamValidateException;
 import org.smartframework.cloud.exception.RpcException;
 import org.smartframework.cloud.exception.ServerException;
 import org.smartframework.cloud.starter.core.business.util.RespUtil;
-import org.smartframework.cloud.starter.mybatis.common.mapper.constants.DelState;
+import org.smartframework.cloud.starter.mybatis.plus.common.mapper.constants.DelState;
 import org.smartframework.cloud.utility.PasswordUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

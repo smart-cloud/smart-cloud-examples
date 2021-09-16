@@ -8,8 +8,9 @@ import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 import org.smartframework.cloud.mask.MaskRule;
 import org.smartframework.cloud.mask.MaskLog;
+import org.smartframework.cloud.starter.mybatis.plus.common.mapper.entity.BaseEntity;
+
 import java.util.Date;
-import org.smartframework.cloud.starter.mybatis.common.mapper.entity.BaseEntity;
 
 /**
  * 登录信息

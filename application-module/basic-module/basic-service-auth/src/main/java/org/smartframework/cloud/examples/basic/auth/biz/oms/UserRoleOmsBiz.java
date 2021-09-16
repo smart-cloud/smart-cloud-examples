@@ -9,8 +9,8 @@ import org.smartframework.cloud.examples.basic.auth.mapper.base.UserRoleRelaBase
 import org.smartframework.cloud.examples.basic.auth.mapper.oms.UserRoleOmsMapper;
 import org.smartframework.cloud.examples.basic.rpc.auth.response.oms.user.role.UserRoleRespVO;
 import org.smartframework.cloud.examples.common.config.constants.DataSourceName;
-import org.smartframework.cloud.starter.mybatis.common.biz.BaseBiz;
-import org.smartframework.cloud.starter.mybatis.common.mapper.constants.DelState;
+import org.smartframework.cloud.starter.mybatis.plus.common.biz.BaseBiz;
+import org.smartframework.cloud.starter.mybatis.plus.common.mapper.constants.DelState;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -37,7 +37,7 @@ public class UserRoleOmsBiz extends BaseBiz<UserRoleRelaBaseMapper, UserRoleRela
      */
     public Boolean create(Long uid, Set<Long> roleIds, Long createUid) {
         List<UserRoleRelaEntity> userRoleRelaEntities = roleIds.stream().map(roleId -> {
-            UserRoleRelaEntity entity = super.create();
+            UserRoleRelaEntity entity = super.buildEntity();
             entity.setRoleInfoId(roleId);
             entity.setUserInfoId(uid);
             entity.setInsertUser(createUid);

@@ -17,8 +17,8 @@ import org.smartframework.cloud.examples.basic.rpc.auth.request.oms.role.permiss
 import org.smartframework.cloud.examples.basic.rpc.auth.response.oms.role.permisson.PermissionInfoRespVO;
 import org.smartframework.cloud.examples.basic.rpc.auth.response.oms.role.permisson.RolePermissionRespVO;
 import org.smartframework.cloud.examples.common.config.constants.DataSourceName;
-import org.smartframework.cloud.starter.mybatis.common.biz.BaseBiz;
-import org.smartframework.cloud.starter.mybatis.common.mapper.constants.DelState;
+import org.smartframework.cloud.starter.mybatis.plus.common.biz.BaseBiz;
+import org.smartframework.cloud.starter.mybatis.plus.common.mapper.constants.DelState;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -45,7 +45,7 @@ public class RolePermissionOmsBiz extends BaseBiz<RolePermissionRelaBaseMapper, 
      */
     public Boolean create(Long roleId, Set<Long> permissonIds, Long uid) {
         List<RolePermissionRelaEntity> rolePermissionRelaEntities = permissonIds.stream().map(permissonId -> {
-            RolePermissionRelaEntity entity = super.create();
+            RolePermissionRelaEntity entity = super.buildEntity();
             entity.setRoleInfoId(roleId);
             entity.setPermissionInfoId(permissonId);
             entity.setInsertUser(uid);

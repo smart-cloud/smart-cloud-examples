@@ -12,7 +12,7 @@ public class RoleInfoData {
     private RoleInfoOmsBiz roleInfoOmsBiz;
 
     public RoleInfoEntity insert() {
-        RoleInfoEntity entity = roleInfoOmsBiz.create();
+        RoleInfoEntity entity = roleInfoOmsBiz.buildEntity();
         entity.setCode("admin");
         entity.setDescription("管理员");
         entity.setInsertUser(1L);

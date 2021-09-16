@@ -27,7 +27,7 @@ import org.smartframework.cloud.exception.BusinessException;
 import org.smartframework.cloud.exception.ServerException;
 import org.smartframework.cloud.starter.core.business.util.RespUtil;
 import org.smartframework.cloud.starter.core.business.util.SnowFlakeIdUtil;
-import org.smartframework.cloud.starter.mybatis.common.mapper.constants.DelState;
+import org.smartframework.cloud.starter.mybatis.plus.common.mapper.constants.DelState;
 import org.smartframework.cloud.utility.ObjectUtil;
 import org.smartframework.cloud.utility.spring.SpringContextUtil;
 import org.springframework.beans.factory.annotation.Autowired;

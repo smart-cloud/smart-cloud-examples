@@ -6,7 +6,7 @@ import org.smartframework.cloud.examples.basic.rpc.user.request.api.user.UserInf
 import org.smartframework.cloud.examples.basic.user.entity.base.UserInfoEntity;
 import org.smartframework.cloud.examples.basic.user.mapper.base.UserInfoBaseMapper;
 import org.smartframework.cloud.examples.common.config.constants.DataSourceName;
-import org.smartframework.cloud.starter.mybatis.common.biz.BaseBiz;
+import org.smartframework.cloud.starter.mybatis.plus.common.biz.BaseBiz;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -20,7 +20,7 @@ public class UserInfoApiBiz extends BaseBiz<UserInfoBaseMapper, UserInfoEntity> 
      * @return
      */
     public UserInfoEntity insert(UserInfoInsertReqVO userInfo) {
-        UserInfoEntity userInfoEntity = create();
+        UserInfoEntity userInfoEntity = super.buildEntity();
         userInfoEntity.setMobile(userInfo.getMobile());
         userInfoEntity.setNickName(userInfo.getNickname());
         userInfoEntity.setRealName(userInfo.getRealname());

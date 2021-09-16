@@ -5,9 +5,9 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import org.smartframework.cloud.examples.mall.order.entity.base.OrderBillEntity;
 import org.smartframework.cloud.examples.mall.order.mapper.base.OrderBillBaseMapper;
 import org.smartframework.cloud.examples.mall.rpc.enums.order.OrderStatus;
-import org.smartframework.cloud.starter.mybatis.common.biz.BaseBiz;
-import org.smartframework.cloud.starter.mybatis.common.mapper.constants.DelState;
-import org.smartframework.cloud.starter.mybatis.constants.ShardingJdbcDS;
+import org.smartframework.cloud.starter.mp.shardingjdbc.constants.ShardingjdbcDatasourceNames;
+import org.smartframework.cloud.starter.mybatis.plus.common.biz.BaseBiz;
+import org.smartframework.cloud.starter.mybatis.plus.common.mapper.constants.DelState;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -17,7 +17,7 @@ import org.springframework.stereotype.Repository;
  * @date 2019-04-08
  */
 @Repository
-@DS(ShardingJdbcDS.MASTER)
+@DS(ShardingjdbcDatasourceNames.SHARDING_DATASOURCE)
 public class OrderBillApiBiz extends BaseBiz<OrderBillBaseMapper, OrderBillEntity> {
 
     public long create(OrderBillEntity entity) {
@@ -31,7 +31,6 @@ public class OrderBillApiBiz extends BaseBiz<OrderBillBaseMapper, OrderBillEntit
      * @param orderNo 订单号
      * @return
      */
-    @DS(ShardingJdbcDS.SLAVE)
     public OrderBillEntity getByOrderNo(String orderNo) {
         return super.getOne(new LambdaQueryWrapper<OrderBillEntity>()
                 .eq(OrderBillEntity::getOrderNo, orderNo)

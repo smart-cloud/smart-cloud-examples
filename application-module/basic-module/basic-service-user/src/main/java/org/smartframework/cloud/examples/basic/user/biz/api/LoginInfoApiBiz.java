@@ -7,7 +7,7 @@ import org.smartframework.cloud.examples.basic.user.bo.login.LoginInfoInsertBizB
 import org.smartframework.cloud.examples.basic.user.entity.base.LoginInfoEntity;
 import org.smartframework.cloud.examples.basic.user.mapper.base.LoginInfoBaseMapper;
 import org.smartframework.cloud.examples.common.config.constants.DataSourceName;
-import org.smartframework.cloud.starter.mybatis.common.biz.BaseBiz;
+import org.smartframework.cloud.starter.mybatis.plus.common.biz.BaseBiz;
 import org.springframework.stereotype.Repository;
 
 import java.util.Date;
@@ -23,7 +23,7 @@ public class LoginInfoApiBiz extends BaseBiz<LoginInfoBaseMapper, LoginInfoEntit
      * @return
      */
     public LoginInfoEntity insert(LoginInfoInsertBizBO bo) {
-        LoginInfoEntity entity = create();
+        LoginInfoEntity entity = super.buildEntity();
         entity.setUserId(bo.getUserId());
         entity.setUsername(bo.getUsername());
         entity.setSalt(bo.getSalt());

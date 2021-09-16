@@ -12,8 +12,8 @@ import org.smartframework.cloud.examples.mall.product.entity.base.ProductInfoEnt
 import org.smartframework.cloud.examples.mall.product.mapper.base.ProductInfoBaseMapper;
 import org.smartframework.cloud.examples.mall.rpc.product.request.api.PageProductReqVO;
 import org.smartframework.cloud.examples.mall.rpc.product.response.api.PageProductRespVO;
-import org.smartframework.cloud.starter.mybatis.common.biz.BaseBiz;
-import org.smartframework.cloud.starter.mybatis.common.mapper.constants.DelState;
+import org.smartframework.cloud.starter.mybatis.plus.common.biz.BaseBiz;
+import org.smartframework.cloud.starter.mybatis.plus.common.mapper.constants.DelState;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;

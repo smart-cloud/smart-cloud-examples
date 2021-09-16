@@ -12,8 +12,8 @@ import org.smartframework.cloud.examples.mall.rpc.product.request.oms.PageProduc
 import org.smartframework.cloud.examples.mall.rpc.product.request.oms.ProductInsertReqVO;
 import org.smartframework.cloud.examples.mall.rpc.product.request.oms.ProductUpdateReqVO;
 import org.smartframework.cloud.examples.mall.rpc.product.response.base.ProductInfoBaseRespVO;
-import org.smartframework.cloud.starter.mybatis.common.biz.BaseBiz;
-import org.smartframework.cloud.starter.mybatis.common.mapper.constants.DelState;
+import org.smartframework.cloud.starter.mybatis.plus.common.biz.BaseBiz;
+import org.smartframework.cloud.starter.mybatis.plus.common.mapper.constants.DelState;
 import org.springframework.stereotype.Repository;
 
 import java.util.Date;
@@ -35,7 +35,7 @@ public class ProductInfoOmsBiz extends BaseBiz<ProductInfoBaseMapper, ProductInf
      * @return
      */
     public boolean insert(ProductInsertReqVO reqBody) {
-        ProductInfoEntity productInfoEntity = create();
+        ProductInfoEntity productInfoEntity = super.buildEntity();
         productInfoEntity.setName(reqBody.getName());
         productInfoEntity.setSellPrice(reqBody.getSellPrice());
         productInfoEntity.setStock(reqBody.getStock());

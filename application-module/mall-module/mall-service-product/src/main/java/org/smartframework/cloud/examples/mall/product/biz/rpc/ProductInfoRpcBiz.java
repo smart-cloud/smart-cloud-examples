@@ -8,7 +8,7 @@ import org.smartframework.cloud.examples.mall.rpc.product.request.rpc.QryProduct
 import org.smartframework.cloud.examples.mall.rpc.product.request.rpc.UpdateStockReqDTO.UpdateStockItem;
 import org.smartframework.cloud.examples.mall.rpc.product.response.rpc.QryProductByIdRespDTO;
 import org.smartframework.cloud.examples.mall.rpc.product.response.rpc.QryProductByIdsRespDTO;
-import org.smartframework.cloud.starter.mybatis.common.biz.BaseBiz;
+import org.smartframework.cloud.starter.mybatis.plus.common.biz.BaseBiz;
 import org.smartframework.cloud.utility.ObjectUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;

@@ -3,7 +3,7 @@ package org.smartframework.cloud.examples.mall.order.service.api;
 import com.baomidou.dynamic.datasource.annotation.DS;
 import org.smartframework.cloud.examples.mall.order.biz.api.OrderDeliveryInfoApiBiz;
 import org.smartframework.cloud.examples.mall.order.entity.base.OrderDeliveryInfoEntity;
-import org.smartframework.cloud.starter.mybatis.constants.ShardingJdbcDS;
+import org.smartframework.cloud.starter.mp.shardingjdbc.constants.ShardingjdbcDatasourceNames;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,7 +16,7 @@ import java.util.List;
  * @date 2020-09-28
  */
 @Service
-@DS(ShardingJdbcDS.MASTER)
+@DS(ShardingjdbcDatasourceNames.SHARDING_DATASOURCE)
 public class OrderDeliveryInfoApiService {
 
     @Autowired

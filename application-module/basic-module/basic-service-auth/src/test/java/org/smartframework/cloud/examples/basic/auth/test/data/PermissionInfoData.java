@@ -12,7 +12,7 @@ public class PermissionInfoData {
     private PermissionInfoOmsBiz permissionInfoOmsBiz;
 
     public PermissionInfoEntity insert() {
-        PermissionInfoEntity entity = permissionInfoOmsBiz.create();
+        PermissionInfoEntity entity = permissionInfoOmsBiz.buildEntity();
         entity.setCode("/auth/oms/permission/create");
         entity.setDescription("创建权限");
         entity.setInsertUser(1L);

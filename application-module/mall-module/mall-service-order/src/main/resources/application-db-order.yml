@@ -1,35 +1,42 @@
 spring:
   shardingsphere:
     datasource:
-      names: mall-order-0, mall-order-1, mall-order-slave-0, mall-order-slave-1
-      mall-order-0:
+      names: mallordermaster-0, mallordermaster-1, mallorderslave-0, mallorderslave-1
+      mallordermaster-0:
         type: com.zaxxer.hikari.HikariDataSource
         driver-class-name: com.mysql.cj.jdbc.Driver
         jdbc-url: jdbc:mysql://127.0.0.1:3306/demo_order_0?serverTimezone=Asia/Shanghai&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true
         username: root
         password: 123456
-      mall-order-1:
+      mallordermaster-1:
         type: com.zaxxer.hikari.HikariDataSource
         driver-class-name: com.mysql.cj.jdbc.Driver
         jdbc-url: jdbc:mysql://127.0.0.1:3306/demo_order_1?serverTimezone=Asia/Shanghai&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true
         username: root
         password: 123456
-      mall-order-slave-0:
+      mallorderslave-0:
         type: com.zaxxer.hikari.HikariDataSource
         driver-class-name: com.mysql.cj.jdbc.Driver
         jdbc-url: jdbc:mysql://127.0.0.1:3306/demo_order_0?serverTimezone=Asia/Shanghai&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true
         username: root
         password: 123456
-      mall-order-slave-1:
+      mallorderslave-1:
         type: com.zaxxer.hikari.HikariDataSource
         driver-class-name: com.mysql.cj.jdbc.Driver
         jdbc-url: jdbc:mysql://127.0.0.1:3306/demo_order_1?serverTimezone=Asia/Shanghai&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true
         username: root
         password: 123456
     sharding:
+      master-slave-rules:
+        mallorder0:
+          master-data-source-name: mallordermaster-0
+          slave-data-source-names: mallorderslave-0
+        mallorder1:
+          master-data-source-name: mallordermaster-1
+          slave-data-source-names: mallorderslave-1
       tables:
         t_order_bill:
-          actual-data-nodes: mall-order-$->{0..1}.t_order_bill_$->{0..99},mall-order-slave-$->{0..1}.t_order_bill_$->{0..99}
+          actual-data-nodes: mallorder$->{0..1}.t_order_bill_$->{0..99}
           database-strategy:
             complex:
               algorithm-class-name: org.smartframework.cloud.examples.mall.order.shardingjdbc.OrderBillDatabaseShardingAlgorithm
@@ -39,7 +46,7 @@ spring:
               algorithm-class-name: org.smartframework.cloud.examples.mall.order.shardingjdbc.OrderBillTableShardingAlgorithm
               sharding-columns: f_buyer,f_order_no
         t_order_delivery_info:
-          actual-data-nodes: mall-order-$->{0..1}.t_order_delivery_info_$->{0..99},mall-order-slave-$->{0..1}.t_order_delivery_info_$->{0..99}
+          actual-data-nodes: mallorder$->{0..1}.t_order_delivery_info_$->{0..99}
           database-strategy:
             standard:
               precise-algorithm-class-name: org.smartframework.cloud.examples.mall.order.shardingjdbc.OrderDeliveryInfoDatabaseShardingAlgorithm

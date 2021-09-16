@@ -12,8 +12,8 @@ import org.smartframework.cloud.examples.basic.rpc.auth.request.oms.role.RoleCre
 import org.smartframework.cloud.examples.basic.rpc.auth.request.oms.role.RoleUpdateReqVO;
 import org.smartframework.cloud.examples.basic.rpc.auth.response.base.RoleInfoBaseRespVO;
 import org.smartframework.cloud.examples.common.config.constants.DataSourceName;
-import org.smartframework.cloud.starter.mybatis.common.biz.BaseBiz;
-import org.smartframework.cloud.starter.mybatis.common.mapper.constants.DelState;
+import org.smartframework.cloud.starter.mybatis.plus.common.biz.BaseBiz;
+import org.smartframework.cloud.starter.mybatis.plus.common.mapper.constants.DelState;
 import org.springframework.stereotype.Repository;
 
 import java.util.Date;
@@ -45,7 +45,7 @@ public class RoleInfoOmsBiz extends BaseBiz<RoleInfoBaseMapper, RoleInfoEntity> 
      * @return
      */
     public Boolean create(RoleCreateReqVO req) {
-        RoleInfoEntity entity = create();
+        RoleInfoEntity entity = super.buildEntity();
         entity.setCode(req.getCode());
         entity.setDescription(req.getDesc());
         entity.setInsertUser(UserContext.getUserId());
