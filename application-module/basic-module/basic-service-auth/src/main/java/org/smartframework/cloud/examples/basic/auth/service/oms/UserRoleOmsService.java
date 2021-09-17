@@ -1,5 +1,6 @@
 package org.smartframework.cloud.examples.basic.auth.service.oms;
 
+import com.baomidou.dynamic.datasource.annotation.DSTransactional;
 import org.smartframework.cloud.examples.app.auth.core.UserContext;
 import org.smartframework.cloud.examples.basic.auth.biz.oms.UserRoleOmsBiz;
 import org.smartframework.cloud.examples.basic.rpc.auth.request.oms.user.role.UserRoleCreateReqVO;
@@ -7,7 +8,6 @@ import org.smartframework.cloud.examples.basic.rpc.auth.request.oms.user.role.Us
 import org.smartframework.cloud.examples.basic.rpc.auth.response.oms.user.role.UserRoleRespVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -33,7 +33,7 @@ public class UserRoleOmsService {
      * @param req
      * @return
      */
-    @Transactional(rollbackFor = Exception.class)
+    @DSTransactional
     public Boolean update(UserRoleUpdateReqVO req) {
         userRoleOmsBiz.logicDelete(req.getUid());
         userRoleOmsBiz.create(req.getUid(), req.getRoleIds(), UserContext.getUserId());
@@ -49,6 +49,5 @@ public class UserRoleOmsService {
     public List<UserRoleRespVO> listRole(Long uid) {
         return userRoleOmsBiz.listRole(uid);
     }
-
 
 }

@@ -1,5 +1,6 @@
 package org.smartframework.cloud.examples.mall.order.service.api;
 
+import com.baomidou.dynamic.datasource.annotation.DSTransactional;
 import io.seata.spring.annotation.GlobalTransactional;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
@@ -119,7 +120,7 @@ public class OrderApiService {
      * @param products
      * @param productInfos
      */
-    @Transactional(rollbackFor = Exception.class)
+    @DSTransactional
     public void createOrder(String orderNo, Long userId, List<SubmitOrderProductInfoReqVO> products, List<QryProductByIdRespDTO> productInfos) {
         List<OrderDeliveryInfoEntity> entities = saveOrderDeliveryInfo(orderNo, products, productInfos);
         saveOrderBill(orderNo, userId, entities);

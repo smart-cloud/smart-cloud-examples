@@ -1,5 +1,8 @@
 package org.smartframework.cloud.examples.mall.product.service.rpc;
 
+import com.baomidou.dynamic.datasource.annotation.DS;
+import com.baomidou.dynamic.datasource.annotation.DSTransactional;
+import org.smartframework.cloud.examples.common.config.constants.DataSourceName;
 import org.smartframework.cloud.examples.mall.product.biz.rpc.ProductInfoRpcBiz;
 import org.smartframework.cloud.examples.mall.rpc.product.request.rpc.QryProductByIdReqDTO;
 import org.smartframework.cloud.examples.mall.rpc.product.request.rpc.QryProductByIdsReqDTO;
@@ -8,7 +11,6 @@ import org.smartframework.cloud.examples.mall.rpc.product.response.rpc.QryProduc
 import org.smartframework.cloud.examples.mall.rpc.product.response.rpc.QryProductByIdsRespDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 /**
  * 商品信息rpc service
@@ -16,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
  * @author liyulin
  * @date 2019-03-29
  */
+@DS(DataSourceName.MALL_PRODUCT)
 @Service
 public class ProductInfoRpcService {
 
@@ -48,7 +51,7 @@ public class ProductInfoRpcService {
      * @param req
      * @return
      */
-    @Transactional
+    @DSTransactional
     public Boolean updateStock(UpdateStockReqDTO req) {
         return productRpcBiz.updateStock(req.getItems());
     }

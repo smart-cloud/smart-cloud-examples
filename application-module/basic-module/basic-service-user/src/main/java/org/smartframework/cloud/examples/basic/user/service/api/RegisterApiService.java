@@ -1,5 +1,6 @@
 package org.smartframework.cloud.examples.basic.user.service.api;
 
+import com.baomidou.dynamic.datasource.annotation.DSTransactional;
 import org.smartframework.cloud.examples.basic.rpc.user.request.api.login.LoginInfoInsertReqVO;
 import org.smartframework.cloud.examples.basic.rpc.user.request.api.register.RegisterUserReqVO;
 import org.smartframework.cloud.examples.basic.rpc.user.response.api.register.RegisterUserRespVO;
@@ -7,7 +8,6 @@ import org.smartframework.cloud.examples.basic.user.bo.login.LoginInfoInsertServ
 import org.smartframework.cloud.examples.basic.user.entity.base.UserInfoEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 /**
  * 注册
@@ -29,7 +29,7 @@ public class RegisterApiService {
      * @param req
      * @return
      */
-    @Transactional(rollbackFor = Exception.class)
+    @DSTransactional
     public RegisterUserRespVO register(RegisterUserReqVO req) {
         // 用户信息
         UserInfoEntity userInfoEntity = userInfoApiService.insert(req.getUserInfo());
