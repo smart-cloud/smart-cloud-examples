@@ -23,7 +23,7 @@ public class OrderDeliveryInfoDatabaseShardingAlgorithm<T extends Comparable<?>>
     }
 
     private String getDataBaseName(Collection<String> databaseNames, Long idSharding) {
-        return databaseNames.stream().filter(x -> x.endsWith("-" + idSharding)).findFirst().orElse(null);
+        return databaseNames.stream().filter(x -> x.endsWith(String.valueOf(idSharding))).findFirst().orElse(null);
     }
 
 }

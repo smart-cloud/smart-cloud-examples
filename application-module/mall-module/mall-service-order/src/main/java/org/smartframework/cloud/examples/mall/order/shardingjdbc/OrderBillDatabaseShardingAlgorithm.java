@@ -43,7 +43,7 @@ public class OrderBillDatabaseShardingAlgorithm<T extends Comparable<?>> extends
     }
 
     private Collection<String> getDataBaseNames(Collection<String> databaseNames, Long idSharding) {
-        return databaseNames.stream().filter(x -> x.endsWith("-" + idSharding)).collect(Collectors.toSet());
+        return databaseNames.stream().filter(x -> x.endsWith(String.valueOf(idSharding))).collect(Collectors.toSet());
     }
 
 }
