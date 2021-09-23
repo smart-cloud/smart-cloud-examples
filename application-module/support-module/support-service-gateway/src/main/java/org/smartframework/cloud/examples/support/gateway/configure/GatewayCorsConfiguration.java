@@ -1,10 +1,13 @@
 package org.smartframework.cloud.examples.support.gateway.configure;
 
+import org.apache.commons.collections4.ListUtils;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.reactive.CorsWebFilter;
 import org.springframework.web.cors.reactive.UrlBasedCorsConfigurationSource;
+
+import java.util.Arrays;
 
 /**
  * 网关跨域配置
@@ -21,11 +24,11 @@ public class GatewayCorsConfiguration {
 
         CorsConfiguration corsConfiguration = new CorsConfiguration();
         //允许哪种请求头跨域
-        corsConfiguration.addAllowedHeader(CorsConfiguration.ALL);
+        corsConfiguration.setAllowedHeaders(Arrays.asList(CorsConfiguration.ALL));
         //允许哪种方法类型跨域 get post delete put
-        corsConfiguration.addAllowedMethod(CorsConfiguration.ALL);
+        corsConfiguration.setAllowedMethods(Arrays.asList(CorsConfiguration.ALL));
         // 允许哪些请求源跨域
-        corsConfiguration.addAllowedOrigin(CorsConfiguration.ALL);
+        corsConfiguration.setAllowedOriginPatterns(Arrays.asList(CorsConfiguration.ALL));
         // 是否携带cookie跨域
         corsConfiguration.setAllowCredentials(true);
 
