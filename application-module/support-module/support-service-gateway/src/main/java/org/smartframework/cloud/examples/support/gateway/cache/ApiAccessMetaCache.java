@@ -1,5 +1,6 @@
 package org.smartframework.cloud.examples.support.gateway.cache;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 import org.apache.commons.collections4.SetUtils;
@@ -79,13 +80,13 @@ public class ApiAccessMetaCache extends Base {
 
     public ApiAccessMetaCache(ApiAccessMetaRespVO respVO) {
         if (respVO == null) {
-            setAuth(null);
-            setDataSecurity(null);
-            setRepeatSubmitCheck(null);
+            initAuth(null);
+            initDataSecurity(null);
+            initRepeatSubmitCheck(null);
         } else {
-            setAuth(respVO.getAuthMeta());
-            setDataSecurity(respVO.getDataSecurityMeta());
-            setRepeatSubmitCheck(respVO.getRepeatSubmitCheckMeta());
+            initAuth(respVO.getAuthMeta());
+            initDataSecurity(respVO.getDataSecurityMeta());
+            initRepeatSubmitCheck(respVO.getRepeatSubmitCheckMeta());
             this.requestValidMillis = respVO.getRequestValidMillis();
         }
     }
@@ -95,7 +96,7 @@ public class ApiAccessMetaCache extends Base {
      *
      * @param authMetaRespVO
      */
-    private void setAuth(AuthMetaRespVO authMetaRespVO) {
+    private void initAuth(AuthMetaRespVO authMetaRespVO) {
         if (authMetaRespVO == null) {
             this.requiresUser = false;
             this.requiresRoles = new HashSet<>(0);
@@ -112,7 +113,7 @@ public class ApiAccessMetaCache extends Base {
      *
      * @param dataSecurityMetaRespVO
      */
-    private void setDataSecurity(DataSecurityMetaRespVO dataSecurityMetaRespVO) {
+    private void initDataSecurity(DataSecurityMetaRespVO dataSecurityMetaRespVO) {
         if ((dataSecurityMetaRespVO == null)) {
             this.requestDecrypt = false;
             this.responseEncrypt = false;
@@ -129,7 +130,7 @@ public class ApiAccessMetaCache extends Base {
      *
      * @param repeatSubmitCheckMetaRespVO
      */
-    private void setRepeatSubmitCheck(RepeatSubmitCheckMetaRespVO repeatSubmitCheckMetaRespVO) {
+    private void initRepeatSubmitCheck(RepeatSubmitCheckMetaRespVO repeatSubmitCheckMetaRespVO) {
         if (repeatSubmitCheckMetaRespVO == null) {
             this.repeatSubmitCheck = false;
             this.repeatSubmitExpireMillis = 0;
@@ -139,10 +140,12 @@ public class ApiAccessMetaCache extends Base {
         }
     }
 
+    @JsonIgnore
     public boolean isAuth() {
         return requiresUser || requiresRoles.size() > 0 || requiresPermissions.size() > 0;
     }
 
+    @JsonIgnore
     public boolean isDataSecurity() {
         return requestDecrypt || responseEncrypt || signType != SignType.NONE.getType();
     }
