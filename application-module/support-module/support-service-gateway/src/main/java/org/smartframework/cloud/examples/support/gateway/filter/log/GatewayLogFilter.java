@@ -6,6 +6,8 @@ import org.smartframework.cloud.examples.support.gateway.constants.GatewayConsta
 import org.smartframework.cloud.examples.support.gateway.constants.Order;
 import org.smartframework.cloud.examples.support.gateway.filter.rewrite.RewriteServerHttpRequestDecorator;
 import org.smartframework.cloud.examples.support.gateway.filter.rewrite.RewriteServerHttpResponseDecorator;
+import org.smartframework.cloud.utility.spring.condition.ConditionEnableLogInfo;
+import org.springframework.context.annotation.Conditional;
 import org.springframework.core.Ordered;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.http.server.reactive.ServerHttpResponse;
@@ -24,6 +26,7 @@ import reactor.core.publisher.SignalType;
  */
 @Component
 @Slf4j
+@Conditional(ConditionEnableLogInfo.class)
 public class GatewayLogFilter implements WebFilter, Ordered {
 
     @Override
