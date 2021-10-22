@@ -13,7 +13,7 @@ import org.smartframework.cloud.examples.mall.product.mapper.base.ProductInfoBas
 import org.smartframework.cloud.examples.mall.rpc.product.request.api.PageProductReqVO;
 import org.smartframework.cloud.examples.mall.rpc.product.response.api.PageProductRespVO;
 import org.smartframework.cloud.starter.mybatis.plus.common.biz.BaseBiz;
-import org.smartframework.cloud.starter.mybatis.plus.common.mapper.constants.DelState;
+import org.smartframework.cloud.starter.mybatis.plus.enums.DeleteState;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -41,7 +41,7 @@ public class ProductInfoApiBiz extends BaseBiz<ProductInfoBaseMapper, ProductInf
         if (StringUtils.isNotBlank(name)) {
             wrapper.like(ProductInfoEntity::getName, name);
         }
-        wrapper.eq(ProductInfoEntity::getDelState, DelState.NORMAL);
+        wrapper.eq(ProductInfoEntity::getDelState, DeleteState.NORMAL);
         wrapper.orderByDesc(ProductInfoEntity::getInsertTime);
         IPage<ProductInfoEntity> page = super.page(new Page<>(req.getPageNum(), req.getPageSize(), true), wrapper);
         List<ProductInfoEntity> entitydatas = page.getRecords();

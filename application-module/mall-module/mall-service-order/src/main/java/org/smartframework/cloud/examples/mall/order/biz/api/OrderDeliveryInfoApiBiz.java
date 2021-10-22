@@ -4,7 +4,7 @@ import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import org.smartframework.cloud.examples.mall.order.entity.base.OrderDeliveryInfoEntity;
 import org.smartframework.cloud.examples.mall.order.mapper.base.OrderDeliveryInfoBaseMapper;
-import org.smartframework.cloud.starter.mp.shardingjdbc.constants.ShardingjdbcDatasourceNames;
+import org.smartframework.cloud.starter.mp.shardingjdbc.constants.ShardingSphereDataSourceName;
 import org.smartframework.cloud.starter.mybatis.plus.common.biz.BaseBiz;
 import org.springframework.stereotype.Repository;
 
@@ -17,7 +17,7 @@ import java.util.List;
  * @date 2019-04-08
  */
 @Repository
-@DS(ShardingjdbcDatasourceNames.SHARDING_DATASOURCE)
+@DS(ShardingSphereDataSourceName.SHARDING_DATASOURCE)
 public class OrderDeliveryInfoApiBiz extends BaseBiz<OrderDeliveryInfoBaseMapper, OrderDeliveryInfoEntity> {
 
     /**

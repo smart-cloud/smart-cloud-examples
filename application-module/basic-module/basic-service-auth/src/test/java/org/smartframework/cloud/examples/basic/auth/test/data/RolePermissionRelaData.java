@@ -2,7 +2,7 @@ package org.smartframework.cloud.examples.basic.auth.test.data;
 
 import org.smartframework.cloud.examples.basic.auth.biz.oms.RolePermissionOmsBiz;
 import org.smartframework.cloud.examples.basic.auth.entity.base.RolePermissionRelaEntity;
-import org.smartframework.cloud.starter.mybatis.plus.common.mapper.constants.DelState;
+import org.smartframework.cloud.starter.mybatis.plus.enums.DeleteState;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -23,7 +23,7 @@ public class RolePermissionRelaData {
             userRoleRelaEntity.setPermissionInfoId(permissionId);
             userRoleRelaEntity.setInsertTime(new Date());
             userRoleRelaEntity.setInsertUser(1L);
-            userRoleRelaEntity.setDelState(DelState.NORMAL);
+            userRoleRelaEntity.setDelState(DeleteState.NORMAL);
 
             return userRoleRelaEntity;
         }).collect(Collectors.toList());

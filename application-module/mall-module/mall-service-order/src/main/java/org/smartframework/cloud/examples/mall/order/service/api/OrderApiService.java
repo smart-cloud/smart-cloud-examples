@@ -28,12 +28,11 @@ import org.smartframework.cloud.exception.BusinessException;
 import org.smartframework.cloud.exception.ServerException;
 import org.smartframework.cloud.starter.core.business.util.RespUtil;
 import org.smartframework.cloud.starter.core.business.util.SnowFlakeIdUtil;
-import org.smartframework.cloud.starter.mybatis.plus.common.mapper.constants.DelState;
+import org.smartframework.cloud.starter.mybatis.plus.enums.DeleteState;
 import org.smartframework.cloud.utility.ObjectUtil;
 import org.smartframework.cloud.utility.spring.SpringContextUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -191,7 +190,7 @@ public class OrderApiService {
             entity.setProductName(productInfo.getName());
 
             entity.setInsertTime(new Date());
-            entity.setDelState(DelState.NORMAL);
+            entity.setDelState(DeleteState.NORMAL);
 
             return entity;
         }).collect(Collectors.toList());
@@ -212,7 +211,7 @@ public class OrderApiService {
         orderBillEntity.setPayState(PayStateEnum.PENDING_PAY.getValue());
         orderBillEntity.setBuyer(userId);
         orderBillEntity.setInsertTime(new Date());
-        orderBillEntity.setDelState(DelState.NORMAL);
+        orderBillEntity.setDelState(DeleteState.NORMAL);
 
         orderBillApiBiz.create(orderBillEntity);
 

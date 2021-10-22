@@ -18,7 +18,7 @@ import org.smartframework.cloud.examples.basic.rpc.auth.response.oms.role.permis
 import org.smartframework.cloud.examples.basic.rpc.auth.response.oms.role.permisson.RolePermissionRespVO;
 import org.smartframework.cloud.examples.common.config.constants.DataSourceName;
 import org.smartframework.cloud.starter.mybatis.plus.common.biz.BaseBiz;
-import org.smartframework.cloud.starter.mybatis.plus.common.mapper.constants.DelState;
+import org.smartframework.cloud.starter.mybatis.plus.enums.DeleteState;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -65,10 +65,10 @@ public class RolePermissionOmsBiz extends BaseBiz<RolePermissionRelaBaseMapper, 
         RolePermissionRelaEntity deletedEntity = new RolePermissionRelaEntity();
         deletedEntity.setDelUser(UserContext.getUserId());
         deletedEntity.setDelTime(new Date());
-        deletedEntity.setDelState(DelState.DELETED);
+        deletedEntity.setDelState(DeleteState.DELETED);
         return super.update(deletedEntity, new LambdaQueryWrapper<RolePermissionRelaEntity>()
                 .eq(RolePermissionRelaEntity::getRoleInfoId, roleId)
-                .eq(RolePermissionRelaEntity::getDelState, DelState.NORMAL));
+                .eq(RolePermissionRelaEntity::getDelState, DeleteState.NORMAL));
     }
 
     /**
@@ -135,7 +135,7 @@ public class RolePermissionOmsBiz extends BaseBiz<RolePermissionRelaBaseMapper, 
         List<RolePermissionRelaEntity> rolePermissionRelaEntities = super.list(new LambdaQueryWrapper<RolePermissionRelaEntity>()
                 .select(RolePermissionRelaEntity::getPermissionInfoId)
                 .in(RolePermissionRelaEntity::getRoleInfoId, roleIds)
-                .eq(RolePermissionRelaEntity::getDelState, DelState.NORMAL));
+                .eq(RolePermissionRelaEntity::getDelState, DeleteState.NORMAL));
         if (CollectionUtils.isEmpty(rolePermissionRelaEntities)) {
             return new HashSet<>(0);
         }

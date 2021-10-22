@@ -4,7 +4,7 @@ import org.smartframework.cloud.examples.basic.rpc.enums.user.ChannelEnum;
 import org.smartframework.cloud.examples.basic.rpc.enums.user.SexEnum;
 import org.smartframework.cloud.examples.basic.user.entity.base.UserInfoEntity;
 import org.smartframework.cloud.examples.basic.user.mapper.base.UserInfoBaseMapper;
-import org.smartframework.cloud.starter.mybatis.plus.common.mapper.constants.DelState;
+import org.smartframework.cloud.starter.mybatis.plus.enums.DeleteState;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -24,7 +24,7 @@ public class UserInfoData {
 		entity.setChannel(ChannelEnum.APP.getValue());
 		entity.setSex(SexEnum.FEMALE.getValue());
 		entity.setInsertTime(new Date());
-		entity.setDelState(DelState.NORMAL);
+		entity.setDelState(DeleteState.NORMAL);
 		userInfoBaseMapper.insert(entity);
 	}
 

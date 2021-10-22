@@ -13,7 +13,7 @@ import org.smartframework.cloud.examples.mall.rpc.product.request.oms.ProductIns
 import org.smartframework.cloud.examples.mall.rpc.product.request.oms.ProductUpdateReqVO;
 import org.smartframework.cloud.examples.mall.rpc.product.response.base.ProductInfoBaseRespVO;
 import org.smartframework.cloud.starter.mybatis.plus.common.biz.BaseBiz;
-import org.smartframework.cloud.starter.mybatis.plus.common.mapper.constants.DelState;
+import org.smartframework.cloud.starter.mybatis.plus.enums.DeleteState;
 import org.springframework.stereotype.Repository;
 
 import java.util.Date;
@@ -82,7 +82,7 @@ public class ProductInfoOmsBiz extends BaseBiz<ProductInfoBaseMapper, ProductInf
         if (StringUtils.isNotBlank(name)) {
             wrapper.like(ProductInfoEntity::getName, name);
         }
-        wrapper.eq(ProductInfoEntity::getDelState, DelState.NORMAL);
+        wrapper.eq(ProductInfoEntity::getDelState, DeleteState.NORMAL);
         wrapper.orderByDesc(ProductInfoEntity::getInsertTime);
         return super.page(req, wrapper, ProductInfoBaseRespVO.class);
     }

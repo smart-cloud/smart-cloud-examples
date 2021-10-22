@@ -10,7 +10,7 @@ import org.smartframework.cloud.examples.basic.auth.mapper.oms.UserRoleOmsMapper
 import org.smartframework.cloud.examples.basic.rpc.auth.response.oms.user.role.UserRoleRespVO;
 import org.smartframework.cloud.examples.common.config.constants.DataSourceName;
 import org.smartframework.cloud.starter.mybatis.plus.common.biz.BaseBiz;
-import org.smartframework.cloud.starter.mybatis.plus.common.mapper.constants.DelState;
+import org.smartframework.cloud.starter.mybatis.plus.enums.DeleteState;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -57,10 +57,10 @@ public class UserRoleOmsBiz extends BaseBiz<UserRoleRelaBaseMapper, UserRoleRela
         UserRoleRelaEntity deletedEntity = new UserRoleRelaEntity();
         deletedEntity.setDelUser(UserContext.getUserId());
         deletedEntity.setDelTime(new Date());
-        deletedEntity.setDelState(DelState.DELETED);
+        deletedEntity.setDelState(DeleteState.DELETED);
         return super.update(deletedEntity, new LambdaQueryWrapper<UserRoleRelaEntity>()
                 .eq(UserRoleRelaEntity::getUserInfoId, uid)
-                .eq(UserRoleRelaEntity::getDelState, DelState.NORMAL));
+                .eq(UserRoleRelaEntity::getDelState, DeleteState.NORMAL));
     }
 
     /**
@@ -83,7 +83,7 @@ public class UserRoleOmsBiz extends BaseBiz<UserRoleRelaBaseMapper, UserRoleRela
         List<UserRoleRelaEntity> relaEntities = super.list(new LambdaQueryWrapper<UserRoleRelaEntity>()
                 .select(UserRoleRelaEntity::getRoleInfoId)
                 .eq(UserRoleRelaEntity::getUserInfoId, uid)
-                .eq(UserRoleRelaEntity::getDelState, DelState.NORMAL));
+                .eq(UserRoleRelaEntity::getDelState, DeleteState.NORMAL));
         if (CollectionUtils.isEmpty(relaEntities)) {
             return new HashSet<>(0);
         }
