@@ -26,38 +26,55 @@ spring:
         jdbc-url: jdbc:mysql://127.0.0.1:3306/demo_order_1?serverTimezone=Asia/Shanghai&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true
         username: root
         password: 123456
+    rules:
+      readwrite-splitting:
+        data-sources:
+          mallorder0:
+            load-balancer-name: round_robin
+            write-data-source-name: mallordermaster-0
+            read-data-source-names: mallorderslave-0
+          mallorder1:
+            load-balancer-name: round_robin
+            write-data-source-name: mallordermaster-1
+            read-data-source-names: mallorderslave-1
+        load-balancers:
+          round_robin:
+            type: ROUND_ROBIN
     sharding:
-      master-slave-rules:
-        mallorder0:
-          master-data-source-name: mallordermaster-0
-          slave-data-source-names: mallorderslave-0
-        mallorder1:
-          master-data-source-name: mallordermaster-1
-          slave-data-source-names: mallorderslave-1
+      binding-tables: t_order_bill,t_order_delivery_info
+      # 配置参考https://github.com/apache/shardingsphere/blob/6b157b44d0/shardingsphere-features/shardingsphere-sharding/shardingsphere-sharding-core/src/test/resources/yaml/sharding-rule.yaml
+      sharding-algorithms:
+        order_bill_database_complex:
+          type: ORDER_BILL_DATABASE_TYPE
+        order_bill_table_complex:
+          type: ORDER_BILL_TABLE_TYPE
+        order_delivery_info_database_standard:
+          type: ORDER_DELIVERY_INFO_DATABASE_TYPE
+        order_delivery_info_table_standard:
+          type: ORDER_DELIVERY_INFO_TABLE_TYPE
       tables:
         t_order_bill:
           actual-data-nodes: mallorder$->{0..1}.t_order_bill_$->{0..99}
           database-strategy:
             complex:
-              algorithm-class-name: org.smartframework.cloud.examples.mall.order.shardingjdbc.OrderBillDatabaseShardingAlgorithm
+              algorithm-class-name: order_bill_database_complex
               sharding-columns: f_buyer,f_order_no
           table-strategy:
             complex:
-              algorithm-class-name: org.smartframework.cloud.examples.mall.order.shardingjdbc.OrderBillTableShardingAlgorithm
+              algorithm-class-name: order_bill_table_complex
               sharding-columns: f_buyer,f_order_no
         t_order_delivery_info:
           actual-data-nodes: mallorder$->{0..1}.t_order_delivery_info_$->{0..99}
           database-strategy:
             standard:
-              precise-algorithm-class-name: org.smartframework.cloud.examples.mall.order.shardingjdbc.OrderDeliveryInfoDatabaseShardingAlgorithm
+              algorithm-class-name: order_delivery_info_database_standard
               sharding-column: f_order_no
           table-strategy:
             standard:
-              precise-algorithm-class-name: org.smartframework.cloud.examples.mall.order.shardingjdbc.OrderDeliveryInfoTableShardingAlgorithm
+              algorithm-class-name: order_delivery_info_table_standard
               sharding-column: f_order_no
     props:
-      sql:
-        show: true
+      sql-show: true
 mybatis-plus:
   mapper-locations:
     - classpath*:/org/smartframework/cloud/examples/mall/order/mapper/**/*.xml

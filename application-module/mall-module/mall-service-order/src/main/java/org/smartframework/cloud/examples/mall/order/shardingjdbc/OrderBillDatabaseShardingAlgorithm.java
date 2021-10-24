@@ -1,7 +1,7 @@
 package org.smartframework.cloud.examples.mall.order.shardingjdbc;
 
-import org.apache.shardingsphere.api.sharding.complex.ComplexKeysShardingAlgorithm;
-import org.apache.shardingsphere.api.sharding.complex.ComplexKeysShardingValue;
+import org.apache.shardingsphere.sharding.api.sharding.complex.ComplexKeysShardingAlgorithm;
+import org.apache.shardingsphere.sharding.api.sharding.complex.ComplexKeysShardingValue;
 import org.smartframework.cloud.examples.mall.order.util.OrderUtil;
 
 import java.util.Collection;
@@ -20,7 +20,7 @@ public class OrderBillDatabaseShardingAlgorithm<T extends Comparable<?>> extends
 
     @Override
     public Collection<String> doSharding(Collection<String> availableDataBaseName, ComplexKeysShardingValue<T> complexKeysShardingValue) {
-        Set<String> targetDbNames = new HashSet<>();
+        Set<String> targetDbNames = new HashSet<>(1);
 
         Map<String, Collection<T>> columnNameAndShardingValueMap = complexKeysShardingValue.getColumnNameAndShardingValuesMap();
         Collection<T> uidValues = columnNameAndShardingValueMap.get(SHARDING_COLUMN_UID);
@@ -44,6 +44,16 @@ public class OrderBillDatabaseShardingAlgorithm<T extends Comparable<?>> extends
 
     private Collection<String> getDataBaseNames(Collection<String> databaseNames, Long idSharding) {
         return databaseNames.stream().filter(x -> x.endsWith(String.valueOf(idSharding))).collect(Collectors.toSet());
+    }
+
+    @Override
+    public void init() {
+
+    }
+
+    @Override
+    public String getType() {
+        return ShardingAlgorithmsType.ORDER_BILL_DATABASE_TYPE;
     }
 
 }

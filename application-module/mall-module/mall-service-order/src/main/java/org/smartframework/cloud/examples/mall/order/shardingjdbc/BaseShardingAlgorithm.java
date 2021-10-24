@@ -1,5 +1,7 @@
 package org.smartframework.cloud.examples.mall.order.shardingjdbc;
 
+import java.util.Collection;
+
 /**
  * @author collin
  * @date 2021-02-09
