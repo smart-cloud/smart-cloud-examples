@@ -7,6 +7,7 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.smartframework.cloud.common.pojo.Response;
 import org.smartframework.cloud.common.pojo.enums.CommonReturnCodes;
+import org.smartframework.cloud.common.web.constants.SmartHttpHeaders;
 import org.smartframework.cloud.examples.support.gateway.enums.GatewayReturnCodes;
 import org.smartframework.cloud.examples.support.gateway.service.api.SecurityApiService;
 import org.smartframework.cloud.examples.support.rpc.gateway.request.api.GenerateAesKeyReqVO;
@@ -24,6 +25,8 @@ import java.security.InvalidKeyException;
 import java.security.KeyPair;
 import java.security.NoSuchAlgorithmException;
 import java.security.interfaces.RSAPublicKey;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author liyulin
@@ -37,7 +40,10 @@ class SecurityApiControllerIntegrationTest extends WebReactiveIntegrationTest {
 
     @Test
     void testGenerateClientPubKey() throws Exception {
-        Response<GenerateClientPubKeyRespVO> result = post("/gateway/api/security/generateClientPubKey", null, new TypeReference<Response<GenerateClientPubKeyRespVO>>() {
+        Map<String, String> headers = new HashMap<>(1);
+        headers.put(SmartHttpHeaders.TIMESTAMP, String.valueOf(System.currentTimeMillis()));
+
+        Response<GenerateClientPubKeyRespVO> result = post("/gateway/api/security/generateClientPubKey", headers, null, new TypeReference<Response<GenerateClientPubKeyRespVO>>() {
         });
         Assertions.assertThat(result).isNotNull();
         Assertions.assertThat(result.getHead()).isNotNull();
@@ -73,7 +79,10 @@ class SecurityApiControllerIntegrationTest extends WebReactiveIntegrationTest {
         generateAesKeyReqVO.setEncryptedCpubKeyModulus(generateEncryptedCpubKey(publicKey, cpubKeyModulus));
         generateAesKeyReqVO.setEncryptedCpubKeyExponent(RsaUtil.encryptString(publicKey, StringUtils.reverse(cpubKeyExponent)));
 
-        Response<GenerateAesKeyRespVO> result = post("/gateway/api/security/generateAesKey", generateAesKeyReqVO, new TypeReference<Response<GenerateAesKeyRespVO>>() {
+        Map<String, String> headers = new HashMap<>(1);
+        headers.put(SmartHttpHeaders.TIMESTAMP, String.valueOf(System.currentTimeMillis()));
+
+        Response<GenerateAesKeyRespVO> result = post("/gateway/api/security/generateAesKey", headers, generateAesKeyReqVO, new TypeReference<Response<GenerateAesKeyRespVO>>() {
         });
         Assertions.assertThat(result).isNotNull();
         Assertions.assertThat(result.getHead()).isNotNull();

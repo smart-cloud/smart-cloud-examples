@@ -41,7 +41,7 @@ public class RequestTimestampCheckFilter extends AbstractFilter {
         if (!StringUtils.isNumeric(requestTimestampStr)) {
             throw new RequestTimestampException(GatewayReturnCodes.REQUEST_TIMESTAMP_FORMAT_INVALID);
         }
-        if (Math.abs(System.currentTimeMillis() - Long.valueOf(requestTimestampStr)) < requestValidMillis) {
+        if (Math.abs(System.currentTimeMillis() - Long.valueOf(requestTimestampStr)) > requestValidMillis) {
             throw new RequestTimestampException(GatewayReturnCodes.REQUEST_TIMESTAMP_ILLEGAL);
         }
         return chain.filter(exchange);
