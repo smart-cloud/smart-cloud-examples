@@ -5,11 +5,11 @@ import org.smartframework.cloud.examples.mall.order.mq.OrderMqConstants;
 import org.smartframework.cloud.examples.mall.order.mq.dto.SubmitOrderDTO;
 import org.smartframework.cloud.examples.mall.order.util.OrderUtil;
 import org.smartframework.cloud.examples.mall.rpc.order.request.api.SubmitOrderReqVO;
-import org.smartframework.cloud.starter.rabbitmq.AbstractRabbitMQProducer;
+import org.smartframework.cloud.starter.rabbitmq.AbstractRabbitMqProducer;
 import org.springframework.stereotype.Component;
 
 @Component
-public class OrderProducer extends AbstractRabbitMQProducer {
+public class OrderProducer extends AbstractRabbitMqProducer {
 
     /**
      * 发送【提交订单】mq

@@ -72,7 +72,7 @@ class SecurityApiControllerIntegrationTest extends WebReactiveIntegrationTest {
         generateAesKeyReqVO.setToken(generateClientPubKeyRespVO.getToken());
 
         // 客户端使用的公钥
-        RSAPublicKey publicKey = RsaUtil.getRSAPublidKey(generateClientPubKeyRespVO.getPubKeyModulus(), generateClientPubKeyRespVO.getPubKeyExponent());
+        RSAPublicKey publicKey = RsaUtil.getRsaPublidKey(generateClientPubKeyRespVO.getPubKeyModulus(), generateClientPubKeyRespVO.getPubKeyExponent());
         String cpubKeyModulus = RsaUtil.getModulus(clientPriServerPubKeyPair);
         String cpubKeyExponent = RsaUtil.getPublicExponent(clientPriServerPubKeyPair);
 

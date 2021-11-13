@@ -66,7 +66,7 @@ public final class TokenUtil {
         Assertions.assertThat(generateClientPubKeyResult.getBody()).isNotNull();
 
         GenerateClientPubKeyRespVO clientPubKey = generateClientPubKeyResult.getBody();
-        RSAPublicKey clientRSAPublicKey = RsaUtil.getRSAPublidKey(clientPubKey.getPubKeyModulus(), clientPubKey.getPubKeyExponent());
+        RSAPublicKey clientRSAPublicKey = RsaUtil.getRsaPublidKey(clientPubKey.getPubKeyModulus(), clientPubKey.getPubKeyExponent());
         String token = clientPubKey.getToken();
         context = new Context();
         context.setClientRSAPublicKey(clientRSAPublicKey);

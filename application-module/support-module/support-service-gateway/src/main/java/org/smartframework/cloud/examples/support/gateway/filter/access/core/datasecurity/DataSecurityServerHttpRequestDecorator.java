@@ -7,6 +7,7 @@ import org.redisson.api.RMapCache;
 import org.redisson.api.RedissonClient;
 import org.smartframework.cloud.api.core.annotation.enums.SignType;
 import org.smartframework.cloud.common.web.constants.SmartHttpHeaders;
+import org.smartframework.cloud.constants.SymbolConstant;
 import org.smartframework.cloud.examples.support.gateway.cache.SecurityKeyCache;
 import org.smartframework.cloud.examples.support.gateway.constants.GatewayConstants;
 import org.smartframework.cloud.examples.support.gateway.enums.GatewayReturnCodes;
@@ -18,7 +19,6 @@ import org.smartframework.cloud.examples.support.gateway.util.RewriteHttpUtil;
 import org.smartframework.cloud.examples.support.gateway.util.WebUtil;
 import org.smartframework.cloud.exception.DataValidateException;
 import org.smartframework.cloud.exception.ParamValidateException;
-import org.smartframework.cloud.starter.core.constants.SymbolConstant;
 import org.smartframework.cloud.utility.security.AesUtil;
 import org.smartframework.cloud.utility.security.RsaUtil;
 import org.springframework.core.io.buffer.DataBuffer;
@@ -155,7 +155,7 @@ public class DataSecurityServerHttpRequestDecorator extends ServerHttpRequestDec
         SecurityKeyCache securityKeyCache = getSecurityKeyCache(token);
         boolean signCheckResult = false;
         try {
-            RSAPublicKey publicKey = RsaUtil.getRSAPublidKey(securityKeyCache.getCpubKeyModulus(), securityKeyCache.getCpubKeyExponent());
+            RSAPublicKey publicKey = RsaUtil.getRsaPublidKey(securityKeyCache.getCpubKeyModulus(), securityKeyCache.getCpubKeyExponent());
             signCheckResult = RsaUtil.checkSign(requestStr, sign, publicKey);
         } catch (Exception e) {
             log.error("sign.check.error", e);

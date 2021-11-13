@@ -81,7 +81,7 @@ public class SecurityApiService {
             throw new DataValidateException(GatewayReturnCodes.TOKEN_EXPIRED_BEFORE_LOGIN);
         }
 
-        RSAPrivateKey rsaPrivateKey = RsaUtil.getRSAPrivateKey(securityKeyCache.getSpriKeyModulus(), securityKeyCache.getSpriKeyExponent());
+        RSAPrivateKey rsaPrivateKey = RsaUtil.getRsaPrivateKey(securityKeyCache.getSpriKeyModulus(), securityKeyCache.getSpriKeyExponent());
 
         String cpubKeyModulus = decryptStringByJs(rsaPrivateKey, req.getEncryptedCpubKeyModulus());
         String cpubKeyExponent = RsaUtil.decryptStringByJs(rsaPrivateKey, req.getEncryptedCpubKeyExponent());
@@ -94,7 +94,7 @@ public class SecurityApiService {
 
         // 3、加密aes key
         // 客户端生成的公钥
-        RSAPublicKey rsaPublicKey = RsaUtil.getRSAPublidKey(cpubKeyModulus, cpubKeyExponent);
+        RSAPublicKey rsaPublicKey = RsaUtil.getRsaPublidKey(cpubKeyModulus, cpubKeyExponent);
         String encryptedAesKey = RsaUtil.encryptString(rsaPublicKey, aesKey);
         return new GenerateAesKeyRespVO(encryptedAesKey);
     }
