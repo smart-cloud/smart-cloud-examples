@@ -16,6 +16,10 @@
             <groupId>org.smartframework.cloud</groupId>
             <artifactId>smart-cloud-starter-test</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.smartframework.cloud</groupId>
+            <artifactId>smart-code-generate</artifactId>
+        </dependency>
     </dependencies>
 
 </project>
