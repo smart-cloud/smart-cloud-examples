@@ -1,0 +1,4 @@
+org.smartframework.cloud.examples.mall.order.shardingjdbc.OrderBillDatabaseShardingAlgorithm
+org.smartframework.cloud.examples.mall.order.shardingjdbc.OrderBillTableShardingAlgorithm
+org.smartframework.cloud.examples.mall.order.shardingjdbc.OrderDeliveryInfoDatabaseShardingAlgorithm
+org.smartframework.cloud.examples.mall.order.shardingjdbc.OrderDeliveryInfoTableShardingAlgorithm
