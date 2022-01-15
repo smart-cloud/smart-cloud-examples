@@ -13,18 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.smartframework.cloud.examples.support.eureka;
+package org.smartframework.cloud.examples.support.gateway;
 
+import org.smartframework.cloud.examples.framework.annotation.SmartApplication;
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.cloud.netflix.eureka.server.EnableEurekaServer;
 
-@SpringBootApplication
-@EnableEurekaServer
-public class Application {
+@SmartApplication
+public class GatewayApplication {
 	
 	public static void main(String[] args) {
-		SpringApplication.run(Application.class, args);
+		SpringApplication.run(GatewayApplication.class, args);
 	}
 	
 }

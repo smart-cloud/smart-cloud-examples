@@ -1,17 +1,17 @@
-eureka:
-  instance:
-    prefer-ip-address: true
-  client:       
-    registerWithEureka: true   
-    fetchRegistry: true
-    service-url: 
-      defaultZone: http://127.0.0.1:10001/eureka/
+#eureka:
+#  instance:
+#    prefer-ip-address: true
+#  client:
+#    registerWithEureka: true
+#    fetchRegistry: true
+#    service-url:
+#      defaultZone: http://127.0.0.1:10001/eureka/
       #defaultZone: http://nodeA:10001/eureka/,http://nodeB:10002/eureka/
 
-#spring:
-#  cloud:
-#    nacos:
-#      discovery:
-#        server-addr: 127.0.0.1:8848
-#      config:
-#        server-addr: 127.0.0.1:8848
+spring:
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+      config:
+        server-addr: 127.0.0.1:8848

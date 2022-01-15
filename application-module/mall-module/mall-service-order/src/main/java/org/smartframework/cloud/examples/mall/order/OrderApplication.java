@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.smartframework.cloud.examples.mall.product;
+package org.smartframework.cloud.examples.mall.order;
 
 import org.smartframework.cloud.examples.framework.annotation.SmartApplication;
 import org.springframework.boot.SpringApplication;
@@ -21,10 +21,10 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @SmartApplication
 @EnableTransactionManagement
-public class Application {
-	
+public class OrderApplication {
+
 	public static void main(String[] args) {
-		SpringApplication.run(Application.class, args);
+		SpringApplication.run(OrderApplication.class, args);
 	}
 
 }
