@@ -41,6 +41,7 @@ import org.smartframework.cloud.exception.RpcException;
 import org.smartframework.cloud.starter.core.business.util.RespUtil;
 import org.smartframework.cloud.utility.JacksonUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Component;
@@ -67,6 +68,7 @@ public class AuthFilter extends AbstractFilter {
 
     @Autowired
     private RedissonClient redissonClient;
+    @Lazy
     @Autowired
     private AuthRpc authRpc;
     @Autowired

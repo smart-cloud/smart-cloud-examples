@@ -26,7 +26,6 @@ smart-cloud-examples
      |    └── support-service-rpc -- 支撑服务rpc模块
      └── support-module -- 支撑服务模块
           ├── support-service-admin -- 注册中心[端口:10001]
-          ├── support-service-eureka -- 监控[端口:10011]
           └── support-service-gateway -- 网关[端口:80]
 ```
 ## （二）工程模块图
@@ -154,6 +153,7 @@ sign = RSA签名签名(AES加密(head的json串) + AES加密(body json串))
 - 安装[redis](https://github.com/microsoftarchive/redis/releases)，并启动
 - 安装[mysql](https://www.mysql.com/downloads/)，执行/docs/sql下脚本
 - 安装[rabbitmq](https://www.rabbitmq.com)，并启动
+- 安装[nacos](https://github.com/alibaba/nacos/releases)，并启动
 - 安装[seata](https://github.com/seata/seata/releases/tag/v1.4.0)服务端，并启动
   - server sql见/smart-cloud-examples/docs/sql/seata.sql
   - file.conf文件配置
@@ -203,7 +203,7 @@ sign = RSA签名签名(AES加密(head的json串) + AES加密(body json串))
   - 启动mysql
   - 启动rabbitmq
   - 启动seata
-  - 启动support-service-eureka
+  - 启动nacos
   - 启动support-service-gateway
   - 最后依次启动mall下或basic下服务
 
@@ -244,3 +244,7 @@ support-service-gateway | 400011 | 请求时间戳格式错误
 support-service-gateway | 400012 | 请求时间戳非法
 support-service-gateway | 400013 | security key过期
 support-service-gateway | 400014 | AES key获取失败
+
+# FAQ
+## spring cloud gateway集成openfeign启动时卡死
+openfeign不支持 reactive clients。解决方案：1.延迟（@Lazy）加载feign客户端；2.通过ObjectProvider<openfeign客户端>的方式获取feign的bean（参考：https://docs.spring.io/spring-cloud-openfeign/docs/current/reference/html/#reactive-support）.

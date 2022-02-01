@@ -19,7 +19,6 @@ import com.google.common.collect.Sets;
 import io.netty.buffer.UnpooledByteBufAllocator;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.IOUtils;
-import org.smartframework.cloud.examples.support.gateway.constants.ProtostuffConstant;
 import org.springframework.core.io.buffer.DataBuffer;
 import org.springframework.core.io.buffer.NettyDataBufferFactory;
 import org.springframework.http.MediaType;
@@ -44,8 +43,7 @@ public class RewriteHttpUtil {
             MediaType.APPLICATION_JSON,
             MediaType.APPLICATION_JSON_UTF8,
             MediaType.TEXT_PLAIN,
-            MediaType.TEXT_XML,
-            ProtostuffConstant.PROTOBUF_MEDIA_TYPE);
+            MediaType.TEXT_XML);
 
     public static Set<MediaType> getLegalLogMediaTypes() {
         return LEGAL_LOG_MEDIA_TYPES;
