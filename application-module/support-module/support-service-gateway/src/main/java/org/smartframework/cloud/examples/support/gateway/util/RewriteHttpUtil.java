@@ -16,24 +16,18 @@
 package org.smartframework.cloud.examples.support.gateway.util;
 
 import com.google.common.collect.Sets;
-import io.netty.buffer.UnpooledByteBufAllocator;
-import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.io.IOUtils;
 import org.springframework.core.io.buffer.DataBuffer;
-import org.springframework.core.io.buffer.NettyDataBufferFactory;
+import org.springframework.core.io.buffer.DataBufferUtils;
 import org.springframework.http.MediaType;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.Set;
 
 /**
- * 重写http上下文
+ * 重写http上下文工具类
  *
  * @author collin
  * @date 2020-07-21
  */
-@Slf4j
 public class RewriteHttpUtil {
 
     /**
@@ -52,18 +46,20 @@ public class RewriteHttpUtil {
     private RewriteHttpUtil() {
     }
 
-    public static <T extends DataBuffer> byte[] convert(T buffer) {
-        try (InputStream dataBuffer = buffer.asInputStream();) {
-            return IOUtils.toByteArray(dataBuffer);
-        } catch (IOException e) {
-            log.error(e.getMessage(), e);
+    /**
+     * DataBuffer转byte[]
+     *
+     * @param dataBuffer
+     * @return
+     */
+    public static byte[] convert(DataBuffer dataBuffer) {
+        byte[] bytes = new byte[dataBuffer.readableByteCount()];
+        try {
+            dataBuffer.read(bytes);
+        } finally {
+            DataBufferUtils.release(dataBuffer);
         }
-        return null;
-    }
-
-    public static <T extends DataBuffer> T convert(byte[] bytes) {
-        NettyDataBufferFactory nettyDataBufferFactory = new NettyDataBufferFactory(new UnpooledByteBufAllocator(false));
-        return (T) nettyDataBufferFactory.wrap(bytes);
+        return bytes;
     }
 
 }

@@ -30,13 +30,13 @@ import org.smartframework.cloud.examples.support.gateway.exception.AesKeyNotFoun
 import org.smartframework.cloud.examples.support.gateway.exception.RequestSignFailException;
 import org.smartframework.cloud.examples.support.gateway.filter.rewrite.RewriteServerHttpRequestDecorator;
 import org.smartframework.cloud.examples.support.gateway.util.RedisKeyHelper;
-import org.smartframework.cloud.examples.support.gateway.util.RewriteHttpUtil;
 import org.smartframework.cloud.examples.support.gateway.util.WebUtil;
 import org.smartframework.cloud.exception.DataValidateException;
 import org.smartframework.cloud.exception.ParamValidateException;
 import org.smartframework.cloud.utility.security.AesUtil;
 import org.smartframework.cloud.utility.security.RsaUtil;
 import org.springframework.core.io.buffer.DataBuffer;
+import org.springframework.core.io.buffer.DataBufferFactory;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.http.server.reactive.ServerHttpRequest;
@@ -64,15 +64,16 @@ public class DataSecurityServerHttpRequestDecorator extends ServerHttpRequestDec
     private transient RedissonClient redissonClient;
     private transient SecurityKeyCache securityKeyCache;
 
-    DataSecurityServerHttpRequestDecorator(ServerHttpRequest delegate, String token, boolean requestDecrypt, byte signType, RedissonClient redissonClient) {
-        super(delegate);
+    DataSecurityServerHttpRequestDecorator(ServerHttpRequest request, DataBufferFactory dataBufferFactory, String token, boolean requestDecrypt, byte signType,
+                                           RedissonClient redissonClient) {
+        super(request);
         Flux<DataBuffer> flux = super.getBody();
         this.redissonClient = redissonClient;
 
-        final String requestStr = getEncryptedRequestStr(delegate);
+        final String requestStr = getEncryptedRequestStr(request);
 
         // 请求信息验签
-        checkRequestSign(delegate, signType, requestStr, token);
+        checkRequestSign(request, signType, requestStr, token);
 
         if (requestDecrypt) {
             flux.subscribe(buffer -> {
@@ -83,15 +84,15 @@ public class DataSecurityServerHttpRequestDecorator extends ServerHttpRequestDec
                 }
                 String decryptedRequestStr = AesUtil.decrypt(requestStr, aesKey);
 
-                HttpMethod httpMethod = delegate.getMethod();
+                HttpMethod httpMethod = request.getMethod();
                 if (httpMethod == HttpMethod.GET) {
-                    decryptUrlParams(decryptedRequestStr, delegate.getQueryParams());
+                    decryptUrlParams(decryptedRequestStr, request.getQueryParams());
                 } else if (httpMethod == HttpMethod.POST) {
-                    MediaType contentType = delegate.getHeaders().getContentType();
+                    MediaType contentType = request.getHeaders().getContentType();
                     if (MediaType.APPLICATION_FORM_URLENCODED_VALUE.equals(contentType.toString())) {
-                        decryptUrlParams(decryptedRequestStr, delegate.getQueryParams());
+                        decryptUrlParams(decryptedRequestStr, request.getQueryParams());
                     } else if (MediaType.APPLICATION_JSON_VALUE.equals(contentType.toString())) {
-                        this.body = Flux.just(RewriteHttpUtil.convert(decryptedRequestStr.getBytes(StandardCharsets.UTF_8)));
+                        this.body = Flux.just(dataBufferFactory.wrap(decryptedRequestStr.getBytes(StandardCharsets.UTF_8)));
                     }
                 }
             });

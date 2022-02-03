@@ -18,6 +18,7 @@ package org.smartframework.cloud.examples.support.gateway.filter.rewrite;
 import lombok.Getter;
 import org.smartframework.cloud.examples.support.gateway.util.RewriteHttpUtil;
 import org.springframework.core.io.buffer.DataBuffer;
+import org.springframework.core.io.buffer.DataBufferFactory;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.http.server.reactive.ServerHttpRequestDecorator;
 import reactor.core.publisher.Flux;
@@ -36,14 +37,14 @@ public class RewriteServerHttpRequestDecorator extends ServerHttpRequestDecorato
     @Getter
     private transient String bodyStr;
 
-    RewriteServerHttpRequestDecorator(ServerHttpRequest delegate) {
-        super(delegate);
+    RewriteServerHttpRequestDecorator(ServerHttpRequest request, DataBufferFactory dataBufferFactory) {
+        super(request);
         Flux<DataBuffer> flux = super.getBody();
-        if (RewriteHttpUtil.getLegalLogMediaTypes().contains(delegate.getHeaders().getContentType())) {
-            flux.subscribe(buffer -> {
-                byte[] bytes = RewriteHttpUtil.convert(buffer);
-                bodyStr = new String(bytes, StandardCharsets.UTF_8);
-                this.body = Flux.just(RewriteHttpUtil.convert(bytes));
+        if (RewriteHttpUtil.getLegalLogMediaTypes().contains(super.getHeaders().getContentType())) {
+            this.body = super.getBody().map(dataBuffer -> {
+                byte[] bytes = RewriteHttpUtil.convert(dataBuffer);
+                this.bodyStr = new String(bytes, StandardCharsets.UTF_8);
+                return dataBufferFactory.wrap(bytes);
             });
         } else {
             this.body = flux;

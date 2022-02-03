@@ -19,6 +19,7 @@ import lombok.Getter;
 import org.reactivestreams.Publisher;
 import org.smartframework.cloud.examples.support.gateway.util.RewriteHttpUtil;
 import org.springframework.core.io.buffer.DataBuffer;
+import org.springframework.core.io.buffer.DataBufferFactory;
 import org.springframework.http.MediaType;
 import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.http.server.reactive.ServerHttpResponseDecorator;
@@ -39,8 +40,8 @@ public class RewriteServerHttpResponseDecorator extends ServerHttpResponseDecora
     @Getter
     private transient String bodyStr;
 
-    RewriteServerHttpResponseDecorator(ServerHttpResponse delegate) {
-        super(delegate);
+    RewriteServerHttpResponseDecorator(ServerHttpResponse response) {
+        super(response);
     }
 
     @Override
@@ -52,11 +53,12 @@ public class RewriteServerHttpResponseDecorator extends ServerHttpResponseDecora
     public Mono<Void> writeWith(Publisher<? extends DataBuffer> body) {
         final MediaType contentType = super.getHeaders().getContentType();
         if (RewriteHttpUtil.getLegalLogMediaTypes().contains(contentType)) {
+            DataBufferFactory dataBufferFactory = super.bufferFactory();
             if (body instanceof Mono) {
                 ((Mono<DataBuffer>) body).subscribe(buffer -> {
                     byte[] bytes = RewriteHttpUtil.convert(buffer);
                     bodyStr = new String(bytes, StandardCharsets.UTF_8);
-                    this.body = Mono.just(RewriteHttpUtil.convert(bytes));
+                    this.body = Mono.just(dataBufferFactory.wrap(bytes));
                 });
 
                 return super.writeWith(this.body);
@@ -64,7 +66,7 @@ public class RewriteServerHttpResponseDecorator extends ServerHttpResponseDecora
                 ((Flux<DataBuffer>) body).subscribe(buffer -> {
                     byte[] bytes = RewriteHttpUtil.convert(buffer);
                     bodyStr = new String(bytes, StandardCharsets.UTF_8);
-                    this.body = Flux.just(RewriteHttpUtil.convert(bytes));
+                    this.body = Flux.just(dataBufferFactory.wrap(bytes));
                 });
                 return super.writeWith(this.body);
             }

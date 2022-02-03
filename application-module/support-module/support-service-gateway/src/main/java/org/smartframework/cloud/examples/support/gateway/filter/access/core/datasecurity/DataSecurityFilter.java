@@ -15,7 +15,6 @@
  */
 package org.smartframework.cloud.examples.support.gateway.filter.access.core.datasecurity;
 
-import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.redisson.api.RedissonClient;
 import org.smartframework.cloud.examples.support.gateway.cache.ApiAccessMetaCache;
@@ -27,7 +26,6 @@ import org.smartframework.cloud.exception.ParamValidateException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
-import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
 import org.springframework.web.server.WebFilterChain;
@@ -39,7 +37,6 @@ import reactor.core.publisher.Mono;
  * @author collin
  * @date 2021-07-16
  */
-@Slf4j
 @Component
 public class DataSecurityFilter extends AbstractFilter {
 
@@ -70,9 +67,10 @@ public class DataSecurityFilter extends AbstractFilter {
         }
 
         return chain.filter(exchange.mutate()
-                .request(new DataSecurityServerHttpRequestDecorator(exchange.getRequest(), token, apiAccessMetaCache.isRequestDecrypt(),
-                        apiAccessMetaCache.getSignType(), redissonClient))
-                .response(new DataSecurityServerHttpResponseDecorator(exchange.getResponse(), apiAccessMetaCache.isResponseEncrypt(), apiAccessMetaCache.getSignType()))
+                .request(new DataSecurityServerHttpRequestDecorator(exchange.getRequest(), exchange.getResponse().bufferFactory(), token,
+                        apiAccessMetaCache.isRequestDecrypt(), apiAccessMetaCache.getSignType(), redissonClient))
+                .response(new DataSecurityServerHttpResponseDecorator(exchange.getResponse(), apiAccessMetaCache.isResponseEncrypt(),
+                        apiAccessMetaCache.getSignType()))
                 .build());
     }
 

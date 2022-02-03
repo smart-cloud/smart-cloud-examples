@@ -15,7 +15,6 @@
  */
 package org.smartframework.cloud.examples.support.gateway.filter.rewrite;
 
-import lombok.extern.slf4j.Slf4j;
 import org.smartframework.cloud.examples.support.gateway.constants.Order;
 import org.springframework.core.Ordered;
 import org.springframework.stereotype.Component;
@@ -31,7 +30,6 @@ import reactor.core.publisher.Mono;
  * @date 2021-07-23
  */
 @Component
-@Slf4j
 public class RewriteHttpFilter implements WebFilter, Ordered {
 
     @Override
@@ -42,7 +40,7 @@ public class RewriteHttpFilter implements WebFilter, Ordered {
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, WebFilterChain chain) {
         return chain.filter(exchange.mutate()
-                .request(new RewriteServerHttpRequestDecorator(exchange.getRequest()))
+                .request(new RewriteServerHttpRequestDecorator(exchange.getRequest(), exchange.getResponse().bufferFactory()))
                 .response(new RewriteServerHttpResponseDecorator(exchange.getResponse()))
                 .build());
     }
