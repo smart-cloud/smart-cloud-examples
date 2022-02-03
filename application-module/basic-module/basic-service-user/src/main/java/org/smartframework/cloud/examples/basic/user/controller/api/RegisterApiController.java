@@ -15,6 +15,7 @@
  */
 package org.smartframework.cloud.examples.basic.user.controller.api;
 
+import lombok.RequiredArgsConstructor;
 import org.smartframework.cloud.api.core.annotation.RequireDataSecurity;
 import org.smartframework.cloud.api.core.annotation.RequireTimestamp;
 import org.smartframework.cloud.common.pojo.Response;
@@ -22,7 +23,6 @@ import org.smartframework.cloud.examples.basic.rpc.user.request.api.register.Reg
 import org.smartframework.cloud.examples.basic.rpc.user.response.api.register.RegisterUserRespVO;
 import org.smartframework.cloud.examples.basic.user.service.api.RegisterApiService;
 import org.smartframework.cloud.starter.core.business.util.RespUtil;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -38,13 +38,13 @@ import javax.validation.Valid;
  * @date 2020-09-10
  * @status done
  */
+@Validated
 @RestController
 @RequestMapping("user/api/register")
-@Validated
+@RequiredArgsConstructor
 public class RegisterApiController {
 
-    @Autowired
-    private RegisterApiService registerApiService;
+    private final RegisterApiService registerApiService;
 
     /**
      * 注册

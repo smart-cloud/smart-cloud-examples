@@ -15,21 +15,28 @@
  */
 package org.smartframework.cloud.examples.api.ac.core.properties;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.smartframework.cloud.common.pojo.Base;
 import org.smartframework.cloud.starter.configure.constants.SmartConstant;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
-import lombok.Getter;
-import lombok.Setter;
-
+/**
+ * 接口元数据相关配置
+ *
+ * @author collin
+ * @date 2022-02-03
+ */
 @Getter
 @Setter
 @ConfigurationProperties(prefix = SmartConstant.SMART_PROPERTIES_PREFIX)
 public class ApiAccessProperties extends Base {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	/** 是否上传api meta信息（默认上传） */
-	private boolean uploadApiMeta = true;
+    /**
+     * 是否上传api meta信息（默认上传）
+     */
+    private boolean uploadApiMeta = true;
 
 }

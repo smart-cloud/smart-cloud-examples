@@ -16,12 +16,12 @@
 package org.smartframework.cloud.examples.basic.user.service.api;
 
 import com.baomidou.dynamic.datasource.annotation.DSTransactional;
+import lombok.RequiredArgsConstructor;
 import org.smartframework.cloud.examples.basic.rpc.user.request.api.login.LoginInfoInsertReqVO;
 import org.smartframework.cloud.examples.basic.rpc.user.request.api.register.RegisterUserReqVO;
 import org.smartframework.cloud.examples.basic.rpc.user.response.api.register.RegisterUserRespVO;
 import org.smartframework.cloud.examples.basic.user.bo.login.LoginInfoInsertServiceBO;
 import org.smartframework.cloud.examples.basic.user.entity.base.UserInfoEntity;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -31,12 +31,11 @@ import org.springframework.stereotype.Service;
  * @date 2019-06-29
  */
 @Service
+@RequiredArgsConstructor
 public class RegisterApiService {
 
-    @Autowired
-    private UserInfoApiService userInfoApiService;
-    @Autowired
-    private LoginInfoApiService loginInfoApiService;
+    private final UserInfoApiService userInfoApiService;
+    private final LoginInfoApiService loginInfoApiService;
 
     /**
      * 注册

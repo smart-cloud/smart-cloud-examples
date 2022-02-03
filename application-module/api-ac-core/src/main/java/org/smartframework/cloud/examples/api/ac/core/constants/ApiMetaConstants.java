@@ -16,6 +16,8 @@
 package org.smartframework.cloud.examples.api.ac.core.constants;
 
 /**
+ * 接口元数据相关常量
+ *
  * @author collin
  * @date 2020-09-18
  */

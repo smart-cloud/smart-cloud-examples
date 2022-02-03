@@ -19,22 +19,25 @@ import org.smartframework.cloud.examples.api.ac.core.controller.ApiMetaControlle
 import org.smartframework.cloud.examples.api.ac.core.listener.NotifyGatewayFetchApiMetaListener;
 import org.smartframework.cloud.examples.api.ac.core.properties.ApiAccessProperties;
 import org.smartframework.cloud.examples.support.rpc.gateway.ApiMetaRpc;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 
+/**
+ * 接口元数据上传相关
+ *
+ * @author collin
+ * @date 2022-02-03
+ */
 @Configuration
 @EnableConfigurationProperties(ApiAccessProperties.class)
 public class ApiAcessAutoConfigure {
 
-    @Autowired
     @Bean
-    @Order(Ordered.LOWEST_PRECEDENCE)
-    public NotifyGatewayFetchApiMetaListener notifyGatewayFetchApiMetaListener(ApiMetaRpc apiMetaRpc, ApiAccessProperties apiAccessProperties) {
+    @Order
+    public NotifyGatewayFetchApiMetaListener notifyGatewayFetchApiMetaListener(final ApiMetaRpc apiMetaRpc, final ApiAccessProperties apiAccessProperties) {
         return new NotifyGatewayFetchApiMetaListener(apiMetaRpc, apiAccessProperties);
     }
 

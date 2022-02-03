@@ -24,6 +24,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
+ * 接口元数据获取接口
+ *
  * @author collin
  * @date 2020-09-18
  */

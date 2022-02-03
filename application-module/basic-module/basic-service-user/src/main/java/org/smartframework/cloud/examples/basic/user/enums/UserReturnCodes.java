@@ -32,10 +32,14 @@ public enum UserReturnCodes implements IBaseReturnCodes {
 	USER_DELETED("100003"),
 	/** 用户或密码错误 */
 	USERNAME_OR_PASSWORD_ERROR("100004"),
+	/** 该手机号已存在，请换一个重新注册 */
+	REGISTER_MOBILE_EXSITED("100005"),
+	/** 该用户名已存在，请换一个重新注册 */
+	REGISTER_USERNAME_EXSITED("100006"),
 	/** rsa密钥对生成出错 */
-	GENERATE_RSAKEY_FAIL("100005"),
+	GENERATE_RSAKEY_FAIL("100007"),
 	/** 盐值生成失败 */
-	GENERATE_SALT_FAIL("100006");
+	GENERATE_SALT_FAIL("100008");
 
 	/** 状态码 */
 	private String code;

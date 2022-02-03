@@ -15,6 +15,7 @@
  */
 package org.smartframework.cloud.examples.basic.user.service.api;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.smartframework.cloud.common.pojo.Base;
 import org.smartframework.cloud.common.pojo.Response;
@@ -29,7 +30,6 @@ import org.smartframework.cloud.examples.basic.user.biz.api.LoginInfoApiBiz;
 import org.smartframework.cloud.examples.basic.user.biz.api.UserInfoApiBiz;
 import org.smartframework.cloud.examples.basic.user.bo.login.LoginInfoInsertBizBO;
 import org.smartframework.cloud.examples.basic.user.bo.login.LoginInfoInsertServiceBO;
-import org.smartframework.cloud.examples.basic.user.config.UserParamValidateMessage;
 import org.smartframework.cloud.examples.basic.user.entity.base.LoginInfoEntity;
 import org.smartframework.cloud.examples.basic.user.entity.base.UserInfoEntity;
 import org.smartframework.cloud.examples.basic.user.enums.UserReturnCodes;
@@ -43,24 +43,20 @@ import org.smartframework.cloud.exception.ServerException;
 import org.smartframework.cloud.starter.core.business.util.RespUtil;
 import org.smartframework.cloud.starter.mybatis.plus.enums.DeleteState;
 import org.smartframework.cloud.utility.PasswordUtil;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.security.NoSuchAlgorithmException;
 import java.util.Objects;
 
-@Service
 @Slf4j
+@Service
+@RequiredArgsConstructor
 public class LoginInfoApiService {
 
-    @Autowired
-    private LoginInfoApiBiz loginInfoApiBiz;
-    @Autowired
-    private UserInfoApiBiz userInfoApiBiz;
-    @Autowired
-    private UserRpc userRpc;
-    @Autowired
-    private AuthRpc authRpc;
+    private final LoginInfoApiBiz loginInfoApiBiz;
+    private final UserInfoApiBiz userInfoApiBiz;
+    private final UserRpc userRpc;
+    private final AuthRpc authRpc;
 
     /**
      * 登陆校验
@@ -161,7 +157,7 @@ public class LoginInfoApiService {
         // 判断该用户名是否已存在
         boolean existUsername = loginInfoApiBiz.existByUsername(bo.getUsername());
         if (existUsername) {
-            throw new ParamValidateException(UserParamValidateMessage.REGISTER_USERNAME_EXSITED);
+            throw new ParamValidateException(UserReturnCodes.REGISTER_USERNAME_EXSITED);
         }
 
         String salt = generateRandomSalt();
