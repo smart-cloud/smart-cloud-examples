@@ -17,6 +17,7 @@ package org.smartframework.cloud.examples.mall.order.service.api;
 
 import com.baomidou.dynamic.datasource.annotation.DSTransactional;
 import io.seata.spring.annotation.GlobalTransactional;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.smartframework.cloud.common.pojo.Base;
@@ -46,7 +47,6 @@ import org.smartframework.cloud.starter.core.business.util.SnowFlakeIdUtil;
 import org.smartframework.cloud.starter.mybatis.plus.enums.DeleteState;
 import org.smartframework.cloud.utility.ObjectUtil;
 import org.smartframework.cloud.utility.spring.SpringContextUtil;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -60,18 +60,15 @@ import java.util.stream.Collectors;
  * @author collin
  * @date 2019-04-08
  */
-@Service
 @Slf4j
+@Service
+@RequiredArgsConstructor
 public class OrderApiService {
 
-    @Autowired
-    private ProductInfoRpc productInfoRpc;
-    @Autowired
-    private OrderBillApiBiz orderBillApiBiz;
-    @Autowired
-    private OrderDeliveryInfoApiBiz orderDeliveryInfoApiBiz;
-    @Autowired
-    private OrderDeliveryInfoApiService orderDeliveryInfoApiService;
+    private final ProductInfoRpc productInfoRpc;
+    private final OrderBillApiBiz orderBillApiBiz;
+    private final OrderDeliveryInfoApiBiz orderDeliveryInfoApiBiz;
+    private final OrderDeliveryInfoApiService orderDeliveryInfoApiService;
 
     /**
      * 提交订单

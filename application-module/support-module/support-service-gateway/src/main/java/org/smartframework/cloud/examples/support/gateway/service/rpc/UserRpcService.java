@@ -15,6 +15,7 @@
  */
 package org.smartframework.cloud.examples.support.gateway.service.rpc;
 
+import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.redisson.api.RMapCache;
 import org.redisson.api.RedissonClient;
@@ -27,7 +28,6 @@ import org.smartframework.cloud.examples.support.gateway.util.RedisKeyHelper;
 import org.smartframework.cloud.examples.support.rpc.gateway.request.rpc.CacheUserInfoReqDTO;
 import org.smartframework.cloud.examples.support.rpc.gateway.request.rpc.ExitLoginReqDTO;
 import org.smartframework.cloud.exception.DataValidateException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
 
@@ -41,10 +41,10 @@ import java.util.concurrent.TimeUnit;
  * @date 2020-09-11
  */
 @Service
+@RequiredArgsConstructor
 public class UserRpcService {
 
-    @Autowired
-    private RedissonClient redissonClient;
+    private final RedissonClient redissonClient;
 
     /**
      * 登录（或注册）成功后缓存用户信息

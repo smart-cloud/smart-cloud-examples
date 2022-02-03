@@ -15,22 +15,22 @@
  */
 package org.smartframework.cloud.examples.mall.order.mq.consumer;
 
+import lombok.RequiredArgsConstructor;
 import org.smartframework.cloud.examples.mall.order.mq.OrderMqConstants;
 import org.smartframework.cloud.examples.mall.order.mq.dto.SubmitOrderDTO;
 import org.smartframework.cloud.examples.mall.order.service.api.OrderApiService;
 import org.smartframework.cloud.starter.rabbitmq.AbstractRabbitMqConsumer;
 import org.smartframework.cloud.starter.rabbitmq.annotation.MqConsumerFailRetry;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
 @MqConsumerFailRetry
+@RequiredArgsConstructor
 @RabbitListener(queues = OrderMqConstants.SubmitOrder.QUEUE)
 public class OrderConsumer extends AbstractRabbitMqConsumer<SubmitOrderDTO> {
 
-    @Autowired
-    private OrderApiService orderApiService;
+    private final OrderApiService orderApiService;
 
     @Override
     protected void doProcess(SubmitOrderDTO submitOrderDTO) {

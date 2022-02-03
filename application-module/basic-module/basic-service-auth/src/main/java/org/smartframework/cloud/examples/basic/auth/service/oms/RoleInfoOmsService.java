@@ -15,6 +15,7 @@
  */
 package org.smartframework.cloud.examples.basic.auth.service.oms;
 
+import lombok.RequiredArgsConstructor;
 import org.smartframework.cloud.common.pojo.BasePageResponse;
 import org.smartframework.cloud.examples.app.auth.core.UserContext;
 import org.smartframework.cloud.examples.basic.auth.biz.oms.RoleInfoOmsBiz;
@@ -24,14 +25,13 @@ import org.smartframework.cloud.examples.basic.rpc.auth.request.oms.role.RoleCre
 import org.smartframework.cloud.examples.basic.rpc.auth.request.oms.role.RoleUpdateReqVO;
 import org.smartframework.cloud.examples.basic.rpc.auth.response.base.RoleInfoBaseRespVO;
 import org.smartframework.cloud.exception.DataValidateException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
+@RequiredArgsConstructor
 public class RoleInfoOmsService {
 
-    @Autowired
-    private RoleInfoOmsBiz roleInfoOmsBiz;
+    private final RoleInfoOmsBiz roleInfoOmsBiz;
 
     /**
      * 添加角色

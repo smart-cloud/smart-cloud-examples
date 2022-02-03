@@ -15,6 +15,7 @@
  */
 package org.smartframework.cloud.examples.mall.product.service.oms;
 
+import lombok.RequiredArgsConstructor;
 import org.smartframework.cloud.common.pojo.BasePageResponse;
 import org.smartframework.cloud.examples.mall.product.biz.oms.ProductInfoOmsBiz;
 import org.smartframework.cloud.examples.mall.rpc.product.request.oms.PageProductReqVO;
@@ -22,7 +23,6 @@ import org.smartframework.cloud.examples.mall.rpc.product.request.oms.ProductDel
 import org.smartframework.cloud.examples.mall.rpc.product.request.oms.ProductInsertReqVO;
 import org.smartframework.cloud.examples.mall.rpc.product.request.oms.ProductUpdateReqVO;
 import org.smartframework.cloud.examples.mall.rpc.product.response.base.ProductInfoBaseRespVO;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -32,10 +32,10 @@ import org.springframework.stereotype.Service;
  * @date 2019-03-29
  */
 @Service
+@RequiredArgsConstructor
 public class ProductInfoOmsService {
 
-    @Autowired
-    private ProductInfoOmsBiz productOmsBiz;
+    private final ProductInfoOmsBiz productOmsBiz;
 
     /**
      * 新增

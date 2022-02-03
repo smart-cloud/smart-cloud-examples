@@ -15,21 +15,21 @@
  */
 package org.smartframework.cloud.examples.basic.auth.controller.rpc;
 
+import lombok.RequiredArgsConstructor;
 import org.smartframework.cloud.common.pojo.Response;
 import org.smartframework.cloud.examples.basic.auth.service.rpc.AuthRpcService;
 import org.smartframework.cloud.examples.basic.rpc.auth.AuthRpc;
 import org.smartframework.cloud.examples.basic.rpc.auth.response.rpc.AuthRespDTO;
 import org.smartframework.cloud.starter.core.business.util.RespUtil;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RestController;
 
-@RestController
 @Validated
+@RestController
+@RequiredArgsConstructor
 public class AuthRpcController implements AuthRpc {
 
-    @Autowired
-    private AuthRpcService authRpcService;
+    private final AuthRpcService authRpcService;
 
     @Override
     public Response<AuthRespDTO> listByUid(Long uid) {

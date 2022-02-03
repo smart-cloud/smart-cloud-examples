@@ -15,6 +15,7 @@
  */
 package org.smartframework.cloud.examples.basic.auth.controller.oms;
 
+import lombok.RequiredArgsConstructor;
 import org.smartframework.cloud.api.core.annotation.RequireDataSecurity;
 import org.smartframework.cloud.api.core.annotation.RequireRepeatSubmitCheck;
 import org.smartframework.cloud.api.core.annotation.RequireTimestamp;
@@ -29,7 +30,6 @@ import org.smartframework.cloud.examples.basic.rpc.auth.request.oms.permisson.Pe
 import org.smartframework.cloud.examples.basic.rpc.auth.request.oms.permisson.PermissionUpdateReqVO;
 import org.smartframework.cloud.examples.basic.rpc.auth.response.base.PermissionInfoBaseRespVO;
 import org.smartframework.cloud.starter.core.business.util.RespUtil;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -43,13 +43,13 @@ import javax.validation.constraints.NotNull;
  * @date 2021-07-04
  * @status done
  */
+@Validated
 @RestController
 @RequestMapping("auth/oms/permission")
-@Validated
+@RequiredArgsConstructor
 public class PermissionInfoOmsController {
 
-    @Autowired
-    private PermissionInfoOmsService permissionInfoOmsService;
+    private final PermissionInfoOmsService permissionInfoOmsService;
 
     /**
      * 添加角色

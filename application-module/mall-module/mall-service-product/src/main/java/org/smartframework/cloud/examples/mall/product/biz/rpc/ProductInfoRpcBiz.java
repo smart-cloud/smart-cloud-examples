@@ -15,6 +15,7 @@
  */
 package org.smartframework.cloud.examples.mall.product.biz.rpc;
 
+import lombok.RequiredArgsConstructor;
 import org.smartframework.cloud.examples.mall.product.entity.base.ProductInfoEntity;
 import org.smartframework.cloud.examples.mall.product.mapper.base.ProductInfoBaseMapper;
 import org.smartframework.cloud.examples.mall.product.mapper.rpc.ProductInfoRpcMapper;
@@ -25,7 +26,6 @@ import org.smartframework.cloud.examples.mall.rpc.product.response.rpc.QryProduc
 import org.smartframework.cloud.examples.mall.rpc.product.response.rpc.QryProductByIdsRespDTO;
 import org.smartframework.cloud.starter.mybatis.plus.common.biz.BaseBiz;
 import org.smartframework.cloud.utility.ObjectUtil;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -38,10 +38,10 @@ import java.util.stream.Collectors;
  * @date 2019-03-31
  */
 @Repository
+@RequiredArgsConstructor
 public class ProductInfoRpcBiz extends BaseBiz<ProductInfoBaseMapper, ProductInfoEntity> {
 
-    @Autowired
-    private ProductInfoRpcMapper productInfoRpcMapper;
+    private final ProductInfoRpcMapper productInfoRpcMapper;
 
     /**
      * 根据id查询商品信息

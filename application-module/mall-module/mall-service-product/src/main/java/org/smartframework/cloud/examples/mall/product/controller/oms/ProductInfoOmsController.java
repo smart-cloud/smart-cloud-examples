@@ -15,6 +15,7 @@
  */
 package org.smartframework.cloud.examples.mall.product.controller.oms;
 
+import lombok.RequiredArgsConstructor;
 import org.smartframework.cloud.api.core.annotation.RequireDataSecurity;
 import org.smartframework.cloud.api.core.annotation.RequireRepeatSubmitCheck;
 import org.smartframework.cloud.api.core.annotation.RequireTimestamp;
@@ -28,7 +29,6 @@ import org.smartframework.cloud.examples.mall.rpc.product.request.oms.ProductIns
 import org.smartframework.cloud.examples.mall.rpc.product.request.oms.ProductUpdateReqVO;
 import org.smartframework.cloud.examples.mall.rpc.product.response.base.ProductInfoBaseRespVO;
 import org.smartframework.cloud.starter.core.business.util.RespUtil;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -42,13 +42,13 @@ import javax.validation.constraints.NotNull;
  * @date 2020-09-10
  * @status done
  */
+@Validated
 @RestController
 @RequestMapping("product/oms/productInfo")
-@Validated
+@RequiredArgsConstructor
 public class ProductInfoOmsController {
 
-    @Autowired
-    private ProductInfoOmsService productOmsService;
+    private final ProductInfoOmsService productOmsService;
 
     /**
      * 新增商品信息

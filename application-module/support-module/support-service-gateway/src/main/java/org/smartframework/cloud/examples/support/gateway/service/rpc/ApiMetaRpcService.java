@@ -16,6 +16,7 @@
 package org.smartframework.cloud.examples.support.gateway.service.rpc;
 
 import com.fasterxml.jackson.core.type.TypeReference;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.MapUtils;
 import org.smartframework.cloud.common.pojo.Response;
@@ -29,7 +30,6 @@ import org.smartframework.cloud.exception.BusinessException;
 import org.smartframework.cloud.starter.core.business.util.RespUtil;
 import org.smartframework.cloud.utility.HttpUtil;
 import org.smartframework.cloud.utility.spring.SpringContextUtil;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -46,12 +46,12 @@ import java.util.List;
  * @author collin
  * @date 2020/04/28
  */
-@Service
 @Slf4j
+@Service
+@RequiredArgsConstructor
 public class ApiMetaRpcService {
 
-    @Autowired
-    private RedisTemplate redisTemplate;
+    private final RedisTemplate redisTemplate;
 
     public void notifyFetch(NotifyFetchReqDTO req) throws IOException, NoSuchMethodException, InvocationTargetException, IllegalAccessException {
 //        String url = getFetchUrl(req.getServiceName());

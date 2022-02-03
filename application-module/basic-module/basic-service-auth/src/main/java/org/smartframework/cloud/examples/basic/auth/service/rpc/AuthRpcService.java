@@ -15,28 +15,25 @@
  */
 package org.smartframework.cloud.examples.basic.auth.service.rpc;
 
+import lombok.RequiredArgsConstructor;
 import org.apache.commons.collections4.CollectionUtils;
 import org.smartframework.cloud.examples.basic.auth.biz.oms.PermissionInfoOmsBiz;
 import org.smartframework.cloud.examples.basic.auth.biz.oms.RoleInfoOmsBiz;
 import org.smartframework.cloud.examples.basic.auth.biz.oms.RolePermissionOmsBiz;
 import org.smartframework.cloud.examples.basic.auth.biz.oms.UserRoleOmsBiz;
 import org.smartframework.cloud.examples.basic.rpc.auth.response.rpc.AuthRespDTO;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Set;
 
 @Service
+@RequiredArgsConstructor
 public class AuthRpcService {
 
-    @Autowired
-    private UserRoleOmsBiz userRoleOmsBiz;
-    @Autowired
-    private RolePermissionOmsBiz rolePermissionOmsBiz;
-    @Autowired
-    private RoleInfoOmsBiz roleInfoOmsBiz;
-    @Autowired
-    private PermissionInfoOmsBiz permissionInfoOmsBiz;
+    private final UserRoleOmsBiz userRoleOmsBiz;
+    private final RolePermissionOmsBiz rolePermissionOmsBiz;
+    private final RoleInfoOmsBiz roleInfoOmsBiz;
+    private final PermissionInfoOmsBiz permissionInfoOmsBiz;
 
     /**
      * 根据uid查询用户拥有的权限信息

@@ -15,11 +15,11 @@
  */
 package org.smartframework.cloud.examples.mall.product.service.api;
 
+import lombok.RequiredArgsConstructor;
 import org.smartframework.cloud.common.pojo.BasePageResponse;
 import org.smartframework.cloud.examples.mall.product.biz.api.ProductInfoApiBiz;
 import org.smartframework.cloud.examples.mall.rpc.product.request.api.PageProductReqVO;
 import org.smartframework.cloud.examples.mall.rpc.product.response.api.PageProductRespVO;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -29,19 +29,19 @@ import org.springframework.stereotype.Service;
  * @date 2019-03-29
  */
 @Service
+@RequiredArgsConstructor
 public class ProductInfoApiService {
-	
-	@Autowired
-	private ProductInfoApiBiz productOmsBiz;
 
-	/**
-	 * 分页查询商品信息
-	 * 
-	 * @param req
-	 * @return
-	 */
-	public BasePageResponse<PageProductRespVO> pageProduct(PageProductReqVO req) {
-		return productOmsBiz.pageProduct(req);
-	}
-	
+    private final ProductInfoApiBiz productOmsBiz;
+
+    /**
+     * 分页查询商品信息
+     *
+     * @param req
+     * @return
+     */
+    public BasePageResponse<PageProductRespVO> pageProduct(PageProductReqVO req) {
+        return productOmsBiz.pageProduct(req);
+    }
+
 }

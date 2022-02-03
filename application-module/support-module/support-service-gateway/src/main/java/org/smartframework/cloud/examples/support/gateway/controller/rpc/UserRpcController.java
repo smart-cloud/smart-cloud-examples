@@ -15,6 +15,7 @@
  */
 package org.smartframework.cloud.examples.support.gateway.controller.rpc;
 
+import lombok.RequiredArgsConstructor;
 import org.smartframework.cloud.common.pojo.Base;
 import org.smartframework.cloud.common.pojo.Response;
 import org.smartframework.cloud.examples.support.gateway.service.rpc.UserRpcService;
@@ -22,7 +23,6 @@ import org.smartframework.cloud.examples.support.rpc.gateway.UserRpc;
 import org.smartframework.cloud.examples.support.rpc.gateway.request.rpc.CacheUserInfoReqDTO;
 import org.smartframework.cloud.examples.support.rpc.gateway.request.rpc.ExitLoginReqDTO;
 import org.smartframework.cloud.starter.core.business.util.RespUtil;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -32,12 +32,12 @@ import org.springframework.web.bind.annotation.RestController;
  * @author collin
  * @date 2020-09-11
  */
-@RestController
 @Validated
+@RestController
+@RequiredArgsConstructor
 public class UserRpcController implements UserRpc {
 
-    @Autowired
-    private UserRpcService userRpcService;
+    private final UserRpcService userRpcService;
 
     /**
      * 登录（或注册）成功后缓存用户信息

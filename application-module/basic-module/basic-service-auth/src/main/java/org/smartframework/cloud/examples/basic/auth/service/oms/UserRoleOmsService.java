@@ -16,21 +16,21 @@
 package org.smartframework.cloud.examples.basic.auth.service.oms;
 
 import com.baomidou.dynamic.datasource.annotation.DSTransactional;
+import lombok.RequiredArgsConstructor;
 import org.smartframework.cloud.examples.app.auth.core.UserContext;
 import org.smartframework.cloud.examples.basic.auth.biz.oms.UserRoleOmsBiz;
 import org.smartframework.cloud.examples.basic.rpc.auth.request.oms.user.role.UserRoleCreateReqVO;
 import org.smartframework.cloud.examples.basic.rpc.auth.request.oms.user.role.UserRoleUpdateReqVO;
 import org.smartframework.cloud.examples.basic.rpc.auth.response.oms.user.role.UserRoleRespVO;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class UserRoleOmsService {
 
-    @Autowired
-    private UserRoleOmsBiz userRoleOmsBiz;
+    private final UserRoleOmsBiz userRoleOmsBiz;
 
     /**
      * 添加用户角色

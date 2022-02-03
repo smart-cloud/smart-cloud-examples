@@ -15,6 +15,7 @@
  */
 package org.smartframework.cloud.examples.basic.auth.controller.oms;
 
+import lombok.RequiredArgsConstructor;
 import org.smartframework.cloud.api.core.annotation.RequireDataSecurity;
 import org.smartframework.cloud.api.core.annotation.RequireRepeatSubmitCheck;
 import org.smartframework.cloud.api.core.annotation.RequireTimestamp;
@@ -27,7 +28,6 @@ import org.smartframework.cloud.examples.basic.rpc.auth.request.oms.user.role.Us
 import org.smartframework.cloud.examples.basic.rpc.auth.request.oms.user.role.UserRoleUpdateReqVO;
 import org.smartframework.cloud.examples.basic.rpc.auth.response.oms.user.role.UserRoleRespVO;
 import org.smartframework.cloud.starter.core.business.util.RespUtil;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -42,13 +42,13 @@ import java.util.List;
  * @date 2021-07-04
  * @status done
  */
+@Validated
 @RestController
 @RequestMapping("auth/oms/user/role")
-@Validated
+@RequiredArgsConstructor
 public class UserRoleOmsController {
 
-    @Autowired
-    private UserRoleOmsService userRoleOmsService;
+    private final UserRoleOmsService userRoleOmsService;
 
     /**
      * 添加用户角色

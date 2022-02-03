@@ -15,6 +15,7 @@
  */
 package org.smartframework.cloud.examples.support.gateway.service.api;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.DecoderException;
 import org.redisson.api.RMapCache;
@@ -30,7 +31,6 @@ import org.smartframework.cloud.exception.DataValidateException;
 import org.smartframework.cloud.exception.ServerException;
 import org.smartframework.cloud.utility.RandomUtil;
 import org.smartframework.cloud.utility.security.RsaUtil;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.crypto.BadPaddingException;
@@ -51,12 +51,12 @@ import java.util.concurrent.TimeUnit;
  * @author collin
  * @date 2020-09-10
  */
-@Service
 @Slf4j
+@Service
+@RequiredArgsConstructor
 public class SecurityApiService {
 
-    @Autowired
-    private RedissonClient redissonClient;
+    private final RedissonClient redissonClient;
 
     public GenerateClientPubKeyRespVO generateClientPubKey() {
         // 1、生成密钥对

@@ -15,6 +15,7 @@
  */
 package org.smartframework.cloud.examples.mall.order.controller.api;
 
+import lombok.RequiredArgsConstructor;
 import org.smartframework.cloud.api.core.annotation.RequireDataSecurity;
 import org.smartframework.cloud.api.core.annotation.RequireRepeatSubmitCheck;
 import org.smartframework.cloud.api.core.annotation.RequireTimestamp;
@@ -25,7 +26,6 @@ import org.smartframework.cloud.examples.mall.order.service.api.OrderApiService;
 import org.smartframework.cloud.examples.mall.rpc.order.request.api.SubmitOrderReqVO;
 import org.smartframework.cloud.examples.mall.rpc.order.response.api.QuerySubmitResultRespVO;
 import org.smartframework.cloud.starter.core.business.util.RespUtil;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -39,15 +39,14 @@ import javax.validation.constraints.NotNull;
  * @date 2020-09-10
  * @status done
  */
+@Validated
 @RestController
 @RequestMapping("order/api/order")
-@Validated
+@RequiredArgsConstructor
 public class OrderApiController {
 
-    @Autowired
-    private OrderProducer orderProducer;
-    @Autowired
-    private OrderApiService orderApiService;
+    private final OrderProducer orderProducer;
+    private final OrderApiService orderApiService;
 
     /**
      * 提交订单

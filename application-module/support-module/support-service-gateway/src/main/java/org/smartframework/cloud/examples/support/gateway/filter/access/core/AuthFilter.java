@@ -15,6 +15,7 @@
  */
 package org.smartframework.cloud.examples.support.gateway.filter.access.core;
 
+import lombok.RequiredArgsConstructor;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.redisson.api.RMapCache;
@@ -40,8 +41,7 @@ import org.smartframework.cloud.exception.DataValidateException;
 import org.smartframework.cloud.exception.RpcException;
 import org.smartframework.cloud.starter.core.business.util.RespUtil;
 import org.smartframework.cloud.utility.JacksonUtil;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Lazy;
+import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Component;
@@ -64,15 +64,12 @@ import java.util.concurrent.TimeUnit;
  * @date 2020-09-11
  */
 @Component
+@RequiredArgsConstructor
 public class AuthFilter extends AbstractFilter {
 
-    @Autowired
-    private RedissonClient redissonClient;
-    @Lazy
-    @Autowired
-    private AuthRpc authRpc;
-    @Autowired
-    private UserRpcService userRpcService;
+    private final RedissonClient redissonClient;
+    private final ObjectProvider<AuthRpc> authRpcObjectProvider;
+    private final UserRpcService userRpcService;
 
     @Override
     public int getOrder() {
@@ -177,7 +174,7 @@ public class AuthFilter extends AbstractFilter {
         }
 
         // 如果缓存中没有，则rpc查数据库
-        Response<AuthRespDTO> authResponse = authRpc.listByUid(uid);
+        Response<AuthRespDTO> authResponse = authRpcObjectProvider.getIfAvailable().listByUid(uid);
         if (!RespUtil.isSuccess(authResponse)) {
             if (authResponse == null || authResponse.getHead() == null) {
                 throw new RpcException();

@@ -15,6 +15,7 @@
  */
 package org.smartframework.cloud.examples.mall.product.controller.rpc;
 
+import lombok.RequiredArgsConstructor;
 import org.smartframework.cloud.common.pojo.Base;
 import org.smartframework.cloud.common.pojo.Response;
 import org.smartframework.cloud.examples.mall.product.enums.ProductReturnCodes;
@@ -26,16 +27,15 @@ import org.smartframework.cloud.examples.mall.rpc.product.request.rpc.UpdateStoc
 import org.smartframework.cloud.examples.mall.rpc.product.response.rpc.QryProductByIdRespDTO;
 import org.smartframework.cloud.examples.mall.rpc.product.response.rpc.QryProductByIdsRespDTO;
 import org.smartframework.cloud.starter.core.business.util.RespUtil;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RestController;
 
-@RestController
 @Validated
+@RestController
+@RequiredArgsConstructor
 public class ProductInfoRpcController implements ProductInfoRpc {
 
-    @Autowired
-    private ProductInfoRpcService productInfoRpcService;
+    private final ProductInfoRpcService productInfoRpcService;
 
     @Override
     public Response<QryProductByIdRespDTO> qryProductById(QryProductByIdReqDTO req) {

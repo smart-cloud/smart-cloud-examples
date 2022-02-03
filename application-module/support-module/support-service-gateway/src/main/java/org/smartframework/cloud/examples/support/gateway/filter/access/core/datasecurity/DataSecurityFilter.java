@@ -15,6 +15,7 @@
  */
 package org.smartframework.cloud.examples.support.gateway.filter.access.core.datasecurity;
 
+import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.redisson.api.RedissonClient;
 import org.smartframework.cloud.examples.support.gateway.cache.ApiAccessMetaCache;
@@ -23,7 +24,6 @@ import org.smartframework.cloud.examples.support.gateway.enums.GatewayReturnCode
 import org.smartframework.cloud.examples.support.gateway.filter.FilterContext;
 import org.smartframework.cloud.examples.support.gateway.filter.access.AbstractFilter;
 import org.smartframework.cloud.exception.ParamValidateException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
@@ -38,10 +38,10 @@ import reactor.core.publisher.Mono;
  * @date 2021-07-16
  */
 @Component
+@RequiredArgsConstructor
 public class DataSecurityFilter extends AbstractFilter {
 
-    @Autowired
-    private RedissonClient redissonClient;
+    private final RedissonClient redissonClient;
 
     @Override
     public int getOrder() {

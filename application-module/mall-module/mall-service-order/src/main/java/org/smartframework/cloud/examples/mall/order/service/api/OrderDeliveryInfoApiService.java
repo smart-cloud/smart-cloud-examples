@@ -16,10 +16,10 @@
 package org.smartframework.cloud.examples.mall.order.service.api;
 
 import com.baomidou.dynamic.datasource.annotation.DS;
+import lombok.RequiredArgsConstructor;
 import org.smartframework.cloud.examples.mall.order.biz.api.OrderDeliveryInfoApiBiz;
 import org.smartframework.cloud.examples.mall.order.entity.base.OrderDeliveryInfoEntity;
 import org.smartframework.cloud.starter.mp.shardingjdbc.constants.ShardingSphereDataSourceName;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -32,10 +32,10 @@ import java.util.List;
  */
 @Service
 @DS(ShardingSphereDataSourceName.SHARDING_DATASOURCE)
+@RequiredArgsConstructor
 public class OrderDeliveryInfoApiService {
 
-    @Autowired
-    private OrderDeliveryInfoApiBiz orderDeliveryInfoApiBiz;
+    private final OrderDeliveryInfoApiBiz orderDeliveryInfoApiBiz;
 
     public boolean create(List<OrderDeliveryInfoEntity> entities) {
         return orderDeliveryInfoApiBiz.getBaseMapper().insertBatchSomeColumn(entities) == entities.size();

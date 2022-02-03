@@ -15,6 +15,7 @@
  */
 package org.smartframework.cloud.examples.support.gateway.controller.api;
 
+import lombok.RequiredArgsConstructor;
 import org.apache.commons.codec.DecoderException;
 import org.smartframework.cloud.api.core.annotation.RequireTimestamp;
 import org.smartframework.cloud.common.pojo.Response;
@@ -23,7 +24,6 @@ import org.smartframework.cloud.examples.support.rpc.gateway.request.api.Generat
 import org.smartframework.cloud.examples.support.rpc.gateway.response.api.GenerateAesKeyRespVO;
 import org.smartframework.cloud.examples.support.rpc.gateway.response.api.GenerateClientPubKeyRespVO;
 import org.smartframework.cloud.starter.core.business.util.RespUtil;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -45,13 +45,13 @@ import java.security.spec.InvalidKeySpecException;
  * @date 2020-09-10
  * @status done
  */
+@Validated
 @RestController
 @RequestMapping("gateway/api/security")
-@Validated
+@RequiredArgsConstructor
 public class SecurityApiController {
 
-    @Autowired
-    private SecurityApiService securityApiService;
+    private final SecurityApiService securityApiService;
 
     /**
      * 生成客户端公钥

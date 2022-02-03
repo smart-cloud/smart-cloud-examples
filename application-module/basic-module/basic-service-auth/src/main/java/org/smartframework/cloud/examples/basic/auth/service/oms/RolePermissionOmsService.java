@@ -16,6 +16,7 @@
 package org.smartframework.cloud.examples.basic.auth.service.oms;
 
 import com.baomidou.dynamic.datasource.annotation.DSTransactional;
+import lombok.RequiredArgsConstructor;
 import org.smartframework.cloud.common.pojo.BasePageResponse;
 import org.smartframework.cloud.examples.app.auth.core.UserContext;
 import org.smartframework.cloud.examples.basic.auth.biz.oms.RolePermissionOmsBiz;
@@ -23,14 +24,13 @@ import org.smartframework.cloud.examples.basic.rpc.auth.request.oms.role.permiss
 import org.smartframework.cloud.examples.basic.rpc.auth.request.oms.role.permisson.RolePermissonCreateReqVO;
 import org.smartframework.cloud.examples.basic.rpc.auth.request.oms.role.permisson.RolePermissonUpdateReqVO;
 import org.smartframework.cloud.examples.basic.rpc.auth.response.oms.role.permisson.RolePermissionRespVO;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
+@RequiredArgsConstructor
 public class RolePermissionOmsService {
 
-    @Autowired
-    private RolePermissionOmsBiz rolePermissionOmsBiz;
+    private final RolePermissionOmsBiz rolePermissionOmsBiz;
 
     /**
      * 添加角色权限

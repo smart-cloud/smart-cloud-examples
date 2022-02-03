@@ -39,8 +39,8 @@ import reactor.core.publisher.SignalType;
  * @author collin
  * @date 2020-07-17
  */
-@Component
 @Slf4j
+@Component
 @Conditional(ConditionEnableLogInfo.class)
 public class GatewayLogFilter implements WebFilter, Ordered {
 

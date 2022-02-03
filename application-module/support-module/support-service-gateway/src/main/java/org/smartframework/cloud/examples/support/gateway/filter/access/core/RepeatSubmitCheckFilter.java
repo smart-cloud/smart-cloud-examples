@@ -15,6 +15,7 @@
  */
 package org.smartframework.cloud.examples.support.gateway.filter.access.core;
 
+import lombok.RequiredArgsConstructor;
 import org.redisson.api.RLock;
 import org.redisson.api.RedissonClient;
 import org.smartframework.cloud.examples.support.gateway.cache.ApiAccessMetaCache;
@@ -25,7 +26,6 @@ import org.smartframework.cloud.examples.support.gateway.filter.rewrite.RewriteS
 import org.smartframework.cloud.examples.support.gateway.util.RedisKeyHelper;
 import org.smartframework.cloud.exception.RepeatSubmitException;
 import org.smartframework.cloud.utility.security.Md5Util;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
@@ -41,10 +41,10 @@ import java.util.concurrent.TimeUnit;
  * @date 2020-09-05
  */
 @Component
+@RequiredArgsConstructor
 public class RepeatSubmitCheckFilter extends AbstractFilter {
 
-    @Autowired
-    private RedissonClient redissonClient;
+    private final RedissonClient redissonClient;
 
     @Override
     protected Mono<Void> filter(ServerWebExchange exchange, WebFilterChain chain, FilterContext filterContext) {

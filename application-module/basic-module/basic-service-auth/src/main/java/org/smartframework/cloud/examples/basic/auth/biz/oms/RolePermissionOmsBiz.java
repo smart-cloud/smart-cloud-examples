@@ -17,6 +17,7 @@ package org.smartframework.cloud.examples.basic.auth.biz.oms;
 
 import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import lombok.RequiredArgsConstructor;
 import org.apache.commons.collections4.CollectionUtils;
 import org.smartframework.cloud.common.pojo.BasePageResponse;
 import org.smartframework.cloud.common.pojo.util.PageUtil;
@@ -34,7 +35,6 @@ import org.smartframework.cloud.examples.basic.rpc.auth.response.oms.role.permis
 import org.smartframework.cloud.examples.common.config.constants.DataSourceName;
 import org.smartframework.cloud.starter.mybatis.plus.common.biz.BaseBiz;
 import org.smartframework.cloud.starter.mybatis.plus.enums.DeleteState;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.Date;
@@ -45,10 +45,10 @@ import java.util.stream.Collectors;
 
 @Repository
 @DS(DataSourceName.BASIC_AUTH)
+@RequiredArgsConstructor
 public class RolePermissionOmsBiz extends BaseBiz<RolePermissionRelaBaseMapper, RolePermissionRelaEntity> {
 
-    @Autowired
-    private RolePermissionOmsMapper rolePermissionOmsMapper;
+    private final RolePermissionOmsMapper rolePermissionOmsMapper;
 
     /**
      * 添加角色权限

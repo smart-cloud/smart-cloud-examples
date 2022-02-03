@@ -17,6 +17,7 @@ package org.smartframework.cloud.examples.basic.auth.biz.oms;
 
 import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import lombok.RequiredArgsConstructor;
 import org.apache.commons.collections4.CollectionUtils;
 import org.smartframework.cloud.examples.app.auth.core.UserContext;
 import org.smartframework.cloud.examples.basic.auth.entity.base.UserRoleRelaEntity;
@@ -26,7 +27,6 @@ import org.smartframework.cloud.examples.basic.rpc.auth.response.oms.user.role.U
 import org.smartframework.cloud.examples.common.config.constants.DataSourceName;
 import org.smartframework.cloud.starter.mybatis.plus.common.biz.BaseBiz;
 import org.smartframework.cloud.starter.mybatis.plus.enums.DeleteState;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.Date;
@@ -37,10 +37,10 @@ import java.util.stream.Collectors;
 
 @Repository
 @DS(DataSourceName.BASIC_AUTH)
+@RequiredArgsConstructor
 public class UserRoleOmsBiz extends BaseBiz<UserRoleRelaBaseMapper, UserRoleRelaEntity> {
 
-    @Autowired
-    private UserRoleOmsMapper userRoleOmsMapper;
+    private final UserRoleOmsMapper userRoleOmsMapper;
 
     /**
      * 添加用户权限
