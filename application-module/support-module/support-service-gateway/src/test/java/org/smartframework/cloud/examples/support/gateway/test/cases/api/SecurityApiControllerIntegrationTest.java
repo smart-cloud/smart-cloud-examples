@@ -21,9 +21,9 @@ import org.apache.commons.lang3.StringUtils;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.smartframework.cloud.common.pojo.Response;
-import org.smartframework.cloud.common.pojo.enums.CommonReturnCodes;
+import org.smartframework.cloud.constants.CommonReturnCodes;
 import org.smartframework.cloud.common.web.constants.SmartHttpHeaders;
-import org.smartframework.cloud.examples.support.gateway.enums.GatewayReturnCodes;
+import org.smartframework.cloud.examples.support.gateway.constants.GatewayReturnCodes;
 import org.smartframework.cloud.examples.support.gateway.service.api.SecurityApiService;
 import org.smartframework.cloud.examples.support.rpc.gateway.request.api.GenerateAesKeyReqVO;
 import org.smartframework.cloud.examples.support.rpc.gateway.response.api.GenerateAesKeyRespVO;
@@ -62,7 +62,7 @@ class SecurityApiControllerIntegrationTest extends WebReactiveIntegrationTest {
         });
         Assertions.assertThat(result).isNotNull();
         Assertions.assertThat(result.getHead()).isNotNull();
-        Assertions.assertThat(result.getHead().getCode()).isEqualTo(CommonReturnCodes.SUCCESS.getCode());
+        Assertions.assertThat(result.getHead().getCode()).isEqualTo(CommonReturnCodes.SUCCESS);
         Assertions.assertThat(result.getBody().getToken()).isNotBlank();
         Assertions.assertThat(result.getBody().getPubKeyModulus()).isNotBlank();
         Assertions.assertThat(result.getBody().getPubKeyExponent()).isNotBlank();
@@ -101,7 +101,7 @@ class SecurityApiControllerIntegrationTest extends WebReactiveIntegrationTest {
         });
         Assertions.assertThat(result).isNotNull();
         Assertions.assertThat(result.getHead()).isNotNull();
-        Assertions.assertThat(result.getHead().getCode()).isEqualTo(CommonReturnCodes.SUCCESS.getCode());
+        Assertions.assertThat(result.getHead().getCode()).isEqualTo(CommonReturnCodes.SUCCESS);
         Assertions.assertThat(result.getBody().getEncryptedAesKey()).isNotBlank();
 
         // 解密AES key

@@ -19,7 +19,7 @@ import lombok.RequiredArgsConstructor;
 import org.smartframework.cloud.common.pojo.BasePageResponse;
 import org.smartframework.cloud.examples.app.auth.core.UserContext;
 import org.smartframework.cloud.examples.basic.auth.biz.oms.PermissionInfoOmsBiz;
-import org.smartframework.cloud.examples.basic.auth.enums.AuthReturnCodes;
+import org.smartframework.cloud.examples.basic.auth.constants.AuthReturnCodes;
 import org.smartframework.cloud.examples.basic.rpc.auth.request.oms.permisson.PagePermissionReqVO;
 import org.smartframework.cloud.examples.basic.rpc.auth.request.oms.permisson.PermissionCreateReqVO;
 import org.smartframework.cloud.examples.basic.rpc.auth.request.oms.permisson.PermissionUpdateReqVO;

@@ -18,7 +18,7 @@ package org.smartframework.cloud.examples.system.test.module.mall.product.api;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.smartframework.cloud.common.pojo.Response;
-import org.smartframework.cloud.common.pojo.enums.CommonReturnCodes;
+import org.smartframework.cloud.constants.CommonReturnCodes;
 import org.smartframework.cloud.examples.mall.rpc.product.request.oms.ProductInsertReqVO;
 import org.smartframework.cloud.starter.test.AbstractSystemTest;
 import org.smartframework.cloud.utility.RandomUtil;
@@ -40,7 +40,7 @@ class ProductInfoOmsSystemTest extends AbstractSystemTest {
         Response<Boolean> result = ProductInfoOms.create(reqVO);
         Assertions.assertThat(result).isNotNull();
         Assertions.assertThat(result.getHead()).isNotNull();
-        Assertions.assertThat(result.getHead().getCode()).isEqualTo(CommonReturnCodes.SUCCESS.getCode());
+        Assertions.assertThat(result.getHead().getCode()).isEqualTo(CommonReturnCodes.SUCCESS);
         Assertions.assertThat(result.getBody()).isTrue();
     }
 

@@ -15,7 +15,7 @@
  */
 package org.smartframework.cloud.examples.mall.product.test.data;
 
-import org.smartframework.cloud.examples.mall.product.entity.base.ProductInfoEntity;
+import org.smartframework.cloud.examples.mall.product.entity.ProductInfoEntity;
 import org.smartframework.cloud.examples.mall.product.mapper.base.ProductInfoBaseMapper;
 import org.smartframework.cloud.starter.mybatis.plus.enums.DeleteState;
 import org.springframework.beans.factory.annotation.Autowired;

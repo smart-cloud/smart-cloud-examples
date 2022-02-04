@@ -20,7 +20,7 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.smartframework.cloud.common.pojo.Base;
 import org.smartframework.cloud.common.pojo.Response;
-import org.smartframework.cloud.common.pojo.enums.CommonReturnCodes;
+import org.smartframework.cloud.constants.CommonReturnCodes;
 import org.smartframework.cloud.examples.mall.product.test.data.ProductInfoData;
 import org.smartframework.cloud.examples.mall.rpc.product.request.rpc.QryProductByIdReqDTO;
 import org.smartframework.cloud.examples.mall.rpc.product.request.rpc.QryProductByIdsReqDTO;
@@ -57,7 +57,7 @@ class ProductInfoRpcControllerIntegrationTest extends WebMvcIntegrationTest {
 
         Assertions.assertThat(result).isNotNull();
         Assertions.assertThat(result.getHead()).isNotNull();
-        Assertions.assertThat(result.getHead().getCode()).isEqualTo(CommonReturnCodes.SUCCESS.getCode());
+        Assertions.assertThat(result.getHead().getCode()).isEqualTo(CommonReturnCodes.SUCCESS);
     }
 
     @Test
@@ -78,7 +78,7 @@ class ProductInfoRpcControllerIntegrationTest extends WebMvcIntegrationTest {
 
         Assertions.assertThat(result).isNotNull();
         Assertions.assertThat(result.getHead()).isNotNull();
-        Assertions.assertThat(result.getHead().getCode()).isEqualTo(CommonReturnCodes.SUCCESS.getCode());
+        Assertions.assertThat(result.getHead().getCode()).isEqualTo(CommonReturnCodes.SUCCESS);
         Assertions.assertThat(result.getBody()).isNotNull();
         Assertions.assertThat(result.getBody().getProductInfos()).isNotEmpty();
     }
@@ -105,7 +105,7 @@ class ProductInfoRpcControllerIntegrationTest extends WebMvcIntegrationTest {
 
         Assertions.assertThat(result).isNotNull();
         Assertions.assertThat(result.getHead()).isNotNull();
-        Assertions.assertThat(result.getHead().getCode()).isEqualTo(CommonReturnCodes.SUCCESS.getCode());
+        Assertions.assertThat(result.getHead().getCode()).isEqualTo(CommonReturnCodes.SUCCESS);
     }
 
 }

@@ -25,7 +25,7 @@ import org.smartframework.cloud.common.web.constants.SmartHttpHeaders;
 import org.smartframework.cloud.constants.SymbolConstant;
 import org.smartframework.cloud.examples.support.gateway.cache.SecurityKeyCache;
 import org.smartframework.cloud.examples.support.gateway.constants.GatewayConstants;
-import org.smartframework.cloud.examples.support.gateway.enums.GatewayReturnCodes;
+import org.smartframework.cloud.examples.support.gateway.constants.GatewayReturnCodes;
 import org.smartframework.cloud.examples.support.gateway.exception.AesKeyNotFoundException;
 import org.smartframework.cloud.examples.support.gateway.exception.RequestSignFailException;
 import org.smartframework.cloud.examples.support.gateway.filter.rewrite.RewriteServerHttpRequestDecorator;

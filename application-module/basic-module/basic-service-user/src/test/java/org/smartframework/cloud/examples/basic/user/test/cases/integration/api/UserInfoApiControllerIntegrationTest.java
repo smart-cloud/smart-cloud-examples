@@ -19,7 +19,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.smartframework.cloud.common.pojo.Response;
-import org.smartframework.cloud.common.pojo.enums.CommonReturnCodes;
+import org.smartframework.cloud.constants.CommonReturnCodes;
 import org.smartframework.cloud.examples.basic.rpc.user.response.base.UserInfoBaseRespVO;
 import org.smartframework.cloud.examples.basic.user.test.data.UserInfoData;
 import org.smartframework.cloud.starter.test.integration.WebMvcIntegrationTest;
@@ -45,7 +45,7 @@ class UserInfoApiControllerIntegrationTest extends WebMvcIntegrationTest {
 
         Assertions.assertThat(result).isNotNull();
         Assertions.assertThat(result.getHead()).isNotNull();
-        Assertions.assertThat(result.getHead().getCode()).isEqualTo(CommonReturnCodes.SUCCESS.getCode());
+        Assertions.assertThat(result.getHead().getCode()).isEqualTo(CommonReturnCodes.SUCCESS);
         Assertions.assertThat(result.getBody()).isNotNull();
     }
 

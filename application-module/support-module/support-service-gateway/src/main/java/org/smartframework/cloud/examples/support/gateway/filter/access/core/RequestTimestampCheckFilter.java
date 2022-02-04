@@ -18,7 +18,7 @@ package org.smartframework.cloud.examples.support.gateway.filter.access.core;
 import org.apache.commons.lang3.StringUtils;
 import org.smartframework.cloud.common.web.constants.SmartHttpHeaders;
 import org.smartframework.cloud.examples.support.gateway.constants.Order;
-import org.smartframework.cloud.examples.support.gateway.enums.GatewayReturnCodes;
+import org.smartframework.cloud.examples.support.gateway.constants.GatewayReturnCodes;
 import org.smartframework.cloud.examples.support.gateway.exception.RequestTimestampException;
 import org.smartframework.cloud.examples.support.gateway.filter.FilterContext;
 import org.smartframework.cloud.examples.support.gateway.filter.access.AbstractFilter;

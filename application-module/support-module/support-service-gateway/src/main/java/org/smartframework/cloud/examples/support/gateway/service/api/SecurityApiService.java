@@ -22,7 +22,7 @@ import org.redisson.api.RMapCache;
 import org.redisson.api.RedissonClient;
 import org.smartframework.cloud.examples.support.gateway.cache.SecurityKeyCache;
 import org.smartframework.cloud.examples.support.gateway.constants.RedisExpire;
-import org.smartframework.cloud.examples.support.gateway.enums.GatewayReturnCodes;
+import org.smartframework.cloud.examples.support.gateway.constants.GatewayReturnCodes;
 import org.smartframework.cloud.examples.support.gateway.util.RedisKeyHelper;
 import org.smartframework.cloud.examples.support.rpc.gateway.request.api.GenerateAesKeyReqVO;
 import org.smartframework.cloud.examples.support.rpc.gateway.response.api.GenerateAesKeyRespVO;

@@ -18,10 +18,9 @@ package org.smartframework.cloud.examples.mall.product.test.cases.integration.om
 import com.fasterxml.jackson.core.type.TypeReference;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.smartframework.cloud.common.pojo.Base;
 import org.smartframework.cloud.common.pojo.BasePageResponse;
 import org.smartframework.cloud.common.pojo.Response;
-import org.smartframework.cloud.common.pojo.enums.CommonReturnCodes;
+import org.smartframework.cloud.constants.CommonReturnCodes;
 import org.smartframework.cloud.examples.mall.product.test.data.ProductInfoData;
 import org.smartframework.cloud.examples.mall.rpc.product.request.oms.PageProductReqVO;
 import org.smartframework.cloud.examples.mall.rpc.product.request.oms.ProductDeleteReqVO;
@@ -53,7 +52,7 @@ class ProductInfoOmsControllerIntegrationTest extends WebMvcIntegrationTest {
 
         Assertions.assertThat(result).isNotNull();
         Assertions.assertThat(result.getHead()).isNotNull();
-        Assertions.assertThat(result.getHead().getCode()).isEqualTo(CommonReturnCodes.SUCCESS.getCode());
+        Assertions.assertThat(result.getHead().getCode()).isEqualTo(CommonReturnCodes.SUCCESS);
         Assertions.assertThat(result.getBody()).isTrue();
     }
 
@@ -74,7 +73,7 @@ class ProductInfoOmsControllerIntegrationTest extends WebMvcIntegrationTest {
 
         Assertions.assertThat(result).isNotNull();
         Assertions.assertThat(result.getHead()).isNotNull();
-        Assertions.assertThat(result.getHead().getCode()).isEqualTo(CommonReturnCodes.SUCCESS.getCode());
+        Assertions.assertThat(result.getHead().getCode()).isEqualTo(CommonReturnCodes.SUCCESS);
         Assertions.assertThat(result.getBody()).isTrue();
     }
 
@@ -92,7 +91,7 @@ class ProductInfoOmsControllerIntegrationTest extends WebMvcIntegrationTest {
 
         Assertions.assertThat(result).isNotNull();
         Assertions.assertThat(result.getHead()).isNotNull();
-        Assertions.assertThat(result.getHead().getCode()).isEqualTo(CommonReturnCodes.SUCCESS.getCode());
+        Assertions.assertThat(result.getHead().getCode()).isEqualTo(CommonReturnCodes.SUCCESS);
         Assertions.assertThat(result.getBody()).isTrue();
     }
 
@@ -112,7 +111,7 @@ class ProductInfoOmsControllerIntegrationTest extends WebMvcIntegrationTest {
 
         Assertions.assertThat(result).isNotNull();
         Assertions.assertThat(result.getHead()).isNotNull();
-        Assertions.assertThat(result.getHead().getCode()).isEqualTo(CommonReturnCodes.SUCCESS.getCode());
+        Assertions.assertThat(result.getHead().getCode()).isEqualTo(CommonReturnCodes.SUCCESS);
         Assertions.assertThat(result.getBody()).isNotNull();
         Assertions.assertThat(result.getBody().getDatas()).isNotEmpty();
     }

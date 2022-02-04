@@ -23,7 +23,7 @@ import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.smartframework.cloud.common.pojo.BasePageResponse;
 import org.smartframework.cloud.examples.common.config.constants.DataSourceName;
-import org.smartframework.cloud.examples.mall.product.entity.base.ProductInfoEntity;
+import org.smartframework.cloud.examples.mall.product.entity.ProductInfoEntity;
 import org.smartframework.cloud.examples.mall.product.mapper.base.ProductInfoBaseMapper;
 import org.smartframework.cloud.examples.mall.rpc.product.request.api.PageProductReqVO;
 import org.smartframework.cloud.examples.mall.rpc.product.response.api.PageProductRespVO;

@@ -16,7 +16,7 @@
 package org.smartframework.cloud.examples.basic.auth.test.data;
 
 import org.smartframework.cloud.examples.basic.auth.biz.oms.PermissionInfoOmsBiz;
-import org.smartframework.cloud.examples.basic.auth.entity.base.PermissionInfoEntity;
+import org.smartframework.cloud.examples.basic.auth.entity.PermissionInfoEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

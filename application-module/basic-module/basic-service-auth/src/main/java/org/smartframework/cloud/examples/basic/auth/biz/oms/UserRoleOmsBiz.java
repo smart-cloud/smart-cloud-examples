@@ -20,7 +20,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.collections4.CollectionUtils;
 import org.smartframework.cloud.examples.app.auth.core.UserContext;
-import org.smartframework.cloud.examples.basic.auth.entity.base.UserRoleRelaEntity;
+import org.smartframework.cloud.examples.basic.auth.entity.UserRoleRelaEntity;
 import org.smartframework.cloud.examples.basic.auth.mapper.base.UserRoleRelaBaseMapper;
 import org.smartframework.cloud.examples.basic.auth.mapper.oms.UserRoleOmsMapper;
 import org.smartframework.cloud.examples.basic.rpc.auth.response.oms.user.role.UserRoleRespVO;

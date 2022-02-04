@@ -13,19 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.smartframework.cloud.examples.mall.order.mapper.base;
-
-import org.apache.ibatis.annotations.Mapper;
-import org.smartframework.cloud.examples.mall.order.entity.base.OrderDeliveryInfoEntity;
-import org.smartframework.cloud.starter.mybatis.plus.common.mapper.SmartMapper;
+package org.smartframework.cloud.examples.mall.product.constants;
 
 /**
- * 运单信息base mapper
+ * 商品服务状态码
  *
  * @author collin
- * @date 2021-12-12
+ * @date 2019-04-07
  */
-@Mapper
-public interface OrderDeliveryInfoBaseMapper extends SmartMapper<OrderDeliveryInfoEntity> {
+public interface ProductReturnCodes {
+
+    /**
+     * 库存不足，操作失败
+     */
+    String STOCK_NOT_ENOUGH = "300001";
 
 }

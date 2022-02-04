@@ -16,7 +16,7 @@
 package org.smartframework.cloud.examples.mall.product.biz.rpc;
 
 import lombok.RequiredArgsConstructor;
-import org.smartframework.cloud.examples.mall.product.entity.base.ProductInfoEntity;
+import org.smartframework.cloud.examples.mall.product.entity.ProductInfoEntity;
 import org.smartframework.cloud.examples.mall.product.mapper.base.ProductInfoBaseMapper;
 import org.smartframework.cloud.examples.mall.product.mapper.rpc.ProductInfoRpcMapper;
 import org.smartframework.cloud.examples.mall.rpc.product.request.rpc.QryProductByIdReqDTO;

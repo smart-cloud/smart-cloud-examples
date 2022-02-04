@@ -20,7 +20,7 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.smartframework.cloud.common.pojo.Response;
-import org.smartframework.cloud.common.pojo.enums.CommonReturnCodes;
+import org.smartframework.cloud.constants.CommonReturnCodes;
 import org.smartframework.cloud.examples.mall.order.util.OrderUtil;
 import org.smartframework.cloud.examples.mall.rpc.order.request.api.SubmitOrderProductInfoReqVO;
 import org.smartframework.cloud.examples.mall.rpc.order.request.api.SubmitOrderReqVO;
@@ -68,7 +68,7 @@ class OrderApiControllerIntegrationTest extends WebMvcIntegrationTest {
         // 3、断言结果
         Assertions.assertThat(submitResp).isNotNull();
         Assertions.assertThat(submitResp.getHead()).isNotNull();
-        Assertions.assertThat(submitResp.getHead().getCode()).isEqualTo(CommonReturnCodes.SUCCESS.getCode());
+        Assertions.assertThat(submitResp.getHead().getCode()).isEqualTo(CommonReturnCodes.SUCCESS);
         Assertions.assertThat(submitResp.getBody()).isNotBlank();
 
         // 4、查询提单结果
@@ -77,7 +77,7 @@ class OrderApiControllerIntegrationTest extends WebMvcIntegrationTest {
 
         Assertions.assertThat(resp).isNotNull();
         Assertions.assertThat(resp.getHead()).isNotNull();
-        Assertions.assertThat(resp.getHead().getCode()).isEqualTo(CommonReturnCodes.SUCCESS.getCode());
+        Assertions.assertThat(resp.getHead().getCode()).isEqualTo(CommonReturnCodes.SUCCESS);
         Assertions.assertThat(resp.getBody()).isNotNull();
     }
 
@@ -88,7 +88,7 @@ class OrderApiControllerIntegrationTest extends WebMvcIntegrationTest {
 
         Assertions.assertThat(resp).isNotNull();
         Assertions.assertThat(resp.getHead()).isNotNull();
-        Assertions.assertThat(resp.getHead().getCode()).isEqualTo(CommonReturnCodes.SUCCESS.getCode());
+        Assertions.assertThat(resp.getHead().getCode()).isEqualTo(CommonReturnCodes.SUCCESS);
     }
 
     private Response<QuerySubmitResultRespVO> querySubmitResult(String orderNo) throws Exception {

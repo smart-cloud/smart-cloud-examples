@@ -22,7 +22,7 @@ import org.apache.commons.codec.DecoderException;
 import org.apache.commons.lang3.StringUtils;
 import org.assertj.core.api.Assertions;
 import org.smartframework.cloud.common.pojo.Response;
-import org.smartframework.cloud.common.pojo.enums.CommonReturnCodes;
+import org.smartframework.cloud.constants.CommonReturnCodes;
 import org.smartframework.cloud.examples.basic.rpc.user.request.api.login.LoginInfoInsertReqVO;
 import org.smartframework.cloud.examples.basic.rpc.user.request.api.register.RegisterUserReqVO;
 import org.smartframework.cloud.examples.basic.rpc.user.request.api.user.UserInfoInsertReqVO;
@@ -77,7 +77,7 @@ public final class TokenUtil {
         Response<GenerateClientPubKeyRespVO> generateClientPubKeyResult = SecurityApi.generateClientPubKey();
         Assertions.assertThat(generateClientPubKeyResult).isNotNull();
         Assertions.assertThat(generateClientPubKeyResult.getHead()).isNotNull();
-        Assertions.assertThat(generateClientPubKeyResult.getHead().getCode()).isEqualTo(CommonReturnCodes.SUCCESS.getCode());
+        Assertions.assertThat(generateClientPubKeyResult.getHead().getCode()).isEqualTo(CommonReturnCodes.SUCCESS);
         Assertions.assertThat(generateClientPubKeyResult.getBody()).isNotNull();
 
         GenerateClientPubKeyRespVO clientPubKey = generateClientPubKeyResult.getBody();
@@ -100,7 +100,7 @@ public final class TokenUtil {
         Response<GenerateAesKeyRespVO> generateAesKeyResult = SecurityApi.generateAesKey(generateAesKeyReqVO);
         Assertions.assertThat(generateAesKeyResult).isNotNull();
         Assertions.assertThat(generateAesKeyResult.getHead()).isNotNull();
-        Assertions.assertThat(generateAesKeyResult.getHead().getCode()).isEqualTo(CommonReturnCodes.SUCCESS.getCode());
+        Assertions.assertThat(generateAesKeyResult.getHead().getCode()).isEqualTo(CommonReturnCodes.SUCCESS);
         Assertions.assertThat(generateAesKeyResult.getBody()).isNotNull();
         // 2.3、解密AES key
         String aesKey = RsaUtil.decryptString(serverPubClientPriKeyPair.getPrivate(), generateAesKeyResult.getBody().getEncryptedAesKey());
@@ -133,7 +133,7 @@ public final class TokenUtil {
         Response<RegisterUserRespVO> registerUserResult = RegisterApi.register(registerUserReqVO);
         Assertions.assertThat(registerUserResult).isNotNull();
         Assertions.assertThat(registerUserResult.getHead()).isNotNull();
-        Assertions.assertThat(registerUserResult.getHead().getCode()).isEqualTo(CommonReturnCodes.SUCCESS.getCode());
+        Assertions.assertThat(registerUserResult.getHead().getCode()).isEqualTo(CommonReturnCodes.SUCCESS);
         Assertions.assertThat(registerUserResult.getBody()).isNotNull();
 
         context.setLoginRespVO(registerUserResult.getBody());

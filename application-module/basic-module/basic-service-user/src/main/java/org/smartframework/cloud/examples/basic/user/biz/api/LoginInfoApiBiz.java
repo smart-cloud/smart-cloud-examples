@@ -19,7 +19,7 @@ import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import org.smartframework.cloud.examples.basic.rpc.enums.user.UserStateEnum;
 import org.smartframework.cloud.examples.basic.user.bo.login.LoginInfoInsertBizBO;
-import org.smartframework.cloud.examples.basic.user.entity.base.LoginInfoEntity;
+import org.smartframework.cloud.examples.basic.user.entity.LoginInfoEntity;
 import org.smartframework.cloud.examples.basic.user.mapper.base.LoginInfoBaseMapper;
 import org.smartframework.cloud.examples.common.config.constants.DataSourceName;
 import org.smartframework.cloud.starter.mybatis.plus.common.biz.BaseBiz;

@@ -16,7 +16,7 @@
 package org.smartframework.cloud.examples.basic.auth.mapper.base;
 
 import org.apache.ibatis.annotations.Mapper;
-import org.smartframework.cloud.examples.basic.auth.entity.base.RolePermissionRelaEntity;
+import org.smartframework.cloud.examples.basic.auth.entity.RolePermissionRelaEntity;
 import org.smartframework.cloud.starter.mybatis.plus.common.mapper.SmartMapper;
 
 /**

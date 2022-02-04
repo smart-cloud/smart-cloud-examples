@@ -26,7 +26,7 @@ import org.smartframework.cloud.examples.mall.order.biz.api.OrderBillApiBiz;
 import org.smartframework.cloud.examples.mall.order.biz.api.OrderDeliveryInfoApiBiz;
 import org.smartframework.cloud.examples.mall.order.entity.base.OrderBillEntity;
 import org.smartframework.cloud.examples.mall.order.entity.base.OrderDeliveryInfoEntity;
-import org.smartframework.cloud.examples.mall.order.enums.OrderReturnCodes;
+import org.smartframework.cloud.examples.mall.order.constants.OrderReturnCodes;
 import org.smartframework.cloud.examples.mall.order.exception.UpdateStockException;
 import org.smartframework.cloud.examples.mall.order.mq.dto.SubmitOrderDTO;
 import org.smartframework.cloud.examples.mall.rpc.enums.order.OrderStatus;

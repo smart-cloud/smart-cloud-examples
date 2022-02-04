@@ -17,7 +17,7 @@ package org.smartframework.cloud.examples.basic.user.test.data;
 
 import org.smartframework.cloud.examples.basic.rpc.enums.user.PwdStateEnum;
 import org.smartframework.cloud.examples.basic.user.bo.login.LoginInfoInsertServiceBO;
-import org.smartframework.cloud.examples.basic.user.entity.base.LoginInfoEntity;
+import org.smartframework.cloud.examples.basic.user.entity.LoginInfoEntity;
 import org.smartframework.cloud.examples.basic.user.service.api.LoginInfoApiService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

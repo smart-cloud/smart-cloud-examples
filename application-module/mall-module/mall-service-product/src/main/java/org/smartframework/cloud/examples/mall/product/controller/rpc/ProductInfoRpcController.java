@@ -18,7 +18,7 @@ package org.smartframework.cloud.examples.mall.product.controller.rpc;
 import lombok.RequiredArgsConstructor;
 import org.smartframework.cloud.common.pojo.Base;
 import org.smartframework.cloud.common.pojo.Response;
-import org.smartframework.cloud.examples.mall.product.enums.ProductReturnCodes;
+import org.smartframework.cloud.examples.mall.product.constants.ProductReturnCodes;
 import org.smartframework.cloud.examples.mall.product.service.rpc.ProductInfoRpcService;
 import org.smartframework.cloud.examples.mall.rpc.product.ProductInfoRpc;
 import org.smartframework.cloud.examples.mall.rpc.product.request.rpc.QryProductByIdReqDTO;

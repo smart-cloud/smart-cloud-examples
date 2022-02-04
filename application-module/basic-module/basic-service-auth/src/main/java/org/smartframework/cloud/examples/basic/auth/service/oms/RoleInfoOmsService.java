@@ -19,7 +19,7 @@ import lombok.RequiredArgsConstructor;
 import org.smartframework.cloud.common.pojo.BasePageResponse;
 import org.smartframework.cloud.examples.app.auth.core.UserContext;
 import org.smartframework.cloud.examples.basic.auth.biz.oms.RoleInfoOmsBiz;
-import org.smartframework.cloud.examples.basic.auth.enums.AuthReturnCodes;
+import org.smartframework.cloud.examples.basic.auth.constants.AuthReturnCodes;
 import org.smartframework.cloud.examples.basic.rpc.auth.request.oms.role.PageRoleReqVO;
 import org.smartframework.cloud.examples.basic.rpc.auth.request.oms.role.RoleCreateReqVO;
 import org.smartframework.cloud.examples.basic.rpc.auth.request.oms.role.RoleUpdateReqVO;

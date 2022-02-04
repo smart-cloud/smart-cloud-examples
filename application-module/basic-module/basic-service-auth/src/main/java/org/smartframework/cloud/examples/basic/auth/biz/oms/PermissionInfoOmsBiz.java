@@ -20,7 +20,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import org.apache.commons.lang3.StringUtils;
 import org.smartframework.cloud.common.pojo.BasePageResponse;
 import org.smartframework.cloud.examples.app.auth.core.UserContext;
-import org.smartframework.cloud.examples.basic.auth.entity.base.PermissionInfoEntity;
+import org.smartframework.cloud.examples.basic.auth.entity.PermissionInfoEntity;
 import org.smartframework.cloud.examples.basic.auth.mapper.base.PermissionInfoBaseMapper;
 import org.smartframework.cloud.examples.basic.rpc.auth.request.oms.permisson.PagePermissionReqVO;
 import org.smartframework.cloud.examples.basic.rpc.auth.request.oms.permisson.PermissionCreateReqVO;

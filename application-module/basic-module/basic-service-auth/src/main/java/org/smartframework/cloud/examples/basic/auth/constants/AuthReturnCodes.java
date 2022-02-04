@@ -13,20 +13,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.smartframework.cloud.examples.support.gateway.exception;
-
-import org.smartframework.cloud.exception.BaseException;
+package org.smartframework.cloud.examples.basic.auth.constants;
 
 /**
- * 请求时间异常
+ * 权限服务状态码
  *
  * @author collin
- * @date 2021-07-17
+ * @date 2019-04-16
  */
-public class RequestTimestampException extends BaseException {
+public interface AuthReturnCodes {
 
-    public RequestTimestampException(String code) {
-        super(code);
-    }
+    /**
+     * 权限编码已存在
+     */
+    String PERMISSION_CODE_EXIST = "110001";
+    /**
+     * 角色编码已存在
+     */
+    String ROLE_CODE_EXIST = "110002";
 
 }

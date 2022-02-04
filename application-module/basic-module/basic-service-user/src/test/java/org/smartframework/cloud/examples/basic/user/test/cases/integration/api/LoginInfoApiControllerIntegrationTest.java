@@ -22,13 +22,13 @@ import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentMatchers;
 import org.mockito.Mockito;
 import org.smartframework.cloud.common.pojo.Response;
-import org.smartframework.cloud.common.pojo.enums.CommonReturnCodes;
+import org.smartframework.cloud.constants.CommonReturnCodes;
 import org.smartframework.cloud.examples.basic.rpc.auth.AuthRpc;
 import org.smartframework.cloud.examples.basic.rpc.auth.response.rpc.AuthRespDTO;
 import org.smartframework.cloud.examples.basic.rpc.user.request.api.login.ExitReqVO;
 import org.smartframework.cloud.examples.basic.rpc.user.request.api.login.LoginReqVO;
 import org.smartframework.cloud.examples.basic.rpc.user.response.api.login.LoginRespVO;
-import org.smartframework.cloud.examples.basic.user.entity.base.LoginInfoEntity;
+import org.smartframework.cloud.examples.basic.user.entity.LoginInfoEntity;
 import org.smartframework.cloud.examples.basic.user.test.data.LoginInfoData;
 import org.smartframework.cloud.examples.basic.user.test.data.UserInfoData;
 import org.smartframework.cloud.examples.support.rpc.gateway.UserRpc;
@@ -81,7 +81,7 @@ class LoginInfoApiControllerIntegrationTest extends WebMvcIntegrationTest {
 
         Assertions.assertThat(result).isNotNull();
         Assertions.assertThat(result.getHead()).isNotNull();
-        Assertions.assertThat(result.getHead().getCode()).isEqualTo(CommonReturnCodes.SUCCESS.getCode());
+        Assertions.assertThat(result.getHead().getCode()).isEqualTo(CommonReturnCodes.SUCCESS);
         Assertions.assertThat(result.getBody().getUserId()).isNotNull();
         Assertions.assertThat(result.getBody().getUsername()).isNotBlank();
         Assertions.assertThat(result.getBody().getRealName()).isNotBlank();
@@ -104,7 +104,7 @@ class LoginInfoApiControllerIntegrationTest extends WebMvcIntegrationTest {
 
         Assertions.assertThat(result).isNotNull();
         Assertions.assertThat(result.getHead()).isNotNull();
-        Assertions.assertThat(result.getHead().getCode()).isEqualTo(CommonReturnCodes.SUCCESS.getCode());
+        Assertions.assertThat(result.getHead().getCode()).isEqualTo(CommonReturnCodes.SUCCESS);
     }
 
 }

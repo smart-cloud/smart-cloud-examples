@@ -20,9 +20,9 @@ import com.google.common.collect.Sets;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.smartframework.cloud.common.pojo.Response;
-import org.smartframework.cloud.common.pojo.enums.CommonReturnCodes;
-import org.smartframework.cloud.examples.basic.auth.entity.base.PermissionInfoEntity;
-import org.smartframework.cloud.examples.basic.auth.entity.base.RoleInfoEntity;
+import org.smartframework.cloud.constants.CommonReturnCodes;
+import org.smartframework.cloud.examples.basic.auth.entity.PermissionInfoEntity;
+import org.smartframework.cloud.examples.basic.auth.entity.RoleInfoEntity;
 import org.smartframework.cloud.examples.basic.auth.test.data.PermissionInfoData;
 import org.smartframework.cloud.examples.basic.auth.test.data.RoleInfoData;
 import org.smartframework.cloud.examples.basic.auth.test.data.RolePermissionRelaData;
@@ -69,7 +69,7 @@ class UserRoleOmsControllerIntegrationTest extends WebMvcIntegrationTest {
 
         Assertions.assertThat(result).isNotNull();
         Assertions.assertThat(result.getHead()).isNotNull();
-        Assertions.assertThat(result.getHead().getCode()).isEqualTo(CommonReturnCodes.SUCCESS.getCode());
+        Assertions.assertThat(result.getHead().getCode()).isEqualTo(CommonReturnCodes.SUCCESS);
         Assertions.assertThat(result.getBody()).isNotNull();
         Assertions.assertThat(result.getBody()).isTrue();
     }
@@ -91,7 +91,7 @@ class UserRoleOmsControllerIntegrationTest extends WebMvcIntegrationTest {
 
         Assertions.assertThat(result).isNotNull();
         Assertions.assertThat(result.getHead()).isNotNull();
-        Assertions.assertThat(result.getHead().getCode()).isEqualTo(CommonReturnCodes.SUCCESS.getCode());
+        Assertions.assertThat(result.getHead().getCode()).isEqualTo(CommonReturnCodes.SUCCESS);
         Assertions.assertThat(result.getBody()).isNotNull();
         Assertions.assertThat(result.getBody()).isTrue();
     }
@@ -110,7 +110,7 @@ class UserRoleOmsControllerIntegrationTest extends WebMvcIntegrationTest {
 
         Assertions.assertThat(result).isNotNull();
         Assertions.assertThat(result.getHead()).isNotNull();
-        Assertions.assertThat(result.getHead().getCode()).isEqualTo(CommonReturnCodes.SUCCESS.getCode());
+        Assertions.assertThat(result.getHead().getCode()).isEqualTo(CommonReturnCodes.SUCCESS);
         Assertions.assertThat(result.getBody()).isNotEmpty();
         Assertions.assertThat(result.getBody().get(0).getRoleCode()).isNotBlank();
         Assertions.assertThat(result.getBody().get(0).getPermissons()).isNotEmpty();

@@ -23,7 +23,7 @@ import org.redisson.api.RMapCache;
 import org.redisson.api.RedissonClient;
 import org.smartframework.cloud.common.pojo.Base;
 import org.smartframework.cloud.common.pojo.Response;
-import org.smartframework.cloud.common.pojo.enums.CommonReturnCodes;
+import org.smartframework.cloud.constants.CommonReturnCodes;
 import org.smartframework.cloud.examples.support.gateway.cache.SecurityKeyCache;
 import org.smartframework.cloud.examples.support.gateway.constants.RedisExpire;
 import org.smartframework.cloud.examples.support.gateway.util.RedisKeyHelper;
@@ -64,7 +64,7 @@ class UserRpcControllerIntegrationTest extends WebReactiveIntegrationTest {
         });
         Assertions.assertThat(result).isNotNull();
         Assertions.assertThat(result.getHead()).isNotNull();
-        Assertions.assertThat(result.getHead().getCode()).isEqualTo(CommonReturnCodes.SUCCESS.getCode());
+        Assertions.assertThat(result.getHead().getCode()).isEqualTo(CommonReturnCodes.SUCCESS);
     }
 
 }

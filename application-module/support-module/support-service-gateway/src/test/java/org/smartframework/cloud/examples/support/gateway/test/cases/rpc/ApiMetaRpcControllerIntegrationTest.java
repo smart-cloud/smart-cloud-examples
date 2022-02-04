@@ -22,7 +22,7 @@ import org.mockito.Mockito;
 import org.smartframework.cloud.api.core.annotation.enums.SignType;
 import org.smartframework.cloud.common.pojo.Base;
 import org.smartframework.cloud.common.pojo.Response;
-import org.smartframework.cloud.common.pojo.enums.CommonReturnCodes;
+import org.smartframework.cloud.constants.CommonReturnCodes;
 import org.smartframework.cloud.examples.api.ac.core.vo.*;
 import org.smartframework.cloud.examples.support.gateway.service.rpc.ApiMetaRpcService;
 import org.smartframework.cloud.examples.support.rpc.gateway.request.rpc.NotifyFetchReqDTO;
@@ -77,7 +77,7 @@ class ApiMetaRpcControllerIntegrationTest extends WebReactiveIntegrationTest {
         });
         Assertions.assertThat(result).isNotNull();
         Assertions.assertThat(result.getHead()).isNotNull();
-        Assertions.assertThat(result.getHead().getCode()).isEqualTo(CommonReturnCodes.SUCCESS.getCode());*/
+        Assertions.assertThat(result.getHead().getCode()).isEqualTo(CommonReturnCodes.SUCCESS);*/
     }
 
 }

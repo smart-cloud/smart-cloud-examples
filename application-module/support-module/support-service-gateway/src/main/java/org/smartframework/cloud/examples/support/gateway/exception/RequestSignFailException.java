@@ -15,7 +15,7 @@
  */
 package org.smartframework.cloud.examples.support.gateway.exception;
 
-import org.smartframework.cloud.examples.support.gateway.enums.GatewayReturnCodes;
+import org.smartframework.cloud.examples.support.gateway.constants.GatewayReturnCodes;
 import org.smartframework.cloud.exception.BaseException;
 
 /**

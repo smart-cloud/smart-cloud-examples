@@ -21,7 +21,7 @@ import org.smartframework.cloud.examples.basic.rpc.user.request.api.login.LoginI
 import org.smartframework.cloud.examples.basic.rpc.user.request.api.register.RegisterUserReqVO;
 import org.smartframework.cloud.examples.basic.rpc.user.response.api.register.RegisterUserRespVO;
 import org.smartframework.cloud.examples.basic.user.bo.login.LoginInfoInsertServiceBO;
-import org.smartframework.cloud.examples.basic.user.entity.base.UserInfoEntity;
+import org.smartframework.cloud.examples.basic.user.entity.UserInfoEntity;
 import org.springframework.stereotype.Service;
 
 /**

@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.smartframework.cloud.examples.mall.product.entity.base;
+package org.smartframework.cloud.examples.basic.auth.entity;
 
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
@@ -24,7 +24,7 @@ import lombok.experimental.SuperBuilder;
 import org.smartframework.cloud.starter.mybatis.plus.common.mapper.entity.BaseEntity;
 
 /**
- * 商品信息
+ * 角色权限关系表
  *
  * @author collin
  * @date 2021-12-12
@@ -33,21 +33,17 @@ import org.smartframework.cloud.starter.mybatis.plus.common.mapper.entity.BaseEn
 @Setter
 @NoArgsConstructor
 @SuperBuilder
-@TableName("t_product_info")
-public class ProductInfoEntity extends BaseEntity {
+@TableName("t_role_permission_rela")
+public class RolePermissionRelaEntity extends BaseEntity {
 
 	private static final long serialVersionUID = 1L;
 
-    /** 商品名称 */
-    @TableField(value = "f_name")
-	private String name;
+    /** t_role_info表id */
+    @TableField(value = "t_role_info_id")
+	private Long roleInfoId;
 	
-    /** 销售价格（单位：万分之一元） */
-    @TableField(value = "f_sell_price")
-	private Long sellPrice;
-	
-    /** 库存 */
-    @TableField(value = "f_stock")
-	private Long stock;
+    /** t_permission_info表id */
+    @TableField(value = "t_permission_info_id")
+	private Long permissionInfoId;
 	
 }

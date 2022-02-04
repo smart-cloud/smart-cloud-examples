@@ -15,7 +15,7 @@
  */
 package org.smartframework.cloud.examples.mall.order.exception;
 
-import org.smartframework.cloud.examples.mall.order.enums.OrderReturnCodes;
+import org.smartframework.cloud.examples.mall.order.constants.OrderReturnCodes;
 import org.smartframework.cloud.exception.BaseException;
 
 /**

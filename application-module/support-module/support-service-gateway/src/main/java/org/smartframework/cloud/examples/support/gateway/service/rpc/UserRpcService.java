@@ -23,7 +23,7 @@ import org.smartframework.cloud.examples.app.auth.core.MySmartUser;
 import org.smartframework.cloud.examples.support.gateway.cache.AuthCache;
 import org.smartframework.cloud.examples.support.gateway.cache.SecurityKeyCache;
 import org.smartframework.cloud.examples.support.gateway.constants.RedisExpire;
-import org.smartframework.cloud.examples.support.gateway.enums.GatewayReturnCodes;
+import org.smartframework.cloud.examples.support.gateway.constants.GatewayReturnCodes;
 import org.smartframework.cloud.examples.support.gateway.util.RedisKeyHelper;
 import org.smartframework.cloud.examples.support.rpc.gateway.request.rpc.CacheUserInfoReqDTO;
 import org.smartframework.cloud.examples.support.rpc.gateway.request.rpc.ExitLoginReqDTO;

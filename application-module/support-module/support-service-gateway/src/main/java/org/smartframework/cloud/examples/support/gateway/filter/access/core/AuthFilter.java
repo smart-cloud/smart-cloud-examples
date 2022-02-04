@@ -30,7 +30,7 @@ import org.smartframework.cloud.examples.support.gateway.cache.ApiAccessMetaCach
 import org.smartframework.cloud.examples.support.gateway.cache.AuthCache;
 import org.smartframework.cloud.examples.support.gateway.constants.Order;
 import org.smartframework.cloud.examples.support.gateway.constants.RedisExpire;
-import org.smartframework.cloud.examples.support.gateway.enums.GatewayReturnCodes;
+import org.smartframework.cloud.examples.support.gateway.constants.GatewayReturnCodes;
 import org.smartframework.cloud.examples.support.gateway.exception.AuthenticationException;
 import org.smartframework.cloud.examples.support.gateway.filter.FilterContext;
 import org.smartframework.cloud.examples.support.gateway.filter.access.AbstractFilter;

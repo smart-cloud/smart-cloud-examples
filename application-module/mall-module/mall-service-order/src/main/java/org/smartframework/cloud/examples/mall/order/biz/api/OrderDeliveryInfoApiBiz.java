@@ -18,7 +18,7 @@ package org.smartframework.cloud.examples.mall.order.biz.api;
 import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import org.smartframework.cloud.examples.mall.order.entity.base.OrderDeliveryInfoEntity;
-import org.smartframework.cloud.examples.mall.order.mapper.base.OrderDeliveryInfoBaseMapper;
+import org.smartframework.cloud.examples.mall.order.mapper.OrderDeliveryInfoBaseMapper;
 import org.smartframework.cloud.starter.mp.shardingjdbc.constants.ShardingSphereDataSourceName;
 import org.smartframework.cloud.starter.mybatis.plus.common.biz.BaseBiz;
 import org.springframework.stereotype.Repository;

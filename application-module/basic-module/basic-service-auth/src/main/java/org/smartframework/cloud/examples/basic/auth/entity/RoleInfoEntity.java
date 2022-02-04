@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.smartframework.cloud.examples.basic.auth.entity.base;
+package org.smartframework.cloud.examples.basic.auth.entity;
 
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
@@ -24,7 +24,7 @@ import lombok.experimental.SuperBuilder;
 import org.smartframework.cloud.starter.mybatis.plus.common.mapper.entity.BaseEntity;
 
 /**
- * 用户角色表
+ * 角色表
  *
  * @author collin
  * @date 2021-12-12
@@ -33,17 +33,17 @@ import org.smartframework.cloud.starter.mybatis.plus.common.mapper.entity.BaseEn
 @Setter
 @NoArgsConstructor
 @SuperBuilder
-@TableName("t_user_role_rela")
-public class UserRoleRelaEntity extends BaseEntity {
+@TableName("t_role_info")
+public class RoleInfoEntity extends BaseEntity {
 
 	private static final long serialVersionUID = 1L;
 
-    /** demo_user库t_user_info表id */
-    @TableField(value = "t_user_info_id")
-	private Long userInfoId;
+    /** 角色编码 */
+    @TableField(value = "f_code")
+	private String code;
 	
-    /** t_role_info表id */
-    @TableField(value = "t_role_info_id")
-	private Long roleInfoId;
+    /** 角色描述 */
+    @TableField(value = "f_description")
+	private String description;
 	
 }

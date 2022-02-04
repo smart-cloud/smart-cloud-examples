@@ -13,20 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.smartframework.cloud.examples.support.gateway.exception;
+package org.smartframework.cloud.examples.mall.order.mapper;
 
-import org.smartframework.cloud.exception.BaseException;
+import org.apache.ibatis.annotations.Mapper;
+import org.smartframework.cloud.examples.mall.order.entity.base.OrderDeliveryInfoEntity;
+import org.smartframework.cloud.starter.mybatis.plus.common.mapper.SmartMapper;
 
 /**
- * 请求时间异常
+ * 运单信息base mapper
  *
  * @author collin
- * @date 2021-07-17
+ * @date 2021-12-12
  */
-public class RequestTimestampException extends BaseException {
-
-    public RequestTimestampException(String code) {
-        super(code);
-    }
+@Mapper
+public interface OrderDeliveryInfoBaseMapper extends SmartMapper<OrderDeliveryInfoEntity> {
 
 }

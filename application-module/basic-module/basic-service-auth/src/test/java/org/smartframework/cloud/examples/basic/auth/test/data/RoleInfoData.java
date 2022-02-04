@@ -16,7 +16,7 @@
 package org.smartframework.cloud.examples.basic.auth.test.data;
 
 import org.smartframework.cloud.examples.basic.auth.biz.oms.RoleInfoOmsBiz;
-import org.smartframework.cloud.examples.basic.auth.entity.base.RoleInfoEntity;
+import org.smartframework.cloud.examples.basic.auth.entity.RoleInfoEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
