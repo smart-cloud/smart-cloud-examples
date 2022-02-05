@@ -24,7 +24,7 @@ import lombok.experimental.SuperBuilder;
 import org.smartframework.cloud.mask.MaskRule;
 import org.smartframework.cloud.mask.MaskLog;
 import java.util.Date;
-import org.smartframework.cloud.starter.mybatis.plus.common.mapper.entity.BaseEntity;
+import org.smartframework.cloud.starter.mybatis.plus.common.entity.BaseEntity;
 
 /**
  * 登录信息
