@@ -16,13 +16,13 @@
 package org.smartframework.cloud.examples.system.test;
 
 import org.junit.jupiter.api.Disabled;
+import org.junit.platform.runner.JUnitPlatform;
 import org.junit.platform.suite.api.SelectPackages;
-import org.junit.platform.suite.api.Suite;
+import org.junit.runner.RunWith;
 
 @Disabled
-@Suite
-@SelectPackages({"org.smartframework.cloud.examples.system.test.module.mall.order.api",
-        "org.smartframework.cloud.examples.system.test.module.mall.product.api"})
+@RunWith(JUnitPlatform.class)
+@SelectPackages({"org.smartframework.cloud.examples.system.test"})
 public class SuiteTest {
 
 }

@@ -16,13 +16,13 @@
 package org.smartframework.cloud.examples.basic.auth.test;
 
 import org.junit.jupiter.api.Disabled;
+import org.junit.platform.runner.JUnitPlatform;
 import org.junit.platform.suite.api.SelectPackages;
-import org.junit.platform.suite.api.Suite;
+import org.junit.runner.RunWith;
 
 @Disabled
-@Suite
-@SelectPackages({"org.smartframework.cloud.examples.basic.auth.test.cases.integration.oms",
-        "org.smartframework.cloud.examples.basic.auth.test.cases.integration.rpc"})
+@RunWith(JUnitPlatform.class)
+@SelectPackages({"org.smartframework.cloud.examples.basic.auth.test"})
 public class SuiteTest {
 
 }
