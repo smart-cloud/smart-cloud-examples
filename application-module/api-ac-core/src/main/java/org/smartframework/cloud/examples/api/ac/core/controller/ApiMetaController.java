@@ -32,6 +32,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class ApiMetaController {
 
+    /**
+     * 手机api meta数据
+     *
+     * @return
+     */
     @GetMapping(ApiMetaConstants.FETCH_URL)
     public Response<ApiMetaFetchRespVO> fetch() {
         return RespUtil.success(ApiMetaUtil.collectApiMetas());

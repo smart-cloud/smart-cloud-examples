@@ -18,15 +18,26 @@ package org.smartframework.cloud.examples.support.gateway.service.rpc;
 import com.fasterxml.jackson.core.type.TypeReference;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections4.MapUtils;
 import org.smartframework.cloud.common.pojo.Response;
+import org.smartframework.cloud.examples.api.ac.core.constants.ApiMetaConstants;
 import org.smartframework.cloud.examples.api.ac.core.vo.ApiMetaFetchRespVO;
+import org.smartframework.cloud.examples.support.gateway.cache.ApiAccessMetaCache;
+import org.smartframework.cloud.examples.support.gateway.constants.GatewayReturnCodes;
+import org.smartframework.cloud.examples.support.gateway.util.RedisKeyHelper;
 import org.smartframework.cloud.examples.support.rpc.gateway.request.rpc.NotifyFetchReqDTO;
+import org.smartframework.cloud.exception.BusinessException;
+import org.smartframework.cloud.starter.core.business.util.RespUtil;
 import org.smartframework.cloud.utility.HttpUtil;
+import org.smartframework.cloud.utility.spring.SpringContextUtil;
+import org.springframework.cloud.client.ServiceInstance;
+import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
+import java.util.List;
 
 /**
  * 接口元数据（签名、加解密、权限等）处理
@@ -42,20 +53,20 @@ public class ApiMetaRpcService {
     private final RedisTemplate redisTemplate;
 
     public void notifyFetch(NotifyFetchReqDTO req) throws IOException, NoSuchMethodException, InvocationTargetException, IllegalAccessException {
-//        String url = getFetchUrl(req.getServiceName());
-//        Response<ApiMetaFetchRespVO> apiMetaFetchRespVO = fetchApiMeta(url);
-//
-//        if (!RespUtil.isSuccess(apiMetaFetchRespVO)) {
-//            throw new BusinessException(GatewayReturnCodes.FETCH_APIMETA_FAIL);
-//        }
-//        ApiMetaFetchRespVO apiMetaFetch = apiMetaFetchRespVO.getBody();
-//        if (apiMetaFetch == null || MapUtils.isEmpty(apiMetaFetch.getApiAccessMap())) {
-//            return;
-//        }
-//        // redis持久化
-//        apiMetaFetch.getApiAccessMap().forEach((urlMethod, apiAccess) ->
-//                redisTemplate.opsForHash().put(RedisKeyHelper.getApiMetaKey(), RedisKeyHelper.getApiMetaHashKey(urlMethod), new ApiAccessMetaCache(apiAccess))
-//        );
+        String url = getFetchUrl(req.getServiceName());
+        Response<ApiMetaFetchRespVO> apiMetaFetchRespVO = fetchApiMeta(url);
+
+        if (!RespUtil.isSuccess(apiMetaFetchRespVO)) {
+            throw new BusinessException(GatewayReturnCodes.FETCH_APIMETA_FAIL);
+        }
+        ApiMetaFetchRespVO apiMetaFetch = apiMetaFetchRespVO.getBody();
+        if (apiMetaFetch == null || MapUtils.isEmpty(apiMetaFetch.getApiAccessMap())) {
+            return;
+        }
+        // redis持久化
+        apiMetaFetch.getApiAccessMap().forEach((urlMethod, apiAccess) ->
+                redisTemplate.opsForHash().put(RedisKeyHelper.getApiMetaKey(), RedisKeyHelper.getApiMetaHashKey(urlMethod), new ApiAccessMetaCache(apiAccess))
+        );
     }
 
     /**
@@ -65,17 +76,10 @@ public class ApiMetaRpcService {
      * @return
      */
     private String getFetchUrl(String serviceName) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
-        // TODO:
-        return null;
-//        DiscoveryClient discoveryClient = SpringContextUtil.getBean(DiscoveryClient.class);
-//        //DiscoveryClient#refreshRegistry()
-//        Method method = DiscoveryClient.class.getDeclaredMethod("refreshRegistry");
-//        method.setAccessible(true);
-//        method.invoke(discoveryClient);
-//        List<ServiceInstance> serviceInstances = discoveryClient.getInstances(serviceName);
-//        GatewayApplication application = discoveryClient.getApplication(serviceName);
-//        InstanceInfo instanceInfo = application.getInstances().get(0);
-//        return "http://" + instanceInfo.getIPAddr() + ":" + instanceInfo.getPort() + ApiMetaConstants.FETCH_URL;
+        DiscoveryClient discoveryClient = SpringContextUtil.getBean(DiscoveryClient.class);
+        List<ServiceInstance> serviceInstances = discoveryClient.getInstances(serviceName);
+        ServiceInstance serviceInstance = serviceInstances.get(0);
+        return String.format("http://%s:%s%s", serviceInstance.getHost(), serviceInstance.getPort(), ApiMetaConstants.FETCH_URL);
     }
 
     /**
