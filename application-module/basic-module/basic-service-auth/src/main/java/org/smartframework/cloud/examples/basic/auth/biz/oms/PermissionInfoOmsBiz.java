@@ -15,7 +15,6 @@
  */
 package org.smartframework.cloud.examples.basic.auth.biz.oms;
 
-import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import org.apache.commons.lang3.StringUtils;
 import org.smartframework.cloud.common.pojo.BasePageResponse;
@@ -26,7 +25,6 @@ import org.smartframework.cloud.examples.basic.rpc.auth.request.oms.permisson.Pa
 import org.smartframework.cloud.examples.basic.rpc.auth.request.oms.permisson.PermissionCreateReqVO;
 import org.smartframework.cloud.examples.basic.rpc.auth.request.oms.permisson.PermissionUpdateReqVO;
 import org.smartframework.cloud.examples.basic.rpc.auth.response.base.PermissionInfoBaseRespVO;
-import org.smartframework.cloud.examples.common.config.constants.DataSourceName;
 import org.smartframework.cloud.starter.mybatis.plus.common.biz.BaseBiz;
 import org.smartframework.cloud.starter.mybatis.plus.enums.DeleteState;
 import org.springframework.stereotype.Repository;
@@ -37,7 +35,6 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Repository
-@DS(DataSourceName.BASIC_AUTH)
 public class PermissionInfoOmsBiz extends BaseBiz<PermissionInfoBaseMapper, PermissionInfoEntity> {
 
     /**

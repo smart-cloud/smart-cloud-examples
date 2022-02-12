@@ -15,8 +15,10 @@
  */
 package org.smartframework.cloud.examples.mall.product.service.api;
 
+import com.baomidou.dynamic.datasource.annotation.DS;
 import lombok.RequiredArgsConstructor;
 import org.smartframework.cloud.common.pojo.BasePageResponse;
+import org.smartframework.cloud.examples.common.config.constants.DataSourceName;
 import org.smartframework.cloud.examples.mall.product.biz.api.ProductInfoApiBiz;
 import org.smartframework.cloud.examples.mall.rpc.product.request.api.PageProductReqVO;
 import org.smartframework.cloud.examples.mall.rpc.product.response.api.PageProductRespVO;
@@ -30,6 +32,7 @@ import org.springframework.stereotype.Service;
  */
 @Service
 @RequiredArgsConstructor
+@DS(DataSourceName.MALL_PRODUCT_MASTER)
 public class ProductInfoApiService {
 
     private final ProductInfoApiBiz productOmsBiz;
@@ -40,6 +43,7 @@ public class ProductInfoApiService {
      * @param req
      * @return
      */
+    @DS(DataSourceName.MALL_PRODUCT_SLAVE)
     public BasePageResponse<PageProductRespVO> pageProduct(PageProductReqVO req) {
         return productOmsBiz.pageProduct(req);
     }

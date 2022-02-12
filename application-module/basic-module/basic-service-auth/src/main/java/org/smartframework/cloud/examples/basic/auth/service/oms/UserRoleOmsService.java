@@ -15,6 +15,7 @@
  */
 package org.smartframework.cloud.examples.basic.auth.service.oms;
 
+import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.dynamic.datasource.annotation.DSTransactional;
 import lombok.RequiredArgsConstructor;
 import org.smartframework.cloud.examples.app.auth.core.UserContext;
@@ -22,12 +23,14 @@ import org.smartframework.cloud.examples.basic.auth.biz.oms.UserRoleOmsBiz;
 import org.smartframework.cloud.examples.basic.rpc.auth.request.oms.user.role.UserRoleCreateReqVO;
 import org.smartframework.cloud.examples.basic.rpc.auth.request.oms.user.role.UserRoleUpdateReqVO;
 import org.smartframework.cloud.examples.basic.rpc.auth.response.oms.user.role.UserRoleRespVO;
+import org.smartframework.cloud.examples.common.config.constants.DataSourceName;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@DS(DataSourceName.BASIC_AUTH_MASTER)
 public class UserRoleOmsService {
 
     private final UserRoleOmsBiz userRoleOmsBiz;
@@ -61,6 +64,7 @@ public class UserRoleOmsService {
      * @param uid
      * @return
      */
+    @DS(DataSourceName.BASIC_AUTH_SLAVE)
     public List<UserRoleRespVO> listRole(Long uid) {
         return userRoleOmsBiz.listRole(uid);
     }

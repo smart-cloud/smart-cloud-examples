@@ -15,6 +15,7 @@
  */
 package org.smartframework.cloud.examples.basic.user.service.api;
 
+import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.dynamic.datasource.annotation.DSTransactional;
 import lombok.RequiredArgsConstructor;
 import org.smartframework.cloud.examples.basic.rpc.user.request.api.login.LoginInfoInsertReqVO;
@@ -22,6 +23,7 @@ import org.smartframework.cloud.examples.basic.rpc.user.request.api.register.Reg
 import org.smartframework.cloud.examples.basic.rpc.user.response.api.register.RegisterUserRespVO;
 import org.smartframework.cloud.examples.basic.user.bo.login.LoginInfoInsertServiceBO;
 import org.smartframework.cloud.examples.basic.user.entity.UserInfoEntity;
+import org.smartframework.cloud.examples.common.config.constants.DataSourceName;
 import org.springframework.stereotype.Service;
 
 /**
@@ -32,6 +34,7 @@ import org.springframework.stereotype.Service;
  */
 @Service
 @RequiredArgsConstructor
+@DS(DataSourceName.BASIC_USER_MASTER)
 public class RegisterApiService {
 
     private final UserInfoApiService userInfoApiService;

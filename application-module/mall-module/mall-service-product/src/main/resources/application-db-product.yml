@@ -1,11 +1,17 @@
 spring:
   datasource:
     dynamic:
-      primary: mall-product
+      primary: mall-product-master
       strict: true
       seata: true
       datasource:
-        mall-product:
+        mall-product-master:
+          url: jdbc:mysql://127.0.0.1:3306/demo_product?serverTimezone=Asia/Shanghai&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true
+          username: root
+          password: 123456
+          driver-class-name: com.mysql.cj.jdbc.Driver
+          type: com.zaxxer.hikari.HikariDataSource
+        mall-product-slave:
           url: jdbc:mysql://127.0.0.1:3306/demo_product?serverTimezone=Asia/Shanghai&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true
           username: root
           password: 123456

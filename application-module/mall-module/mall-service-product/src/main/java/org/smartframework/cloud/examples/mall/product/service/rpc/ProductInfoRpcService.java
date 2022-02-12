@@ -33,9 +33,9 @@ import org.springframework.stereotype.Service;
  * @author collin
  * @date 2019-03-29
  */
-@DS(DataSourceName.MALL_PRODUCT)
 @Service
 @RequiredArgsConstructor
+@DS(DataSourceName.MALL_PRODUCT_MASTER)
 public class ProductInfoRpcService {
 
     private final ProductInfoRpcBiz productRpcBiz;
@@ -46,6 +46,7 @@ public class ProductInfoRpcService {
      * @param reqBody
      * @return
      */
+    @DS(DataSourceName.MALL_PRODUCT_SLAVE)
     public QryProductByIdRespDTO qryProductById(QryProductByIdReqDTO reqBody) {
         return productRpcBiz.qryProductById(reqBody);
     }
@@ -56,6 +57,7 @@ public class ProductInfoRpcService {
      * @param reqDTO
      * @return
      */
+    @DS(DataSourceName.MALL_PRODUCT_SLAVE)
     public QryProductByIdsRespDTO qryProductByIds(QryProductByIdsReqDTO reqDTO) {
         return productRpcBiz.qryProductByIds(reqDTO);
     }

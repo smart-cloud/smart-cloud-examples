@@ -15,6 +15,7 @@
  */
 package org.smartframework.cloud.examples.basic.auth.service.rpc;
 
+import com.baomidou.dynamic.datasource.annotation.DS;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.collections4.CollectionUtils;
 import org.smartframework.cloud.examples.basic.auth.biz.oms.PermissionInfoOmsBiz;
@@ -22,12 +23,14 @@ import org.smartframework.cloud.examples.basic.auth.biz.oms.RoleInfoOmsBiz;
 import org.smartframework.cloud.examples.basic.auth.biz.oms.RolePermissionOmsBiz;
 import org.smartframework.cloud.examples.basic.auth.biz.oms.UserRoleOmsBiz;
 import org.smartframework.cloud.examples.basic.rpc.auth.response.rpc.AuthRespDTO;
+import org.smartframework.cloud.examples.common.config.constants.DataSourceName;
 import org.springframework.stereotype.Service;
 
 import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
+@DS(DataSourceName.BASIC_AUTH_MASTER)
 public class AuthRpcService {
 
     private final UserRoleOmsBiz userRoleOmsBiz;
@@ -41,6 +44,7 @@ public class AuthRpcService {
      * @param uid
      * @return
      */
+    @DS(DataSourceName.BASIC_AUTH_SLAVE)
     public AuthRespDTO listByUid(Long uid) {
         Set<Long> roleIds = userRoleOmsBiz.listRoleId(uid);
         if (CollectionUtils.isEmpty(roleIds)) {

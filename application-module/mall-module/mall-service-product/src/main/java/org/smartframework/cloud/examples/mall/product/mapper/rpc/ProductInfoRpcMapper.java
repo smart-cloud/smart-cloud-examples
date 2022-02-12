@@ -29,7 +29,7 @@ import org.smartframework.cloud.examples.mall.rpc.product.request.rpc.UpdateStoc
  * @author collin
  * @date 2019-04-07
  */
-@DS(DataSourceName.MALL_PRODUCT)
+@DS(DataSourceName.MALL_PRODUCT_MASTER)
 @Mapper
 public interface ProductInfoRpcMapper {
 

@@ -15,8 +15,10 @@
  */
 package org.smartframework.cloud.examples.mall.product.service.oms;
 
+import com.baomidou.dynamic.datasource.annotation.DS;
 import lombok.RequiredArgsConstructor;
 import org.smartframework.cloud.common.pojo.BasePageResponse;
+import org.smartframework.cloud.examples.common.config.constants.DataSourceName;
 import org.smartframework.cloud.examples.mall.product.biz.oms.ProductInfoOmsBiz;
 import org.smartframework.cloud.examples.mall.rpc.product.request.oms.PageProductReqVO;
 import org.smartframework.cloud.examples.mall.rpc.product.request.oms.ProductDeleteReqVO;
@@ -33,6 +35,7 @@ import org.springframework.stereotype.Service;
  */
 @Service
 @RequiredArgsConstructor
+@DS(DataSourceName.MALL_PRODUCT_MASTER)
 public class ProductInfoOmsService {
 
     private final ProductInfoOmsBiz productOmsBiz;
@@ -73,6 +76,7 @@ public class ProductInfoOmsService {
      * @param req
      * @return
      */
+    @DS(DataSourceName.MALL_PRODUCT_SLAVE)
     public BasePageResponse<ProductInfoBaseRespVO> pageProduct(PageProductReqVO req) {
         return productOmsBiz.pageProduct(req);
     }

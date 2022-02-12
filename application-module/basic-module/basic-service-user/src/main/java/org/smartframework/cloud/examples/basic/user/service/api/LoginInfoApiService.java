@@ -15,6 +15,7 @@
  */
 package org.smartframework.cloud.examples.basic.user.service.api;
 
+import com.baomidou.dynamic.datasource.annotation.DS;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.smartframework.cloud.common.pojo.Base;
@@ -33,6 +34,7 @@ import org.smartframework.cloud.examples.basic.user.bo.login.LoginInfoInsertServ
 import org.smartframework.cloud.examples.basic.user.entity.LoginInfoEntity;
 import org.smartframework.cloud.examples.basic.user.entity.UserInfoEntity;
 import org.smartframework.cloud.examples.basic.user.constants.UserReturnCodes;
+import org.smartframework.cloud.examples.common.config.constants.DataSourceName;
 import org.smartframework.cloud.examples.support.rpc.gateway.UserRpc;
 import org.smartframework.cloud.examples.support.rpc.gateway.request.rpc.CacheUserInfoReqDTO;
 import org.smartframework.cloud.examples.support.rpc.gateway.request.rpc.ExitLoginReqDTO;
@@ -51,6 +53,7 @@ import java.util.Objects;
 @Slf4j
 @Service
 @RequiredArgsConstructor
+@DS(DataSourceName.BASIC_USER_MASTER)
 public class LoginInfoApiService {
 
     private final LoginInfoApiBiz loginInfoApiBiz;
@@ -64,6 +67,7 @@ public class LoginInfoApiService {
      * @param req
      * @return
      */
+    @DS(DataSourceName.BASIC_USER_SLAVE)
     public LoginRespVO login(LoginReqVO req) {
         LoginInfoEntity loginInfoEntity = loginInfoApiBiz.queryByUsername(req.getUsername());
         if (Objects.isNull(loginInfoEntity)) {
@@ -105,6 +109,7 @@ public class LoginInfoApiService {
      * @param req
      * @return
      */
+    @DS(DataSourceName.BASIC_USER_SLAVE)
     public void exit(ExitReqVO req) {
         Response<Base> exitLoginResponse = userRpc.exit(ExitLoginReqDTO.builder().token(req.getToken()).build());
         if (!RespUtil.isSuccess(exitLoginResponse)) {

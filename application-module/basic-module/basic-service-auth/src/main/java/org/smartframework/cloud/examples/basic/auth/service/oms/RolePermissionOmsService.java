@@ -15,6 +15,7 @@
  */
 package org.smartframework.cloud.examples.basic.auth.service.oms;
 
+import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.dynamic.datasource.annotation.DSTransactional;
 import lombok.RequiredArgsConstructor;
 import org.smartframework.cloud.common.pojo.BasePageResponse;
@@ -24,10 +25,12 @@ import org.smartframework.cloud.examples.basic.rpc.auth.request.oms.role.permiss
 import org.smartframework.cloud.examples.basic.rpc.auth.request.oms.role.permisson.RolePermissonCreateReqVO;
 import org.smartframework.cloud.examples.basic.rpc.auth.request.oms.role.permisson.RolePermissonUpdateReqVO;
 import org.smartframework.cloud.examples.basic.rpc.auth.response.oms.role.permisson.RolePermissionRespVO;
+import org.smartframework.cloud.examples.common.config.constants.DataSourceName;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
+@DS(DataSourceName.BASIC_AUTH_MASTER)
 public class RolePermissionOmsService {
 
     private final RolePermissionOmsBiz rolePermissionOmsBiz;
@@ -61,6 +64,7 @@ public class RolePermissionOmsService {
      * @param req
      * @return
      */
+    @DS(DataSourceName.BASIC_AUTH_SLAVE)
     public BasePageResponse<RolePermissionRespVO> page(PageRolePermissonReqVO req) {
         return rolePermissionOmsBiz.page(req);
     }

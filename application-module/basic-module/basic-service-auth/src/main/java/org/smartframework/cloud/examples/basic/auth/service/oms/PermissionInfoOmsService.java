@@ -15,6 +15,7 @@
  */
 package org.smartframework.cloud.examples.basic.auth.service.oms;
 
+import com.baomidou.dynamic.datasource.annotation.DS;
 import lombok.RequiredArgsConstructor;
 import org.smartframework.cloud.common.pojo.BasePageResponse;
 import org.smartframework.cloud.examples.app.auth.core.UserContext;
@@ -24,11 +25,13 @@ import org.smartframework.cloud.examples.basic.rpc.auth.request.oms.permisson.Pa
 import org.smartframework.cloud.examples.basic.rpc.auth.request.oms.permisson.PermissionCreateReqVO;
 import org.smartframework.cloud.examples.basic.rpc.auth.request.oms.permisson.PermissionUpdateReqVO;
 import org.smartframework.cloud.examples.basic.rpc.auth.response.base.PermissionInfoBaseRespVO;
+import org.smartframework.cloud.examples.common.config.constants.DataSourceName;
 import org.smartframework.cloud.exception.DataValidateException;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
+@DS(DataSourceName.BASIC_AUTH_MASTER)
 public class PermissionInfoOmsService {
 
     private final PermissionInfoOmsBiz permissionInfoOmsBiz;
@@ -75,6 +78,7 @@ public class PermissionInfoOmsService {
      * @param req
      * @return
      */
+    @DS(DataSourceName.BASIC_AUTH_SLAVE)
     public BasePageResponse<PermissionInfoBaseRespVO> page(PagePermissionReqVO req) {
         return permissionInfoOmsBiz.page(req);
     }

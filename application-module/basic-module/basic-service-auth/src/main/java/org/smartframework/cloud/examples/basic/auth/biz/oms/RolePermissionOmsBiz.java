@@ -15,7 +15,6 @@
  */
 package org.smartframework.cloud.examples.basic.auth.biz.oms;
 
-import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.collections4.CollectionUtils;
@@ -32,7 +31,6 @@ import org.smartframework.cloud.examples.basic.auth.mapper.oms.RolePermissionOms
 import org.smartframework.cloud.examples.basic.rpc.auth.request.oms.role.permisson.PageRolePermissonReqVO;
 import org.smartframework.cloud.examples.basic.rpc.auth.response.oms.role.permisson.PermissionInfoRespVO;
 import org.smartframework.cloud.examples.basic.rpc.auth.response.oms.role.permisson.RolePermissionRespVO;
-import org.smartframework.cloud.examples.common.config.constants.DataSourceName;
 import org.smartframework.cloud.starter.mybatis.plus.common.biz.BaseBiz;
 import org.smartframework.cloud.starter.mybatis.plus.enums.DeleteState;
 import org.springframework.stereotype.Repository;
@@ -44,7 +42,6 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Repository
-@DS(DataSourceName.BASIC_AUTH)
 @RequiredArgsConstructor
 public class RolePermissionOmsBiz extends BaseBiz<RolePermissionRelaBaseMapper, RolePermissionRelaEntity> {
 

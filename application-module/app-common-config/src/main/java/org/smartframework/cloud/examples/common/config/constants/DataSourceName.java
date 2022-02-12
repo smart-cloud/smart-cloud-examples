@@ -24,16 +24,28 @@ package org.smartframework.cloud.examples.common.config.constants;
 public interface DataSourceName {
 
     /**
-     * 权限
+     * 权限主库
      */
-    String BASIC_AUTH = "basic-auth";
+    String BASIC_AUTH_MASTER = "basic-auth-master";
     /**
-     * 用户
+     * 权限从库
      */
-    String BASIC_USER = "basic-user";
+    String BASIC_AUTH_SLAVE = "basic-auth-slave";
     /**
-     * 商品
+     * 用户主库
      */
-    String MALL_PRODUCT = "mall-product";
+    String BASIC_USER_MASTER = "basic-user-master";
+    /**
+     * 用户从库
+     */
+    String BASIC_USER_SLAVE = "basic-user-slave";
+    /**
+     * 商品主库
+     */
+    String MALL_PRODUCT_MASTER = "mall-product-master";
+    /**
+     * 商品从库
+     */
+    String MALL_PRODUCT_SLAVE = "mall-product-slave";
 
 }

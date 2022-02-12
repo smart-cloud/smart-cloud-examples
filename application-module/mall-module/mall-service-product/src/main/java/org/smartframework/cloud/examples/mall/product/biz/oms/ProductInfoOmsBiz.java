@@ -15,12 +15,10 @@
  */
 package org.smartframework.cloud.examples.mall.product.biz.oms;
 
-import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import org.apache.commons.lang3.StringUtils;
 import org.smartframework.cloud.common.pojo.BasePageResponse;
 import org.smartframework.cloud.examples.app.auth.core.UserContext;
-import org.smartframework.cloud.examples.common.config.constants.DataSourceName;
 import org.smartframework.cloud.examples.mall.product.entity.ProductInfoEntity;
 import org.smartframework.cloud.examples.mall.product.mapper.base.ProductInfoBaseMapper;
 import org.smartframework.cloud.examples.mall.rpc.product.request.oms.PageProductReqVO;
@@ -40,7 +38,6 @@ import java.util.Date;
  * @date 2019-03-31
  */
 @Repository
-@DS(DataSourceName.MALL_PRODUCT)
 public class ProductInfoOmsBiz extends BaseBiz<ProductInfoBaseMapper, ProductInfoEntity> {
 
     /**
