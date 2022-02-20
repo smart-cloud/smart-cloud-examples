@@ -15,12 +15,12 @@
  */
 package org.smartframework.cloud.examples.mall.rpc.product.request.rpc;
 
+import io.github.smart.cloud.common.pojo.Base;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
-import org.smartframework.cloud.common.pojo.Base;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Min;

@@ -16,11 +16,13 @@
 package org.smartframework.cloud.examples.mall.order.test.cases.integration.api;
 
 import com.fasterxml.jackson.core.type.TypeReference;
+import io.github.smart.cloud.common.pojo.Response;
+import io.github.smart.cloud.constants.CommonReturnCodes;
+import io.github.smart.cloud.starter.core.business.util.RespUtil;
+import io.github.smart.cloud.starter.test.integration.WebMvcIntegrationTest;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
-import org.smartframework.cloud.common.pojo.Response;
-import org.smartframework.cloud.constants.CommonReturnCodes;
 import org.smartframework.cloud.examples.mall.order.util.OrderUtil;
 import org.smartframework.cloud.examples.mall.rpc.order.request.api.SubmitOrderProductInfoReqVO;
 import org.smartframework.cloud.examples.mall.rpc.order.request.api.SubmitOrderReqVO;
@@ -28,8 +30,6 @@ import org.smartframework.cloud.examples.mall.rpc.order.response.api.QuerySubmit
 import org.smartframework.cloud.examples.mall.rpc.product.ProductInfoRpc;
 import org.smartframework.cloud.examples.mall.rpc.product.response.rpc.QryProductByIdRespDTO;
 import org.smartframework.cloud.examples.mall.rpc.product.response.rpc.QryProductByIdsRespDTO;
-import org.smartframework.cloud.starter.core.business.util.RespUtil;
-import org.smartframework.cloud.starter.test.integration.WebMvcIntegrationTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
 import java.util.ArrayList;

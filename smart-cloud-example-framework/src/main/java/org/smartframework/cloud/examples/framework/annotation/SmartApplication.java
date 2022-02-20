@@ -15,8 +15,8 @@
  */
 package org.smartframework.cloud.examples.framework.annotation;
 
-import org.smartframework.cloud.starter.core.support.annotation.SmartBootApplication;
-import org.smartframework.cloud.starter.core.support.annotation.YamlScan;
+import io.github.smart.cloud.starter.core.support.annotation.SmartBootApplication;
+import io.github.smart.cloud.starter.core.support.annotation.YamlScan;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.netflix.hystrix.EnableHystrix;
 import org.springframework.cloud.openfeign.EnableFeignClients;

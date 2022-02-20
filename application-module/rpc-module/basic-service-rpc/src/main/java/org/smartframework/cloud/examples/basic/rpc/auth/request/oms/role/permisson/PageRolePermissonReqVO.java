@@ -15,9 +15,9 @@
  */
 package org.smartframework.cloud.examples.basic.rpc.auth.request.oms.role.permisson;
 
+import io.github.smart.cloud.common.pojo.BasePageRequest;
 import lombok.Getter;
 import lombok.Setter;
-import org.smartframework.cloud.common.pojo.BasePageRequest;
 
 /**
  * 分页查询角色权限信息请求参数

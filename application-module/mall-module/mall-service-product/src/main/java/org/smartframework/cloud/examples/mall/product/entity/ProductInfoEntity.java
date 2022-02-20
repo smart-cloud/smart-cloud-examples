@@ -17,11 +17,11 @@ package org.smartframework.cloud.examples.mall.product.entity;
 
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
+import io.github.smart.cloud.starter.mybatis.plus.common.entity.BaseEntity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
-import org.smartframework.cloud.starter.mybatis.plus.common.entity.BaseEntity;
 
 /**
  * 商品信息

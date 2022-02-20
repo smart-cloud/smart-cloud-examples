@@ -15,8 +15,8 @@
  */
 package org.smartframework.cloud.examples.support.gateway.filter.access;
 
+import io.github.smart.cloud.common.web.constants.SmartHttpHeaders;
 import lombok.RequiredArgsConstructor;
-import org.smartframework.cloud.common.web.constants.SmartHttpHeaders;
 import org.smartframework.cloud.examples.support.gateway.cache.ApiAccessMetaCache;
 import org.smartframework.cloud.examples.support.gateway.constants.GatewayConstants;
 import org.smartframework.cloud.examples.support.gateway.constants.Order;

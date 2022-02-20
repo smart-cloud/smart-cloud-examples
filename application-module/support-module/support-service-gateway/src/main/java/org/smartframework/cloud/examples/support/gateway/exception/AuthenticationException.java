@@ -15,8 +15,8 @@
  */
 package org.smartframework.cloud.examples.support.gateway.exception;
 
-import org.smartframework.cloud.constants.CommonReturnCodes;
-import org.smartframework.cloud.exception.BaseException;
+import io.github.smart.cloud.exception.BaseException;
+import io.github.smart.cloud.constants.CommonReturnCodes;
 
 /**
  * 无权限访问

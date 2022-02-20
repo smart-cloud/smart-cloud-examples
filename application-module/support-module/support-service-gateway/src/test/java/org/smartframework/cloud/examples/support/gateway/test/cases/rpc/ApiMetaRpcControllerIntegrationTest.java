@@ -16,21 +16,24 @@
 package org.smartframework.cloud.examples.support.gateway.test.cases.rpc;
 
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.google.common.collect.Lists;
+import io.github.smart.cloud.api.core.annotation.enums.SignType;
+import io.github.smart.cloud.common.pojo.Base;
+import io.github.smart.cloud.common.pojo.Response;
+import io.github.smart.cloud.constants.CommonReturnCodes;
+import io.github.smart.cloud.starter.test.integration.WebReactiveIntegrationTest;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
-import org.smartframework.cloud.api.core.annotation.enums.SignType;
-import org.smartframework.cloud.common.pojo.Base;
-import org.smartframework.cloud.common.pojo.Response;
-import org.smartframework.cloud.constants.CommonReturnCodes;
 import org.smartframework.cloud.examples.api.ac.core.vo.*;
 import org.smartframework.cloud.examples.support.gateway.service.rpc.ApiMetaRpcService;
 import org.smartframework.cloud.examples.support.rpc.gateway.request.rpc.NotifyFetchReqDTO;
-import org.smartframework.cloud.starter.test.integration.WebReactiveIntegrationTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.boot.test.mock.mockito.SpyBean;
+import org.springframework.cloud.client.DefaultServiceInstance;
+import org.springframework.cloud.client.ServiceInstance;
+import org.springframework.cloud.client.discovery.DiscoveryClient;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -40,21 +43,17 @@ import java.util.Map;
  */
 class ApiMetaRpcControllerIntegrationTest extends WebReactiveIntegrationTest {
 
-//    @MockBean
-//    private DiscoveryClient discoveryClient;
+    @MockBean
+    private DiscoveryClient discoveryClient;
     @SpyBean
     private ApiMetaRpcService apiMetaRpcService;
 
     @Test
     void testNotifyFetch() throws Exception {
-        /*String serviceId = "user";
+        String serviceId = "user";
         // mock start
-        InstanceInfo instanceInfo = InstanceInfo.Builder.newBuilder().setAppName(serviceId).setIPAddr("192.168.15.10").setPort(8080).build();
-
-        GatewayApplication applicationMock = Mockito.mock(GatewayApplication.class);
-        Mockito.when(applicationMock.getInstances()).thenReturn(Arrays.asList(instanceInfo));
-
-        Mockito.when(discoveryClient.getApplication(serviceId)).thenReturn(applicationMock);
+        ServiceInstance instanceInfoMock = new DefaultServiceInstance(serviceId, serviceId, "192.168.15.10", 8080, false, null);
+        Mockito.when(discoveryClient.getInstances(serviceId)).thenReturn(Lists.newArrayList(instanceInfoMock));
 
         Map<String, ApiAccessMetaRespVO> apiAccessMapMock = new HashMap<>();
 
@@ -77,7 +76,7 @@ class ApiMetaRpcControllerIntegrationTest extends WebReactiveIntegrationTest {
         });
         Assertions.assertThat(result).isNotNull();
         Assertions.assertThat(result.getHead()).isNotNull();
-        Assertions.assertThat(result.getHead().getCode()).isEqualTo(CommonReturnCodes.SUCCESS);*/
+        Assertions.assertThat(result.getHead().getCode()).isEqualTo(CommonReturnCodes.SUCCESS);
     }
 
 }

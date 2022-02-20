@@ -16,6 +16,7 @@
 package org.smartframework.cloud.examples.basic.user.service.api;
 
 import com.baomidou.dynamic.datasource.annotation.DS;
+import io.github.smart.cloud.exception.ParamValidateException;
 import lombok.RequiredArgsConstructor;
 import org.smartframework.cloud.examples.app.auth.core.UserContext;
 import org.smartframework.cloud.examples.basic.rpc.user.request.api.user.UserInfoInsertReqVO;
@@ -24,7 +25,6 @@ import org.smartframework.cloud.examples.basic.user.biz.api.UserInfoApiBiz;
 import org.smartframework.cloud.examples.basic.user.constants.UserReturnCodes;
 import org.smartframework.cloud.examples.basic.user.entity.UserInfoEntity;
 import org.smartframework.cloud.examples.common.config.constants.DataSourceName;
-import org.smartframework.cloud.exception.ParamValidateException;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 

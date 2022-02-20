@@ -15,8 +15,8 @@
  */
 package org.smartframework.cloud.examples.support.gateway.util;
 
+import io.github.smart.cloud.starter.redis.enums.RedisKeyPrefix;
 import org.smartframework.cloud.examples.support.gateway.enums.GatewayRedisKeyPrefix;
-import org.smartframework.cloud.starter.redis.enums.RedisKeyPrefix;
 
 public final class RedisKeyHelper {
 

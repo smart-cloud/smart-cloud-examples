@@ -15,9 +15,9 @@
  */
 package org.smartframework.cloud.examples.mall.rpc.order.response.api;
 
+import io.github.smart.cloud.common.pojo.Base;
 import lombok.Getter;
 import lombok.Setter;
-import org.smartframework.cloud.common.pojo.Base;
 
 import java.util.List;
 

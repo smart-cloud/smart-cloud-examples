@@ -15,11 +15,11 @@
  */
 package org.smartframework.cloud.examples.basic.auth.dataobject.param;
 
+import io.github.smart.cloud.common.pojo.dataobject.BasePageRequestDO;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.smartframework.cloud.common.pojo.dataobject.BasePageRequestDO;
 
 @Getter
 @Setter

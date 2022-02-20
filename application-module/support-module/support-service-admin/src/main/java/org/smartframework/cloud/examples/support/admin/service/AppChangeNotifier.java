@@ -26,6 +26,8 @@ import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
 
 /**
+ * 服务状态变更监听
+ *
  * @author collin
  * @date 2020-09-15
  */

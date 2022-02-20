@@ -15,11 +15,11 @@
  */
 package org.smartframework.cloud.examples.support.gateway.enums;
 
+import io.github.smart.cloud.starter.redis.RedisKeyUtil;
+import io.github.smart.cloud.starter.redis.enums.RedisKeyPrefix;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import org.smartframework.cloud.starter.redis.RedisKeyUtil;
-import org.smartframework.cloud.starter.redis.enums.RedisKeyPrefix;
 
 /**
  * gateway redis key前缀

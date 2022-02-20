@@ -16,11 +16,12 @@
 package org.smartframework.cloud.examples.mall.product.test.cases.integration.rpc;
 
 import com.fasterxml.jackson.core.type.TypeReference;
+import io.github.smart.cloud.common.pojo.Base;
+import io.github.smart.cloud.common.pojo.Response;
+import io.github.smart.cloud.constants.CommonReturnCodes;
+import io.github.smart.cloud.starter.test.integration.WebMvcIntegrationTest;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.smartframework.cloud.common.pojo.Base;
-import org.smartframework.cloud.common.pojo.Response;
-import org.smartframework.cloud.constants.CommonReturnCodes;
 import org.smartframework.cloud.examples.mall.product.test.data.ProductInfoData;
 import org.smartframework.cloud.examples.mall.rpc.product.request.rpc.QryProductByIdReqDTO;
 import org.smartframework.cloud.examples.mall.rpc.product.request.rpc.QryProductByIdsReqDTO;
@@ -28,7 +29,6 @@ import org.smartframework.cloud.examples.mall.rpc.product.request.rpc.UpdateStoc
 import org.smartframework.cloud.examples.mall.rpc.product.request.rpc.UpdateStockReqDTO.UpdateStockItem;
 import org.smartframework.cloud.examples.mall.rpc.product.response.rpc.QryProductByIdRespDTO;
 import org.smartframework.cloud.examples.mall.rpc.product.response.rpc.QryProductByIdsRespDTO;
-import org.smartframework.cloud.starter.test.integration.WebMvcIntegrationTest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;

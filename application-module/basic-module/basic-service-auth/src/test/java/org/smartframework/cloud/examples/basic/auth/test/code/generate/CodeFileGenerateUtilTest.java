@@ -15,9 +15,9 @@
  */
 package org.smartframework.cloud.examples.basic.auth.test.code.generate;
 
+import io.github.smart.cloud.code.generate.core.CodeGenerateUtil;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
-import org.smartframework.cloud.code.generate.core.CodeGenerateUtil;
 
 @Disabled
 class CodeFileGenerateUtilTest {

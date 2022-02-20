@@ -15,10 +15,10 @@
  */
 package org.smartframework.cloud.examples.basic.rpc.auth;
 
-import org.smartframework.cloud.common.pojo.Response;
+import io.github.smart.cloud.common.pojo.Response;
+import io.github.smart.cloud.starter.rpc.feign.annotation.SmartFeignClient;
 import org.smartframework.cloud.examples.basic.rpc.auth.response.rpc.AuthRespDTO;
 import org.smartframework.cloud.examples.basic.rpc.constant.RpcConstants;
-import org.smartframework.cloud.starter.rpc.feign.annotation.SmartFeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import javax.validation.constraints.NotNull;

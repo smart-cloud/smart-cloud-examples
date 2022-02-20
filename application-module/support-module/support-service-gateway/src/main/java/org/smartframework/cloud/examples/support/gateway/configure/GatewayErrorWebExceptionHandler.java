@@ -15,10 +15,10 @@
  */
 package org.smartframework.cloud.examples.support.gateway.configure;
 
+import io.github.smart.cloud.common.pojo.Base;
+import io.github.smart.cloud.common.pojo.Response;
+import io.github.smart.cloud.starter.web.exception.ExceptionHandlerContext;
 import lombok.extern.slf4j.Slf4j;
-import org.smartframework.cloud.common.pojo.Base;
-import org.smartframework.cloud.common.pojo.Response;
-import org.smartframework.cloud.starter.web.exception.ExceptionHandlerContext;
 import org.springframework.boot.web.reactive.error.ErrorWebExceptionHandler;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.MediaType;

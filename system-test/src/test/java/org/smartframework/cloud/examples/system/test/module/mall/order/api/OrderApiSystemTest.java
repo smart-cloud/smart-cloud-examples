@@ -15,11 +15,13 @@
  */
 package org.smartframework.cloud.examples.system.test.module.mall.order.api;
 
+import io.github.smart.cloud.common.pojo.BasePageResponse;
+import io.github.smart.cloud.common.pojo.Response;
+import io.github.smart.cloud.constants.CommonReturnCodes;
+import io.github.smart.cloud.starter.test.AbstractSystemTest;
+import io.github.smart.cloud.utility.RandomUtil;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.smartframework.cloud.common.pojo.BasePageResponse;
-import org.smartframework.cloud.common.pojo.Response;
-import org.smartframework.cloud.constants.CommonReturnCodes;
 import org.smartframework.cloud.examples.mall.rpc.enums.order.OrderStatus;
 import org.smartframework.cloud.examples.mall.rpc.order.request.api.SubmitOrderProductInfoReqVO;
 import org.smartframework.cloud.examples.mall.rpc.order.request.api.SubmitOrderReqVO;
@@ -29,8 +31,6 @@ import org.smartframework.cloud.examples.mall.rpc.product.request.oms.ProductIns
 import org.smartframework.cloud.examples.mall.rpc.product.response.api.PageProductRespVO;
 import org.smartframework.cloud.examples.system.test.module.mall.product.api.ProductInfoApi;
 import org.smartframework.cloud.examples.system.test.module.mall.product.api.ProductInfoOms;
-import org.smartframework.cloud.starter.test.AbstractSystemTest;
-import org.smartframework.cloud.utility.RandomUtil;
 
 import java.io.IOException;
 import java.util.Arrays;

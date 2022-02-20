@@ -15,10 +15,10 @@
  */
 package org.smartframework.cloud.examples.app.auth.core;
 
+import io.github.smart.cloud.api.core.user.context.SmartUser;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import org.smartframework.cloud.api.core.user.context.SmartUser;
 
 /**
  * 用户信息

@@ -15,15 +15,15 @@
  */
 package org.smartframework.cloud.examples.basic.rpc.user.response.base;
 
-import org.smartframework.cloud.mask.MaskRule;
-import org.smartframework.cloud.mask.MaskLog;
-import java.util.Date;
-import org.smartframework.cloud.common.pojo.BaseEntityResponse;
-
+import io.github.smart.cloud.common.pojo.BaseEntityResponse;
+import io.github.smart.cloud.mask.MaskLog;
+import io.github.smart.cloud.mask.MaskRule;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
+
+import java.util.Date;
 
 /**
  * 登录信息

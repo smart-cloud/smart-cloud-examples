@@ -15,9 +15,9 @@
  */
 package org.smartframework.cloud.examples.mall.product.mapper.base;
 
+import io.github.smart.cloud.starter.mybatis.plus.common.mapper.SmartMapper;
 import org.apache.ibatis.annotations.Mapper;
 import org.smartframework.cloud.examples.mall.product.entity.ProductInfoEntity;
-import org.smartframework.cloud.starter.mybatis.plus.common.mapper.SmartMapper;
 
 /**
  * 商品信息base mapper

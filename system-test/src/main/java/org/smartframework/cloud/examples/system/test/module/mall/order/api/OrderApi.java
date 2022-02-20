@@ -16,13 +16,13 @@
 package org.smartframework.cloud.examples.system.test.module.mall.order.api;
 
 import com.fasterxml.jackson.core.type.TypeReference;
+import io.github.smart.cloud.common.pojo.Response;
+import io.github.smart.cloud.utility.HttpUtil;
 import lombok.experimental.UtilityClass;
-import org.smartframework.cloud.common.pojo.Response;
 import org.smartframework.cloud.examples.mall.rpc.order.request.api.SubmitOrderReqVO;
 import org.smartframework.cloud.examples.mall.rpc.order.response.api.QuerySubmitResultRespVO;
 import org.smartframework.cloud.examples.system.test.config.SystemTestConfig;
 import org.smartframework.cloud.examples.system.test.util.HttpHeaderUtil;
-import org.smartframework.cloud.utility.HttpUtil;
 
 import java.io.IOException;
 

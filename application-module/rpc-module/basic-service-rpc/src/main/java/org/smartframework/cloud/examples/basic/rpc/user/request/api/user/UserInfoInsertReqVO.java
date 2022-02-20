@@ -15,13 +15,13 @@
  */
 package org.smartframework.cloud.examples.basic.rpc.user.request.api.user;
 
+import io.github.smart.cloud.common.pojo.Base;
+import io.github.smart.cloud.mask.MaskLog;
+import io.github.smart.cloud.mask.MaskRule;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
-import org.smartframework.cloud.common.pojo.Base;
-import org.smartframework.cloud.mask.MaskLog;
-import org.smartframework.cloud.mask.MaskRule;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;

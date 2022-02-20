@@ -15,8 +15,8 @@
  */
 package org.smartframework.cloud.examples.app.auth.core.exception;
 
-import org.smartframework.cloud.constants.CommonReturnCodes;
-import org.smartframework.cloud.exception.BaseException;
+import io.github.smart.cloud.constants.CommonReturnCodes;
+import io.github.smart.cloud.exception.BaseException;
 
 /**
  * 用户信息获取不到异常

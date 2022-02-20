@@ -15,14 +15,14 @@
  */
 package org.smartframework.cloud.examples.system.test.module.mall.product.api;
 
+import io.github.smart.cloud.common.pojo.BasePageResponse;
+import io.github.smart.cloud.common.pojo.Response;
+import io.github.smart.cloud.constants.CommonReturnCodes;
+import io.github.smart.cloud.starter.test.AbstractSystemTest;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.smartframework.cloud.common.pojo.BasePageResponse;
-import org.smartframework.cloud.common.pojo.Response;
-import org.smartframework.cloud.constants.CommonReturnCodes;
 import org.smartframework.cloud.examples.mall.rpc.product.request.api.PageProductReqVO;
 import org.smartframework.cloud.examples.mall.rpc.product.response.api.PageProductRespVO;
-import org.smartframework.cloud.starter.test.AbstractSystemTest;
 
 import java.io.IOException;
 

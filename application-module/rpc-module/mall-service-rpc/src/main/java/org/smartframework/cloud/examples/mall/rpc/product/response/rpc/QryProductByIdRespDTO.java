@@ -15,11 +15,11 @@
  */
 package org.smartframework.cloud.examples.mall.rpc.product.response.rpc;
 
+import io.github.smart.cloud.common.pojo.Base;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
-import org.smartframework.cloud.common.pojo.Base;
 
 /**
  * 根据id查询商品信息响应信息

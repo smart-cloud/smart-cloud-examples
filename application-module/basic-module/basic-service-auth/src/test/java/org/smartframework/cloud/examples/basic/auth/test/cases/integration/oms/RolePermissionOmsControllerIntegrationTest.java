@@ -17,11 +17,12 @@ package org.smartframework.cloud.examples.basic.auth.test.cases.integration.oms;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.google.common.collect.Sets;
+import io.github.smart.cloud.common.pojo.BasePageResponse;
+import io.github.smart.cloud.common.pojo.Response;
+import io.github.smart.cloud.constants.CommonReturnCodes;
+import io.github.smart.cloud.starter.test.integration.WebMvcIntegrationTest;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.smartframework.cloud.common.pojo.BasePageResponse;
-import org.smartframework.cloud.common.pojo.Response;
-import org.smartframework.cloud.constants.CommonReturnCodes;
 import org.smartframework.cloud.examples.basic.auth.entity.PermissionInfoEntity;
 import org.smartframework.cloud.examples.basic.auth.entity.RoleInfoEntity;
 import org.smartframework.cloud.examples.basic.auth.test.data.PermissionInfoData;
@@ -32,7 +33,6 @@ import org.smartframework.cloud.examples.basic.rpc.auth.request.oms.role.permiss
 import org.smartframework.cloud.examples.basic.rpc.auth.request.oms.role.permisson.RolePermissonCreateReqVO;
 import org.smartframework.cloud.examples.basic.rpc.auth.request.oms.role.permisson.RolePermissonUpdateReqVO;
 import org.smartframework.cloud.examples.basic.rpc.auth.response.oms.role.permisson.RolePermissionRespVO;
-import org.smartframework.cloud.starter.test.integration.WebMvcIntegrationTest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;

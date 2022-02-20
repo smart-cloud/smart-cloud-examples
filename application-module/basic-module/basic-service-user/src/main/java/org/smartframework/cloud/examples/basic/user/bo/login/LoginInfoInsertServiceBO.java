@@ -15,8 +15,7 @@
  */
 package org.smartframework.cloud.examples.basic.user.bo.login;
 
-import org.smartframework.cloud.common.pojo.Base;
-
+import io.github.smart.cloud.common.pojo.Base;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

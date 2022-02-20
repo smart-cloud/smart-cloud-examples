@@ -15,9 +15,9 @@
  */
 package org.smartframework.cloud.examples.mall.order.util;
 
+import io.github.smart.cloud.utility.DateUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
-import org.smartframework.cloud.utility.DateUtil;
 
 /**
  * 订单工具类

@@ -16,10 +16,11 @@
 package org.smartframework.cloud.examples.basic.auth.test.cases.integration.rpc;
 
 import com.fasterxml.jackson.core.type.TypeReference;
+import io.github.smart.cloud.common.pojo.Response;
+import io.github.smart.cloud.constants.CommonReturnCodes;
+import io.github.smart.cloud.starter.test.integration.WebMvcIntegrationTest;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.smartframework.cloud.common.pojo.Response;
-import org.smartframework.cloud.constants.CommonReturnCodes;
 import org.smartframework.cloud.examples.basic.auth.entity.PermissionInfoEntity;
 import org.smartframework.cloud.examples.basic.auth.entity.RoleInfoEntity;
 import org.smartframework.cloud.examples.basic.auth.test.data.PermissionInfoData;
@@ -27,7 +28,6 @@ import org.smartframework.cloud.examples.basic.auth.test.data.RoleInfoData;
 import org.smartframework.cloud.examples.basic.auth.test.data.RolePermissionRelaData;
 import org.smartframework.cloud.examples.basic.auth.test.data.UserRoleRelaData;
 import org.smartframework.cloud.examples.basic.rpc.auth.response.rpc.AuthRespDTO;
-import org.smartframework.cloud.starter.test.integration.WebMvcIntegrationTest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;

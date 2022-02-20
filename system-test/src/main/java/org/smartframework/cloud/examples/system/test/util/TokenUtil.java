@@ -15,14 +15,16 @@
  */
 package org.smartframework.cloud.examples.system.test.util;
 
+import io.github.smart.cloud.common.pojo.Response;
+import io.github.smart.cloud.constants.CommonReturnCodes;
+import io.github.smart.cloud.utility.RandomUtil;
+import io.github.smart.cloud.utility.security.RsaUtil;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.DecoderException;
 import org.apache.commons.lang3.StringUtils;
 import org.assertj.core.api.Assertions;
-import org.smartframework.cloud.common.pojo.Response;
-import org.smartframework.cloud.constants.CommonReturnCodes;
 import org.smartframework.cloud.examples.basic.rpc.user.request.api.login.LoginInfoInsertReqVO;
 import org.smartframework.cloud.examples.basic.rpc.user.request.api.register.RegisterUserReqVO;
 import org.smartframework.cloud.examples.basic.rpc.user.request.api.user.UserInfoInsertReqVO;
@@ -33,8 +35,6 @@ import org.smartframework.cloud.examples.support.rpc.gateway.response.api.Genera
 import org.smartframework.cloud.examples.support.rpc.gateway.response.api.GenerateClientPubKeyRespVO;
 import org.smartframework.cloud.examples.system.test.module.basic.user.api.RegisterApi;
 import org.smartframework.cloud.examples.system.test.module.support.gateway.api.SecurityApi;
-import org.smartframework.cloud.utility.RandomUtil;
-import org.smartframework.cloud.utility.security.RsaUtil;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;

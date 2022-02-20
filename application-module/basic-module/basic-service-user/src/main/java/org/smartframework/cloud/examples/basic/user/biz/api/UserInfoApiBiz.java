@@ -16,10 +16,10 @@
 package org.smartframework.cloud.examples.basic.user.biz.api;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import io.github.smart.cloud.starter.mybatis.plus.common.biz.BaseBiz;
 import org.smartframework.cloud.examples.basic.rpc.user.request.api.user.UserInfoInsertReqVO;
 import org.smartframework.cloud.examples.basic.user.entity.UserInfoEntity;
 import org.smartframework.cloud.examples.basic.user.mapper.base.UserInfoBaseMapper;
-import org.smartframework.cloud.starter.mybatis.plus.common.biz.BaseBiz;
 import org.springframework.stereotype.Repository;
 
 @Repository

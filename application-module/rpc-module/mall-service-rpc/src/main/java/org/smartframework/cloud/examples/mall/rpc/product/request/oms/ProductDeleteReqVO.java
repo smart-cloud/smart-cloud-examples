@@ -15,9 +15,9 @@
  */
 package org.smartframework.cloud.examples.mall.rpc.product.request.oms;
 
+import io.github.smart.cloud.common.pojo.Base;
 import lombok.Getter;
 import lombok.Setter;
-import org.smartframework.cloud.common.pojo.Base;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;

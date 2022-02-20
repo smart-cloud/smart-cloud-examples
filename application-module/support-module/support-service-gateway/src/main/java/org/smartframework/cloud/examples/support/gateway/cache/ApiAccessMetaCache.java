@@ -16,11 +16,11 @@
 package org.smartframework.cloud.examples.support.gateway.cache;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import io.github.smart.cloud.api.core.annotation.enums.SignType;
+import io.github.smart.cloud.common.pojo.Base;
 import lombok.Getter;
 import lombok.Setter;
 import org.apache.commons.collections4.SetUtils;
-import org.smartframework.cloud.api.core.annotation.enums.SignType;
-import org.smartframework.cloud.common.pojo.Base;
 import org.smartframework.cloud.examples.api.ac.core.vo.ApiAccessMetaRespVO;
 import org.smartframework.cloud.examples.api.ac.core.vo.AuthMetaRespVO;
 import org.smartframework.cloud.examples.api.ac.core.vo.DataSecurityMetaRespVO;

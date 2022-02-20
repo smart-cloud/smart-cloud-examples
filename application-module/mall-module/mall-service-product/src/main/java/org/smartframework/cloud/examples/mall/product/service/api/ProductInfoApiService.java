@@ -16,8 +16,8 @@
 package org.smartframework.cloud.examples.mall.product.service.api;
 
 import com.baomidou.dynamic.datasource.annotation.DS;
+import io.github.smart.cloud.common.pojo.BasePageResponse;
 import lombok.RequiredArgsConstructor;
-import org.smartframework.cloud.common.pojo.BasePageResponse;
 import org.smartframework.cloud.examples.common.config.constants.DataSourceName;
 import org.smartframework.cloud.examples.mall.product.biz.api.ProductInfoApiBiz;
 import org.smartframework.cloud.examples.mall.rpc.product.request.api.PageProductReqVO;

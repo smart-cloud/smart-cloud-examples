@@ -15,9 +15,9 @@
  */
 package org.smartframework.cloud.examples.system.test.util;
 
+import io.github.smart.cloud.common.web.constants.SmartHttpHeaders;
 import org.apache.http.Header;
 import org.apache.http.message.BasicHeader;
-import org.smartframework.cloud.common.web.constants.SmartHttpHeaders;
 
 import java.util.UUID;
 

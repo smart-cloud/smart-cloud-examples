@@ -15,8 +15,8 @@
  */
 package org.smartframework.cloud.examples.support.gateway.exception;
 
+import io.github.smart.cloud.exception.BaseException;
 import org.smartframework.cloud.examples.support.gateway.constants.GatewayReturnCodes;
-import org.smartframework.cloud.exception.BaseException;
 
 /**
  * 请求参数签名校验失败

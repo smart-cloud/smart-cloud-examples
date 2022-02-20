@@ -15,8 +15,7 @@
  */
 package org.smartframework.cloud.examples.mall.rpc.product.response.base;
 
-import org.smartframework.cloud.common.pojo.BaseEntityResponse;
-
+import io.github.smart.cloud.common.pojo.BaseEntityResponse;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

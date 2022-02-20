@@ -15,11 +15,11 @@
  */
 package org.smartframework.cloud.examples.app.auth.core;
 
-import org.smartframework.cloud.api.core.user.context.AbstractUserContext;
-import org.smartframework.cloud.api.core.user.context.SmartUser;
-import org.smartframework.cloud.common.web.util.WebServletUtil;
+import io.github.smart.cloud.api.core.user.context.AbstractUserContext;
+import io.github.smart.cloud.api.core.user.context.SmartUser;
+import io.github.smart.cloud.common.web.util.WebServletUtil;
+import io.github.smart.cloud.utility.JacksonUtil;
 import org.smartframework.cloud.examples.app.auth.core.exception.SmartUserMissingException;
-import org.smartframework.cloud.utility.JacksonUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;

@@ -15,15 +15,15 @@
  */
 package org.smartframework.cloud.examples.mall.rpc.product;
 
-import org.smartframework.cloud.common.pojo.Base;
-import org.smartframework.cloud.common.pojo.Response;
+import io.github.smart.cloud.common.pojo.Base;
+import io.github.smart.cloud.common.pojo.Response;
+import io.github.smart.cloud.starter.rpc.feign.annotation.SmartFeignClient;
 import org.smartframework.cloud.examples.mall.rpc.constant.RpcConstants;
 import org.smartframework.cloud.examples.mall.rpc.product.request.rpc.QryProductByIdReqDTO;
 import org.smartframework.cloud.examples.mall.rpc.product.request.rpc.QryProductByIdsReqDTO;
 import org.smartframework.cloud.examples.mall.rpc.product.request.rpc.UpdateStockReqDTO;
 import org.smartframework.cloud.examples.mall.rpc.product.response.rpc.QryProductByIdRespDTO;
 import org.smartframework.cloud.examples.mall.rpc.product.response.rpc.QryProductByIdsRespDTO;
-import org.smartframework.cloud.starter.rpc.feign.annotation.SmartFeignClient;
 import org.springframework.cloud.openfeign.SpringQueryMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;

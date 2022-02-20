@@ -15,12 +15,12 @@
  */
 package org.smartframework.cloud.examples.mall.order.mq.producer;
 
+import io.github.smart.cloud.starter.rabbitmq.AbstractRabbitMqProducer;
 import org.smartframework.cloud.examples.app.auth.core.UserContext;
 import org.smartframework.cloud.examples.mall.order.mq.OrderMqConstants;
 import org.smartframework.cloud.examples.mall.order.mq.dto.SubmitOrderDTO;
 import org.smartframework.cloud.examples.mall.order.util.OrderUtil;
 import org.smartframework.cloud.examples.mall.rpc.order.request.api.SubmitOrderReqVO;
-import org.smartframework.cloud.starter.rabbitmq.AbstractRabbitMqProducer;
 import org.springframework.stereotype.Component;
 
 @Component

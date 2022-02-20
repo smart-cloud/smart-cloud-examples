@@ -17,12 +17,14 @@ package org.smartframework.cloud.examples.basic.user.test.cases.integration.api;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.google.common.collect.Sets;
+import io.github.smart.cloud.common.pojo.Response;
+import io.github.smart.cloud.constants.CommonReturnCodes;
+import io.github.smart.cloud.starter.core.business.util.RespUtil;
+import io.github.smart.cloud.starter.test.integration.WebMvcIntegrationTest;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentMatchers;
 import org.mockito.Mockito;
-import org.smartframework.cloud.common.pojo.Response;
-import org.smartframework.cloud.constants.CommonReturnCodes;
 import org.smartframework.cloud.examples.basic.rpc.auth.AuthRpc;
 import org.smartframework.cloud.examples.basic.rpc.auth.response.rpc.AuthRespDTO;
 import org.smartframework.cloud.examples.basic.rpc.enums.user.ChannelEnum;
@@ -34,8 +36,6 @@ import org.smartframework.cloud.examples.basic.rpc.user.request.api.user.UserInf
 import org.smartframework.cloud.examples.basic.rpc.user.response.api.register.RegisterUserRespVO;
 import org.smartframework.cloud.examples.basic.user.service.api.LoginInfoApiService;
 import org.smartframework.cloud.examples.support.rpc.gateway.UserRpc;
-import org.smartframework.cloud.starter.core.business.util.RespUtil;
-import org.smartframework.cloud.starter.test.integration.WebMvcIntegrationTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;

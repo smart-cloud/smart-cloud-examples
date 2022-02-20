@@ -15,9 +15,9 @@
  */
 package org.smartframework.cloud.examples.basic.auth.test.data;
 
+import io.github.smart.cloud.starter.mybatis.plus.enums.DeleteState;
 import org.smartframework.cloud.examples.basic.auth.biz.oms.RolePermissionOmsBiz;
 import org.smartframework.cloud.examples.basic.auth.entity.RolePermissionRelaEntity;
-import org.smartframework.cloud.starter.mybatis.plus.enums.DeleteState;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

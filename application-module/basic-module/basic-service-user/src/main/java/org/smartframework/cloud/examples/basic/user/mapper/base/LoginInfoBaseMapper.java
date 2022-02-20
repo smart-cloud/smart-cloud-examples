@@ -15,9 +15,9 @@
  */
 package org.smartframework.cloud.examples.basic.user.mapper.base;
 
+import io.github.smart.cloud.starter.mybatis.plus.common.mapper.SmartMapper;
 import org.apache.ibatis.annotations.Mapper;
 import org.smartframework.cloud.examples.basic.user.entity.LoginInfoEntity;
-import org.smartframework.cloud.starter.mybatis.plus.common.mapper.SmartMapper;
 
 /**
  * 登录信息base mapper

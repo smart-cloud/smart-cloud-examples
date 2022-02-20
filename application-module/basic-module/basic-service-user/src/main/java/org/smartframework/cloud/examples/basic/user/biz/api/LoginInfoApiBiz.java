@@ -16,11 +16,11 @@
 package org.smartframework.cloud.examples.basic.user.biz.api;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import io.github.smart.cloud.starter.mybatis.plus.common.biz.BaseBiz;
 import org.smartframework.cloud.examples.basic.rpc.enums.user.UserStateEnum;
 import org.smartframework.cloud.examples.basic.user.bo.login.LoginInfoInsertBizBO;
 import org.smartframework.cloud.examples.basic.user.entity.LoginInfoEntity;
 import org.smartframework.cloud.examples.basic.user.mapper.base.LoginInfoBaseMapper;
-import org.smartframework.cloud.starter.mybatis.plus.common.biz.BaseBiz;
 import org.springframework.stereotype.Repository;
 
 import java.util.Date;

@@ -15,11 +15,11 @@
  */
 package org.smartframework.cloud.examples.basic.rpc.auth.response.oms.role.permisson;
 
+import io.github.smart.cloud.common.pojo.Base;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
-import org.smartframework.cloud.common.pojo.Base;
 
 /**
  * 权限信息

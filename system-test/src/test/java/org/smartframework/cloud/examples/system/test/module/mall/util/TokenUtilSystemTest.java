@@ -15,10 +15,10 @@
  */
 package org.smartframework.cloud.examples.system.test.module.mall.util;
 
+import io.github.smart.cloud.starter.test.AbstractSystemTest;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.smartframework.cloud.examples.system.test.util.TokenUtil;
-import org.smartframework.cloud.starter.test.AbstractSystemTest;
 
 import java.io.IOException;
 

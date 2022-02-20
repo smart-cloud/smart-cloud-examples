@@ -16,18 +16,18 @@
 package org.smartframework.cloud.examples.mall.product.test.cases.integration.oms;
 
 import com.fasterxml.jackson.core.type.TypeReference;
+import io.github.smart.cloud.common.pojo.BasePageResponse;
+import io.github.smart.cloud.common.pojo.Response;
+import io.github.smart.cloud.constants.CommonReturnCodes;
+import io.github.smart.cloud.starter.test.integration.WebMvcIntegrationTest;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.smartframework.cloud.common.pojo.BasePageResponse;
-import org.smartframework.cloud.common.pojo.Response;
-import org.smartframework.cloud.constants.CommonReturnCodes;
 import org.smartframework.cloud.examples.mall.product.test.data.ProductInfoData;
 import org.smartframework.cloud.examples.mall.rpc.product.request.oms.PageProductReqVO;
 import org.smartframework.cloud.examples.mall.rpc.product.request.oms.ProductDeleteReqVO;
 import org.smartframework.cloud.examples.mall.rpc.product.request.oms.ProductInsertReqVO;
 import org.smartframework.cloud.examples.mall.rpc.product.request.oms.ProductUpdateReqVO;
 import org.smartframework.cloud.examples.mall.rpc.product.response.base.ProductInfoBaseRespVO;
-import org.smartframework.cloud.starter.test.integration.WebMvcIntegrationTest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;

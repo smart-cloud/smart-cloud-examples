@@ -15,8 +15,8 @@
  */
 package org.smartframework.cloud.examples.mall.order.exception;
 
+import io.github.smart.cloud.exception.BaseException;
 import org.smartframework.cloud.examples.mall.order.constants.OrderReturnCodes;
-import org.smartframework.cloud.exception.BaseException;
 
 /**
  * 库存更新异常

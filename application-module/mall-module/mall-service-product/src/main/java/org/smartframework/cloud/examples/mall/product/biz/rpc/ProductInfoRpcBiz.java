@@ -15,6 +15,8 @@
  */
 package org.smartframework.cloud.examples.mall.product.biz.rpc;
 
+import io.github.smart.cloud.starter.mybatis.plus.common.biz.BaseBiz;
+import io.github.smart.cloud.utility.ObjectUtil;
 import lombok.RequiredArgsConstructor;
 import org.smartframework.cloud.examples.mall.product.entity.ProductInfoEntity;
 import org.smartframework.cloud.examples.mall.product.mapper.base.ProductInfoBaseMapper;
@@ -24,8 +26,6 @@ import org.smartframework.cloud.examples.mall.rpc.product.request.rpc.QryProduct
 import org.smartframework.cloud.examples.mall.rpc.product.request.rpc.UpdateStockReqDTO.UpdateStockItem;
 import org.smartframework.cloud.examples.mall.rpc.product.response.rpc.QryProductByIdRespDTO;
 import org.smartframework.cloud.examples.mall.rpc.product.response.rpc.QryProductByIdsRespDTO;
-import org.smartframework.cloud.starter.mybatis.plus.common.biz.BaseBiz;
-import org.smartframework.cloud.utility.ObjectUtil;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;

@@ -15,10 +15,10 @@
  */
 package org.smartframework.cloud.examples.api.ac.core.properties;
 
+import io.github.smart.cloud.common.pojo.Base;
+import io.github.smart.cloud.starter.configure.constants.SmartConstant;
 import lombok.Getter;
 import lombok.Setter;
-import org.smartframework.cloud.common.pojo.Base;
-import org.smartframework.cloud.starter.configure.constants.SmartConstant;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**

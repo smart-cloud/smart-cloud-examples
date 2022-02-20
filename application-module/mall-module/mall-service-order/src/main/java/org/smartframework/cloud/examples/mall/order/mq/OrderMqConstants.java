@@ -15,7 +15,7 @@
  */
 package org.smartframework.cloud.examples.mall.order.mq;
 
-import org.smartframework.cloud.starter.rabbitmq.MqConstants;
+import io.github.smart.cloud.starter.rabbitmq.MqConstants;
 
 /**
  * mq常量

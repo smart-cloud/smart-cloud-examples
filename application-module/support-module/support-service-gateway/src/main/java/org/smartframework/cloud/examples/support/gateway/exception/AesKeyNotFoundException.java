@@ -15,7 +15,7 @@
  */
 package org.smartframework.cloud.examples.support.gateway.exception;
 
-import org.smartframework.cloud.exception.BaseException;
+import io.github.smart.cloud.exception.BaseException;
 
 public class AesKeyNotFoundException extends BaseException {
 

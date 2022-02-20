@@ -15,11 +15,11 @@
  */
 package org.smartframework.cloud.examples.basic.user.test.data;
 
+import io.github.smart.cloud.starter.mybatis.plus.enums.DeleteState;
 import org.smartframework.cloud.examples.basic.rpc.enums.user.ChannelEnum;
 import org.smartframework.cloud.examples.basic.rpc.enums.user.SexEnum;
 import org.smartframework.cloud.examples.basic.user.entity.UserInfoEntity;
 import org.smartframework.cloud.examples.basic.user.mapper.base.UserInfoBaseMapper;
-import org.smartframework.cloud.starter.mybatis.plus.enums.DeleteState;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

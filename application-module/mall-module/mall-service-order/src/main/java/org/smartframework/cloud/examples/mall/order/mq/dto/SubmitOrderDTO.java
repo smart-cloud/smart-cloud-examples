@@ -15,9 +15,9 @@
  */
 package org.smartframework.cloud.examples.mall.order.mq.dto;
 
+import io.github.smart.cloud.common.pojo.Base;
 import lombok.Getter;
 import lombok.Setter;
-import org.smartframework.cloud.common.pojo.Base;
 import org.smartframework.cloud.examples.mall.rpc.order.request.api.SubmitOrderProductInfoReqVO;
 
 import java.util.List;
