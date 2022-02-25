@@ -20,7 +20,7 @@ import io.github.smart.cloud.common.pojo.Response;
 import io.github.smart.cloud.common.web.constants.SmartHttpHeaders;
 import io.github.smart.cloud.constants.CommonReturnCodes;
 import io.github.smart.cloud.exception.ServerException;
-import io.github.smart.cloud.starter.test.integration.WebReactiveIntegrationTest;
+import io.github.smart.cloud.test.core.integration.WebReactiveIntegrationTest;
 import io.github.smart.cloud.utility.security.RsaUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;

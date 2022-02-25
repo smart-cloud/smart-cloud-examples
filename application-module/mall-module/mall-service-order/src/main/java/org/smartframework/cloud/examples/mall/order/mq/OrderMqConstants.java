@@ -30,7 +30,7 @@ public interface OrderMqConstants {
         /**
          * 提交订单
          */
-        String QUEUE = PREFIX + MqConstants.QUEUE_SUFFIX;
+        String QUEUE = PREFIX + "_queue";
         /**
          * 提交授信订单
          */
@@ -38,7 +38,7 @@ public interface OrderMqConstants {
         /**
          * 提交授信订单
          */
-        String ROUTEKEY = PREFIX + MqConstants.ROUTEKEY_SUFFIX;
+        String ROUTEKEY = PREFIX + "routekey";
     }
 
 }

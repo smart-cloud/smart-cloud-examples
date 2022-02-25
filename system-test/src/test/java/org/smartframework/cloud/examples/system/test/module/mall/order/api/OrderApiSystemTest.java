@@ -18,7 +18,7 @@ package org.smartframework.cloud.examples.system.test.module.mall.order.api;
 import io.github.smart.cloud.common.pojo.BasePageResponse;
 import io.github.smart.cloud.common.pojo.Response;
 import io.github.smart.cloud.constants.CommonReturnCodes;
-import io.github.smart.cloud.starter.test.AbstractSystemTest;
+import io.github.smart.cloud.test.core.AbstractSystemTest;
 import io.github.smart.cloud.utility.RandomUtil;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;

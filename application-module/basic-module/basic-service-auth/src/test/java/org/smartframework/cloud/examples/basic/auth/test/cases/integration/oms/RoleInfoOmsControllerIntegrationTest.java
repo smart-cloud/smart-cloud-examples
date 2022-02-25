@@ -19,7 +19,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import io.github.smart.cloud.common.pojo.BasePageResponse;
 import io.github.smart.cloud.common.pojo.Response;
 import io.github.smart.cloud.constants.CommonReturnCodes;
-import io.github.smart.cloud.starter.test.integration.WebMvcIntegrationTest;
+import io.github.smart.cloud.test.core.integration.WebMvcIntegrationTest;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.smartframework.cloud.examples.basic.auth.entity.RoleInfoEntity;

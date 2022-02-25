@@ -20,7 +20,7 @@ import com.google.common.collect.Sets;
 import io.github.smart.cloud.common.pojo.Base;
 import io.github.smart.cloud.common.pojo.Response;
 import io.github.smart.cloud.constants.CommonReturnCodes;
-import io.github.smart.cloud.starter.test.integration.WebReactiveIntegrationTest;
+import io.github.smart.cloud.test.core.integration.WebReactiveIntegrationTest;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.redisson.api.RMapCache;

@@ -51,7 +51,7 @@
 
 		<dependency>
 			<groupId>io.github.smart-cloud</groupId>
-			<artifactId>smart-cloud-starter-test</artifactId>
+			<artifactId>smart-cloud-test-core</artifactId>
 			<scope>compile</scope>
 		</dependency>
 	</dependencies>
