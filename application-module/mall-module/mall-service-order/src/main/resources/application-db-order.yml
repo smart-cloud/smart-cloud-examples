@@ -5,25 +5,25 @@ spring:
       mallordermaster-0:
         type: com.zaxxer.hikari.HikariDataSource
         driver-class-name: com.mysql.cj.jdbc.Driver
-        jdbc-url: jdbc:mysql://127.0.0.1:3306/demo_order_0?serverTimezone=Asia/Shanghai&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true
+        jdbc-url: jdbc:mysql://127.0.0.1:3306/demo_order_0?characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true
         username: root
         password: 123456
       mallordermaster-1:
         type: com.zaxxer.hikari.HikariDataSource
         driver-class-name: com.mysql.cj.jdbc.Driver
-        jdbc-url: jdbc:mysql://127.0.0.1:3306/demo_order_1?serverTimezone=Asia/Shanghai&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true
+        jdbc-url: jdbc:mysql://127.0.0.1:3306/demo_order_1?characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true
         username: root
         password: 123456
       mallorderslave-0:
         type: com.zaxxer.hikari.HikariDataSource
         driver-class-name: com.mysql.cj.jdbc.Driver
-        jdbc-url: jdbc:mysql://127.0.0.1:3306/demo_order_0?serverTimezone=Asia/Shanghai&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true
+        jdbc-url: jdbc:mysql://127.0.0.1:3306/demo_order_0?characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true
         username: root
         password: 123456
       mallorderslave-1:
         type: com.zaxxer.hikari.HikariDataSource
         driver-class-name: com.mysql.cj.jdbc.Driver
-        jdbc-url: jdbc:mysql://127.0.0.1:3306/demo_order_1?serverTimezone=Asia/Shanghai&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true
+        jdbc-url: jdbc:mysql://127.0.0.1:3306/demo_order_1?characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true
         username: root
         password: 123456
     rules:

@@ -5,13 +5,13 @@ spring:
       strict: true
       datasource:
         basic-user-master:
-          url: jdbc:mysql://127.0.0.1:3306/demo_user?serverTimezone=Asia/Shanghai&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true
+          url: jdbc:mysql://127.0.0.1:3306/demo_user?characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true
           username: root
           password: 123456
           driver-class-name: com.mysql.cj.jdbc.Driver
           type: com.zaxxer.hikari.HikariDataSource
         basic-user-slave:
-          url: jdbc:mysql://127.0.0.1:3306/demo_user?serverTimezone=Asia/Shanghai&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true
+          url: jdbc:mysql://127.0.0.1:3306/demo_user?characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true
           username: root
           password: 123456
           driver-class-name: com.mysql.cj.jdbc.Driver
