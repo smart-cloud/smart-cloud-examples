@@ -23,7 +23,9 @@ import org.smartframework.cloud.examples.basic.rpc.user.request.api.register.Reg
 import org.smartframework.cloud.examples.basic.rpc.user.response.api.register.RegisterUserRespVO;
 import org.smartframework.cloud.examples.basic.user.bo.login.LoginInfoInsertServiceBO;
 import org.smartframework.cloud.examples.basic.user.entity.UserInfoEntity;
+import org.smartframework.cloud.examples.basic.user.event.RegisterSuccessEventCache;
 import org.smartframework.cloud.examples.common.config.constants.DataSourceName;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 
 /**
@@ -39,6 +41,7 @@ public class RegisterApiService {
 
     private final UserInfoApiService userInfoApiService;
     private final LoginInfoApiService loginInfoApiService;
+    private final ApplicationEventPublisher applicationEventPublisher;
 
     /**
      * 注册
@@ -69,8 +72,14 @@ public class RegisterApiService {
                 .mobile(userInfoEntity.getMobile())
                 .build();
 
-        // 缓存登录信息到网关
-        loginInfoApiService.cacheUserInfo(req.getToken(), registerUserRespVO);
+        // 注册成功事件
+        RegisterSuccessEventCache registerSuccessEvent = new RegisterSuccessEventCache(this);
+        registerSuccessEvent.setToken(req.getToken());
+        registerSuccessEvent.setUid(registerUserRespVO.getUserId());
+        registerSuccessEvent.setUsername(registerUserRespVO.getUsername());
+        registerSuccessEvent.setRealName(registerUserRespVO.getRealName());
+        registerSuccessEvent.setMobile(registerUserRespVO.getMobile());
+        applicationEventPublisher.publishEvent(registerSuccessEvent);
 
         return registerUserRespVO;
     }

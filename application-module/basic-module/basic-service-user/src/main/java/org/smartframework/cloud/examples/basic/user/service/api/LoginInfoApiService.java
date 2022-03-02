@@ -41,10 +41,12 @@ import org.smartframework.cloud.examples.basic.user.bo.login.LoginInfoInsertServ
 import org.smartframework.cloud.examples.basic.user.constants.UserReturnCodes;
 import org.smartframework.cloud.examples.basic.user.entity.LoginInfoEntity;
 import org.smartframework.cloud.examples.basic.user.entity.UserInfoEntity;
+import org.smartframework.cloud.examples.basic.user.event.LoginSuccessEventCache;
 import org.smartframework.cloud.examples.common.config.constants.DataSourceName;
 import org.smartframework.cloud.examples.support.rpc.gateway.UserRpc;
 import org.smartframework.cloud.examples.support.rpc.gateway.request.rpc.CacheUserInfoReqDTO;
 import org.smartframework.cloud.examples.support.rpc.gateway.request.rpc.ExitLoginReqDTO;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 
 import java.security.NoSuchAlgorithmException;
@@ -60,6 +62,7 @@ public class LoginInfoApiService {
     private final UserInfoApiBiz userInfoApiBiz;
     private final UserRpc userRpc;
     private final AuthRpc authRpc;
+    private final ApplicationEventPublisher applicationEventPublisher;
 
     /**
      * 登陆校验
@@ -96,8 +99,14 @@ public class LoginInfoApiService {
                 .mobile(userInfoEntity.getMobile())
                 .build();
 
-        // 缓存登录信息到网关
-        cacheUserInfo(req.getToken(), loginRespVO);
+        // 登录成功事件
+        LoginSuccessEventCache loginSuccessEvent = new LoginSuccessEventCache(this);
+        loginSuccessEvent.setToken(req.getToken());
+        loginSuccessEvent.setUid(loginRespVO.getUserId());
+        loginSuccessEvent.setUsername(loginRespVO.getUsername());
+        loginSuccessEvent.setRealName(loginRespVO.getRealName());
+        loginSuccessEvent.setMobile(loginRespVO.getMobile());
+        applicationEventPublisher.publishEvent(loginSuccessEvent);
 
         return loginRespVO;
     }
