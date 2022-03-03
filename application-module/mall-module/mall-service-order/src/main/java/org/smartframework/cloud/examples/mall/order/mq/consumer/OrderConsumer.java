@@ -24,6 +24,12 @@ import org.smartframework.cloud.examples.mall.order.service.api.OrderApiService;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Component;
 
+/**
+ * 下单消费者
+ *
+ * @author collin
+ * @date 2022-3-03
+ */
 @Component
 @MqConsumerFailRetry
 @RequiredArgsConstructor

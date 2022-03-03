@@ -23,6 +23,12 @@ import org.smartframework.cloud.examples.mall.order.util.OrderUtil;
 import org.smartframework.cloud.examples.mall.rpc.order.request.api.SubmitOrderReqVO;
 import org.springframework.stereotype.Component;
 
+/**
+ * 订单生产者
+ *
+ * @author collin
+ * @date 2022-03-03
+ */
 @Component
 public class OrderProducer extends AbstractRabbitMqProducer {
 
@@ -34,7 +40,7 @@ public class OrderProducer extends AbstractRabbitMqProducer {
     public String submitOrder(SubmitOrderReqVO req) {
         SubmitOrderDTO submitOrderDTO = new SubmitOrderDTO();
         Long userId = UserContext.getUserId();
-        submitOrderDTO.setUserId(userId);
+        submitOrderDTO.setUid(userId);
         String orderNo = OrderUtil.generateOrderNo(userId);
         submitOrderDTO.setOrderNo(orderNo);
         submitOrderDTO.setSubmtOrderProductInfos(req.getProducts());

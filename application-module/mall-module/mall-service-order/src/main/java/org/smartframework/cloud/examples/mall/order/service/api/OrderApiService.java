@@ -78,8 +78,33 @@ public class OrderApiService {
      * @throws UpdateStockException
      */
     public void submit(SubmitOrderDTO submitOrderDTO) {
+        // 幂等校验
+        String orderNo = submitOrderDTO.getOrderNo();
+        if (orderBillApiBiz.getByOrderNo(orderNo) != null) {
+            log.warn("order[{}] had created", orderNo);
+            return;
+        }
+
+        // 获取商品信息
         List<SubmitOrderProductInfoReqVO> products = submitOrderDTO.getSubmtOrderProductInfos();
-        // 1、查询商品信息
+        List<QryProductByIdRespDTO> productInfos = queryProductInfo(products);
+
+        OrderApiService orderApiService = SpringContextUtil.getBean(OrderApiService.class);
+        // 创建订单信息
+        orderApiService.createOrder(orderNo, submitOrderDTO.getUid(), products, productInfos);
+
+        // 扣减库存、抵扣优惠券、更新订单状态
+        orderApiService.deductStockAndCounpon(orderNo, products);
+    }
+
+    /**
+     * 获取商品信息
+     *
+     * @param products
+     * @return
+     */
+    private List<QryProductByIdRespDTO> queryProductInfo(List<SubmitOrderProductInfoReqVO> products) {
+        // 查询商品信息
         List<Long> productIds = products.stream().map(SubmitOrderProductInfoReqVO::getProductId).collect(Collectors.toList());
 
         QryProductByIdsReqDTO qryProductByIdsReqDTO = QryProductByIdsReqDTO.builder().ids(productIds).build();
@@ -93,14 +118,8 @@ public class OrderApiService {
                 || qryProductByIdsResponse.getBody().getProductInfos().size() != products.size()) {
             throw new BusinessException(OrderReturnCodes.PRODUCT_NOT_EXIST);
         }
-        List<QryProductByIdRespDTO> productInfos = qryProductByIdsResponse.getBody().getProductInfos();
 
-        OrderApiService orderApiService = SpringContextUtil.getBean(OrderApiService.class);
-        // 2、创建订单信息
-        orderApiService.createOrder(submitOrderDTO.getOrderNo(), submitOrderDTO.getUserId(), products, productInfos);
-
-        // 3、扣减库存、抵扣优惠券、更新订单状态
-        orderApiService.deductStockAndCounpon(submitOrderDTO.getOrderNo(), products);
+        return qryProductByIdsResponse.getBody().getProductInfos();
     }
 
     @GlobalTransactional

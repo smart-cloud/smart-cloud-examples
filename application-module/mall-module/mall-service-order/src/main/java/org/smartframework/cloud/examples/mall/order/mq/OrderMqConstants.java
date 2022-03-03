@@ -30,7 +30,7 @@ public interface OrderMqConstants {
         /**
          * 提交订单
          */
-        String QUEUE = PREFIX + "_queue";
+        String QUEUE = PREFIX + "queue";
         /**
          * 提交授信订单
          */

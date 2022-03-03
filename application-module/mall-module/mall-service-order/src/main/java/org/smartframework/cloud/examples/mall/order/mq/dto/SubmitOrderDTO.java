@@ -22,6 +22,12 @@ import org.smartframework.cloud.examples.mall.rpc.order.request.api.SubmitOrderP
 
 import java.util.List;
 
+/**
+ * 提交订单参数信息
+ *
+ * @author collin
+ * @date 2022-03-03
+ */
 @Getter
 @Setter
 public class SubmitOrderDTO extends Base {
@@ -29,7 +35,7 @@ public class SubmitOrderDTO extends Base {
     /**
      * 用户id
      */
-    private Long userId;
+    private Long uid;
 
     /**
      * 订单号
