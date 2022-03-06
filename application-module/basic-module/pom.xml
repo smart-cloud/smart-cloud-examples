@@ -56,6 +56,11 @@
 
 		<dependency>
 			<groupId>io.github.smart-cloud</groupId>
+			<artifactId>smart-cloud-starter-redis</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>io.github.smart-cloud</groupId>
 			<artifactId>smart-cloud-starter-locale</artifactId>
 		</dependency>
 		

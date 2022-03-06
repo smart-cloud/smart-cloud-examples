@@ -21,8 +21,8 @@ import io.github.smart.cloud.common.pojo.Response;
 import io.github.smart.cloud.exception.BusinessException;
 import io.github.smart.cloud.exception.ServerException;
 import io.github.smart.cloud.starter.core.business.util.RespUtil;
-import io.github.smart.cloud.starter.core.business.util.SnowFlakeIdUtil;
 import io.github.smart.cloud.starter.mybatis.plus.enums.DeleteState;
+import io.github.smart.cloud.starter.mybatis.plus.util.IdWorker;
 import io.github.smart.cloud.utility.ObjectUtil;
 import io.github.smart.cloud.utility.spring.SpringContextUtil;
 import io.seata.spring.annotation.GlobalTransactional;
@@ -211,7 +211,7 @@ public class OrderApiService {
                                                                 List<SubmitOrderProductInfoReqVO> products, List<QryProductByIdRespDTO> productInfos) {
         List<OrderDeliveryInfoEntity> entities = products.stream().map(item -> {
             OrderDeliveryInfoEntity entity = new OrderDeliveryInfoEntity();
-            entity.setId(SnowFlakeIdUtil.getInstance().nextId());
+            entity.setId(IdWorker.getInstance().nextId());
             entity.setOrderNo(orderNo);
             entity.setProductInfoId(item.getProductId());
             entity.setBuyCount(item.getBuyCount());
@@ -233,7 +233,7 @@ public class OrderApiService {
 
     private OrderBillEntity saveOrderBill(String orderNo, Long userId, List<OrderDeliveryInfoEntity> entities) {
         OrderBillEntity orderBillEntity = new OrderBillEntity();
-        orderBillEntity.setId(SnowFlakeIdUtil.getInstance().nextId());
+        orderBillEntity.setId(IdWorker.getInstance().nextId());
         orderBillEntity.setOrderNo(orderNo);
 
         Long amount = entities.stream().mapToLong(item -> item.getBuyCount() * item.getPrice()).sum();
