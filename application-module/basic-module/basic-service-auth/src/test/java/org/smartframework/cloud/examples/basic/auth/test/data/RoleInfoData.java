@@ -15,19 +15,26 @@
  */
 package org.smartframework.cloud.examples.basic.auth.test.data;
 
+import io.github.smart.cloud.starter.global.id.GlobalId;
+import io.github.smart.cloud.starter.mybatis.plus.enums.DeleteState;
+import lombok.RequiredArgsConstructor;
 import org.smartframework.cloud.examples.basic.auth.biz.oms.RoleInfoOmsBiz;
 import org.smartframework.cloud.examples.basic.auth.entity.RoleInfoEntity;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.Date;
+
 @Component
+@RequiredArgsConstructor
 public class RoleInfoData {
 
-    @Autowired
-    private RoleInfoOmsBiz roleInfoOmsBiz;
+    private final RoleInfoOmsBiz roleInfoOmsBiz;
 
     public RoleInfoEntity insert() {
-        RoleInfoEntity entity = roleInfoOmsBiz.buildEntity();
+        RoleInfoEntity entity = new RoleInfoEntity();
+        entity.setId(GlobalId.nextId());
+        entity.setInsertTime(new Date());
+        entity.setDelState(DeleteState.NORMAL);
         entity.setCode("admin");
         entity.setDescription("管理员");
         entity.setInsertUser(1L);

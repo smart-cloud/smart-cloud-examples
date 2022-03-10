@@ -16,6 +16,7 @@
 package org.smartframework.cloud.examples.basic.auth.biz.oms;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import io.github.smart.cloud.starter.global.id.GlobalId;
 import io.github.smart.cloud.starter.mybatis.plus.common.biz.BaseBiz;
 import io.github.smart.cloud.starter.mybatis.plus.enums.DeleteState;
 import lombok.RequiredArgsConstructor;
@@ -49,7 +50,10 @@ public class UserRoleOmsBiz extends BaseBiz<UserRoleRelaBaseMapper, UserRoleRela
      */
     public Boolean create(Long uid, Set<Long> roleIds, Long createUid) {
         List<UserRoleRelaEntity> userRoleRelaEntities = roleIds.stream().map(roleId -> {
-            UserRoleRelaEntity entity = super.buildEntity();
+            UserRoleRelaEntity entity = new UserRoleRelaEntity();
+            entity.setId(GlobalId.nextId());
+            entity.setInsertTime(new Date());
+            entity.setDelState(DeleteState.NORMAL);
             entity.setRoleInfoId(roleId);
             entity.setUserInfoId(uid);
             entity.setInsertUser(createUid);

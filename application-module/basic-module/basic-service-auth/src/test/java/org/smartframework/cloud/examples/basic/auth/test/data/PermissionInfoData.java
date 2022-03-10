@@ -15,19 +15,26 @@
  */
 package org.smartframework.cloud.examples.basic.auth.test.data;
 
+import io.github.smart.cloud.starter.global.id.GlobalId;
+import io.github.smart.cloud.starter.mybatis.plus.enums.DeleteState;
+import lombok.RequiredArgsConstructor;
 import org.smartframework.cloud.examples.basic.auth.biz.oms.PermissionInfoOmsBiz;
 import org.smartframework.cloud.examples.basic.auth.entity.PermissionInfoEntity;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.Date;
+
 @Component
+@RequiredArgsConstructor
 public class PermissionInfoData {
 
-    @Autowired
-    private PermissionInfoOmsBiz permissionInfoOmsBiz;
+    private final PermissionInfoOmsBiz permissionInfoOmsBiz;
 
     public PermissionInfoEntity insert() {
-        PermissionInfoEntity entity = permissionInfoOmsBiz.buildEntity();
+        PermissionInfoEntity entity = new PermissionInfoEntity();
+        entity.setId(GlobalId.nextId());
+        entity.setInsertTime(new Date());
+        entity.setDelState(DeleteState.NORMAL);
         entity.setCode("/auth/oms/permission/create");
         entity.setDescription("创建权限");
         entity.setInsertUser(1L);

@@ -15,12 +15,10 @@
  */
 package org.smartframework.cloud.examples.basic.auth;
 
-import io.github.smart.cloud.starter.mybatis.plus.annotation.EnableIdWorker;
 import org.smartframework.cloud.examples.framework.annotation.SmartApplication;
 import org.springframework.boot.SpringApplication;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
-@EnableIdWorker
 @SmartApplication
 @EnableTransactionManagement
 public class AuthApplication {

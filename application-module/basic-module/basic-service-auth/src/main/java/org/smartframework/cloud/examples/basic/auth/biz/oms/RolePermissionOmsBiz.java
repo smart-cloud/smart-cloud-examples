@@ -18,6 +18,7 @@ package org.smartframework.cloud.examples.basic.auth.biz.oms;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import io.github.smart.cloud.common.pojo.BasePageResponse;
 import io.github.smart.cloud.common.pojo.util.PageUtil;
+import io.github.smart.cloud.starter.global.id.GlobalId;
 import io.github.smart.cloud.starter.mybatis.plus.common.biz.BaseBiz;
 import io.github.smart.cloud.starter.mybatis.plus.enums.DeleteState;
 import lombok.RequiredArgsConstructor;
@@ -57,7 +58,10 @@ public class RolePermissionOmsBiz extends BaseBiz<RolePermissionRelaBaseMapper, 
      */
     public Boolean create(Long roleId, Set<Long> permissonIds, Long uid) {
         List<RolePermissionRelaEntity> rolePermissionRelaEntities = permissonIds.stream().map(permissonId -> {
-            RolePermissionRelaEntity entity = super.buildEntity();
+            RolePermissionRelaEntity entity = new RolePermissionRelaEntity();
+            entity.setId(GlobalId.nextId());
+            entity.setInsertTime(new Date());
+            entity.setDelState(DeleteState.NORMAL);
             entity.setRoleInfoId(roleId);
             entity.setPermissionInfoId(permissonId);
             entity.setInsertUser(uid);

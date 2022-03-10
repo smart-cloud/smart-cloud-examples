@@ -16,11 +16,15 @@
 package org.smartframework.cloud.examples.basic.user.biz.api;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import io.github.smart.cloud.starter.global.id.GlobalId;
 import io.github.smart.cloud.starter.mybatis.plus.common.biz.BaseBiz;
+import io.github.smart.cloud.starter.mybatis.plus.enums.DeleteState;
 import org.smartframework.cloud.examples.basic.rpc.user.request.api.user.UserInfoInsertReqVO;
 import org.smartframework.cloud.examples.basic.user.entity.UserInfoEntity;
 import org.smartframework.cloud.examples.basic.user.mapper.base.UserInfoBaseMapper;
 import org.springframework.stereotype.Repository;
+
+import java.util.Date;
 
 @Repository
 public class UserInfoApiBiz extends BaseBiz<UserInfoBaseMapper, UserInfoEntity> {
@@ -32,7 +36,10 @@ public class UserInfoApiBiz extends BaseBiz<UserInfoBaseMapper, UserInfoEntity> 
      * @return
      */
     public UserInfoEntity insert(UserInfoInsertReqVO userInfo) {
-        UserInfoEntity userInfoEntity = super.buildEntity();
+        UserInfoEntity userInfoEntity = new UserInfoEntity();
+        userInfoEntity.setId(GlobalId.nextId());
+        userInfoEntity.setInsertTime(new Date());
+        userInfoEntity.setDelState(DeleteState.NORMAL);
         userInfoEntity.setMobile(userInfo.getMobile());
         userInfoEntity.setNickName(userInfo.getNickname());
         userInfoEntity.setRealName(userInfo.getRealname());

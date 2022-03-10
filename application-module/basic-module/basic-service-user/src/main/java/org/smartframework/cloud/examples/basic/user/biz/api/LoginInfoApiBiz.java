@@ -16,7 +16,9 @@
 package org.smartframework.cloud.examples.basic.user.biz.api;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import io.github.smart.cloud.starter.global.id.GlobalId;
 import io.github.smart.cloud.starter.mybatis.plus.common.biz.BaseBiz;
+import io.github.smart.cloud.starter.mybatis.plus.enums.DeleteState;
 import org.smartframework.cloud.examples.basic.rpc.enums.user.UserStateEnum;
 import org.smartframework.cloud.examples.basic.user.bo.login.LoginInfoInsertBizBO;
 import org.smartframework.cloud.examples.basic.user.entity.LoginInfoEntity;
@@ -35,7 +37,10 @@ public class LoginInfoApiBiz extends BaseBiz<LoginInfoBaseMapper, LoginInfoEntit
      * @return
      */
     public LoginInfoEntity insert(LoginInfoInsertBizBO bo) {
-        LoginInfoEntity entity = super.buildEntity();
+        LoginInfoEntity entity = new LoginInfoEntity();
+        entity.setId(GlobalId.nextId());
+        entity.setInsertTime(new Date());
+        entity.setDelState(DeleteState.NORMAL);
         entity.setUserId(bo.getUserId());
         entity.setUsername(bo.getUsername());
         entity.setSalt(bo.getSalt());

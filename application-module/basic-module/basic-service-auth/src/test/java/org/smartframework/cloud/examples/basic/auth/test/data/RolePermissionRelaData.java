@@ -16,9 +16,9 @@
 package org.smartframework.cloud.examples.basic.auth.test.data;
 
 import io.github.smart.cloud.starter.mybatis.plus.enums.DeleteState;
+import lombok.RequiredArgsConstructor;
 import org.smartframework.cloud.examples.basic.auth.biz.oms.RolePermissionOmsBiz;
 import org.smartframework.cloud.examples.basic.auth.entity.RolePermissionRelaEntity;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
@@ -26,10 +26,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Component
+@RequiredArgsConstructor
 public class RolePermissionRelaData {
 
-    @Autowired
-    private RolePermissionOmsBiz rolePermissionOmsBiz;
+    private final RolePermissionOmsBiz rolePermissionOmsBiz;
 
     public void insert(Long roleId, List<Long> permissionIds) {
         List<RolePermissionRelaEntity> rolePermissionRelaEntities = permissionIds.stream().map(permissionId -> {

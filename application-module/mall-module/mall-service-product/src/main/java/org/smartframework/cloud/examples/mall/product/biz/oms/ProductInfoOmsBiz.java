@@ -17,6 +17,7 @@ package org.smartframework.cloud.examples.mall.product.biz.oms;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import io.github.smart.cloud.common.pojo.BasePageResponse;
+import io.github.smart.cloud.starter.global.id.GlobalId;
 import io.github.smart.cloud.starter.mybatis.plus.common.biz.BaseBiz;
 import io.github.smart.cloud.starter.mybatis.plus.enums.DeleteState;
 import org.apache.commons.lang3.StringUtils;
@@ -47,7 +48,10 @@ public class ProductInfoOmsBiz extends BaseBiz<ProductInfoBaseMapper, ProductInf
      * @return
      */
     public boolean insert(ProductInsertReqVO reqBody) {
-        ProductInfoEntity productInfoEntity = super.buildEntity();
+        ProductInfoEntity productInfoEntity = new ProductInfoEntity();
+        productInfoEntity.setId(GlobalId.nextId());
+        productInfoEntity.setInsertTime(new Date());
+        productInfoEntity.setDelState(DeleteState.NORMAL);
         productInfoEntity.setName(reqBody.getName());
         productInfoEntity.setSellPrice(reqBody.getSellPrice());
         productInfoEntity.setStock(reqBody.getStock());
