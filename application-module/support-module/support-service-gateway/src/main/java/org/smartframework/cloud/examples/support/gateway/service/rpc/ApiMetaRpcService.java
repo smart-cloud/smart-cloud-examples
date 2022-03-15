@@ -22,7 +22,6 @@ import io.github.smart.cloud.starter.core.business.util.RespUtil;
 import io.github.smart.cloud.utility.HttpUtil;
 import io.github.smart.cloud.utility.spring.SpringContextUtil;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.MapUtils;
 import org.smartframework.cloud.examples.api.ac.core.constants.ApiMetaConstants;
 import org.smartframework.cloud.examples.api.ac.core.vo.ApiMetaFetchRespVO;
@@ -45,7 +44,6 @@ import java.util.List;
  * @author collin
  * @date 2020/04/28
  */
-@Slf4j
 @Service
 @RequiredArgsConstructor
 public class ApiMetaRpcService {
