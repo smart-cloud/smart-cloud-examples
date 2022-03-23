@@ -30,13 +30,17 @@ spring:
       readwrite-splitting:
         data-sources:
           mallorder0:
+            type: Static
+            props:
+              write-data-source-names: mallordermaster-0
+              read-data-source-names: mallorderslave-0
             load-balancer-name: round_robin
-            write-data-source-name: mallordermaster-0
-            read-data-source-names: mallorderslave-0
           mallorder1:
+            type: Static
+            props:
+              write-data-source-name: mallordermaster-1
+              read-data-source-names: mallorderslave-1
             load-balancer-name: round_robin
-            write-data-source-name: mallordermaster-1
-            read-data-source-names: mallorderslave-1
         load-balancers:
           round_robin:
             type: ROUND_ROBIN
