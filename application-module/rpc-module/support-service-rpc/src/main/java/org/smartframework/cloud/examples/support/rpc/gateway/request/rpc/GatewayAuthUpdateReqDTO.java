@@ -22,6 +22,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
+import javax.validation.constraints.NotNull;
+
 /**
  * 修改权限信息
  *
@@ -34,9 +36,13 @@ import lombok.experimental.SuperBuilder;
 @AllArgsConstructor
 @SuperBuilder
 public class GatewayAuthUpdateReqDTO extends Base {
-	
-	private static final long serialVersionUID = 1L;
-	
-	private long userId;
+
+    private static final long serialVersionUID = 1L;
+
+    /**
+     * 用户uid
+     */
+    @NotNull
+    private Long userId;
 
 }

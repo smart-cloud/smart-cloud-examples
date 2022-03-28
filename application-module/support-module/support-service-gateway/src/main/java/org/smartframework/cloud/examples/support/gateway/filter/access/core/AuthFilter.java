@@ -77,7 +77,7 @@ public class AuthFilter extends AbstractFilter {
     }
 
     @Override
-    protected Mono<Void> filter(ServerWebExchange exchange, WebFilterChain chain, FilterContext filterContext) {
+    protected Mono<Void> innerFilter(ServerWebExchange exchange, WebFilterChain chain, FilterContext filterContext) {
         ApiAccessMetaCache apiAccessMetaCache = filterContext.getApiAccessMetaCache();
         // 判断是否需要登陆、鉴权
         if (!apiAccessMetaCache.isAuth()) {
@@ -95,18 +95,18 @@ public class AuthFilter extends AbstractFilter {
             throw new BusinessException(GatewayReturnCodes.TOKEN_EXPIRED_LOGIN_SUCCESS);
         }
 
-        // 1、先从二级缓存判断
+        // 1、先从缓存获取数据进行判断
         RMapCache<String, Boolean> userAuthSecondaryCacheMapCache = redissonClient.getMapCache(RedisKeyHelper.getUserAuthSecondaryCacheHashKey(token));
         if (userAuthSecondaryCacheMapCache != null) {
-            Boolean userAuthSecondaryCachePass = userAuthSecondaryCacheMapCache.get(filterContext.getUrlMethod());
-            if (userAuthSecondaryCachePass != null) {
-                if (userAuthSecondaryCachePass) {
+            Boolean isUserAuthSecondaryCachePass = userAuthSecondaryCacheMapCache.get(filterContext.getUrlMethod());
+            if (isUserAuthSecondaryCachePass != null) {
+                if (isUserAuthSecondaryCachePass) {
                     return chain.filter(exchange);
                 }
                 throw new AuthenticationException();
             }
         }
-        // 2、再从一级缓存判断
+        // 2、缓存没有，则通过rpc获取数据进行判断
         boolean pass = checkAuth(apiAccessMetaCache, token, mySmartUser.getId());
         userAuthSecondaryCacheMapCache.put(filterContext.getUrlMethod(), pass, RedisExpire.USER_EXPIRE_SECONDS_LOGIN_SUCCESS, TimeUnit.SECONDS);
         if (!pass) {
@@ -134,8 +134,9 @@ public class AuthFilter extends AbstractFilter {
         }
 
         AuthCache authCache = getAuthCache(token, uid);
-        if (authCache == null || (requirePermission && CollectionUtils.isEmpty(authCache.getPermissions()))
-                || (requireRole && CollectionUtils.isEmpty(authCache.getRoles()))) {
+        boolean isNeedAuth = authCache == null || (requirePermission && CollectionUtils.isEmpty(authCache.getPermissions()))
+                || (requireRole && CollectionUtils.isEmpty(authCache.getRoles()));
+        if (isNeedAuth) {
             return false;
         }
 

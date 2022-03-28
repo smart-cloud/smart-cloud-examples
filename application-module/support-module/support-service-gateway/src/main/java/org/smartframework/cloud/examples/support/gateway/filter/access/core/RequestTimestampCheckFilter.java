@@ -43,7 +43,7 @@ public class RequestTimestampCheckFilter extends AbstractFilter {
     }
 
     @Override
-    protected Mono<Void> filter(ServerWebExchange exchange, WebFilterChain chain, FilterContext filterContext) {
+    protected Mono<Void> innerFilter(ServerWebExchange exchange, WebFilterChain chain, FilterContext filterContext) {
         Long requestValidMillis = filterContext.getApiAccessMetaCache().getRequestValidMillis();
         if (requestValidMillis == null || requestValidMillis <= 0) {
             return chain.filter(exchange);

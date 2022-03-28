@@ -38,11 +38,11 @@ public class RepeatSubmitCheckMetaRespVO extends Base {
     /**
      * 是否需要重复提交校验
      */
-    private boolean check;
+    private Boolean check;
 
     /**
      * 缓存有效期
      */
-    private long expireMillis;
+    private Long expireMillis;
 
 }

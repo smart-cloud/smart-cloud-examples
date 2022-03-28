@@ -38,16 +38,16 @@ public class DataSecurityMetaRespVO extends Base {
     /**
      * 请求参数是否需要解密
      */
-    private boolean requestDecrypt;
+    private Boolean requestDecrypt;
 
     /**
      * 响应信息是否需要加密
      */
-    private boolean responseEncrypt;
+    private Boolean responseEncrypt;
 
     /**
      * 接口签名类型
      */
-    private byte sign;
+    private Byte sign;
 
 }

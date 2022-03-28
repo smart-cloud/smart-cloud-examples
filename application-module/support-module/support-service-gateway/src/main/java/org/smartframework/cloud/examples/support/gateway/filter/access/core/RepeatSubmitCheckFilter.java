@@ -47,7 +47,7 @@ public class RepeatSubmitCheckFilter extends AbstractFilter {
     private final RedissonClient redissonClient;
 
     @Override
-    protected Mono<Void> filter(ServerWebExchange exchange, WebFilterChain chain, FilterContext filterContext) {
+    protected Mono<Void> innerFilter(ServerWebExchange exchange, WebFilterChain chain, FilterContext filterContext) {
         ApiAccessMetaCache apiAccessMetaCache = filterContext.getApiAccessMetaCache();
         if (!apiAccessMetaCache.isRepeatSubmitCheck()) {
             return chain.filter(exchange);

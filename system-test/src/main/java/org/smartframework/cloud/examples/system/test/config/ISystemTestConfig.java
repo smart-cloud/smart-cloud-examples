@@ -16,17 +16,39 @@
 package org.smartframework.cloud.examples.system.test.config;
 
 /**
+ * 系统测试配置
+ *
  * @author collin
  * @date 2020-09-29
  */
 public interface ISystemTestConfig {
 
+    /**
+     * 获取用户服务请求base url
+     *
+     * @return
+     */
     String getUserBaseUrl();
 
+    /**
+     * 获取订单服务请求base url
+     *
+     * @return
+     */
     String getOrderBaseUrl();
 
+    /**
+     * 获取商品服务请求base url
+     *
+     * @return
+     */
     String getProductBaseUrl();
 
+    /**
+     * 获取网关服务请求base url
+     *
+     * @return
+     */
     String getGatewayBaseUrl();
 
 }

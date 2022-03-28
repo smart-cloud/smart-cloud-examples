@@ -22,6 +22,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
+import javax.validation.constraints.NotBlank;
+
 /**
  * 上传权限信息
  *
@@ -37,6 +39,10 @@ public class GatewayAuthUploadReqDTO extends Base {
 
     private static final long serialVersionUID = 1L;
 
-    private long token;
+    /**
+     * 用户token
+     */
+    @NotBlank
+    private String token;
 
 }

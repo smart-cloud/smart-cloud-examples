@@ -38,7 +38,7 @@ public class PageProductRespVO extends Base {
     /**
      * 商品id
      */
-    private long id;
+    private Long id;
 
     /**
      * 商品名称
@@ -48,11 +48,11 @@ public class PageProductRespVO extends Base {
     /**
      * 销售价格（单位：万分之一元）
      */
-    private long sellPrice;
+    private Long sellPrice;
 
     /**
      * 库存
      */
-    private long stock;
+    private Long stock;
 
 }

@@ -78,7 +78,7 @@ public class ApiMetaUtil {
             return null;
         }
 
-        Map<String, ApiAccessMetaRespVO> apiAccessMap = new HashMap<>();
+        Map<String, ApiAccessMetaRespVO> apiAccessMap = new HashMap<>(8);
         for (Method method : allMappingSet) {
             Class<?> declaringClass = method.getDeclaringClass();
             // 过滤掉rpc接口

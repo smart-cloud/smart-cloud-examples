@@ -49,7 +49,7 @@ public class DataSecurityFilter extends AbstractFilter {
     }
 
     @Override
-    protected Mono<Void> filter(ServerWebExchange exchange, WebFilterChain chain, FilterContext filterContext) {
+    protected Mono<Void> innerFilter(ServerWebExchange exchange, WebFilterChain chain, FilterContext filterContext) {
         ApiAccessMetaCache apiAccessMetaCache = filterContext.getApiAccessMetaCache();
         if (!apiAccessMetaCache.isDataSecurity()) {
             return chain.filter(exchange);

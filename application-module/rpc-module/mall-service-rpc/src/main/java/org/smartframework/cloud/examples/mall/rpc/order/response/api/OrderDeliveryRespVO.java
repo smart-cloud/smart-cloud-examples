@@ -41,6 +41,6 @@ public class OrderDeliveryRespVO extends Base {
     /**
      * 购买数量
      */
-    private int buyCount;
+    private Integer buyCount;
 
 }

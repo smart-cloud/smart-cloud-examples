@@ -117,7 +117,7 @@ public class ApiAccessMetaCache extends Base {
             this.requiresRoles = new HashSet<>(0);
             this.requiresPermissions = new HashSet<>(0);
         } else {
-            this.requiresUser = authMetaRespVO.isRequireUser();
+            this.requiresUser = authMetaRespVO.getRequireUser();
             this.requiresRoles = SetUtils.hashSet(authMetaRespVO.getRequireRoles());
             this.requiresPermissions = SetUtils.hashSet(authMetaRespVO.getRequirePermissions());
         }
@@ -134,8 +134,8 @@ public class ApiAccessMetaCache extends Base {
             this.responseEncrypt = false;
             this.signType = SignType.NONE.getType();
         } else {
-            this.requestDecrypt = dataSecurityMetaRespVO.isRequestDecrypt();
-            this.responseEncrypt = dataSecurityMetaRespVO.isResponseEncrypt();
+            this.requestDecrypt = dataSecurityMetaRespVO.getRequestDecrypt();
+            this.responseEncrypt = dataSecurityMetaRespVO.getResponseEncrypt();
             this.signType = dataSecurityMetaRespVO.getSign();
         }
     }
@@ -150,7 +150,7 @@ public class ApiAccessMetaCache extends Base {
             this.repeatSubmitCheck = false;
             this.repeatSubmitExpireMillis = 0;
         } else {
-            this.repeatSubmitCheck = repeatSubmitCheckMetaRespVO.isCheck();
+            this.repeatSubmitCheck = repeatSubmitCheckMetaRespVO.getCheck();
             this.repeatSubmitExpireMillis = repeatSubmitCheckMetaRespVO.getExpireMillis();
         }
     }

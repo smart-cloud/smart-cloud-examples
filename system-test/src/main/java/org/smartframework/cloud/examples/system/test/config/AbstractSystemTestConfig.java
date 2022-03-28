@@ -15,6 +15,12 @@
  */
 package org.smartframework.cloud.examples.system.test.config;
 
+/**
+ * 系统测试配置抽象类
+ *
+ * @author collin
+ * @date 2020-09-29
+ */
 public abstract class AbstractSystemTestConfig {
 
     /**

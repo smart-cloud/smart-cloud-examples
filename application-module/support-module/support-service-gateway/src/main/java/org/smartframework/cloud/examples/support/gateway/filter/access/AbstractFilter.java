@@ -31,17 +31,24 @@ import reactor.core.publisher.Mono;
  */
 public abstract class AbstractFilter implements WebFilter, Ordered {
 
-    protected abstract Mono<Void> filter(ServerWebExchange exchange, WebFilterChain chain, FilterContext filterContext);
+    /**
+     * 内部过滤器
+     *
+     * @param exchange
+     * @param chain
+     * @param filterContext
+     * @return
+     */
+    protected abstract Mono<Void> innerFilter(ServerWebExchange exchange, WebFilterChain chain, FilterContext filterContext);
 
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, WebFilterChain chain) {
         FilterContext filterContext = (FilterContext) exchange.getAttributes().get(GatewayConstants.FILTER_CONTEXT_KEY);
-        if (filterContext == null
-                || filterContext.getApiAccessMetaCache() == null) {
+        if (filterContext == null || filterContext.getApiAccessMetaCache() == null) {
             return chain.filter(exchange);
         }
 
-        return filter(exchange, chain, filterContext);
+        return innerFilter(exchange, chain, filterContext);
     }
 
 }
