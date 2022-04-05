@@ -51,7 +51,7 @@ public class ProductInfoRpcBiz extends BaseBiz<ProductInfoBaseMapper, ProductInf
      */
     public QryProductByIdRespDTO qryProductById(QryProductByIdReqDTO reqBody) {
         ProductInfoEntity entity = super.getById(reqBody.getId());
-        if (ObjectUtil.isNull(entity)) {
+        if (entity==null) {
             return null;
         }
 
@@ -71,7 +71,7 @@ public class ProductInfoRpcBiz extends BaseBiz<ProductInfoBaseMapper, ProductInf
      */
     public QryProductByIdsRespDTO qryProductByIds(QryProductByIdsReqDTO reqDTO) {
         List<ProductInfoEntity> entities = super.listByIds(reqDTO.getIds());
-        if (ObjectUtil.isNull(entities)) {
+        if (entities==null) {
             return null;
         }
 

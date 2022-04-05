@@ -113,7 +113,7 @@ public class OrderApiService {
         if (!RespUtil.isSuccess(qryProductByIdsResponse)) {
             throw new ServerException(RespUtil.getFailMsg(qryProductByIdsResponse));
         }
-        if (ObjectUtil.isNull(qryProductByIdsResponse.getBody())
+        if (qryProductByIdsResponse.getBody()==null
                 || CollectionUtils.isEmpty(qryProductByIdsResponse.getBody().getProductInfos())
                 || qryProductByIdsResponse.getBody().getProductInfos().size() != products.size()) {
             throw new BusinessException(OrderReturnCodes.PRODUCT_NOT_EXIST);
