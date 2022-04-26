@@ -29,7 +29,7 @@ import java.lang.annotation.*;
 @EnableFeignClients(basePackages = "org.smartframework.cloud.examples.**..rpc")
 @EnableDiscoveryClient
 @SmartBootApplication(componentBasePackages = "org.smartframework.cloud.examples")
-@YamlScan(locationPatterns = "classpath*:/application-*.yml")
+@YamlScan(locationPatterns = "classpath*:/application-*.yaml")
 public @interface SmartApplication {
 
 }

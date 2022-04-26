@@ -1,8 +1,0 @@
-spring:
-  application:
-    name: supportServiceAdmin
-  profiles:
-    include: common-config,discovery
-
-server:
-  port: 10011
