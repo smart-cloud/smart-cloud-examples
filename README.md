@@ -154,8 +154,11 @@ sign = RSA签名签名(AES加密(head的json串) + AES加密(body json串))
 - 安装[mysql](https://www.mysql.com/downloads/)，执行/docs/sql下脚本
 - 安装[rabbitmq](https://www.rabbitmq.com)，并启动
 - 安装[nacos](https://github.com/alibaba/nacos/releases)，并启动
-  - nacos配置dataId='spring.application.name'.yaml，如网关服务为supportServiceGateway.yaml
-  - nacos配置group=DEFAULT_GROUP
+  ![](docs/images/nacos_config_list.png)
+
+  ![](docs/images/nacos_config_detail.png)
+
+  ![](docs/images/nacos_sentinel_config.png)
 - 安装[seata](https://github.com/seata/seata/releases/tag/v1.4.0)服务端，并启动
   - server sql见/smart-cloud-examples/docs/sql/seata.sql
   - file.conf文件配置

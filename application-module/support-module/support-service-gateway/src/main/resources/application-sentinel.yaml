@@ -1,0 +1,18 @@
+spring:
+  cloud:
+    # 参考SentinelProperties
+    sentinel:
+      enabled: true
+      transport:
+        # sentinel控制台地址
+        dashboard: localhost:8080
+        # 跟sentinel控制台交流的端口，随意指定一个未使用的端口即可，默认是8719
+        port: 8719
+      datasource:
+        ds1:
+          nacos:
+            server-addr: 127.0.0.1:8848
+            data-id: gateway-sentinel
+            group-Id: DEFAULT_GROUP
+            rule-type: flow
+            data-type: json
