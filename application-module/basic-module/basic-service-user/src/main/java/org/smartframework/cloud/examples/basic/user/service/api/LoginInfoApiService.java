@@ -95,8 +95,8 @@ public class LoginInfoApiService {
         LoginRespVO loginRespVO = LoginRespVO.builder()
                 .userId(userInfoEntity.getId())
                 .username(loginInfoEntity.getUsername())
-                .realName(userInfoEntity.getRealName())
-                .mobile(userInfoEntity.getMobile())
+                .realName(userInfoEntity.getRealName().getValue())
+                .mobile(userInfoEntity.getMobile().getValue())
                 .build();
 
         // 登录成功事件

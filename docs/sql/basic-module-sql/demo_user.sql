@@ -16,9 +16,9 @@
 
 CREATE TABLE `t_user_info` (
 	`f_id` BIGINT(20) UNSIGNED NOT NULL,
-	`f_mobile` CHAR(11) NULL DEFAULT NULL COMMENT '手机号',
+	`f_mobile` CHAR(64) NULL DEFAULT NULL COMMENT '手机号',
 	`f_nick_name` VARCHAR(45) NULL DEFAULT NULL COMMENT '昵称',
-	`f_real_name` VARCHAR(45) NULL DEFAULT NULL COMMENT '真实姓名',
+	`f_real_name` VARCHAR(64) NULL DEFAULT NULL COMMENT '真实姓名',
 	`f_sex` TINYINT(1) UNSIGNED NULL DEFAULT NULL COMMENT '性别=={"1":"男","2":"女","3":"未知"}',
 	`f_birthday` DATE NULL DEFAULT NULL COMMENT '出生年月',
 	`f_profile_image` VARCHAR(255) NULL DEFAULT NULL COMMENT '头像',

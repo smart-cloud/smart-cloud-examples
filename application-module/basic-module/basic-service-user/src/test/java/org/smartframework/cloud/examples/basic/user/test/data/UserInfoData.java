@@ -15,6 +15,7 @@
  */
 package org.smartframework.cloud.examples.basic.user.test.data;
 
+import io.github.smart.cloud.starter.mybatis.plus.common.CryptField;
 import io.github.smart.cloud.starter.mybatis.plus.enums.DeleteState;
 import org.smartframework.cloud.examples.basic.rpc.enums.user.ChannelEnum;
 import org.smartframework.cloud.examples.basic.rpc.enums.user.SexEnum;
@@ -34,8 +35,8 @@ public class UserInfoData {
 	public void insertTestData(Long id) {
 		UserInfoEntity entity = new UserInfoEntity();
 		entity.setId(id);
-		entity.setMobile("18720912981");
-		entity.setRealName("李四");
+		entity.setMobile(CryptField.of("18720912981"));
+		entity.setRealName(CryptField.of("李四"));
 		entity.setChannel(ChannelEnum.APP.getValue());
 		entity.setSex(SexEnum.FEMALE.getValue());
 		entity.setInsertTime(new Date());

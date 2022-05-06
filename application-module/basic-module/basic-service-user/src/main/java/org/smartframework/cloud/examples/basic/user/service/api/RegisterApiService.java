@@ -17,6 +17,7 @@ package org.smartframework.cloud.examples.basic.user.service.api;
 
 import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.dynamic.datasource.annotation.DSTransactional;
+import io.github.smart.cloud.starter.mybatis.plus.common.CryptField;
 import lombok.RequiredArgsConstructor;
 import org.smartframework.cloud.examples.basic.rpc.user.request.api.login.LoginInfoInsertReqVO;
 import org.smartframework.cloud.examples.basic.rpc.user.request.api.register.RegisterUserReqVO;
@@ -68,8 +69,8 @@ public class RegisterApiService {
         RegisterUserRespVO registerUserRespVO = RegisterUserRespVO.builder()
                 .userId(userInfoEntity.getId())
                 .username(loginInfo.getUsername())
-                .realName(userInfoEntity.getRealName())
-                .mobile(userInfoEntity.getMobile())
+                .realName(userInfoEntity.getRealName().getValue())
+                .mobile(userInfoEntity.getMobile().getValue())
                 .build();
 
         // 注册成功事件

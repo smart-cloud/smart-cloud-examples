@@ -3,6 +3,8 @@ smart:
   log:
     rpclog: true
     apilog: true
+  crypt-field:
+    key: 123456
 
 server:
   port: 20031

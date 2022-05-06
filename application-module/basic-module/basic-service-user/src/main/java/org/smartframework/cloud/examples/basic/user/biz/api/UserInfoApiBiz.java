@@ -17,6 +17,7 @@ package org.smartframework.cloud.examples.basic.user.biz.api;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import io.github.smart.cloud.starter.global.id.GlobalId;
+import io.github.smart.cloud.starter.mybatis.plus.common.CryptField;
 import io.github.smart.cloud.starter.mybatis.plus.common.biz.BaseBiz;
 import io.github.smart.cloud.starter.mybatis.plus.enums.DeleteState;
 import org.smartframework.cloud.examples.basic.rpc.user.request.api.user.UserInfoInsertReqVO;
@@ -40,9 +41,9 @@ public class UserInfoApiBiz extends BaseBiz<UserInfoBaseMapper, UserInfoEntity> 
         userInfoEntity.setId(GlobalId.nextId());
         userInfoEntity.setInsertTime(new Date());
         userInfoEntity.setDelState(DeleteState.NORMAL);
-        userInfoEntity.setMobile(userInfo.getMobile());
+        userInfoEntity.setMobile(CryptField.of(userInfo.getMobile()));
         userInfoEntity.setNickName(userInfo.getNickname());
-        userInfoEntity.setRealName(userInfo.getRealname());
+        userInfoEntity.setRealName(CryptField.of(userInfo.getRealname()));
         userInfoEntity.setSex(userInfo.getSex());
         userInfoEntity.setBirthday(userInfo.getBirthday());
         userInfoEntity.setProfileImage(userInfo.getProfileImage());
@@ -60,7 +61,7 @@ public class UserInfoApiBiz extends BaseBiz<UserInfoBaseMapper, UserInfoEntity> 
      */
     public boolean existByMobile(String mobile) {
         LambdaQueryWrapper<UserInfoEntity> wrapper = new LambdaQueryWrapper<>();
-        wrapper.select(UserInfoEntity::getId).eq(UserInfoEntity::getMobile, mobile);
+        wrapper.select(UserInfoEntity::getId).eq(UserInfoEntity::getMobile, CryptField.of(mobile));
 
         return super.getOne(wrapper) != null;
     }
