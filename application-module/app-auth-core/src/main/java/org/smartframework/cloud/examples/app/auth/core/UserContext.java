@@ -17,6 +17,7 @@ package org.smartframework.cloud.examples.app.auth.core;
 
 import io.github.smart.cloud.api.core.user.context.AbstractUserContext;
 import io.github.smart.cloud.api.core.user.context.SmartUser;
+import io.github.smart.cloud.common.web.constants.SmartHttpHeaders;
 import io.github.smart.cloud.common.web.util.WebServletUtil;
 import io.github.smart.cloud.utility.JacksonUtil;
 import org.smartframework.cloud.examples.app.auth.core.exception.SmartUserMissingException;
@@ -70,7 +71,7 @@ public class UserContext extends AbstractUserContext {
         if (request == null) {
             return null;
         }
-        String userJson = request.getHeader(AppAuthConstants.HEADER_USER);
+        String userJson = request.getHeader(SmartHttpHeaders.HEADER_USER);
         if (userJson == null || userJson.trim().length() == 0) {
             return null;
         }

@@ -17,6 +17,7 @@ package org.smartframework.cloud.examples.support.gateway.filter.access.core;
 
 import io.github.smart.cloud.common.pojo.Response;
 import io.github.smart.cloud.common.pojo.ResponseHead;
+import io.github.smart.cloud.common.web.constants.SmartHttpHeaders;
 import io.github.smart.cloud.exception.BusinessException;
 import io.github.smart.cloud.exception.DataValidateException;
 import io.github.smart.cloud.exception.RpcException;
@@ -27,7 +28,6 @@ import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.redisson.api.RMapCache;
 import org.redisson.api.RedissonClient;
-import org.smartframework.cloud.examples.app.auth.core.AppAuthConstants;
 import org.smartframework.cloud.examples.app.auth.core.MySmartUser;
 import org.smartframework.cloud.examples.basic.rpc.auth.AuthRpc;
 import org.smartframework.cloud.examples.basic.rpc.auth.response.rpc.AuthRespDTO;
@@ -203,7 +203,7 @@ public class AuthFilter extends AbstractFilter {
     public ServerHttpRequest fillUserInHeader(ServerHttpRequest request, MySmartUser mySmartUser) {
         // base64处理，解决中文乱码
         String authUserBase64 = Base64Utils.encodeToUrlSafeString(JacksonUtil.toJson(mySmartUser).getBytes(StandardCharsets.UTF_8));
-        return request.mutate().header(AppAuthConstants.HEADER_USER, authUserBase64).build();
+        return request.mutate().header(SmartHttpHeaders.HEADER_USER, authUserBase64).build();
     }
 
 }
