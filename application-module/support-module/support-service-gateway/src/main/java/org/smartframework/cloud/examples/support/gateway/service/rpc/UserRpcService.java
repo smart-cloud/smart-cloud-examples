@@ -24,7 +24,8 @@ import org.smartframework.cloud.examples.app.auth.core.MySmartUser;
 import org.smartframework.cloud.examples.support.gateway.cache.AuthCache;
 import org.smartframework.cloud.examples.support.gateway.cache.SecurityKeyCache;
 import org.smartframework.cloud.examples.support.gateway.constants.GatewayReturnCodes;
-import org.smartframework.cloud.examples.support.gateway.constants.RedisExpire;
+import org.smartframework.cloud.examples.support.gateway.constants.RedisMaxIdle;
+import org.smartframework.cloud.examples.support.gateway.constants.RedisTtl;
 import org.smartframework.cloud.examples.support.gateway.util.RedisKeyHelper;
 import org.smartframework.cloud.examples.support.rpc.gateway.request.rpc.CacheUserInfoReqDTO;
 import org.smartframework.cloud.examples.support.rpc.gateway.request.rpc.ExitLoginReqDTO;
@@ -65,6 +66,25 @@ public class UserRpcService {
     }
 
     /**
+     * 刷新有效期
+     *
+     * @param token
+     */
+    public void refreshUserCacheExpiration(String token) {
+        // 1、刷新security key
+        RMapCache<String, SecurityKeyCache> securityKeyMapCache = redissonClient.getMapCache(RedisKeyHelper.getSecurityHashKey());
+        securityKeyMapCache.updateEntryExpirationAsync(RedisKeyHelper.getSecurityKey(token), RedisTtl.SECURITY_KEY_LOGIN_SUCCESS, TimeUnit.MILLISECONDS, RedisTtl.SECURITY_KEY_LOGIN_SUCCESS, TimeUnit.MILLISECONDS);
+
+        // 2、刷新用户信息
+        RMapCache<String, MySmartUser> userMapCache = redissonClient.getMapCache(RedisKeyHelper.getUserHashKey());
+        userMapCache.updateEntryExpirationAsync(RedisKeyHelper.getUserKey(token), RedisTtl.USER_LOGIN_SUCCESS, TimeUnit.MILLISECONDS, RedisMaxIdle.USER_LOGIN_SUCCESS, TimeUnit.MILLISECONDS);
+
+        // 3、刷新权限信息
+        RMapCache<String, AuthCache> authMapCache = redissonClient.getMapCache(RedisKeyHelper.getAuthHashKey());
+        authMapCache.updateEntryExpirationAsync(RedisKeyHelper.getAuthKey(token), RedisTtl.USER_LOGIN_SUCCESS, TimeUnit.MILLISECONDS, RedisMaxIdle.USER_LOGIN_SUCCESS, TimeUnit.MILLISECONDS);
+    }
+
+    /**
      * 延长security key有效期
      *
      * @param token
@@ -75,7 +95,7 @@ public class UserRpcService {
         if (securityKeyCache == null) {
             throw new DataValidateException(GatewayReturnCodes.TOKEN_EXPIRED_BEFORE_LOGIN);
         }
-        securityKeyMapCache.put(RedisKeyHelper.getSecurityKey(token), securityKeyCache, RedisExpire.SECURITY_KEY_EXPIRE_SECONDS_LOGIN_SUCCESS, TimeUnit.SECONDS);
+        securityKeyMapCache.put(RedisKeyHelper.getSecurityKey(token), securityKeyCache, RedisTtl.SECURITY_KEY_LOGIN_SUCCESS, TimeUnit.MILLISECONDS);
     }
 
     private void cacheUser(CacheUserInfoReqDTO req) {
@@ -87,7 +107,7 @@ public class UserRpcService {
         mySmartUserCache.setMobile(req.getMobile());
 
         RMapCache<String, MySmartUser> userMapCache = redissonClient.getMapCache(RedisKeyHelper.getUserHashKey());
-        userMapCache.put(RedisKeyHelper.getUserKey(req.getToken()), mySmartUserCache, RedisExpire.USER_EXPIRE_SECONDS_LOGIN_SUCCESS, TimeUnit.SECONDS);
+        userMapCache.put(RedisKeyHelper.getUserKey(req.getToken()), mySmartUserCache, RedisTtl.USER_LOGIN_SUCCESS, TimeUnit.MILLISECONDS, RedisMaxIdle.USER_LOGIN_SUCCESS, TimeUnit.MILLISECONDS);
     }
 
     public void cacheAuth(@NonNull String token, Set<String> roles, Set<String> permissions) {
@@ -96,7 +116,7 @@ public class UserRpcService {
         authCache.setPermissions(permissions);
 
         RMapCache<String, AuthCache> authMapCache = redissonClient.getMapCache(RedisKeyHelper.getAuthHashKey());
-        authMapCache.put(RedisKeyHelper.getAuthKey(token), authCache, RedisExpire.USER_EXPIRE_SECONDS_LOGIN_SUCCESS, TimeUnit.SECONDS);
+        authMapCache.put(RedisKeyHelper.getAuthKey(token), authCache, RedisTtl.USER_LOGIN_SUCCESS, TimeUnit.MILLISECONDS, RedisMaxIdle.USER_LOGIN_SUCCESS, TimeUnit.MILLISECONDS);
     }
 
     private void deleteOldCacheAndSaveRela(Long uid, String token) {
@@ -108,7 +128,7 @@ public class UserRpcService {
         }
 
         // 2、保存新的token与userId关系
-        userTokenCache.put(RedisKeyHelper.getUserTokenRelationKey(uid), token, RedisExpire.USER_EXPIRE_SECONDS_LOGIN_SUCCESS, TimeUnit.SECONDS);
+        userTokenCache.put(RedisKeyHelper.getUserTokenRelationKey(uid), token, RedisTtl.USER_LOGIN_SUCCESS, TimeUnit.MILLISECONDS);
     }
 
     /**

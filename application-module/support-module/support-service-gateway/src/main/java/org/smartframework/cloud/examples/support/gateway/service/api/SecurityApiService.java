@@ -26,7 +26,7 @@ import org.redisson.api.RMapCache;
 import org.redisson.api.RedissonClient;
 import org.smartframework.cloud.examples.support.gateway.cache.SecurityKeyCache;
 import org.smartframework.cloud.examples.support.gateway.constants.GatewayReturnCodes;
-import org.smartframework.cloud.examples.support.gateway.constants.RedisExpire;
+import org.smartframework.cloud.examples.support.gateway.constants.RedisTtl;
 import org.smartframework.cloud.examples.support.gateway.util.RedisKeyHelper;
 import org.smartframework.cloud.examples.support.rpc.gateway.request.api.GenerateAesKeyReqVO;
 import org.smartframework.cloud.examples.support.rpc.gateway.response.api.GenerateAesKeyRespVO;
@@ -82,7 +82,7 @@ public class SecurityApiService {
         securityKeyCache.setSpriKeyExponent(RsaUtil.getPrivateExponent(clientPubServerPriKeyPair));
 
         RMapCache<String, SecurityKeyCache> authCache = redissonClient.getMapCache(RedisKeyHelper.getSecurityHashKey());
-        authCache.put(RedisKeyHelper.getSecurityKey(token), securityKeyCache, RedisExpire.SECURITY_KEY_EXPIRE_SECONDS_NON_LOGIN, TimeUnit.SECONDS);
+        authCache.put(RedisKeyHelper.getSecurityKey(token), securityKeyCache, RedisTtl.SECURITY_KEY_NON_LOGIN, TimeUnit.MILLISECONDS);
 
         return respVO;
     }
@@ -105,7 +105,7 @@ public class SecurityApiService {
         securityKeyCache.setCpubKeyExponent(cpubKeyExponent);
         String aesKey = RandomUtil.generateRandom(false, 8);
         securityKeyCache.setAesKey(aesKey);
-        securityKeyMapCache.put(RedisKeyHelper.getSecurityKey(req.getToken()), securityKeyCache, RedisExpire.SECURITY_KEY_EXPIRE_SECONDS_NON_LOGIN, TimeUnit.SECONDS);
+        securityKeyMapCache.put(RedisKeyHelper.getSecurityKey(req.getToken()), securityKeyCache, RedisTtl.SECURITY_KEY_NON_LOGIN, TimeUnit.MILLISECONDS);
 
         // 3、加密aes key
         // 客户端生成的公钥

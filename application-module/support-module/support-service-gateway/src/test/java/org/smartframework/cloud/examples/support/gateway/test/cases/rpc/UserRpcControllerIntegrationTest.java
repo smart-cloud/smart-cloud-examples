@@ -26,7 +26,7 @@ import org.junit.jupiter.api.Test;
 import org.redisson.api.RMapCache;
 import org.redisson.api.RedissonClient;
 import org.smartframework.cloud.examples.support.gateway.cache.SecurityKeyCache;
-import org.smartframework.cloud.examples.support.gateway.constants.RedisExpire;
+import org.smartframework.cloud.examples.support.gateway.constants.RedisTtl;
 import org.smartframework.cloud.examples.support.gateway.util.RedisKeyHelper;
 import org.smartframework.cloud.examples.support.rpc.gateway.request.rpc.CacheUserInfoReqDTO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,10 +44,10 @@ class UserRpcControllerIntegrationTest extends WebReactiveIntegrationTest {
         Long userId = 1L;
         // mock start
         RMapCache<String, SecurityKeyCache> authCache = redissonClient.getMapCache(RedisKeyHelper.getSecurityHashKey());
-        authCache.put(RedisKeyHelper.getSecurityKey(token), new SecurityKeyCache(), RedisExpire.SECURITY_KEY_EXPIRE_SECONDS_NON_LOGIN, TimeUnit.SECONDS);
+        authCache.put(RedisKeyHelper.getSecurityKey(token), new SecurityKeyCache(), RedisTtl.SECURITY_KEY_NON_LOGIN, TimeUnit.MILLISECONDS);
 
         RMapCache<Long, String> userTokenCache = redissonClient.getMapCache(RedisKeyHelper.getUserTokenRelationHashKey());
-        userTokenCache.put(RedisKeyHelper.getUserTokenRelationKey(userId), "12313", RedisExpire.USER_EXPIRE_SECONDS_LOGIN_SUCCESS, TimeUnit.SECONDS);
+        userTokenCache.put(RedisKeyHelper.getUserTokenRelationKey(userId), "12313", RedisTtl.USER_LOGIN_SUCCESS, TimeUnit.MILLISECONDS);
         // mock end
 
         CacheUserInfoReqDTO req = CacheUserInfoReqDTO.builder()

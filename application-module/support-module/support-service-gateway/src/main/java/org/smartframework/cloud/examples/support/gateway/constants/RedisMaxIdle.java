@@ -16,26 +16,16 @@
 package org.smartframework.cloud.examples.support.gateway.constants;
 
 /**
- * redis 缓存有效数
+ * redis 缓存空闲最大时间
  *
  * @author collin
  * @date 2020-09-10
  */
-public interface RedisExpire {
-
-    /**
-     * 未登录用户security key有效期
-     */
-    int SECURITY_KEY_EXPIRE_SECONDS_NON_LOGIN = 5 * 60;
-
-    /**
-     * 登录成功后security key有效期
-     */
-    int SECURITY_KEY_EXPIRE_SECONDS_LOGIN_SUCCESS = 7 * 24 * 60 * 60;
+public interface RedisMaxIdle {
 
     /**
      * 登录成功后用户信息有效期
      */
-    int USER_EXPIRE_SECONDS_LOGIN_SUCCESS = SECURITY_KEY_EXPIRE_SECONDS_LOGIN_SUCCESS;
+    int USER_LOGIN_SUCCESS = RedisTtl.USER_LOGIN_SUCCESS / 2;
 
 }

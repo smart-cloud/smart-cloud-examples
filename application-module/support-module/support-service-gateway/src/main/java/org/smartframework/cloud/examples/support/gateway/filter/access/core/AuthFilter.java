@@ -35,7 +35,8 @@ import org.smartframework.cloud.examples.support.gateway.cache.ApiAccessMetaCach
 import org.smartframework.cloud.examples.support.gateway.cache.AuthCache;
 import org.smartframework.cloud.examples.support.gateway.constants.GatewayReturnCodes;
 import org.smartframework.cloud.examples.support.gateway.constants.Order;
-import org.smartframework.cloud.examples.support.gateway.constants.RedisExpire;
+import org.smartframework.cloud.examples.support.gateway.constants.RedisMaxIdle;
+import org.smartframework.cloud.examples.support.gateway.constants.RedisTtl;
 import org.smartframework.cloud.examples.support.gateway.exception.AuthenticationException;
 import org.smartframework.cloud.examples.support.gateway.filter.FilterContext;
 import org.smartframework.cloud.examples.support.gateway.filter.access.AbstractFilter;
@@ -108,13 +109,20 @@ public class AuthFilter extends AbstractFilter {
         }
         // 2、缓存没有，则通过rpc获取数据进行判断
         boolean pass = checkAuth(apiAccessMetaCache, token, mySmartUser.getId());
-        userAuthSecondaryCacheMapCache.put(filterContext.getUrlMethod(), pass, RedisExpire.USER_EXPIRE_SECONDS_LOGIN_SUCCESS, TimeUnit.SECONDS);
+        userAuthSecondaryCacheMapCache.put(filterContext.getUrlMethod(), pass, RedisTtl.USER_LOGIN_SUCCESS, TimeUnit.MILLISECONDS, RedisMaxIdle.USER_LOGIN_SUCCESS, TimeUnit.MILLISECONDS);
         if (!pass) {
             throw new AuthenticationException();
         }
 
         // 3、将用户信息塞入http header
         ServerHttpRequest newServerHttpRequest = fillUserInHeader(exchange.getRequest(), mySmartUser);
+
+        // 4、缓存有效期过半，刷新有效期
+        Long tokenTtl = userCache.remainTimeToLive(RedisKeyHelper.getUserKey(token));
+        if (tokenTtl <= RedisTtl.USER_CACHE_REFRESH_THRESHOLD) {
+            userRpcService.refreshUserCacheExpiration(token);
+        }
+
         return chain.filter(exchange.mutate().request(newServerHttpRequest).build());
     }
 
@@ -134,8 +142,7 @@ public class AuthFilter extends AbstractFilter {
         }
 
         AuthCache authCache = getAuthCache(token, uid);
-        boolean isNeedAuth = authCache == null || (requirePermission && CollectionUtils.isEmpty(authCache.getPermissions()))
-                || (requireRole && CollectionUtils.isEmpty(authCache.getRoles()));
+        boolean isNeedAuth = authCache == null || (requirePermission && CollectionUtils.isEmpty(authCache.getPermissions())) || (requireRole && CollectionUtils.isEmpty(authCache.getRoles()));
         if (isNeedAuth) {
             return false;
         }
