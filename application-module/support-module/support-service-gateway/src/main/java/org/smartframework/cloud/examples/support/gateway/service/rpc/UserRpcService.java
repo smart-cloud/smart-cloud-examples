@@ -61,7 +61,11 @@ public class UserRpcService {
         cacheUser(req);
         cacheAuth(req.getToken(), req.getRoles(), req.getPermissions());
 
-        // 3、删除上一次登录的信息（如果存在） && 保存新的token与userId关系
+        // 3、删除用户权限二级缓存
+        RMapCache<String, Boolean> userAuthSecondaryCacheMapCache = redissonClient.getMapCache(RedisKeyHelper.getUserAuthSecondaryCacheHashKey(req.getToken()));
+        userAuthSecondaryCacheMapCache.clear();
+
+        // 4、删除上一次登录的信息（如果存在） && 保存新的token与userId关系
         deleteOldCacheAndSaveRela(req.getUserId(), req.getToken());
     }
 
