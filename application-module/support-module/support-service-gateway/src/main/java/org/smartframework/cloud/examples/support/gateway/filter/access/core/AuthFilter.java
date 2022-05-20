@@ -120,7 +120,7 @@ public class AuthFilter extends AbstractFilter {
         // 4、缓存有效期过半，刷新有效期
         Long tokenTtl = userCache.remainTimeToLive(RedisKeyHelper.getUserKey(token));
         if (tokenTtl <= RedisTtl.USER_CACHE_REFRESH_THRESHOLD) {
-            userRpcService.refreshUserCacheExpiration(token);
+            userRpcService.refreshUserCacheExpiration(token, mySmartUser.getId());
         }
 
         return chain.filter(exchange.mutate().request(newServerHttpRequest).build());
@@ -141,7 +141,7 @@ public class AuthFilter extends AbstractFilter {
             return true;
         }
 
-        AuthCache authCache = getAuthCache(token, uid);
+        AuthCache authCache = getAuthCache(uid);
         boolean isNeedAuth = authCache == null || (requirePermission && CollectionUtils.isEmpty(authCache.getPermissions())) || (requireRole && CollectionUtils.isEmpty(authCache.getRoles()));
         if (isNeedAuth) {
             return false;
@@ -170,13 +170,12 @@ public class AuthFilter extends AbstractFilter {
     /**
      * 获取用户权限信息
      *
-     * @param token
      * @param uid
      * @return
      */
-    private AuthCache getAuthCache(@NonNull String token, @NonNull Long uid) {
+    private AuthCache getAuthCache(@NonNull Long uid) {
         RMapCache<String, AuthCache> authMapCache = redissonClient.getMapCache(RedisKeyHelper.getAuthHashKey());
-        AuthCache authCache = authMapCache.get(RedisKeyHelper.getAuthKey(token));
+        AuthCache authCache = authMapCache.get(RedisKeyHelper.getAuthKey(uid));
         if (authCache != null) {
             return authCache;
         }
@@ -197,7 +196,7 @@ public class AuthFilter extends AbstractFilter {
             authCache.setRoles(authRespDTO.getRoles());
             authCache.setPermissions(authRespDTO.getPermissions());
         }
-        userRpcService.cacheAuth(token, authCache.getRoles(), authCache.getPermissions());
+        userRpcService.cacheAuth(uid, authCache.getRoles(), authCache.getPermissions());
         return authCache;
     }
 

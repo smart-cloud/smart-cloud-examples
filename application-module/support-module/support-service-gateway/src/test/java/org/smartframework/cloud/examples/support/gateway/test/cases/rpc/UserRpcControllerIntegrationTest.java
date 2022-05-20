@@ -52,7 +52,7 @@ class UserRpcControllerIntegrationTest extends WebReactiveIntegrationTest {
 
         CacheUserInfoReqDTO req = CacheUserInfoReqDTO.builder()
                 .token(token)
-                .userId(userId)
+                .uid(userId)
                 .username("zhangsan")
                 .mobile("13112345678")
                 .realName("张三")

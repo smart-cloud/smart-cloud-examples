@@ -47,7 +47,7 @@ public class CacheUserInfoReqDTO extends Base {
      * 用户id
      */
     @NotNull
-    private Long userId;
+    private Long uid;
 
     /**
      * 用户名

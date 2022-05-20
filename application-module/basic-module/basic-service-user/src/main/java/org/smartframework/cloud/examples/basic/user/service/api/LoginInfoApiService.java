@@ -144,7 +144,7 @@ public class LoginInfoApiService {
 
         CacheUserInfoReqDTO cacheUserInfoReqDTO = CacheUserInfoReqDTO.builder()
                 .token(token)
-                .userId(loginRespVO.getUserId())
+                .uid(loginRespVO.getUserId())
                 .username(loginRespVO.getUsername())
                 .realName(loginRespVO.getRealName())
                 .mobile(loginRespVO.getMobile())

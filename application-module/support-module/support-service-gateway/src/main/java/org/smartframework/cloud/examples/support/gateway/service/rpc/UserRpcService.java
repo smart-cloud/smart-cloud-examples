@@ -15,6 +15,7 @@
  */
 package org.smartframework.cloud.examples.support.gateway.service.rpc;
 
+import io.github.smart.cloud.exception.BusinessException;
 import io.github.smart.cloud.exception.DataValidateException;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
@@ -29,9 +30,9 @@ import org.smartframework.cloud.examples.support.gateway.constants.RedisTtl;
 import org.smartframework.cloud.examples.support.gateway.util.RedisKeyHelper;
 import org.smartframework.cloud.examples.support.rpc.gateway.request.rpc.CacheUserInfoReqDTO;
 import org.smartframework.cloud.examples.support.rpc.gateway.request.rpc.ExitLoginReqDTO;
-import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
 
+import javax.validation.constraints.NotNull;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
@@ -59,14 +60,14 @@ public class UserRpcService {
 
         // 2、缓存用户信息
         cacheUser(req);
-        cacheAuth(req.getToken(), req.getRoles(), req.getPermissions());
+        cacheAuth(req.getUid(), req.getRoles(), req.getPermissions());
 
         // 3、删除用户权限二级缓存
         RMapCache<String, Boolean> userAuthSecondaryCacheMapCache = redissonClient.getMapCache(RedisKeyHelper.getUserAuthSecondaryCacheHashKey(req.getToken()));
         userAuthSecondaryCacheMapCache.clear();
 
         // 4、删除上一次登录的信息（如果存在） && 保存新的token与userId关系
-        deleteOldCacheAndSaveRela(req.getUserId(), req.getToken());
+        deleteOldCacheAndSaveRela(req.getUid(), req.getToken());
     }
 
     /**
@@ -74,7 +75,7 @@ public class UserRpcService {
      *
      * @param token
      */
-    public void refreshUserCacheExpiration(String token) {
+    public void refreshUserCacheExpiration(String token, Long uid) {
         // 1、刷新security key
         RMapCache<String, SecurityKeyCache> securityKeyMapCache = redissonClient.getMapCache(RedisKeyHelper.getSecurityHashKey());
         securityKeyMapCache.updateEntryExpirationAsync(RedisKeyHelper.getSecurityKey(token), RedisTtl.SECURITY_KEY_LOGIN_SUCCESS, TimeUnit.MILLISECONDS, RedisTtl.SECURITY_KEY_LOGIN_SUCCESS, TimeUnit.MILLISECONDS);
@@ -85,7 +86,7 @@ public class UserRpcService {
 
         // 3、刷新权限信息
         RMapCache<String, AuthCache> authMapCache = redissonClient.getMapCache(RedisKeyHelper.getAuthHashKey());
-        authMapCache.updateEntryExpirationAsync(RedisKeyHelper.getAuthKey(token), RedisTtl.USER_LOGIN_SUCCESS, TimeUnit.MILLISECONDS, RedisMaxIdle.USER_LOGIN_SUCCESS, TimeUnit.MILLISECONDS);
+        authMapCache.updateEntryExpirationAsync(RedisKeyHelper.getAuthKey(uid), RedisTtl.USER_LOGIN_SUCCESS, TimeUnit.MILLISECONDS, RedisMaxIdle.USER_LOGIN_SUCCESS, TimeUnit.MILLISECONDS);
     }
 
     /**
@@ -104,7 +105,7 @@ public class UserRpcService {
 
     private void cacheUser(CacheUserInfoReqDTO req) {
         MySmartUser mySmartUserCache = new MySmartUser();
-        Long uid = req.getUserId();
+        Long uid = req.getUid();
         mySmartUserCache.setId(uid);
         mySmartUserCache.setUsername(req.getUsername());
         mySmartUserCache.setRealName(req.getRealName());
@@ -114,13 +115,13 @@ public class UserRpcService {
         userMapCache.put(RedisKeyHelper.getUserKey(req.getToken()), mySmartUserCache, RedisTtl.USER_LOGIN_SUCCESS, TimeUnit.MILLISECONDS, RedisMaxIdle.USER_LOGIN_SUCCESS, TimeUnit.MILLISECONDS);
     }
 
-    public void cacheAuth(@NonNull String token, Set<String> roles, Set<String> permissions) {
+    public void cacheAuth(@NotNull Long uid, Set<String> roles, Set<String> permissions) {
         AuthCache authCache = new AuthCache();
         authCache.setRoles(roles);
         authCache.setPermissions(permissions);
 
         RMapCache<String, AuthCache> authMapCache = redissonClient.getMapCache(RedisKeyHelper.getAuthHashKey());
-        authMapCache.put(RedisKeyHelper.getAuthKey(token), authCache, RedisTtl.USER_LOGIN_SUCCESS, TimeUnit.MILLISECONDS, RedisMaxIdle.USER_LOGIN_SUCCESS, TimeUnit.MILLISECONDS);
+        authMapCache.put(RedisKeyHelper.getAuthKey(uid), authCache, RedisTtl.USER_LOGIN_SUCCESS, TimeUnit.MILLISECONDS, RedisMaxIdle.USER_LOGIN_SUCCESS, TimeUnit.MILLISECONDS);
     }
 
     private void deleteOldCacheAndSaveRela(Long uid, String token) {
@@ -128,7 +129,7 @@ public class UserRpcService {
         RMapCache<Long, String> userTokenCache = redissonClient.getMapCache(RedisKeyHelper.getUserTokenRelationHashKey());
         String oldToken = userTokenCache.get(RedisKeyHelper.getUserTokenRelationKey(uid));
         if (StringUtils.isNotBlank(oldToken)) {
-            removeSession(oldToken);
+            removeSession(oldToken, uid);
         }
 
         // 2、保存新的token与userId关系
@@ -142,10 +143,15 @@ public class UserRpcService {
      * @return
      */
     public void exit(ExitLoginReqDTO req) {
-        removeSession(req.getToken());
+        RMapCache<String, MySmartUser> userCache = redissonClient.getMapCache(RedisKeyHelper.getUserHashKey());
+        MySmartUser mySmartUser = userCache.get(RedisKeyHelper.getUserKey(req.getToken()));
+        if (mySmartUser == null) {
+            throw new BusinessException(GatewayReturnCodes.TOKEN_EXPIRED_LOGIN_SUCCESS);
+        }
+        removeSession(req.getToken(), mySmartUser.getId());
     }
 
-    private void removeSession(String token) {
+    private void removeSession(String token, Long uid) {
         // 1、删除security key
         RMapCache<String, SecurityKeyCache> securityKeyMapCache = redissonClient.getMapCache(RedisKeyHelper.getSecurityHashKey());
         securityKeyMapCache.remove(RedisKeyHelper.getSecurityKey(token));
@@ -156,7 +162,7 @@ public class UserRpcService {
 
         // 3、删除权限信息
         RMapCache<String, AuthCache> authMapCache = redissonClient.getMapCache(RedisKeyHelper.getAuthHashKey());
-        authMapCache.remove(RedisKeyHelper.getAuthKey(token));
+        authMapCache.remove(RedisKeyHelper.getAuthKey(uid));
 
         // 4、删除用户权限二级缓存
         RMapCache<String, Boolean> userAuthSecondaryCacheMapCache = redissonClient.getMapCache(RedisKeyHelper.getUserAuthSecondaryCacheHashKey(token));

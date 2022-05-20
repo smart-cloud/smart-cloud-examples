@@ -100,11 +100,11 @@ public final class RedisKeyHelper {
     /**
      * 获取权限信息的key
      *
-     * @param token
+     * @param uid
      * @return
      */
-    public static String getAuthKey(String token) {
-        return token;
+    public static String getAuthKey(Long uid) {
+        return String.valueOf(uid);
     }
 
     /**
