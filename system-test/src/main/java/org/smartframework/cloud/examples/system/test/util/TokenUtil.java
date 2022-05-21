@@ -81,10 +81,10 @@ public final class TokenUtil {
         Assertions.assertThat(generateClientPubKeyResult.getBody()).isNotNull();
 
         GenerateClientPubKeyRespVO clientPubKey = generateClientPubKeyResult.getBody();
-        RSAPublicKey clientRSAPublicKey = RsaUtil.getRsaPublidKey(clientPubKey.getPubKeyModulus(), clientPubKey.getPubKeyExponent());
+        RSAPublicKey clientRsaPublicKey = RsaUtil.getRsaPublidKey(clientPubKey.getPubKeyModulus(), clientPubKey.getPubKeyExponent());
         String token = clientPubKey.getToken();
         context = new Context();
-        context.setClientRSAPublicKey(clientRSAPublicKey);
+        context.setClientRsaPublicKey(clientRsaPublicKey);
         context.setToken(token);
 
         // 2.1、客户端生成一对RSA公、私钥（PK2、SK2）
@@ -95,8 +95,8 @@ public final class TokenUtil {
 
         String cpubKeyModulus = RsaUtil.getModulus(serverPubClientPriKeyPair);
         String cpubKeyExponent = RsaUtil.getPublicExponent(serverPubClientPriKeyPair);
-        generateAesKeyReqVO.setEncryptedCpubKeyModulus(generateEncryptedCpubKey(clientRSAPublicKey, cpubKeyModulus));
-        generateAesKeyReqVO.setEncryptedCpubKeyExponent(RsaUtil.encryptString(clientRSAPublicKey, StringUtils.reverse(cpubKeyExponent)));
+        generateAesKeyReqVO.setEncryptedCpubKeyModulus(generateEncryptedCpubKey(clientRsaPublicKey, cpubKeyModulus));
+        generateAesKeyReqVO.setEncryptedCpubKeyExponent(RsaUtil.encryptString(clientRsaPublicKey, StringUtils.reverse(cpubKeyExponent)));
         Response<GenerateAesKeyRespVO> generateAesKeyResult = SecurityApi.generateAesKey(generateAesKeyReqVO);
         Assertions.assertThat(generateAesKeyResult).isNotNull();
         Assertions.assertThat(generateAesKeyResult.getHead()).isNotNull();
@@ -160,7 +160,7 @@ public final class TokenUtil {
     @Getter
     @Setter
     public static class Context {
-        private RSAPublicKey clientRSAPublicKey;
+        private RSAPublicKey clientRsaPublicKey;
         private String token;
         private String aesKey;
         private LoginRespVO loginRespVO;

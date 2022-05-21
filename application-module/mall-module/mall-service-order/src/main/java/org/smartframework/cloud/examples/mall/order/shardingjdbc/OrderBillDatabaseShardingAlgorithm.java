@@ -41,7 +41,7 @@ public class OrderBillDatabaseShardingAlgorithm<T extends Comparable<?>> extends
         Collection<T> uidValues = columnNameAndShardingValueMap.get(SHARDING_COLUMN_UID);
         if (uidValues != null) {
             uidValues.stream().forEach(uid -> {
-                Long uidSharding = OrderUtil.whichDB((Long) uid);
+                Long uidSharding = OrderUtil.whichDb((Long) uid);
                 targetDbNames.addAll(getDataBaseNames(availableDataBaseName, uidSharding));
             });
         }
@@ -49,7 +49,7 @@ public class OrderBillDatabaseShardingAlgorithm<T extends Comparable<?>> extends
         Collection<T> orderNoValues = columnNameAndShardingValueMap.get(SHARDING_COLUMN_ORDER_NO);
         if (orderNoValues != null) {
             orderNoValues.stream().forEach(orderNo -> {
-                Long orderNoSharding = OrderUtil.whichDB((String) orderNo);
+                Long orderNoSharding = OrderUtil.whichDb((String) orderNo);
                 targetDbNames.addAll(getDataBaseNames(availableDataBaseName, orderNoSharding));
             });
         }

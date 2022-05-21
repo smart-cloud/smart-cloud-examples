@@ -33,7 +33,7 @@ public class OrderDeliveryInfoDatabaseShardingAlgorithm extends BaseShardingAlgo
     @Override
     public String doSharding(Collection<String> availableTargetNames, PreciseShardingValue<String> shardingValue) {
         String orderNo = shardingValue.getValue();
-        Long orderNoSharding = OrderUtil.whichDB(orderNo);
+        Long orderNoSharding = OrderUtil.whichDb(orderNo);
 
         return getDataBaseName(availableTargetNames, orderNoSharding);
     }

@@ -47,11 +47,11 @@ public class OrderUtil {
         // yyyyMMddHHmmssSSS+uid/100000000+uid%100
         return new StringBuilder()
                 .append(DateUtil.getCurrentDateTime("yyyyMMddHHmmssSSS"))
-                .append(StringUtils.leftPad(String.valueOf(whichDB(uid)), 8, '0'))
+                .append(StringUtils.leftPad(String.valueOf(whichDb(uid)), 8, '0'))
                 .append(StringUtils.leftPad(String.valueOf(whichTable(uid)), 2, '0')).toString();
     }
 
-    public static final Long whichDB(Long uid) {
+    public static final Long whichDb(Long uid) {
         return uid / DB_DATA_LIMIT;
     }
 
@@ -59,7 +59,7 @@ public class OrderUtil {
         return uid % DB_TABLE_NUM;
     }
 
-    public static final Long whichDB(String orderNo) {
+    public static final Long whichDb(String orderNo) {
         return shardingByOrderNo(orderNo, orderNo.length() - 10, orderNo.length() - 2);
     }
 
