@@ -23,9 +23,10 @@
 	<parent>
 		<groupId>io.github.smart-cloud</groupId>
 		<artifactId>smart-cloud</artifactId>
-		<version>0.0.1-SNAPSHOT</version>
+		<version>1.0.1</version>
 	</parent>
 	<artifactId>smart-cloud-examples</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
 	<modules>
@@ -37,6 +38,7 @@
 
 	<properties>
 		<docker.image.prefix>example</docker.image.prefix>
+		<smart-cloud-examples.version>0.0.1-SNAPSHOT</smart-cloud-examples.version>
 	</properties>
 
 	<dependencyManagement>
@@ -44,67 +46,67 @@
 			<dependency>
 				<groupId>io.github.smart-cloud</groupId>
 				<artifactId>smart-cloud-example-framework</artifactId>
-				<version>${project.version}</version>
+				<version>${smart-cloud-examples.version}</version>
 			</dependency>
 			
 			<dependency>
 				<groupId>io.github.smart-cloud</groupId>
 				<artifactId>api-ac-core</artifactId>
-				<version>${project.version}</version>
+				<version>${smart-cloud-examples.version}</version>
 			</dependency>
 
 			<dependency>
 				<groupId>io.github.smart-cloud</groupId>
 				<artifactId>app-common-config</artifactId>
-				<version>${project.version}</version>
+				<version>${smart-cloud-examples.version}</version>
 			</dependency>
 
 			<dependency>
 				<groupId>io.github.smart-cloud</groupId>
 				<artifactId>app-auth-core</artifactId>
-				<version>${project.version}</version>
+				<version>${smart-cloud-examples.version}</version>
 			</dependency>
 
 			<dependency>
 				<groupId>io.github.smart-cloud</groupId>
 				<artifactId>basic-service-rpc</artifactId>
-				<version>${project.version}</version>
+				<version>${smart-cloud-examples.version}</version>
 			</dependency>
 			
 			<dependency>
 				<groupId>io.github.smart-cloud</groupId>
 				<artifactId>mall-service-rpc</artifactId>
-				<version>${project.version}</version>
+				<version>${smart-cloud-examples.version}</version>
 			</dependency>
 			
 			<dependency>
 				<groupId>io.github.smart-cloud</groupId>
 				<artifactId>support-service-rpc</artifactId>
-				<version>${project.version}</version>
+				<version>${smart-cloud-examples.version}</version>
 			</dependency>
 			
 			<dependency>
 				<groupId>io.github.smart-cloud</groupId>
 				<artifactId>basic-service-user</artifactId>
-				<version>${project.version}</version>
+				<version>${smart-cloud-examples.version}</version>
 			</dependency>
 			
 			<dependency>
 				<groupId>io.github.smart-cloud</groupId>
 				<artifactId>basic-service-auth</artifactId>
-				<version>${project.version}</version>
+				<version>${smart-cloud-examples.version}</version>
 			</dependency>
 			
 			<dependency>
 				<groupId>io.github.smart-cloud</groupId>
 				<artifactId>mall-service-product</artifactId>
-				<version>${project.version}</version>
+				<version>${smart-cloud-examples.version}</version>
 			</dependency>
 			
 			<dependency>
 				<groupId>io.github.smart-cloud</groupId>
 				<artifactId>mall-service-order</artifactId>
-				<version>${project.version}</version>
+				<version>${smart-cloud-examples.version}</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
