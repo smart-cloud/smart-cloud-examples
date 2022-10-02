@@ -36,7 +36,7 @@ smart-cloud-examples
 1、通过自定义注解，监听服务启动完毕后，通知gateway，gateway根据服务名去注册中心获取服务的ip、port，然后通过http主动去掉服务的接口获取api meta信息（是否签名、是否加密、是否需要鉴权等），存至redis。
 ![](docs/images/api_meta_upload.png)
 
-**注意：次处为了接口安全考虑，没有直接将api meta信息由服务主动上报给gateway。**
+**注意：此处为了接口安全考虑，没有直接将api meta信息由服务主动上报给gateway。**
 
 2、后台管理系统在配置权限时，会通过rpc接口刷新网关服务存储的权限信息。
 
