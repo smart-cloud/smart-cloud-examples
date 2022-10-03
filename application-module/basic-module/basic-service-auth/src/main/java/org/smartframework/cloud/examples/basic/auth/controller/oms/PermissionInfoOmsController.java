@@ -20,7 +20,7 @@ import io.github.smart.cloud.api.core.annotation.RequireRepeatSubmitCheck;
 import io.github.smart.cloud.api.core.annotation.RequireTimestamp;
 import io.github.smart.cloud.api.core.annotation.auth.RequirePermissions;
 import io.github.smart.cloud.api.core.annotation.auth.RequireRoles;
-import io.github.smart.cloud.api.core.annotation.enums.Role;
+import io.github.smart.cloud.api.core.annotation.constants.Role;
 import io.github.smart.cloud.common.pojo.BasePageResponse;
 import io.github.smart.cloud.common.pojo.Response;
 import io.github.smart.cloud.starter.core.business.util.RespUtil;
