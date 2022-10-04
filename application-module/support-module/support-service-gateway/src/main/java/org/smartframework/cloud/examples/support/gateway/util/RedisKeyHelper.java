@@ -136,4 +136,14 @@ public final class RedisKeyHelper {
         return GatewayRedisKeyPrefix.USER_AUTH_SECONDARY_CACHE_HASH_KEY.getKey() + token;
     }
 
+    /**
+     * 获取api mate更新锁key
+     *
+     * @param serviceName
+     * @return
+     */
+    public static String getApiMetaLockKey(String serviceName) {
+        return GatewayRedisKeyPrefix.API_META_UPDATE_LOCK_KEY_PREFIX.getKey() + serviceName;
+    }
+
 }

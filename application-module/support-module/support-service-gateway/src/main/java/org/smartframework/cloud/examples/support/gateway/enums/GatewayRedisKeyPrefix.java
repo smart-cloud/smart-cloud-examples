@@ -48,6 +48,10 @@ public enum GatewayRedisKeyPrefix {
      */
     API_META(RedisKeyUtil.buildKey(GATEWAY_DATA_REDIS_KEY_PREFIX.getKey(), "apimeta")),
     /**
+     * gateway lock redis key前缀
+     */
+    API_META_UPDATE_LOCK_KEY_PREFIX(RedisKeyUtil.buildKey(GATEWAY_LOCK_REDIS_KEY_PREFIX.getKey(), "apimeta")),
+    /**
      * 重复提交
      */
     REPEAT_SUBMIT_CHECK(RedisKeyUtil.buildKey(GATEWAY_LOCK_REDIS_KEY_PREFIX.getKey(), "rsc", RedisKeyPrefix.REDIS_KEY_SEPARATOR.getKey())),

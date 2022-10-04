@@ -23,6 +23,8 @@ import io.github.smart.cloud.utility.HttpUtil;
 import io.github.smart.cloud.utility.spring.SpringContextUtil;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.collections4.MapUtils;
+import org.redisson.Redisson;
+import org.redisson.api.RLock;
 import org.smartframework.cloud.examples.api.ac.core.constants.ApiMetaConstants;
 import org.smartframework.cloud.examples.api.ac.core.vo.ApiMetaFetchRespVO;
 import org.smartframework.cloud.examples.support.gateway.cache.ApiAccessMetaCache;
@@ -49,9 +51,37 @@ import java.util.List;
 public class ApiMetaRpcService {
 
     private final RedisTemplate redisTemplate;
+    private final Redisson redisson;
 
     public void notifyFetch(NotifyFetchReqDTO req) throws IOException, NoSuchMethodException, InvocationTargetException, IllegalAccessException {
-        String url = getFetchUrl(req.getServiceName());
+        String serviceName = req.getServiceName();
+        RLock lock = redisson.getLock(RedisKeyHelper.getApiMetaLockKey(serviceName));
+        boolean requireLock = false;
+        try {
+            requireLock = lock.tryLock();
+            if (!requireLock) {
+                return;
+            }
+
+            fetchAndUpdateApiMetas(serviceName);
+        } finally {
+            if (requireLock) {
+                lock.unlock();
+            }
+        }
+    }
+
+    /**
+     * 获取并更新api mate信息
+     *
+     * @param serviceName
+     * @throws IOException
+     * @throws InvocationTargetException
+     * @throws NoSuchMethodException
+     * @throws IllegalAccessException
+     */
+    private void fetchAndUpdateApiMetas(String serviceName) throws IOException, InvocationTargetException, NoSuchMethodException, IllegalAccessException {
+        String url = getFetchUrl(serviceName);
         Response<ApiMetaFetchRespVO> apiMetaFetchRespVO = fetchApiMeta(url);
 
         if (!RespUtil.isSuccess(apiMetaFetchRespVO)) {
@@ -62,9 +92,7 @@ public class ApiMetaRpcService {
             return;
         }
         // redis持久化
-        apiMetaFetch.getApiAccessMap().forEach((urlMethod, apiAccess) ->
-                redisTemplate.opsForHash().put(RedisKeyHelper.getApiMetaKey(), RedisKeyHelper.getApiMetaHashKey(urlMethod), new ApiAccessMetaCache(apiAccess))
-        );
+        apiMetaFetch.getApiAccessMap().forEach((urlMethod, apiAccess) -> redisTemplate.opsForHash().put(RedisKeyHelper.getApiMetaKey(), RedisKeyHelper.getApiMetaHashKey(urlMethod), new ApiAccessMetaCache(apiAccess)));
     }
 
     /**
