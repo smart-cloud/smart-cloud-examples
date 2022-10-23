@@ -21,12 +21,11 @@ import io.github.smart.cloud.common.web.constants.SmartHttpHeaders;
 import io.github.smart.cloud.constants.SymbolConstant;
 import io.github.smart.cloud.exception.DataValidateException;
 import io.github.smart.cloud.exception.ParamValidateException;
+import io.github.smart.cloud.starter.redis.adapter.IRedisAdapter;
 import io.github.smart.cloud.utility.security.AesUtil;
 import io.github.smart.cloud.utility.security.RsaUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
-import org.redisson.api.RMapCache;
-import org.redisson.api.RedissonClient;
 import org.smartframework.cloud.examples.support.gateway.cache.SecurityKeyCache;
 import org.smartframework.cloud.examples.support.gateway.constants.GatewayConstants;
 import org.smartframework.cloud.examples.support.gateway.constants.GatewayReturnCodes;
@@ -61,14 +60,13 @@ import java.util.Arrays;
 public class DataSecurityServerHttpRequestDecorator extends ServerHttpRequestDecorator {
 
     private transient Flux<DataBuffer> body;
-    private transient RedissonClient redissonClient;
+    private final IRedisAdapter redisAdapter;
     private transient SecurityKeyCache securityKeyCache;
 
-    DataSecurityServerHttpRequestDecorator(ServerHttpRequest request, DataBufferFactory dataBufferFactory, String token, boolean requestDecrypt, byte signType,
-                                           RedissonClient redissonClient) {
+    DataSecurityServerHttpRequestDecorator(ServerHttpRequest request, DataBufferFactory dataBufferFactory, String token, boolean requestDecrypt, byte signType, IRedisAdapter redisAdapter) {
         super(request);
         Flux<DataBuffer> flux = super.getBody();
-        this.redissonClient = redissonClient;
+        this.redisAdapter = redisAdapter;
 
         final String requestStr = getEncryptedRequestStr(request);
 
@@ -185,8 +183,8 @@ public class DataSecurityServerHttpRequestDecorator extends ServerHttpRequestDec
         if (securityKeyCache != null) {
             return securityKeyCache;
         }
-        RMapCache<String, SecurityKeyCache> authCache = redissonClient.getMapCache(RedisKeyHelper.getSecurityHashKey());
-        securityKeyCache = authCache.get(RedisKeyHelper.getSecurityKey(token));
+
+        SecurityKeyCache securityKeyCache = redisAdapter.getObject(RedisKeyHelper.getSecurityKey(token));
         if (securityKeyCache == null) {
             throw new DataValidateException(GatewayReturnCodes.SECURITY_KEY_EXPIRED);
         }

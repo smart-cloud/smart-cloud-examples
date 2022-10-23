@@ -16,9 +16,9 @@
 package org.smartframework.cloud.examples.support.gateway.filter.access.core.datasecurity;
 
 import io.github.smart.cloud.exception.ParamValidateException;
+import io.github.smart.cloud.starter.redis.adapter.IRedisAdapter;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
-import org.redisson.api.RedissonClient;
 import org.smartframework.cloud.examples.support.gateway.cache.ApiAccessMetaCache;
 import org.smartframework.cloud.examples.support.gateway.constants.GatewayReturnCodes;
 import org.smartframework.cloud.examples.support.gateway.constants.Order;
@@ -41,7 +41,7 @@ import reactor.core.publisher.Mono;
 @RequiredArgsConstructor
 public class DataSecurityFilter extends AbstractFilter {
 
-    private final RedissonClient redissonClient;
+    private final IRedisAdapter redisAdapter;
 
     @Override
     public int getOrder() {
@@ -67,10 +67,9 @@ public class DataSecurityFilter extends AbstractFilter {
         }
 
         return chain.filter(exchange.mutate()
-                .request(new DataSecurityServerHttpRequestDecorator(exchange.getRequest(), exchange.getResponse().bufferFactory(), token,
-                        apiAccessMetaCache.isRequestDecrypt(), apiAccessMetaCache.getSignType(), redissonClient))
-                .response(new DataSecurityServerHttpResponseDecorator(exchange.getResponse(), apiAccessMetaCache.isResponseEncrypt(),
-                        apiAccessMetaCache.getSignType()))
+                .request(new DataSecurityServerHttpRequestDecorator(exchange.getRequest(), exchange.getResponse().bufferFactory(), token, apiAccessMetaCache.isRequestDecrypt(),
+                        apiAccessMetaCache.getSignType(), redisAdapter))
+                .response(new DataSecurityServerHttpResponseDecorator(exchange.getResponse(), apiAccessMetaCache.isResponseEncrypt(), apiAccessMetaCache.getSignType()))
                 .build());
     }
 
@@ -82,11 +81,17 @@ public class DataSecurityFilter extends AbstractFilter {
      * @return
      */
     private boolean match(MediaType contentType, HttpMethod httpMethod) {
+        if (contentType == null) {
+            return false;
+        }
+
+        String contentTypeStr = contentType.toString();
+        if (!StringUtils.containsAny(contentTypeStr, MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_FORM_URLENCODED_VALUE)) {
+            return false;
+        }
+
         // GET、POST以外的请求不做加解密、签名处理
-        return (contentType != null
-                && ((httpMethod == HttpMethod.POST && (MediaType.APPLICATION_JSON_VALUE.equals(contentType.toString())
-                || MediaType.APPLICATION_FORM_URLENCODED_VALUE.equals(contentType.toString())))
-                || httpMethod == HttpMethod.GET));
+        return httpMethod == HttpMethod.GET || httpMethod == HttpMethod.POST;
     }
 
 }

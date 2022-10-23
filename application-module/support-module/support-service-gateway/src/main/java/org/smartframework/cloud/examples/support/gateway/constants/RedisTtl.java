@@ -26,17 +26,17 @@ public interface RedisTtl {
     /**
      * 未登录用户security key有效期
      */
-    int SECURITY_KEY_NON_LOGIN = 5 * 60 * 1000;
+    long SECURITY_KEY_NON_LOGIN = 5 * 60 * 1000L;
 
     /**
      * 登录成功后security key有效期
      */
-    int SECURITY_KEY_LOGIN_SUCCESS = 7 * 24 * 60 * 60 * 1000;
+    long SECURITY_KEY_LOGIN_SUCCESS = 7 * 24 * 60 * 60 * 1000L;
 
     /**
-     * 登录成功后用户信息有效期
+     * 登录成功后用户信息有效期（单位：毫秒）
      */
-    int USER_LOGIN_SUCCESS = SECURITY_KEY_LOGIN_SUCCESS;
+    long USER_LOGIN_SUCCESS = SECURITY_KEY_LOGIN_SUCCESS;
 
     /**
      * 用户缓存刷新阈值

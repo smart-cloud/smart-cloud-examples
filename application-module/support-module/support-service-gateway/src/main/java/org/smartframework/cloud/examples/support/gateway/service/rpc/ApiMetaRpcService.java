@@ -50,7 +50,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ApiMetaRpcService {
 
-    private final RedisTemplate redisTemplate;
+    private final RedisTemplate<Object, Object> redisTemplate;
     private final Redisson redisson;
 
     public void notifyFetch(NotifyFetchReqDTO req) throws IOException, NoSuchMethodException, InvocationTargetException, IllegalAccessException {

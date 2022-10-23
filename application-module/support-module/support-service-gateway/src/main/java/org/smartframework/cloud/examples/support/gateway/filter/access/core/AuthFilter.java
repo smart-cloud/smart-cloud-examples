@@ -22,12 +22,11 @@ import io.github.smart.cloud.exception.BusinessException;
 import io.github.smart.cloud.exception.DataValidateException;
 import io.github.smart.cloud.exception.RpcException;
 import io.github.smart.cloud.starter.core.business.util.RespUtil;
+import io.github.smart.cloud.starter.redis.adapter.IRedisAdapter;
 import io.github.smart.cloud.utility.JacksonUtil;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.redisson.api.RMapCache;
-import org.redisson.api.RedissonClient;
 import org.smartframework.cloud.examples.app.auth.core.MySmartUser;
 import org.smartframework.cloud.examples.basic.rpc.auth.AuthRpc;
 import org.smartframework.cloud.examples.basic.rpc.auth.response.rpc.AuthRespDTO;
@@ -35,7 +34,6 @@ import org.smartframework.cloud.examples.support.gateway.cache.ApiAccessMetaCach
 import org.smartframework.cloud.examples.support.gateway.cache.AuthCache;
 import org.smartframework.cloud.examples.support.gateway.constants.GatewayReturnCodes;
 import org.smartframework.cloud.examples.support.gateway.constants.Order;
-import org.smartframework.cloud.examples.support.gateway.constants.RedisMaxIdle;
 import org.smartframework.cloud.examples.support.gateway.constants.RedisTtl;
 import org.smartframework.cloud.examples.support.gateway.exception.AuthenticationException;
 import org.smartframework.cloud.examples.support.gateway.filter.FilterContext;
@@ -52,6 +50,8 @@ import org.springframework.web.server.WebFilterChain;
 import reactor.core.publisher.Mono;
 
 import java.nio.charset.StandardCharsets;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
@@ -68,7 +68,7 @@ import java.util.concurrent.TimeUnit;
 @RequiredArgsConstructor
 public class AuthFilter extends AbstractFilter {
 
-    private final RedissonClient redissonClient;
+    private final IRedisAdapter redisAdapter;
     private final ObjectProvider<AuthRpc> authRpcObjectProvider;
     private final UserRpcService userRpcService;
 
@@ -90,26 +90,27 @@ public class AuthFilter extends AbstractFilter {
             throw new DataValidateException(GatewayReturnCodes.TOKEN_MISSING);
         }
 
-        RMapCache<String, MySmartUser> userCache = redissonClient.getMapCache(RedisKeyHelper.getUserHashKey());
-        MySmartUser mySmartUser = userCache.get(RedisKeyHelper.getUserKey(token));
+        String userKey = RedisKeyHelper.getUserKey(token);
+        MySmartUser mySmartUser = redisAdapter.getObject(userKey);
         if (mySmartUser == null) {
             throw new BusinessException(GatewayReturnCodes.TOKEN_EXPIRED_LOGIN_SUCCESS);
         }
 
         // 1、先从缓存获取数据进行判断
-        RMapCache<String, Boolean> userAuthSecondaryCacheMapCache = redissonClient.getMapCache(RedisKeyHelper.getUserAuthSecondaryCacheHashKey(token));
-        if (userAuthSecondaryCacheMapCache != null) {
-            Boolean isUserAuthSecondaryCachePass = userAuthSecondaryCacheMapCache.get(filterContext.getUrlMethod());
-            if (isUserAuthSecondaryCachePass != null) {
-                if (isUserAuthSecondaryCachePass) {
-                    return chain.filter(exchange);
-                }
-                throw new AuthenticationException();
+        String userAuthSecondaryCacheKey = RedisKeyHelper.getUserAuthSecondaryCacheKey(token);
+        String userAuthSecondaryCacheHashKey = RedisKeyHelper.getUserAuthSecondaryCacheHashKey(filterContext.getUrlMethod());
+        Boolean isUserAuthSecondaryCachePass = redisAdapter.get(userAuthSecondaryCacheKey, userAuthSecondaryCacheHashKey);
+        if (isUserAuthSecondaryCachePass != null) {
+            if (isUserAuthSecondaryCachePass) {
+                return chain.filter(exchange);
             }
+            throw new AuthenticationException();
         }
         // 2、缓存没有，则通过rpc获取数据进行判断
         boolean pass = checkAuth(apiAccessMetaCache, token, mySmartUser.getId());
-        userAuthSecondaryCacheMapCache.put(filterContext.getUrlMethod(), pass, RedisTtl.USER_LOGIN_SUCCESS, TimeUnit.MILLISECONDS, RedisMaxIdle.USER_LOGIN_SUCCESS, TimeUnit.MILLISECONDS);
+
+        Map<String, Object> userAuthSecondaryCacheItem = new HashMap<>(1);
+        userAuthSecondaryCacheItem.put(userAuthSecondaryCacheHashKey, pass);
         if (!pass) {
             throw new AuthenticationException();
         }
@@ -118,7 +119,7 @@ public class AuthFilter extends AbstractFilter {
         ServerHttpRequest newServerHttpRequest = fillUserInHeader(exchange.getRequest(), mySmartUser);
 
         // 4、缓存有效期过半，刷新有效期
-        Long tokenTtl = userCache.remainTimeToLive(RedisKeyHelper.getUserKey(token));
+        Long tokenTtl = redisAdapter.getExpire(userKey, TimeUnit.MILLISECONDS);
         if (tokenTtl <= RedisTtl.USER_CACHE_REFRESH_THRESHOLD) {
             userRpcService.refreshUserCacheExpiration(token, mySmartUser.getId());
         }
@@ -174,8 +175,7 @@ public class AuthFilter extends AbstractFilter {
      * @return
      */
     private AuthCache getAuthCache(@NonNull Long uid) {
-        RMapCache<String, AuthCache> authMapCache = redissonClient.getMapCache(RedisKeyHelper.getAuthHashKey());
-        AuthCache authCache = authMapCache.get(RedisKeyHelper.getAuthKey(uid));
+        AuthCache authCache = redisAdapter.getObject(RedisKeyHelper.getAuthKey(uid));
         if (authCache != null) {
             return authCache;
         }

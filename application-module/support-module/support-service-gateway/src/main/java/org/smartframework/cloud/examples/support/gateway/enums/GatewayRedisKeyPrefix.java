@@ -62,7 +62,7 @@ public enum GatewayRedisKeyPrefix {
     /**
      * 用户信息key
      */
-    USER_HASH_KEY(RedisKeyUtil.buildKey(GATEWAY_CACHE_REDIS_KEY_PREFIX.getKey(), "user")),
+    USER_KEY(RedisKeyUtil.buildKey(GATEWAY_CACHE_REDIS_KEY_PREFIX.getKey(), "user")),
     /**
      * 用户、token信息key
      */

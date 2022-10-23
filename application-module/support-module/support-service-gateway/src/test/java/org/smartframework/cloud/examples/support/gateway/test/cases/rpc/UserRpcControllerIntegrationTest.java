@@ -20,34 +20,31 @@ import com.google.common.collect.Sets;
 import io.github.smart.cloud.common.pojo.Base;
 import io.github.smart.cloud.common.pojo.Response;
 import io.github.smart.cloud.constants.CommonReturnCodes;
+import io.github.smart.cloud.starter.redis.adapter.IRedisAdapter;
 import io.github.smart.cloud.test.core.integration.WebReactiveIntegrationTest;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.redisson.api.RMapCache;
-import org.redisson.api.RedissonClient;
 import org.smartframework.cloud.examples.support.gateway.cache.SecurityKeyCache;
 import org.smartframework.cloud.examples.support.gateway.constants.RedisTtl;
 import org.smartframework.cloud.examples.support.gateway.util.RedisKeyHelper;
 import org.smartframework.cloud.examples.support.rpc.gateway.request.rpc.CacheUserInfoReqDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.concurrent.TimeUnit;
-
 class UserRpcControllerIntegrationTest extends WebReactiveIntegrationTest {
 
     @Autowired
-    private RedissonClient redissonClient;
+    private IRedisAdapter redisAdapter;
 
     @Test
     void testCacheUserInfo() throws Exception {
         String token = "12341234";
         Long userId = 1L;
         // mock start
-        RMapCache<String, SecurityKeyCache> authCache = redissonClient.getMapCache(RedisKeyHelper.getSecurityHashKey());
-        authCache.put(RedisKeyHelper.getSecurityKey(token), new SecurityKeyCache(), RedisTtl.SECURITY_KEY_NON_LOGIN, TimeUnit.MILLISECONDS);
+        String cacheKey = RedisKeyHelper.getSecurityKey(token);
+        redisAdapter.setObject(cacheKey, new SecurityKeyCache(), RedisTtl.SECURITY_KEY_NON_LOGIN);
 
-        RMapCache<Long, String> userTokenCache = redissonClient.getMapCache(RedisKeyHelper.getUserTokenRelationHashKey());
-        userTokenCache.put(RedisKeyHelper.getUserTokenRelationKey(userId), "12313", RedisTtl.USER_LOGIN_SUCCESS, TimeUnit.MILLISECONDS);
+        String userTokenRelationKey = RedisKeyHelper.getUserTokenRelationKey(userId);
+        redisAdapter.setString(userTokenRelationKey, "12313", RedisTtl.USER_LOGIN_SUCCESS);
         // mock end
 
         CacheUserInfoReqDTO req = CacheUserInfoReqDTO.builder()

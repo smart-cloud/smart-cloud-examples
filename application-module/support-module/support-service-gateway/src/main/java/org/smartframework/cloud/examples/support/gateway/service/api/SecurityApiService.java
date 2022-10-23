@@ -22,8 +22,6 @@ import io.github.smart.cloud.utility.security.RsaUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.DecoderException;
-import org.redisson.api.RMapCache;
-import org.redisson.api.RedissonClient;
 import org.smartframework.cloud.examples.support.gateway.cache.SecurityKeyCache;
 import org.smartframework.cloud.examples.support.gateway.constants.GatewayReturnCodes;
 import org.smartframework.cloud.examples.support.gateway.constants.RedisTtl;
@@ -31,6 +29,7 @@ import org.smartframework.cloud.examples.support.gateway.util.RedisKeyHelper;
 import org.smartframework.cloud.examples.support.rpc.gateway.request.api.GenerateAesKeyReqVO;
 import org.smartframework.cloud.examples.support.rpc.gateway.response.api.GenerateAesKeyRespVO;
 import org.smartframework.cloud.examples.support.rpc.gateway.response.api.GenerateClientPubKeyRespVO;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 import javax.crypto.BadPaddingException;
@@ -56,7 +55,7 @@ import java.util.concurrent.TimeUnit;
 @RequiredArgsConstructor
 public class SecurityApiService {
 
-    private final RedissonClient redissonClient;
+    private final RedisTemplate<Object, Object> redisTemplate;
 
     public GenerateClientPubKeyRespVO generateClientPubKey() {
         // 1、生成密钥对
@@ -81,8 +80,7 @@ public class SecurityApiService {
         securityKeyCache.setSpriKeyModulus(RsaUtil.getModulus(clientPubServerPriKeyPair));
         securityKeyCache.setSpriKeyExponent(RsaUtil.getPrivateExponent(clientPubServerPriKeyPair));
 
-        RMapCache<String, SecurityKeyCache> authCache = redissonClient.getMapCache(RedisKeyHelper.getSecurityHashKey());
-        authCache.put(RedisKeyHelper.getSecurityKey(token), securityKeyCache, RedisTtl.SECURITY_KEY_NON_LOGIN, TimeUnit.MILLISECONDS);
+        redisTemplate.opsForValue().set(RedisKeyHelper.getSecurityKey(token), securityKeyCache, RedisTtl.SECURITY_KEY_NON_LOGIN, TimeUnit.MILLISECONDS);
 
         return respVO;
     }
@@ -90,8 +88,8 @@ public class SecurityApiService {
     public GenerateAesKeyRespVO generateAesKey(GenerateAesKeyReqVO req) throws InvalidKeySpecException, NoSuchAlgorithmException,
             DecoderException, IllegalBlockSizeException, BadPaddingException, NoSuchPaddingException, InvalidKeyException {
         // 1、解密客户端生成的公钥
-        RMapCache<String, SecurityKeyCache> securityKeyMapCache = redissonClient.getMapCache(RedisKeyHelper.getSecurityHashKey());
-        SecurityKeyCache securityKeyCache = securityKeyMapCache.get(RedisKeyHelper.getSecurityKey(req.getToken()));
+        String cacheKey = RedisKeyHelper.getSecurityKey(req.getToken());
+        SecurityKeyCache securityKeyCache = (SecurityKeyCache) redisTemplate.opsForValue().get(cacheKey);
         if (securityKeyCache == null) {
             throw new DataValidateException(GatewayReturnCodes.TOKEN_EXPIRED_BEFORE_LOGIN);
         }
@@ -105,7 +103,7 @@ public class SecurityApiService {
         securityKeyCache.setCpubKeyExponent(cpubKeyExponent);
         String aesKey = RandomUtil.generateRandom(false, 8);
         securityKeyCache.setAesKey(aesKey);
-        securityKeyMapCache.put(RedisKeyHelper.getSecurityKey(req.getToken()), securityKeyCache, RedisTtl.SECURITY_KEY_NON_LOGIN, TimeUnit.MILLISECONDS);
+        redisTemplate.opsForValue().set(cacheKey, securityKeyCache, RedisTtl.SECURITY_KEY_NON_LOGIN, TimeUnit.MILLISECONDS);
 
         // 3、加密aes key
         // 客户端生成的公钥

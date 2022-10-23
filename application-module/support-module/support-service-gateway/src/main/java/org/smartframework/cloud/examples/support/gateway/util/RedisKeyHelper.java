@@ -15,6 +15,7 @@
  */
 package org.smartframework.cloud.examples.support.gateway.util;
 
+import io.github.smart.cloud.starter.redis.RedisKeyUtil;
 import io.github.smart.cloud.starter.redis.enums.RedisKeyPrefix;
 import org.smartframework.cloud.examples.support.gateway.enums.GatewayRedisKeyPrefix;
 
@@ -51,31 +52,13 @@ public final class RedisKeyHelper {
     }
 
     /**
-     * 获取签名相关的hashkey
-     *
-     * @return
-     */
-    public static String getSecurityHashKey() {
-        return GatewayRedisKeyPrefix.SECURITY_HASH_KEY.getKey();
-    }
-
-    /**
      * 获取签名相关的key
      *
      * @param token
      * @return
      */
     public static String getSecurityKey(String token) {
-        return token;
-    }
-
-    /**
-     * 获取用户信息的hashkey
-     *
-     * @return
-     */
-    public static String getUserHashKey() {
-        return GatewayRedisKeyPrefix.USER_HASH_KEY.getKey();
+        return GatewayRedisKeyPrefix.SECURITY_HASH_KEY.getKey() + token;
     }
 
     /**
@@ -85,16 +68,7 @@ public final class RedisKeyHelper {
      * @return
      */
     public static String getUserKey(String token) {
-        return token;
-    }
-
-    /**
-     * 获取权限信息的hashkey
-     *
-     * @return
-     */
-    public static String getAuthHashKey() {
-        return GatewayRedisKeyPrefix.AUTH_HASH_KEY.getKey();
+        return RedisKeyUtil.buildKey(GatewayRedisKeyPrefix.USER_KEY.getKey(), token);
     }
 
     /**
@@ -104,16 +78,7 @@ public final class RedisKeyHelper {
      * @return
      */
     public static String getAuthKey(Long uid) {
-        return String.valueOf(uid);
-    }
-
-    /**
-     * 获取用户、token关联信息的hashkey
-     *
-     * @return
-     */
-    public static String getUserTokenRelationHashKey() {
-        return GatewayRedisKeyPrefix.USER_TOKEN_RELATION_HASH_KEY.getKey();
+        return RedisKeyUtil.buildKey(GatewayRedisKeyPrefix.AUTH_HASH_KEY.getKey(), String.valueOf(uid));
     }
 
     /**
@@ -122,8 +87,8 @@ public final class RedisKeyHelper {
      * @param userId
      * @return
      */
-    public static Long getUserTokenRelationKey(Long userId) {
-        return userId;
+    public static String getUserTokenRelationKey(Long userId) {
+        return RedisKeyUtil.buildKey(GatewayRedisKeyPrefix.USER_TOKEN_RELATION_HASH_KEY.getKey(), String.valueOf(userId));
     }
 
     /**
@@ -132,8 +97,18 @@ public final class RedisKeyHelper {
      * @param token
      * @return
      */
-    public static String getUserAuthSecondaryCacheHashKey(String token) {
-        return GatewayRedisKeyPrefix.USER_AUTH_SECONDARY_CACHE_HASH_KEY.getKey() + token;
+    public static String getUserAuthSecondaryCacheKey(String token) {
+        return RedisKeyUtil.buildKey(GatewayRedisKeyPrefix.USER_AUTH_SECONDARY_CACHE_HASH_KEY.getKey(), token);
+    }
+
+    /**
+     * 用户权限信息二级缓存key
+     *
+     * @param urlMethod
+     * @return
+     */
+    public static String getUserAuthSecondaryCacheHashKey(String urlMethod) {
+        return urlMethod;
     }
 
     /**
@@ -143,7 +118,7 @@ public final class RedisKeyHelper {
      * @return
      */
     public static String getApiMetaLockKey(String serviceName) {
-        return GatewayRedisKeyPrefix.API_META_UPDATE_LOCK_KEY_PREFIX.getKey() + serviceName;
+        return RedisKeyUtil.buildKey(GatewayRedisKeyPrefix.API_META_UPDATE_LOCK_KEY_PREFIX.getKey(), serviceName);
     }
 
 }

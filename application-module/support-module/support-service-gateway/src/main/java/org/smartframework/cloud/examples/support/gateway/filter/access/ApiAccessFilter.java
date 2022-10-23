@@ -42,7 +42,7 @@ import reactor.core.publisher.Mono;
 @RequiredArgsConstructor
 public class ApiAccessFilter implements WebFilter, Ordered {
 
-    private final RedisTemplate redisTemplate;
+    private final RedisTemplate<Object, Object> redisTemplate;
 
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, WebFilterChain chain) {
