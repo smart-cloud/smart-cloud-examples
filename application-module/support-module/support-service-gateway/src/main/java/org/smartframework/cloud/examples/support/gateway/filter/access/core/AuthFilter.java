@@ -91,7 +91,7 @@ public class AuthFilter extends AbstractFilter {
         }
 
         String userKey = RedisKeyHelper.getUserKey(token);
-        MySmartUser mySmartUser = redisAdapter.getObject(userKey);
+        MySmartUser mySmartUser = (MySmartUser)redisAdapter.get(userKey);
         if (mySmartUser == null) {
             throw new BusinessException(GatewayReturnCodes.TOKEN_EXPIRED_LOGIN_SUCCESS);
         }
@@ -175,7 +175,7 @@ public class AuthFilter extends AbstractFilter {
      * @return
      */
     private AuthCache getAuthCache(@NonNull Long uid) {
-        AuthCache authCache = redisAdapter.getObject(RedisKeyHelper.getAuthKey(uid));
+        AuthCache authCache = (AuthCache)redisAdapter.get(RedisKeyHelper.getAuthKey(uid));
         if (authCache != null) {
             return authCache;
         }

@@ -184,7 +184,7 @@ public class DataSecurityServerHttpRequestDecorator extends ServerHttpRequestDec
             return securityKeyCache;
         }
 
-        SecurityKeyCache securityKeyCache = redisAdapter.getObject(RedisKeyHelper.getSecurityKey(token));
+        SecurityKeyCache securityKeyCache = (SecurityKeyCache)redisAdapter.get(RedisKeyHelper.getSecurityKey(token));
         if (securityKeyCache == null) {
             throw new DataValidateException(GatewayReturnCodes.SECURITY_KEY_EXPIRED);
         }

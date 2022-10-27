@@ -41,10 +41,10 @@ class UserRpcControllerIntegrationTest extends WebReactiveIntegrationTest {
         Long userId = 1L;
         // mock start
         String cacheKey = RedisKeyHelper.getSecurityKey(token);
-        redisAdapter.setObject(cacheKey, new SecurityKeyCache(), RedisTtl.SECURITY_KEY_NON_LOGIN);
+        redisAdapter.set(cacheKey, new SecurityKeyCache(), RedisTtl.SECURITY_KEY_NON_LOGIN);
 
         String userTokenRelationKey = RedisKeyHelper.getUserTokenRelationKey(userId);
-        redisAdapter.setString(userTokenRelationKey, "12313", RedisTtl.USER_LOGIN_SUCCESS);
+        redisAdapter.set(userTokenRelationKey, "12313", RedisTtl.USER_LOGIN_SUCCESS);
         // mock end
 
         CacheUserInfoReqDTO req = CacheUserInfoReqDTO.builder()

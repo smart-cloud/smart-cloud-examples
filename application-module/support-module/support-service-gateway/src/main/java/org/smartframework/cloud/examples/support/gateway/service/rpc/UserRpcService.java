@@ -89,7 +89,7 @@ public class UserRpcService {
      */
     private void delaySecurityKeyExpire(String token) {
         String cacheKey = RedisKeyHelper.getSecurityKey(token);
-        SecurityKeyCache securityKeyCache = redisAdapter.getObject(cacheKey);
+        SecurityKeyCache securityKeyCache = (SecurityKeyCache)redisAdapter.get(cacheKey);
         if (securityKeyCache == null) {
             throw new DataValidateException(GatewayReturnCodes.TOKEN_EXPIRED_BEFORE_LOGIN);
         }
@@ -105,7 +105,7 @@ public class UserRpcService {
         mySmartUserCache.setRealName(req.getRealName());
         mySmartUserCache.setMobile(req.getMobile());
 
-        redisAdapter.setObject(RedisKeyHelper.getUserKey(req.getToken()), mySmartUserCache, RedisTtl.USER_LOGIN_SUCCESS);
+        redisAdapter.set(RedisKeyHelper.getUserKey(req.getToken()), mySmartUserCache, RedisTtl.USER_LOGIN_SUCCESS);
     }
 
     public void cacheAuth(@NotNull Long uid, Set<String> roles, Set<String> permissions) {
@@ -113,19 +113,19 @@ public class UserRpcService {
         authCache.setRoles(roles);
         authCache.setPermissions(permissions);
 
-        redisAdapter.setObject(RedisKeyHelper.getAuthKey(uid), authCache, RedisTtl.USER_LOGIN_SUCCESS);
+        redisAdapter.set(RedisKeyHelper.getAuthKey(uid), authCache, RedisTtl.USER_LOGIN_SUCCESS);
     }
 
     private void deleteOldCacheAndSaveRela(Long uid, String token) {
         // 1、删除上一次登录的信息（如果存在）
         String userTokenRelationKey = RedisKeyHelper.getUserTokenRelationKey(uid);
-        String oldToken = redisAdapter.getString(userTokenRelationKey);
+        String oldToken = (String)redisAdapter.get(userTokenRelationKey);
         if (StringUtils.isNotBlank(oldToken)) {
             removeSession(oldToken, uid);
         }
 
         // 2、保存新的token与userId关系
-        redisAdapter.setString(userTokenRelationKey, token, RedisTtl.USER_LOGIN_SUCCESS);
+        redisAdapter.set(userTokenRelationKey, token, RedisTtl.USER_LOGIN_SUCCESS);
     }
 
     /**
@@ -135,7 +135,7 @@ public class UserRpcService {
      * @return
      */
     public void exit(ExitLoginReqDTO req) {
-        MySmartUser mySmartUser = redisAdapter.getObject(RedisKeyHelper.getUserKey(req.getToken()));
+        MySmartUser mySmartUser = (MySmartUser)redisAdapter.get(RedisKeyHelper.getUserKey(req.getToken()));
         if (mySmartUser == null) {
             throw new BusinessException(GatewayReturnCodes.TOKEN_EXPIRED_LOGIN_SUCCESS);
         }
