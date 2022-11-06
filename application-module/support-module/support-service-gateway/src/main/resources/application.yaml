@@ -36,6 +36,10 @@ spring:
         uri: lb://basicServiceUser
         predicates:
         - Path=/user/**
+      - id: auth
+        uri: lb://basicServiceAuth
+        predicates:
+          - Path=/auth/**
         
       # ------mall module
       - id: product
