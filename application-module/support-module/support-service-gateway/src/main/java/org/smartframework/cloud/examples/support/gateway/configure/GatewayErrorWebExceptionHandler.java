@@ -18,6 +18,7 @@ package org.smartframework.cloud.examples.support.gateway.configure;
 import io.github.smart.cloud.common.pojo.Base;
 import io.github.smart.cloud.common.pojo.Response;
 import io.github.smart.cloud.starter.web.exception.ExceptionHandlerContext;
+import io.github.smart.cloud.utility.JacksonUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.web.reactive.error.ErrorWebExceptionHandler;
 import org.springframework.context.annotation.Configuration;
@@ -46,7 +47,7 @@ public class GatewayErrorWebExceptionHandler implements ErrorWebExceptionHandler
         serverHttpResponse.getHeaders().setContentType(MediaType.APPLICATION_JSON);
         return serverHttpResponse.writeWith(Mono.fromSupplier(() -> {
                     Response<Base> response = new Response<>(ExceptionHandlerContext.transRespHead(throwable));
-                    return serverHttpResponse.bufferFactory().wrap(response.toString().getBytes(StandardCharsets.UTF_8));
+                    return serverHttpResponse.bufferFactory().wrap(JacksonUtil.toBytes(response));
                 }
         ));
     }

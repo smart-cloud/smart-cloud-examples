@@ -37,7 +37,6 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 /**
@@ -53,7 +52,7 @@ public class ApiMetaRpcService {
     private final RedisTemplate<Object, Object> redisTemplate;
     private final Redisson redisson;
 
-    public void notifyFetch(NotifyFetchReqDTO req) throws IOException, NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+    public void notifyFetch(NotifyFetchReqDTO req) throws IOException {
         String serviceName = req.getServiceName();
         RLock lock = redisson.getLock(RedisKeyHelper.getApiMetaLockKey(serviceName));
         boolean requireLock = false;
@@ -76,11 +75,8 @@ public class ApiMetaRpcService {
      *
      * @param serviceName
      * @throws IOException
-     * @throws InvocationTargetException
-     * @throws NoSuchMethodException
-     * @throws IllegalAccessException
      */
-    private void fetchAndUpdateApiMetas(String serviceName) throws IOException, InvocationTargetException, NoSuchMethodException, IllegalAccessException {
+    private void fetchAndUpdateApiMetas(String serviceName) throws IOException {
         String url = getFetchUrl(serviceName);
         Response<ApiMetaFetchRespVO> apiMetaFetchRespVO = fetchApiMeta(url);
 
@@ -101,7 +97,7 @@ public class ApiMetaRpcService {
      * @param serviceName
      * @return
      */
-    private String getFetchUrl(String serviceName) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+    private String getFetchUrl(String serviceName) {
         DiscoveryClient discoveryClient = SpringContextUtil.getBean(DiscoveryClient.class);
         List<ServiceInstance> serviceInstances = discoveryClient.getInstances(serviceName);
         ServiceInstance serviceInstance = serviceInstances.get(0);

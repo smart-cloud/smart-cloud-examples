@@ -41,7 +41,7 @@ public class ApiMetaRpcController implements ApiMetaRpc {
     public Response<Base> notifyFetch(NotifyFetchReqDTO req) {
         try {
             apiMetaRpcService.notifyFetch(req);
-        } catch (IOException | NoSuchMethodException | InvocationTargetException | IllegalAccessException e) {
+        } catch (IOException e) {
             log.error("notifyFetch.fail", e);
             return RespUtil.error(e.getMessage());
         }
