@@ -16,6 +16,7 @@
 package org.smartframework.cloud.examples.support.gateway.service.rpc;
 
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.google.common.base.Preconditions;
 import io.github.smart.cloud.common.pojo.Response;
 import io.github.smart.cloud.exception.BusinessException;
 import io.github.smart.cloud.starter.core.business.util.RespUtil;
@@ -100,7 +101,10 @@ public class ApiMetaRpcService {
     private String getFetchUrl(String serviceName) {
         DiscoveryClient discoveryClient = SpringContextUtil.getBean(DiscoveryClient.class);
         List<ServiceInstance> serviceInstances = discoveryClient.getInstances(serviceName);
-        ServiceInstance serviceInstance = serviceInstances.get(serviceInstances.size() - 1);
+        int serviceCount = serviceInstances.size();
+        Preconditions.checkArgument(serviceCount > 0, String.format("service[%s] not registered", serviceName));
+
+        ServiceInstance serviceInstance = serviceInstances.get(serviceCount - 1);
         return String.format("http://%s:%s%s", serviceInstance.getHost(), serviceInstance.getPort(), ApiMetaConstants.FETCH_URL);
     }
 
