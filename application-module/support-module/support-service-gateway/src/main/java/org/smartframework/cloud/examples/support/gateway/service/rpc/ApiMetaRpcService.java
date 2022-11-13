@@ -100,7 +100,7 @@ public class ApiMetaRpcService {
     private String getFetchUrl(String serviceName) {
         DiscoveryClient discoveryClient = SpringContextUtil.getBean(DiscoveryClient.class);
         List<ServiceInstance> serviceInstances = discoveryClient.getInstances(serviceName);
-        ServiceInstance serviceInstance = serviceInstances.get(0);
+        ServiceInstance serviceInstance = serviceInstances.get(serviceInstances.size() - 1);
         return String.format("http://%s:%s%s", serviceInstance.getHost(), serviceInstance.getPort(), ApiMetaConstants.FETCH_URL);
     }
 
