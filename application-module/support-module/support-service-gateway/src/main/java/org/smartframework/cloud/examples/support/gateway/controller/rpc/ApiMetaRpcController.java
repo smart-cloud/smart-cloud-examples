@@ -27,7 +27,6 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
 
 @Slf4j
 @RestController
@@ -41,7 +40,7 @@ public class ApiMetaRpcController implements ApiMetaRpc {
     public Response<Base> notifyFetch(NotifyFetchReqDTO req) {
         try {
             apiMetaRpcService.notifyFetch(req);
-        } catch (IOException e) {
+        } catch (IOException | InterruptedException e) {
             log.error("notifyFetch.fail", e);
             return RespUtil.error(e.getMessage());
         }

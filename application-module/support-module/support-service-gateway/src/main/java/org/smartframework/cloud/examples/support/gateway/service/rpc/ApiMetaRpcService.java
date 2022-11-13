@@ -23,6 +23,8 @@ import io.github.smart.cloud.starter.core.business.util.RespUtil;
 import io.github.smart.cloud.utility.HttpUtil;
 import io.github.smart.cloud.utility.spring.SpringContextUtil;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.collections4.MapUtils;
 import org.redisson.Redisson;
 import org.redisson.api.RLock;
@@ -39,6 +41,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 /**
  * 接口元数据（签名、加解密、权限等）处理
@@ -46,14 +49,16 @@ import java.util.List;
  * @author collin
  * @date 2020/04/28
  */
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class ApiMetaRpcService {
 
     private final RedisTemplate<Object, Object> redisTemplate;
     private final Redisson redisson;
+    private static final long RETRY_FETCH_SERVICE_INSTANCE_DURATION = 6000L;
 
-    public void notifyFetch(NotifyFetchReqDTO req) throws IOException {
+    public void notifyFetch(NotifyFetchReqDTO req) throws IOException, InterruptedException {
         String serviceName = req.getServiceName();
         RLock lock = redisson.getLock(RedisKeyHelper.getApiMetaLockKey(serviceName));
         boolean requireLock = false;
@@ -77,7 +82,7 @@ public class ApiMetaRpcService {
      * @param serviceName
      * @throws IOException
      */
-    private void fetchAndUpdateApiMetas(String serviceName) throws IOException {
+    private void fetchAndUpdateApiMetas(String serviceName) throws IOException, InterruptedException {
         String url = getFetchUrl(serviceName);
         Response<ApiMetaFetchRespVO> apiMetaFetchRespVO = fetchApiMeta(url);
 
@@ -98,14 +103,28 @@ public class ApiMetaRpcService {
      * @param serviceName
      * @return
      */
-    private String getFetchUrl(String serviceName) {
+    private String getFetchUrl(String serviceName) throws InterruptedException {
+        List<ServiceInstance> serviceInstances = getServiceInstances(serviceName);
+        Preconditions.checkArgument(CollectionUtils.isNotEmpty(serviceInstances), String.format("service[%s] not registered", serviceName));
+
+        ServiceInstance serviceInstance = serviceInstances.get(serviceInstances.size() - 1);
+        return String.format("http://%s:%s%s", serviceInstance.getHost(), serviceInstance.getPort(), ApiMetaConstants.FETCH_URL);
+    }
+
+    private List<ServiceInstance> getServiceInstances(String serviceName) throws InterruptedException {
         DiscoveryClient discoveryClient = SpringContextUtil.getBean(DiscoveryClient.class);
         List<ServiceInstance> serviceInstances = discoveryClient.getInstances(serviceName);
-        int serviceCount = serviceInstances.size();
-        Preconditions.checkArgument(serviceCount > 0, String.format("service[%s] not registered", serviceName));
+        long startTime = System.currentTimeMillis();
+        while (CollectionUtils.isEmpty(serviceInstances)) {
+            TimeUnit.MILLISECONDS.sleep(100);
+            serviceInstances = discoveryClient.getInstances(serviceName);
+            if (System.currentTimeMillis() - startTime > RETRY_FETCH_SERVICE_INSTANCE_DURATION) {
+                log.error("retry fetch service instance duration {}", RETRY_FETCH_SERVICE_INSTANCE_DURATION);
+                break;
+            }
+        }
 
-        ServiceInstance serviceInstance = serviceInstances.get(serviceCount - 1);
-        return String.format("http://%s:%s%s", serviceInstance.getHost(), serviceInstance.getPort(), ApiMetaConstants.FETCH_URL);
+        return serviceInstances;
     }
 
     /**
