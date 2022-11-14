@@ -11,8 +11,12 @@ jasypt:
   
 server:
   servlet:
-    context-path: /  compression:    enabled: true
-  undertow:    direct-buffers: true
+    context-path: /
+  compression:
+    enabled: true
+  undertow:
+    direct-buffers: true
+
 # 监控跟踪
 management:
   endpoint:
@@ -28,5 +32,3 @@ spring:
     enabled: true
   sleuth: 
     enabled: true
-  messages:
-    basename: i18n.messages
