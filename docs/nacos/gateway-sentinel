@@ -1,0 +1,32 @@
+[{
+		"id": 7,
+		"app": "supportServiceGateway",
+		"ip": "192.168.0.107",
+		"port": 8720,
+
+		"limitApp": "default",
+		"resource": "/test",
+		"grade": 1,
+		"count": 1.0,
+		"strategy": 0,
+		"refResource": null,
+		"controlBehavior": 0,
+		"warmUpPeriodSec": 10,
+		"maxQueueingTimeMs": 500,
+		"clusterMode": true,
+		"clusterConfig": {
+			"flowId": 7,
+			"thresholdType": 0,
+			"fallbackToLocalWhenFail": true,
+			"strategy": 0,
+			"sampleCount": 10,
+			"windowIntervalMs": 1000,
+			"resourceTimeout": 2000,
+			"resourceTimeoutStrategy": 0,
+			"acquireRefuseStrategy": 0,
+			"clientOfflineTime": 2000
+		},
+		"gmtCreate": null,
+		"gmtModified": null
+	}
+]
