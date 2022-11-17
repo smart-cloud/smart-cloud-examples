@@ -37,6 +37,12 @@
 		<dependency>
 			<groupId>io.github.smart-cloud</groupId>
 			<artifactId>smart-cloud-starter-web</artifactId>
+			<exclusions>
+				<exclusion>
+					<artifactId>spring-boot-starter-tomcat</artifactId>
+					<groupId>org.springframework.boot</groupId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 		
 		<dependency>
