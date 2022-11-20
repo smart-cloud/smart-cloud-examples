@@ -1,9 +1,6 @@
 smart:
-  log:
-    rpclog: true
-    apilog: true
-  crypt-field:
-    key: 123456
+  mybatis:
+    cryptKey: 123456
 
 server:
   port: 20031

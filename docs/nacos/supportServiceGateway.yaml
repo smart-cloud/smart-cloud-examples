@@ -1,4 +1,10 @@
 smart:
-  log:
-    rpclog: true
-    apilog: true
+  apiLog:
+    enable: true
+    level: info
+    slow-api-min-cost: 2500
+  feign:
+    log:
+      enable: true
+      level: info
+      slow-api-min-cost: 2500
