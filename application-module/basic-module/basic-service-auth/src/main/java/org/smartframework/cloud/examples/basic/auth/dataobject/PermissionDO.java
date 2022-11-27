@@ -15,17 +15,18 @@
  */
 package org.smartframework.cloud.examples.basic.auth.dataobject;
 
-import io.github.smart.cloud.common.pojo.Base;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+
+import java.io.Serializable;
 
 @Getter
 @Setter
+@ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class PermissionDO extends Base {
+public class PermissionDO implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     /**
      * 角色id

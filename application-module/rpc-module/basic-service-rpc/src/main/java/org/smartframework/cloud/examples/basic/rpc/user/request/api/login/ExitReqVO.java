@@ -15,13 +15,14 @@
  */
 package org.smartframework.cloud.examples.basic.rpc.user.request.api.login;
 
-import io.github.smart.cloud.common.pojo.Base;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
 import javax.validation.constraints.NotBlank;
+import java.io.Serializable;
 
 /**
  * @author collin
@@ -29,9 +30,10 @@ import javax.validation.constraints.NotBlank;
  */
 @Setter
 @Getter
+@ToString
 @NoArgsConstructor
 @SuperBuilder
-public class ExitReqVO extends Base {
+public class ExitReqVO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 

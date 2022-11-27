@@ -15,23 +15,21 @@
  */
 package org.smartframework.cloud.examples.support.rpc.gateway.request.api;
 
-import io.github.smart.cloud.common.pojo.Base;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
+import java.io.Serializable;
 
 @Getter
 @Setter
+@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 @SuperBuilder
-public class GenerateAesKeyReqVO extends Base {
+public class GenerateAesKeyReqVO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 

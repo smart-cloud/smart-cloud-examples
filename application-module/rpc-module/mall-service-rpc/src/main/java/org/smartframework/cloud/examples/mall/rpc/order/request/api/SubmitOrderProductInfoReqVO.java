@@ -15,12 +15,13 @@
  */
 package org.smartframework.cloud.examples.mall.rpc.order.request.api;
 
-import io.github.smart.cloud.common.pojo.Base;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 
 /**
  * 提交订单商品请求参数
@@ -30,10 +31,10 @@ import javax.validation.constraints.NotNull;
  */
 @Getter
 @Setter
-public class SubmitOrderProductInfoReqVO extends Base {
+@ToString
+public class SubmitOrderProductInfoReqVO implements Serializable {
 
     private static final long serialVersionUID = 1L;
-
     /**
      * 商品id
      */

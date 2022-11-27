@@ -15,12 +15,10 @@
  */
 package org.smartframework.cloud.examples.api.ac.core.vo;
 
-import io.github.smart.cloud.common.pojo.Base;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
+
+import java.io.Serializable;
 
 /**
  * 接口鉴权meta
@@ -30,10 +28,13 @@ import lombok.experimental.SuperBuilder;
  */
 @Getter
 @Setter
+@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 @SuperBuilder
-public class AuthMetaRespVO extends Base {
+public class AuthMetaRespVO implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     /**
      * 是否需要登陆校验（false则不需要校验）

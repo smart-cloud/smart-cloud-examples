@@ -18,7 +18,6 @@ package org.smartframework.cloud.examples.support.gateway.test.cases.rpc;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.google.common.collect.Lists;
 import io.github.smart.cloud.api.core.annotation.enums.SignType;
-import io.github.smart.cloud.common.pojo.Base;
 import io.github.smart.cloud.common.pojo.Response;
 import io.github.smart.cloud.constants.CommonReturnCodes;
 import io.github.smart.cloud.test.core.integration.WebReactiveIntegrationTest;
@@ -72,7 +71,7 @@ class ApiMetaRpcControllerIntegrationTest extends WebReactiveIntegrationTest {
         Mockito.doReturn(apiMetaFetchResponseMock).when(apiMetaRpcService).fetchApiMeta(Mockito.anyString());
         // mock end
 
-        Response<Base> result = post("/gateway/rpc/apiMeta/notifyFetch", new NotifyFetchReqDTO(serviceId), new TypeReference<Response<Base>>() {
+        Response<Void> result = post("/gateway/rpc/apiMeta/notifyFetch", new NotifyFetchReqDTO(serviceId), new TypeReference<Response<Void>>() {
         });
         Assertions.assertThat(result).isNotNull();
         Assertions.assertThat(result.getHead()).isNotNull();

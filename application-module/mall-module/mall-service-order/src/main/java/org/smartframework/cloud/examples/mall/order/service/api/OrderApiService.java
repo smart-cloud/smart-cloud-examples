@@ -16,14 +16,12 @@
 package org.smartframework.cloud.examples.mall.order.service.api;
 
 import com.baomidou.dynamic.datasource.annotation.DSTransactional;
-import io.github.smart.cloud.common.pojo.Base;
 import io.github.smart.cloud.common.pojo.Response;
 import io.github.smart.cloud.exception.BusinessException;
 import io.github.smart.cloud.exception.ServerException;
 import io.github.smart.cloud.starter.core.business.util.RespUtil;
 import io.github.smart.cloud.starter.global.id.GlobalId;
 import io.github.smart.cloud.starter.mybatis.plus.enums.DeleteState;
-import io.github.smart.cloud.utility.ObjectUtil;
 import io.github.smart.cloud.utility.spring.SpringContextUtil;
 import io.seata.spring.annotation.GlobalTransactional;
 import lombok.RequiredArgsConstructor;
@@ -127,7 +125,7 @@ public class OrderApiService {
         OrderStatus status = null;
         try {
             // 3、扣减库存
-            Response<Base> updateStockResponse = deductStock(products);
+            Response<Void> updateStockResponse = deductStock(products);
             if (RespUtil.isSuccess(updateStockResponse)) {
                 // TODO:4、抵扣优惠券
 
@@ -162,7 +160,7 @@ public class OrderApiService {
      * @param products
      * @return
      */
-    private Response<Base> deductStock(List<SubmitOrderProductInfoReqVO> products) {
+    private Response<Void> deductStock(List<SubmitOrderProductInfoReqVO> products) {
         List<UpdateStockItem> updateStockItems = products.stream().map(item -> {
             UpdateStockItem updateStockItem = new UpdateStockItem();
             updateStockItem.setId(item.getProductId());

@@ -15,10 +15,11 @@
  */
 package org.smartframework.cloud.examples.mall.rpc.order.response.api;
 
-import io.github.smart.cloud.common.pojo.Base;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -29,7 +30,10 @@ import java.util.List;
  */
 @Getter
 @Setter
-public class QuerySubmitResultRespVO extends Base {
+@ToString
+public class QuerySubmitResultRespVO implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     /**
      * 金额总金额

@@ -15,12 +15,9 @@
  */
 package org.smartframework.cloud.examples.api.ac.core.vo;
 
-import io.github.smart.cloud.common.pojo.Base;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
+import java.io.Serializable;
 import java.util.Map;
 
 /**
@@ -31,9 +28,10 @@ import java.util.Map;
  */
 @Getter
 @Setter
+@ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class ApiMetaFetchRespVO extends Base {
+public class ApiMetaFetchRespVO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 

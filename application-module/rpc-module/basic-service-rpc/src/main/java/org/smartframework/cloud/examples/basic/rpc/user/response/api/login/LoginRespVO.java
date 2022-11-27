@@ -15,12 +15,10 @@
  */
 package org.smartframework.cloud.examples.basic.rpc.user.response.api.login;
 
-import io.github.smart.cloud.common.pojo.Base;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
+
+import java.io.Serializable;
 
 /**
  * 登陆响应信息
@@ -30,10 +28,11 @@ import lombok.experimental.SuperBuilder;
  */
 @Setter
 @Getter
+@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 @SuperBuilder
-public class LoginRespVO extends Base {
+public class LoginRespVO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 

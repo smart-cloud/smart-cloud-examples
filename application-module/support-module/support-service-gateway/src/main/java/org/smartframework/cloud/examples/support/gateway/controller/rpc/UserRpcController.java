@@ -15,7 +15,6 @@
  */
 package org.smartframework.cloud.examples.support.gateway.controller.rpc;
 
-import io.github.smart.cloud.common.pojo.Base;
 import io.github.smart.cloud.common.pojo.Response;
 import io.github.smart.cloud.starter.core.business.util.RespUtil;
 import lombok.RequiredArgsConstructor;
@@ -46,7 +45,7 @@ public class UserRpcController implements UserRpc {
      * @return
      */
     @Override
-    public Response<Base> cacheUserInfo(CacheUserInfoReqDTO req) {
+    public Response<Void> cacheUserInfo(CacheUserInfoReqDTO req) {
         userRpcService.cacheUserInfo(req);
         return RespUtil.success();
     }
@@ -58,7 +57,7 @@ public class UserRpcController implements UserRpc {
      * @return
      */
     @Override
-    public Response<Base> exit(ExitLoginReqDTO req) {
+    public Response<Void> exit(ExitLoginReqDTO req) {
         userRpcService.exit(req);
         return RespUtil.success();
     }

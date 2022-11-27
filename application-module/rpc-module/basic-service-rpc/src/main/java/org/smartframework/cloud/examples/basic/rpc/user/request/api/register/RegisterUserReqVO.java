@@ -15,10 +15,10 @@
  */
 package org.smartframework.cloud.examples.basic.rpc.user.request.api.register;
 
-import io.github.smart.cloud.common.pojo.Base;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 import org.smartframework.cloud.examples.basic.rpc.user.request.api.login.LoginInfoInsertReqVO;
 import org.smartframework.cloud.examples.basic.rpc.user.request.api.user.UserInfoInsertReqVO;
@@ -26,6 +26,7 @@ import org.smartframework.cloud.examples.basic.rpc.user.request.api.user.UserInf
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 
 /**
  * 用户注册请求参数
@@ -35,9 +36,10 @@ import javax.validation.constraints.NotNull;
  */
 @Setter
 @Getter
+@ToString
 @NoArgsConstructor
 @SuperBuilder
-public class RegisterUserReqVO extends Base {
+public class RegisterUserReqVO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 

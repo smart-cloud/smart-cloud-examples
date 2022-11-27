@@ -15,19 +15,18 @@
  */
 package org.smartframework.cloud.examples.support.rpc.gateway.response.api;
 
-import io.github.smart.cloud.common.pojo.Base;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
+
+import java.io.Serializable;
 
 @Getter
 @Setter
+@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 @SuperBuilder
-public class GenerateClientPubKeyRespVO extends Base {
+public class GenerateClientPubKeyRespVO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 

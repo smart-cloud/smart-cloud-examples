@@ -15,11 +15,13 @@
  */
 package org.smartframework.cloud.examples.api.ac.core.properties;
 
-import io.github.smart.cloud.common.pojo.Base;
-import io.github.smart.cloud.starter.configure.constants.SmartConstant;
+import io.github.smart.cloud.starter.configure.constants.ConfigureConstant;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+
+import java.io.Serializable;
 
 /**
  * 接口元数据相关配置
@@ -29,8 +31,9 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  */
 @Getter
 @Setter
-@ConfigurationProperties(prefix = SmartConstant.SMART_PROPERTIES_PREFIX)
-public class ApiAccessProperties extends Base {
+@ToString
+@ConfigurationProperties(prefix = ConfigureConstant.SMART_PROPERTIES_PREFIX)
+public class ApiAccessProperties implements Serializable {
 
     private static final long serialVersionUID = 1L;
 

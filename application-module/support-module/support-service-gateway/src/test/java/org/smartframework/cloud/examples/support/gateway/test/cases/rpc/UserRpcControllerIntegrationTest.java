@@ -17,7 +17,6 @@ package org.smartframework.cloud.examples.support.gateway.test.cases.rpc;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.google.common.collect.Sets;
-import io.github.smart.cloud.common.pojo.Base;
 import io.github.smart.cloud.common.pojo.Response;
 import io.github.smart.cloud.constants.CommonReturnCodes;
 import io.github.smart.cloud.starter.redis.adapter.IRedisAdapter;
@@ -57,7 +56,7 @@ class UserRpcControllerIntegrationTest extends WebReactiveIntegrationTest {
                 .permissions(Sets.newHashSet("/user/api/register/register"))
                 .build();
 
-        Response<Base> result = post("/gateway/rpc/user/cacheUserInfo", req, new TypeReference<Response<Base>>() {
+        Response<Void> result = post("/gateway/rpc/user/cacheUserInfo", req, new TypeReference<Response<Void>>() {
         });
         Assertions.assertThat(result).isNotNull();
         Assertions.assertThat(result.getHead()).isNotNull();

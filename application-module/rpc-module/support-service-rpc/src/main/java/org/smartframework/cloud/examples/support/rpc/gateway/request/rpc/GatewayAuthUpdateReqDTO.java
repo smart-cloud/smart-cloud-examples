@@ -15,14 +15,11 @@
  */
 package org.smartframework.cloud.examples.support.rpc.gateway.request.rpc;
 
-import io.github.smart.cloud.common.pojo.Base;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 
 /**
  * 修改权限信息
@@ -32,10 +29,11 @@ import javax.validation.constraints.NotNull;
  */
 @Getter
 @Setter
+@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 @SuperBuilder
-public class GatewayAuthUpdateReqDTO extends Base {
+public class GatewayAuthUpdateReqDTO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 

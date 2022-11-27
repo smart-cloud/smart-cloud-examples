@@ -15,21 +15,21 @@
  */
 package org.smartframework.cloud.examples.basic.rpc.auth.response.rpc;
 
-import io.github.smart.cloud.common.pojo.Base;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
 
+import java.io.Serializable;
 import java.util.Set;
 
 @Setter
 @Getter
+@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 @SuperBuilder
-public class AuthRespDTO extends Base {
+public class AuthRespDTO implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     /**
      * 用户所拥有的角色

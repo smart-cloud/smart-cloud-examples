@@ -17,15 +17,16 @@ package org.smartframework.cloud.examples.support.gateway.cache;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.github.smart.cloud.api.core.annotation.enums.SignType;
-import io.github.smart.cloud.common.pojo.Base;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 import org.apache.commons.collections4.SetUtils;
 import org.smartframework.cloud.examples.api.ac.core.vo.ApiAccessMetaRespVO;
 import org.smartframework.cloud.examples.api.ac.core.vo.AuthMetaRespVO;
 import org.smartframework.cloud.examples.api.ac.core.vo.DataSecurityMetaRespVO;
 import org.smartframework.cloud.examples.api.ac.core.vo.RepeatSubmitCheckMetaRespVO;
 
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -37,7 +38,8 @@ import java.util.Set;
  */
 @Getter
 @Setter
-public class ApiAccessMetaCache extends Base {
+@ToString
+public class ApiAccessMetaCache implements Serializable {
 
     private static final long serialVersionUID = 1L;
     //-----------------------接口鉴权meta end-----------------------

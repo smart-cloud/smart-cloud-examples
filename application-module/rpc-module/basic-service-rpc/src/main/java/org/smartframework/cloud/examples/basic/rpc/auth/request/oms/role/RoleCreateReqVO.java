@@ -15,19 +15,23 @@
  */
 package org.smartframework.cloud.examples.basic.rpc.auth.request.oms.role;
 
-import io.github.smart.cloud.common.pojo.Base;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
 import javax.validation.constraints.NotBlank;
+import java.io.Serializable;
 
 @Setter
 @Getter
+@ToString
 @NoArgsConstructor
 @SuperBuilder
-public class RoleCreateReqVO extends Base {
+public class RoleCreateReqVO implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     /**
      * 角色编码

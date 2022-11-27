@@ -15,7 +15,6 @@
  */
 package org.smartframework.cloud.examples.support.rpc.gateway;
 
-import io.github.smart.cloud.common.pojo.Base;
 import io.github.smart.cloud.common.pojo.Response;
 import io.github.smart.cloud.starter.rpc.feign.annotation.SmartFeignClient;
 import org.smartframework.cloud.examples.support.rpc.constant.RpcConstants;
@@ -43,7 +42,7 @@ public interface UserRpc {
      * @return
      */
     @PostMapping("gateway/rpc/user/cacheUserInfo")
-    Response<Base> cacheUserInfo(@RequestBody @Valid CacheUserInfoReqDTO req);
+    Response<Void> cacheUserInfo(@RequestBody @Valid CacheUserInfoReqDTO req);
 
     /**
      * 退出登录
@@ -52,6 +51,6 @@ public interface UserRpc {
      * @return
      */
     @PostMapping("gateway/rpc/user/exit")
-    Response<Base> exit(@RequestBody @Valid ExitLoginReqDTO req);
+    Response<Void> exit(@RequestBody @Valid ExitLoginReqDTO req);
 
 }

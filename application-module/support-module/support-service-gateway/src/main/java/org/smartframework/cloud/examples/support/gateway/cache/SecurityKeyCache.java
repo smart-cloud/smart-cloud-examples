@@ -15,9 +15,11 @@
  */
 package org.smartframework.cloud.examples.support.gateway.cache;
 
-import io.github.smart.cloud.common.pojo.Base;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
+
+import java.io.Serializable;
 
 /**
  * 签名相关key
@@ -27,7 +29,10 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-public class SecurityKeyCache extends Base {
+@ToString
+public class SecurityKeyCache implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     /**
      * 客户端生成的公钥对应的系数，用于客户端签名校验

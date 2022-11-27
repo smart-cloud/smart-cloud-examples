@@ -15,11 +15,13 @@
  */
 package org.smartframework.cloud.examples.basic.rpc.auth.response.oms.user.role;
 
-import io.github.smart.cloud.common.pojo.Base;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 import lombok.experimental.SuperBuilder;
+
+import java.io.Serializable;
 
 /**
  * 权限信息
@@ -29,9 +31,10 @@ import lombok.experimental.SuperBuilder;
  */
 @Setter
 @Getter
+@ToString
 @NoArgsConstructor
 @SuperBuilder
-public class PermissionInfoRespVO extends Base {
+public class PermissionInfoRespVO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 

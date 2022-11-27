@@ -15,9 +15,11 @@
  */
 package org.smartframework.cloud.examples.mall.rpc.order.response.api;
 
-import io.github.smart.cloud.common.pojo.Base;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
+
+import java.io.Serializable;
 
 /**
  * 运单信息
@@ -25,10 +27,12 @@ import lombok.Setter;
  * @author collin
  * @date 2021-02-07
  */
-
 @Getter
 @Setter
-public class OrderDeliveryRespVO extends Base {
+@ToString
+public class OrderDeliveryRespVO implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     /**
      * 商品名称

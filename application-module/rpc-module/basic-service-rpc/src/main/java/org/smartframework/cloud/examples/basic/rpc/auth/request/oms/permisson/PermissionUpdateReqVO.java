@@ -15,20 +15,24 @@
  */
 package org.smartframework.cloud.examples.basic.rpc.auth.request.oms.permisson;
 
-import io.github.smart.cloud.common.pojo.Base;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 
 @Setter
 @Getter
+@ToString
 @NoArgsConstructor
 @SuperBuilder
-public class PermissionUpdateReqVO extends Base {
+public class PermissionUpdateReqVO implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     /**
      * 权限主键id

@@ -15,12 +15,13 @@
  */
 package org.smartframework.cloud.examples.mall.rpc.order.request.api;
 
-import io.github.smart.cloud.common.pojo.Base;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -31,7 +32,8 @@ import java.util.List;
  */
 @Getter
 @Setter
-public class SubmitOrderReqVO extends Base {
+@ToString
+public class SubmitOrderReqVO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 

@@ -15,25 +15,23 @@
  */
 package org.smartframework.cloud.examples.support.rpc.gateway.request.rpc;
 
-import io.github.smart.cloud.common.pojo.Base;
 import io.github.smart.cloud.mask.MaskLog;
 import io.github.smart.cloud.mask.MaskRule;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 import java.util.Set;
 
 @Getter
 @Setter
+@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 @SuperBuilder
-public class CacheUserInfoReqDTO extends Base {
+public class CacheUserInfoReqDTO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 

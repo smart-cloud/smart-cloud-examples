@@ -16,7 +16,6 @@
 package org.smartframework.cloud.examples.basic.user.service.api;
 
 import com.baomidou.dynamic.datasource.annotation.DS;
-import io.github.smart.cloud.common.pojo.Base;
 import io.github.smart.cloud.common.pojo.Response;
 import io.github.smart.cloud.common.pojo.ResponseHead;
 import io.github.smart.cloud.exception.BusinessException;
@@ -120,7 +119,7 @@ public class LoginInfoApiService {
      */
     @DS(DataSourceName.BASIC_USER_SLAVE)
     public void exit(ExitReqVO req) {
-        Response<Base> exitLoginResponse = userRpc.exit(ExitLoginReqDTO.builder().token(req.getToken()).build());
+        Response<Void> exitLoginResponse = userRpc.exit(ExitLoginReqDTO.builder().token(req.getToken()).build());
         if (!RespUtil.isSuccess(exitLoginResponse)) {
             throw new ServerException(RespUtil.getFailMsg(exitLoginResponse));
         }
@@ -155,7 +154,7 @@ public class LoginInfoApiService {
             cacheUserInfoReqDTO.setPermissions(authRespDTO.getPermissions());
         }
 
-        Response<Base> cacheUserInfoResponse = userRpc.cacheUserInfo(cacheUserInfoReqDTO);
+        Response<Void> cacheUserInfoResponse = userRpc.cacheUserInfo(cacheUserInfoReqDTO);
         if (!RespUtil.isSuccess(cacheUserInfoResponse)) {
             throw new ServerException(RespUtil.getFailMsg(cacheUserInfoResponse));
         }

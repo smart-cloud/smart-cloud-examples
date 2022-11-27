@@ -15,17 +15,18 @@
  */
 package org.smartframework.cloud.examples.basic.rpc.user.request.api.login;
 
-import io.github.smart.cloud.common.pojo.Base;
 import io.github.smart.cloud.mask.MaskLog;
 import io.github.smart.cloud.mask.MaskRule;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.io.Serializable;
 
 /**
  * 添加登陆信息请求参数
@@ -35,9 +36,10 @@ import javax.validation.constraints.Size;
  */
 @Setter
 @Getter
+@ToString
 @NoArgsConstructor
 @SuperBuilder
-public class LoginInfoInsertReqVO extends Base {
+public class LoginInfoInsertReqVO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 

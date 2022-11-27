@@ -16,7 +16,6 @@
 package org.smartframework.cloud.examples.mall.product.test.cases.integration.rpc;
 
 import com.fasterxml.jackson.core.type.TypeReference;
-import io.github.smart.cloud.common.pojo.Base;
 import io.github.smart.cloud.common.pojo.Response;
 import io.github.smart.cloud.constants.CommonReturnCodes;
 import io.github.smart.cloud.test.core.integration.WebMvcIntegrationTest;
@@ -99,8 +98,8 @@ class ProductInfoRpcControllerIntegrationTest extends WebMvcIntegrationTest {
         }
         UpdateStockReqDTO updateStockReqDTO = new UpdateStockReqDTO(updateStockItems);
 
-        Response<Base> result = super.post("/product/rpc/productInfo/updateStock",
-                updateStockReqDTO, new TypeReference<Response<Base>>() {
+        Response<Void> result = super.post("/product/rpc/productInfo/updateStock",
+                updateStockReqDTO, new TypeReference<Response<Void>>() {
                 });
 
         Assertions.assertThat(result).isNotNull();

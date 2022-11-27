@@ -15,12 +15,13 @@
  */
 package org.smartframework.cloud.examples.mall.rpc.product.request.oms;
 
-import io.github.smart.cloud.common.pojo.Base;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 
 /**
  * 逻辑删除请求字段
@@ -30,7 +31,8 @@ import javax.validation.constraints.NotNull;
  */
 @Getter
 @Setter
-public class ProductDeleteReqVO extends Base {
+@ToString
+public class ProductDeleteReqVO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 

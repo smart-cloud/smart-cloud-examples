@@ -15,15 +15,12 @@
  */
 package org.smartframework.cloud.examples.mall.rpc.product.request.rpc;
 
-import io.github.smart.cloud.common.pojo.Base;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 
 /**
  * 根据id查询商品信息请求参数
@@ -33,10 +30,11 @@ import javax.validation.constraints.NotNull;
  */
 @Getter
 @Setter
+@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 @SuperBuilder
-public class QryProductByIdReqDTO extends Base {
+public class QryProductByIdReqDTO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 

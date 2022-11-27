@@ -15,12 +15,13 @@
  */
 package org.smartframework.cloud.examples.api.ac.core.vo;
 
-import io.github.smart.cloud.common.pojo.Base;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
+
+import java.io.Serializable;
 
 /**
  * 接口安全（加解密、签名）meta
@@ -33,7 +34,9 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @AllArgsConstructor
 @SuperBuilder
-public class DataSecurityMetaRespVO extends Base {
+public class DataSecurityMetaRespVO implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     /**
      * 请求参数是否需要解密

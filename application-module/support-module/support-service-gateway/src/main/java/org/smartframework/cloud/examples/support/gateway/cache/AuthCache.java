@@ -15,10 +15,11 @@
  */
 package org.smartframework.cloud.examples.support.gateway.cache;
 
-import io.github.smart.cloud.common.pojo.Base;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
+import java.io.Serializable;
 import java.util.Set;
 
 /**
@@ -29,7 +30,10 @@ import java.util.Set;
  */
 @Getter
 @Setter
-public class AuthCache extends Base {
+@ToString
+public class AuthCache implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     /**
      * 用户所拥有的角色

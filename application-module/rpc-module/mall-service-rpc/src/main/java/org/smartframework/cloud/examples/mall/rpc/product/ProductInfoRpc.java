@@ -15,7 +15,6 @@
  */
 package org.smartframework.cloud.examples.mall.rpc.product;
 
-import io.github.smart.cloud.common.pojo.Base;
 import io.github.smart.cloud.common.pojo.Response;
 import io.github.smart.cloud.starter.rpc.feign.annotation.SmartFeignClient;
 import org.smartframework.cloud.examples.mall.rpc.constant.RpcConstants;
@@ -67,6 +66,6 @@ public interface ProductInfoRpc {
      * @return
      */
     @PostMapping("product/rpc/productInfo/updateStock")
-    Response<Base> updateStock(@RequestBody @Valid UpdateStockReqDTO req);
+    Response<Void> updateStock(@RequestBody @Valid UpdateStockReqDTO req);
 
 }

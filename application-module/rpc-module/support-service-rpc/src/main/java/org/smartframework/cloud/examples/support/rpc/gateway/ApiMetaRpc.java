@@ -15,7 +15,6 @@
  */
 package org.smartframework.cloud.examples.support.rpc.gateway;
 
-import io.github.smart.cloud.common.pojo.Base;
 import io.github.smart.cloud.common.pojo.Response;
 import io.github.smart.cloud.starter.rpc.feign.annotation.SmartFeignClient;
 import org.smartframework.cloud.examples.support.rpc.constant.RpcConstants;
@@ -42,6 +41,6 @@ public interface ApiMetaRpc {
      * @return
      */
     @PostMapping("gateway/rpc/apiMeta/notifyFetch")
-    Response<Base> notifyFetch(@RequestBody @Valid NotifyFetchReqDTO req);
+    Response<Void> notifyFetch(@RequestBody @Valid NotifyFetchReqDTO req);
 
 }
