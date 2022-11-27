@@ -16,7 +16,6 @@
 package org.smartframework.cloud.examples.support.gateway.filter.log;
 
 import io.github.smart.cloud.common.web.pojo.LogAspectDO;
-import io.github.smart.cloud.utility.spring.condition.ConditionEnableLogInfo;
 import lombok.extern.slf4j.Slf4j;
 import org.smartframework.cloud.examples.support.gateway.constants.GatewayConstants;
 import org.smartframework.cloud.examples.support.gateway.constants.Order;
@@ -41,7 +40,6 @@ import reactor.core.publisher.SignalType;
  */
 @Slf4j
 @Component
-@Conditional(ConditionEnableLogInfo.class)
 public class GatewayLogFilter implements WebFilter, Ordered {
 
     @Override
