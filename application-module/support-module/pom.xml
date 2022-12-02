@@ -41,7 +41,7 @@
 
 		<dependency>
 			<groupId>io.github.smart-cloud</groupId>
-			<artifactId>smart-cloud-starter-log4j2</artifactId>
+			<artifactId>smart-cloud-starter-logback</artifactId>
 		</dependency>
 
 		<dependency>
