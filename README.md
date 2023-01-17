@@ -30,6 +30,10 @@ smart-cloud-examples
 ```
 ## （二）工程模块图
 ![](docs/images/smart-cloud-examples.png)
+
+## （三）架构图
+![](docs/images/service_architecture.jpg)
+
 # 二、接口安全
 
 ## （一）流程
