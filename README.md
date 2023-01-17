@@ -29,7 +29,7 @@ smart-cloud-examples
           └── support-service-gateway -- 网关[端口:80]
 ```
 ## （二）工程模块图
-![](docs/images/smart-cloud-examples.png)
+![](docs/images/smart-cloud-examples.jpg)
 
 ## （三）架构图
 ![](docs/images/service_architecture.jpg)
