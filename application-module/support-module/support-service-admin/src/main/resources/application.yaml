@@ -6,3 +6,15 @@ spring:
 
 server:
   port: 10011
+
+smart:
+  monitor:
+    robots:
+      #风控
+      risk:
+        key: 15228554-fc8e-481f-83bc-1e0992f87aea
+        messageTemplate: '{"msgtype":"markdown","markdown":{"content":"**服务名**: %s\n**address**: %s\n**状态**: %s"}}'
+      #业务
+      business:
+        key: b9f23041-3978-43f9-9831-1938c312e87b
+        messageTemplate: '{"msgtype":"markdown","markdown":{"content":"**服务名**: %s\n**address**: %s\n**状态**: %s"}}'

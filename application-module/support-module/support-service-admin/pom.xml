@@ -27,6 +27,10 @@
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 	<artifactId>support-service-admin</artifactId>
+
+	<properties>
+		<hutool>5.8.18</hutool>
+	</properties>
 	
 	<dependencies>
 		<dependency>
@@ -40,14 +44,9 @@
 		</dependency>
 
 		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-mail</artifactId>
-			<exclusions>
-				<exclusion>
-					<artifactId>spring-boot-starter-logging</artifactId>
-					<groupId>org.springframework.boot</groupId>
-				</exclusion>
-			</exclusions>
+			<groupId>cn.hutool</groupId>
+			<artifactId>hutool-http</artifactId>
+			<version>${hutool}</version>
 		</dependency>
 	</dependencies>
 
