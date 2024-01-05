@@ -25,6 +25,7 @@ import de.codecentric.boot.admin.server.notify.AbstractStatusChangeNotifier;
 import lombok.extern.slf4j.Slf4j;
 import org.smartframework.cloud.examples.support.admin.enums.RobotTemplateCode;
 import org.smartframework.cloud.examples.support.admin.service.IRobotService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
 
@@ -41,27 +42,29 @@ import java.util.Set;
 @Component
 public class AppChangeNotifier extends AbstractStatusChangeNotifier {
 
-    private final IRobotService robotService;
+    @Autowired
+    private IRobotService robotService;
+    private final InstanceRepository instanceRepository;
     /**
      * 风控服务名
      */
-    private static final Set<String> RISK_SERVICE_NAMES = new HashSet<>(8);
+    private static final Set<String> MONITOR_SERVICE_NAME = new HashSet<>(8);
     /**
-     * 监控服务名
+     * 服务启动时间
      */
-    private static final String MONITOR_SERVICE_NAME = "monitor";
+    private static final long START_UP_TS = System.currentTimeMillis();
 
     static {
-        RISK_SERVICE_NAMES.add("risk-rule");
-        RISK_SERVICE_NAMES.add("risk-approval");
-        RISK_SERVICE_NAMES.add("risk-collection");
-        RISK_SERVICE_NAMES.add("auth-provider");
-        RISK_SERVICE_NAMES.add("field-compute");
+        MONITOR_SERVICE_NAME.add("risk-rule");
+        MONITOR_SERVICE_NAME.add("risk-approval");
+        MONITOR_SERVICE_NAME.add("risk-collection");
+        MONITOR_SERVICE_NAME.add("auth-provider");
+        MONITOR_SERVICE_NAME.add("field-compute");
     }
 
-    public AppChangeNotifier(IRobotService robotService, InstanceRepository repository) {
+    public AppChangeNotifier(InstanceRepository repository) {
         super(repository);
-        this.robotService = robotService;
+        this.instanceRepository = repository;
     }
 
     @Override
@@ -73,6 +76,11 @@ public class AppChangeNotifier extends AbstractStatusChangeNotifier {
     protected Mono<Void> doNotify(InstanceEvent event, Instance instance) {
         return Mono.fromRunnable(() -> {
             Registration registration = instance.getRegistration();
+            if (System.currentTimeMillis() - START_UP_TS <= 60000) {
+                //服务启动时，1分钟内的服务通知过滤掉
+                return;
+            }
+
             // 排除掉监控服务本身
             if (MONITOR_SERVICE_NAME.equals(registration.getName())) {
                 return;
@@ -80,6 +88,7 @@ public class AppChangeNotifier extends AbstractStatusChangeNotifier {
 
             StatusInfo statusInfo = instance.getStatusInfo();
 
+            // 服务状态描述
             String state;
             if (statusInfo.isDown()) {
                 state = "<font color=\\\"comment\\\">**健康检查没通过**</font>";
@@ -94,8 +103,16 @@ public class AppChangeNotifier extends AbstractStatusChangeNotifier {
             }
             log.info("{}==>{}", registration.getName(), statusInfo.getStatus());
 
-            RobotTemplateCode robotTemplateCode = RISK_SERVICE_NAMES.contains(registration.getName()) ? RobotTemplateCode.RISK : RobotTemplateCode.BUSINESS;
-            robotService.sendWxworkNotice(robotTemplateCode, registration.getName(), registration.getServiceUrl(), state);
+            Long healthInstanceCount = instanceRepository.findByName(registration.getName())
+                    .filter(item -> item.getStatusInfo().isUp())
+                    .count()
+                    .share()
+                    .block();
+            // 在线实例数
+            String healthInstanceCountDesc = healthInstanceCount > 0 ? String.valueOf(healthInstanceCount) : "<font color=\\\"warning\\\">**0**</font>";
+
+            RobotTemplateCode robotTemplateCode = MONITOR_SERVICE_NAME.contains(registration.getName()) ? RobotTemplateCode.RISK : RobotTemplateCode.BUSINESS;
+            robotService.sendWxworkNotice(robotTemplateCode, registration.getName(), registration.getServiceUrl(), state, healthInstanceCountDesc);
         });
     }
 

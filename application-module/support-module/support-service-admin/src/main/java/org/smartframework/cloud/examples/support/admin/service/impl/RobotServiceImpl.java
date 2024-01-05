@@ -21,9 +21,9 @@ public class RobotServiceImpl implements IRobotService {
     private final MonitorProperties monitorProperties;
 
     @Override
-    public void sendWxworkNotice(RobotTemplateCode robotTemplateCode, String name, String address, String state) {
+    public void sendWxworkNotice(RobotTemplateCode robotTemplateCode, String name, String address, String state, String healthInstanceCountDesc) {
         RobotProperties robotProperties = monitorProperties.getRobots().get(robotTemplateCode.getCode());
-        sendWxworkNotice(robotProperties.getUrl(), String.format(robotProperties.getMessageTemplate(), name, address, state));
+        sendWxworkNotice(robotProperties.getUrl(), String.format(robotProperties.getMessageTemplate(), name, address, state, healthInstanceCountDesc));
     }
 
     private void sendWxworkNotice(String url, String content) {
