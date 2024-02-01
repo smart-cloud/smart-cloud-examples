@@ -78,7 +78,12 @@
 			<groupId>io.github.smart-cloud</groupId>
 			<artifactId>smart-cloud-starter-logback</artifactId>
 		</dependency>
-		
+
+		<dependency>
+			<groupId>io.github.smart-cloud</groupId>
+			<artifactId>smart-cloud-starter-actuator</artifactId>
+		</dependency>
+
 		<dependency>
 		    <groupId>com.alibaba.cloud</groupId>
 		    <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
