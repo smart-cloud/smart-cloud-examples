@@ -3,6 +3,10 @@ spring:
     name: supportServiceAdmin
   profiles:
     include: common-config,discovery
+  security:
+    user:
+      name: admin
+      password: ZD3jbvwv5Luvnwvk
 
 server:
   port: 10011
