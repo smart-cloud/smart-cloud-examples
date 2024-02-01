@@ -9,12 +9,19 @@ server:
 
 smart:
   monitor:
-    robots:
-      #风控
-      risk:
-        key: 15228554-fc8e-481f-83bc-1e0992f87aea
-        messageTemplate: '{"msgtype":"markdown","markdown":{"content":"**服务名**: %s\n**address**: %s\n**状态**: %s\n**在线实例数**: %s"}}'
-      #业务
-      business:
-        key: b9f23041-3978-43f9-9831-1938c312e87b
-        messageTemplate: '{"msgtype":"markdown","markdown":{"content":"**服务名**: %s\n**address**: %s\n**状态**: %s\n**在线实例数**: %s"}}'
+    robotKey: 15228554-fc8e-481f-83bc-1e0992f87aea
+    serviceInfos:
+      mallServiceOrder:
+        id: 16
+        robotKey: 15228554-fc8e-481f-83bc-1e0992f87aea
+        remindTagMinDiffTs: 2400000
+        reminders:
+          - Redzhang
+          - Markliu
+      mallServiceProduct:
+        id: 17
+        robotKey: 15228554-fc8e-481f-83bc-1edfgs587aea
+        remindTagMinDiffTs: 1800000
+        reminders:
+          - Redzhang
+          - Collin
