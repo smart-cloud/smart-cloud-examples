@@ -34,7 +34,7 @@ public class ProductInfoApi {
         return HttpUtil.get(
                 SystemTestConfig.getProductBaseUrl() + "product/api/productInfo/pageProduct", HttpHeaderUtil.build(),
                 reqVO, new TypeReference<Response<BasePageResponse<PageProductRespVO>>>() {
-                });
+                }, null);
     }
 
 }

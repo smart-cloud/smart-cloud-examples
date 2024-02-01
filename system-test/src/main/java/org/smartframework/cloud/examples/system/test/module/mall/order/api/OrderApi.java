@@ -38,7 +38,7 @@ public class OrderApi {
     public Response<QuerySubmitResultRespVO> querySubmitResult(String orderNo) throws IOException {
         return HttpUtil.get(SystemTestConfig.getOrderBaseUrl() + "order/api/order/submit?orderNo=" + orderNo, HttpHeaderUtil.build(),
                 null, new TypeReference<Response<QuerySubmitResultRespVO>>() {
-                });
+                }, null);
     }
 
 }

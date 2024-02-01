@@ -136,7 +136,7 @@ public class ApiMetaRpcService {
      */
     public Response<ApiMetaFetchRespVO> fetchApiMeta(String url) throws IOException {
         return HttpUtil.get(url, null, new TypeReference<Response<ApiMetaFetchRespVO>>() {
-        });
+        }, null);
     }
 
 }
