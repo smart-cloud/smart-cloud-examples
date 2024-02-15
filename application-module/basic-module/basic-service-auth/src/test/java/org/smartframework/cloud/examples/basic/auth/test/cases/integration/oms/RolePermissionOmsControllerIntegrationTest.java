@@ -16,7 +16,6 @@
 package org.smartframework.cloud.examples.basic.auth.test.cases.integration.oms;
 
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.google.common.collect.Sets;
 import io.github.smart.cloud.common.pojo.BasePageResponse;
 import io.github.smart.cloud.common.pojo.Response;
 import io.github.smart.cloud.constants.CommonReturnCodes;
@@ -39,6 +38,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.Set;
 
 @Rollback
 @Transactional
@@ -55,7 +55,7 @@ class RolePermissionOmsControllerIntegrationTest extends WebMvcIntegrationTest {
 
     @Test
     void testCreate() throws Exception {
-        HashSet<Long> permissonIds = Sets.newHashSet();
+        Set<Long> permissonIds = new HashSet<>(4);
         permissonIds.add(1L);
         permissonIds.add(2L);
         permissonIds.add(3L);
@@ -77,7 +77,7 @@ class RolePermissionOmsControllerIntegrationTest extends WebMvcIntegrationTest {
 
     @Test
     void testUpdate() throws Exception {
-        HashSet<Long> permissonIds = Sets.newHashSet();
+        Set<Long> permissonIds = new HashSet<>(4);
         permissonIds.add(1L);
         permissonIds.add(2L);
         permissonIds.add(3L);

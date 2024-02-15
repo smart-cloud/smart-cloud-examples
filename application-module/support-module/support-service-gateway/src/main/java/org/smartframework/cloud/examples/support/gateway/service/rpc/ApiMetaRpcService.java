@@ -16,7 +16,6 @@
 package org.smartframework.cloud.examples.support.gateway.service.rpc;
 
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.google.common.base.Preconditions;
 import io.github.smart.cloud.common.pojo.Response;
 import io.github.smart.cloud.exception.BusinessException;
 import io.github.smart.cloud.starter.core.business.util.RespUtil;
@@ -38,6 +37,7 @@ import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 
 import java.io.IOException;
 import java.util.List;
@@ -105,7 +105,7 @@ public class ApiMetaRpcService {
      */
     private String getFetchUrl(String serviceName) throws InterruptedException {
         List<ServiceInstance> serviceInstances = getServiceInstances(serviceName);
-        Preconditions.checkArgument(CollectionUtils.isNotEmpty(serviceInstances), String.format("service[%s] not registered", serviceName));
+        Assert.notEmpty(serviceInstances, String.format("service[%s] not registered", serviceName));
 
         ServiceInstance serviceInstance = serviceInstances.get(serviceInstances.size() - 1);
         return String.format("http://%s:%s%s", serviceInstance.getHost(), serviceInstance.getPort(), ApiMetaConstants.FETCH_URL);

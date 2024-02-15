@@ -15,7 +15,6 @@
  */
 package org.smartframework.cloud.examples.support.gateway.filter.access.core.datasecurity;
 
-import com.google.common.collect.Lists;
 import io.github.smart.cloud.api.core.annotation.enums.SignType;
 import io.github.smart.cloud.common.web.constants.SmartHttpHeaders;
 import io.github.smart.cloud.constants.SymbolConstant;
@@ -48,7 +47,9 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
 import java.security.interfaces.RSAPublicKey;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * 请求参数签名校验、解密
@@ -118,7 +119,9 @@ public class DataSecurityServerHttpRequestDecorator extends ServerHttpRequestDec
                             log.error("decode.error|value={}", value, e);
                         }
                     }
-                    queryParams.put(entry[0], Lists.newArrayList(value));
+                    List<String> values = new ArrayList<>(1);
+                    values.add(value);
+                    queryParams.put(entry[0], values);
                 }
             }
         });
@@ -184,7 +187,7 @@ public class DataSecurityServerHttpRequestDecorator extends ServerHttpRequestDec
             return securityKeyCache;
         }
 
-        SecurityKeyCache securityKeyCache = (SecurityKeyCache)redisAdapter.get(RedisKeyHelper.getSecurityKey(token));
+        SecurityKeyCache securityKeyCache = (SecurityKeyCache) redisAdapter.get(RedisKeyHelper.getSecurityKey(token));
         if (securityKeyCache == null) {
             throw new DataValidateException(GatewayReturnCodes.SECURITY_KEY_EXPIRED);
         }

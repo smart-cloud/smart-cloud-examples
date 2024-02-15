@@ -16,7 +16,6 @@
 package org.smartframework.cloud.examples.basic.user.test.cases.integration.api;
 
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.google.common.collect.Sets;
 import io.github.smart.cloud.common.pojo.Response;
 import io.github.smart.cloud.constants.CommonReturnCodes;
 import io.github.smart.cloud.starter.core.business.util.RespUtil;
@@ -25,6 +24,7 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentMatchers;
 import org.mockito.Mockito;
+import org.mockito.internal.util.collections.Sets;
 import org.smartframework.cloud.examples.basic.rpc.auth.AuthRpc;
 import org.smartframework.cloud.examples.basic.rpc.auth.response.rpc.AuthRespDTO;
 import org.smartframework.cloud.examples.basic.rpc.user.request.api.login.ExitReqVO;
@@ -58,8 +58,8 @@ class LoginInfoApiControllerIntegrationTest extends WebMvcIntegrationTest {
         Mockito.when(userRpc.cacheUserInfo(ArgumentMatchers.any())).thenReturn(RespUtil.success());
         Mockito.when(authRpc.listByUid(ArgumentMatchers.any()))
                 .thenReturn(RespUtil.success(AuthRespDTO.builder()
-                        .roles(Sets.newHashSet("admin"))
-                        .permissions(Sets.newHashSet("/user/api/register/register"))
+                        .roles(Sets.newSet("admin"))
+                        .permissions(Sets.newSet("/user/api/register/register"))
                         .build()));
         // mock end
 

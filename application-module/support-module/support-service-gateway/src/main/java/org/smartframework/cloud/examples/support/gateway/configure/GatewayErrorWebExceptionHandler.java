@@ -18,6 +18,7 @@ package org.smartframework.cloud.examples.support.gateway.configure;
 import io.github.smart.cloud.common.pojo.Response;
 import io.github.smart.cloud.starter.web.exception.ExceptionHandlerContext;
 import io.github.smart.cloud.utility.JacksonUtil;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.web.reactive.error.ErrorWebExceptionHandler;
 import org.springframework.context.annotation.Configuration;
@@ -34,7 +35,10 @@ import reactor.core.publisher.Mono;
  */
 @Slf4j
 @Configuration
+@RequiredArgsConstructor
 public class GatewayErrorWebExceptionHandler implements ErrorWebExceptionHandler {
+
+    private final ExceptionHandlerContext exceptionHandlerContext;
 
     @Override
     public Mono<Void> handle(ServerWebExchange exchange, Throwable throwable) {
@@ -43,7 +47,7 @@ public class GatewayErrorWebExceptionHandler implements ErrorWebExceptionHandler
         ServerHttpResponse serverHttpResponse = exchange.getResponse();
         serverHttpResponse.getHeaders().setContentType(MediaType.APPLICATION_JSON);
         return serverHttpResponse.writeWith(Mono.fromSupplier(() -> {
-                    Response<Void> response = new Response<>(ExceptionHandlerContext.transRespHead(throwable));
+                    Response<Void> response = new Response<>(exceptionHandlerContext.transRespHead(throwable));
                     return serverHttpResponse.bufferFactory().wrap(JacksonUtil.toBytes(response));
                 }
         ));

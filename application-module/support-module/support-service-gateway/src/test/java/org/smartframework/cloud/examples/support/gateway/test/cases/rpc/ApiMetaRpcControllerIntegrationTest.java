@@ -16,12 +16,12 @@
 package org.smartframework.cloud.examples.support.gateway.test.cases.rpc;
 
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.google.common.collect.Lists;
 import io.github.smart.cloud.api.core.annotation.enums.SignType;
 import io.github.smart.cloud.common.pojo.Response;
 import io.github.smart.cloud.constants.CommonReturnCodes;
 import io.github.smart.cloud.test.core.integration.WebReactiveIntegrationTest;
 import org.assertj.core.api.Assertions;
+import org.assertj.core.util.Lists;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.smartframework.cloud.examples.api.ac.core.vo.*;

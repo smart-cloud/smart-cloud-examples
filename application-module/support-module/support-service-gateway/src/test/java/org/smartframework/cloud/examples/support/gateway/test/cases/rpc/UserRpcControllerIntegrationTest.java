@@ -16,12 +16,12 @@
 package org.smartframework.cloud.examples.support.gateway.test.cases.rpc;
 
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.google.common.collect.Sets;
 import io.github.smart.cloud.common.pojo.Response;
 import io.github.smart.cloud.constants.CommonReturnCodes;
 import io.github.smart.cloud.starter.redis.adapter.IRedisAdapter;
 import io.github.smart.cloud.test.core.integration.WebReactiveIntegrationTest;
 import org.assertj.core.api.Assertions;
+import org.assertj.core.util.Sets;
 import org.junit.jupiter.api.Test;
 import org.smartframework.cloud.examples.support.gateway.cache.SecurityKeyCache;
 import org.smartframework.cloud.examples.support.gateway.constants.RedisTtl;
@@ -52,8 +52,8 @@ class UserRpcControllerIntegrationTest extends WebReactiveIntegrationTest {
                 .username("zhangsan")
                 .mobile("13112345678")
                 .realName("张三")
-                .roles(Sets.newHashSet("admin", "pm"))
-                .permissions(Sets.newHashSet("/user/api/register/register"))
+                .roles(Sets.set("admin", "pm"))
+                .permissions(Sets.set("/user/api/register/register"))
                 .build();
 
         Response<Void> result = post("/gateway/rpc/user/cacheUserInfo", req, new TypeReference<Response<Void>>() {
