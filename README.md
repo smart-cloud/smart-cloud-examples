@@ -1,3 +1,6 @@
+[![build](https://github.com/smart-cloud/smart-cloud-examples/actions/workflows/build.yml/badge.svg?branch=dev)](https://github.com/smart-cloud/smart-cloud-examples/actions/workflows/build.yml)
+[![license](https://img.shields.io/badge/license-Apache%202-green)](https://github.com/smart-cloud/smart-cloud-examples/blob/dev/LICENSE)
+
 # 一、项目说明
 > 此项目为基于[smart-cloud](https://github.com/smart-cloud/smart-cloud)的微服务示例项目。
 > 自动化构建见[ci](https://github.com/smart-cloud/ci)
