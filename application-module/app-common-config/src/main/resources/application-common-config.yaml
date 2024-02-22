@@ -17,6 +17,9 @@ server:
 
 # 监控跟踪
 management:
+  health:
+    diskspace:
+      threshold: 10GB
   endpoint:
     health:
       show-details: always
