@@ -73,5 +73,13 @@ public interface GatewayReturnCodes {
      * AES key获取失败
      */
     String AES_KEY_NOT_FOUND = "400014";
+    /**
+     * 命中黑名单列表，禁止访问
+     */
+    String BLACK_LIST_FORBIDDEN_ACCSS = "400015";
+    /**
+     * 不在白名单中，禁止访问
+     */
+    String NOT_IN_WHITE_LIST = "400016";
 
 }

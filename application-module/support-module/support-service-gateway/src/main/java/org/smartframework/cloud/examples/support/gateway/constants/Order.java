@@ -33,9 +33,14 @@ public interface Order {
     int REQUEST_LOG = REWRITE_HTTP + 1;
 
     /**
+     * 黑白名单
+     */
+    int BLACK_WHITE_LIST = REQUEST_LOG + 1;
+
+    /**
      * api access注解全局过滤器order
      */
-    int API_ACCESS = REQUEST_LOG + 1;
+    int API_ACCESS = BLACK_WHITE_LIST + 1;
 
     /**
      * api access注解全局过滤器order
