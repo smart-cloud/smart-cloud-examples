@@ -37,6 +37,10 @@ public class BlackWhiteListFilter implements WebFilter, Ordered {
 
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, WebFilterChain chain) {
+        if (!blackWhiteListProperties.isEnable()) {
+            return chain.filter(exchange);
+        }
+
         String url = exchange.getRequest().getURI().getPath();
         String ipAddress = exchange.getRequest().getRemoteAddress().getAddress().getHostAddress();
 

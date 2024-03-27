@@ -20,6 +20,10 @@ import java.util.Set;
 public class BlackWhiteListProperties {
 
     /**
+     * 黑白名单是否可用
+     */
+    private boolean enable;
+    /**
      * 黑名单<url, 黑名单集合>
      */
     private Map<String, Set<String>> blackList = new LinkedHashMap<>();
