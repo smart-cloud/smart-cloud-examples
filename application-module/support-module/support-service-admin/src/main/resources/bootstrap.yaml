@@ -1,6 +1,8 @@
 spring:
   cloud:
     nacos:
+      discovery:
+        register-enabled: false
       config:
         server-addr: 127.0.0.1:8848
         prefix: supportServiceAdmin
