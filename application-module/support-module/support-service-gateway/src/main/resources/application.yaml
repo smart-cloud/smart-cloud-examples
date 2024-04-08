@@ -6,6 +6,8 @@ spring:
     name: supportServiceGateway
   profiles:
     include: common-config,discovery,feign
+  codec:
+    max-in-memory-size: 8MB
   cloud:
     gateway:
       discovery:
