@@ -14,7 +14,6 @@ import org.springframework.web.server.WebFilter;
 import org.springframework.web.server.WebFilterChain;
 import reactor.core.publisher.Mono;
 
-import java.util.Map;
 import java.util.Set;
 
 /**
@@ -44,8 +43,8 @@ public class BlackWhiteListFilter implements WebFilter, Ordered {
         String url = exchange.getRequest().getURI().getPath();
         String ipAddress = exchange.getRequest().getRemoteAddress().getAddress().getHostAddress();
 
-        checkBlackList(url, ipAddress, blackWhiteListProperties.getBlackList());
-        checkWhiteList(url, ipAddress, blackWhiteListProperties.getWhiteList());
+        checkBlackList(url, ipAddress, blackWhiteListProperties.getBlackIpList());
+        checkWhiteList(url, ipAddress, blackWhiteListProperties.getWhiteIpList());
 
         return chain.filter(exchange);
     }
@@ -55,16 +54,23 @@ public class BlackWhiteListFilter implements WebFilter, Ordered {
      *
      * @param url
      * @param ipAddress
-     * @param blackList
+     * @param blackIpList
      */
-    private void checkBlackList(String url, String ipAddress, Map<String, Set<String>> blackList) {
-        Set<String> blackIps = blackList.get(url);
-        if (CollectionUtils.isEmpty(blackIps)) {
+    private void checkBlackList(String url, String ipAddress, BlackWhiteListProperties.IpList blackIpList) {
+        Set<String> globalBlackIps = blackIpList.getIpList();
+        Set<String> urlBlackIps = blackIpList.getUrlIpList().get(url);
+        if (CollectionUtils.isEmpty(globalBlackIps) && CollectionUtils.isEmpty(urlBlackIps)) {
             return;
         }
 
-        for (String blackIp : blackIps) {
-            if (ipAddress.startsWith(blackIp)) {
+        for (String globalBlackIp : globalBlackIps) {
+            if (ipAddress.startsWith(globalBlackIp)) {
+                throw new BlackListException();
+            }
+        }
+
+        for (String urlBlackIp : urlBlackIps) {
+            if (ipAddress.startsWith(urlBlackIp)) {
                 throw new BlackListException();
             }
         }
@@ -75,24 +81,30 @@ public class BlackWhiteListFilter implements WebFilter, Ordered {
      *
      * @param url
      * @param ipAddress
-     * @param whiteList
+     * @param whiteIpList
      */
-    private void checkWhiteList(String url, String ipAddress, Map<String, Set<String>> whiteList) {
-        Set<String> whiteIps = whiteList.get(url);
-        if (CollectionUtils.isEmpty(whiteIps)) {
-            return;
-        }
-
-        boolean meetWhiteList = false;
-        for (String whiteIp : whiteIps) {
-            if (ipAddress.startsWith(whiteIp)) {
-                meetWhiteList = true;
-                break;
+    private void checkWhiteList(String url, String ipAddress, BlackWhiteListProperties.IpList whiteIpList) {
+        Set<String> globalIpList = whiteIpList.getIpList();
+        if (CollectionUtils.isNotEmpty(globalIpList)) {
+            for (String globalIp : globalIpList) {
+                if (ipAddress.startsWith(globalIp)) {
+                    return;
+                }
             }
         }
 
-        if (!meetWhiteList) {
-            throw new WhiteListException();
+        Set<String> urlWhiteIps = whiteIpList.getUrlIpList().get(url);
+        if (CollectionUtils.isNotEmpty(urlWhiteIps)) {
+            boolean meetUrlWhiteList = false;
+            for (String urlWhiteIp : urlWhiteIps) {
+                if (ipAddress.startsWith(urlWhiteIp)) {
+                    meetUrlWhiteList = true;
+                    break;
+                }
+            }
+            if (!meetUrlWhiteList) {
+                throw new WhiteListException();
+            }
         }
     }
 

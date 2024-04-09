@@ -5,11 +5,12 @@ import lombok.Setter;
 import lombok.ToString;
 
 import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
 
 /**
- * 黑白名单配置
+ * ip黑白名单配置
  *
  * @author collin
  * @date 2024-03-27
@@ -24,12 +25,26 @@ public class BlackWhiteListProperties {
      */
     private boolean enable;
     /**
-     * 黑名单<url, 黑名单集合>
+     * 黑名单
      */
-    private Map<String, Set<String>> blackList = new LinkedHashMap<>();
+    private IpList blackIpList = new IpList();
     /**
-     * 白名单<url, 白名单集合>
+     * 白名单
      */
-    private Map<String, Set<String>> whiteList = new LinkedHashMap<>();
+    private IpList whiteIpList = new IpList();
+
+    @Getter
+    @Setter
+    public static class IpList {
+        /**
+         * 全局ip名单
+         */
+        private Set<String> ipList = new LinkedHashSet<>();
+
+        /**
+         * url名单<url, ip名单集合>
+         */
+        private Map<String, Set<String>> urlIpList = new LinkedHashMap<>();
+    }
 
 }
