@@ -52,7 +52,7 @@ public class RewriteServerHttpResponseDecorator extends ServerHttpResponseDecora
     @Override
     public Mono<Void> writeWith(Publisher<? extends DataBuffer> body) {
         final MediaType contentType = super.getHeaders().getContentType();
-        if (RewriteHttpUtil.getLegalLogMediaTypes().contains(contentType)) {
+        if (RewriteHttpUtil.isReadable(contentType)) {
             DataBufferFactory dataBufferFactory = super.bufferFactory();
             if (body instanceof Mono) {
                 ((Mono<DataBuffer>) body).subscribe(buffer -> {

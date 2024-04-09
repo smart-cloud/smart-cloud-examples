@@ -35,7 +35,10 @@ public final class WebUtil {
         String value = request.getHeaders().getFirst(name);
         if (StringUtils.isBlank(value)) {
             // 如果请求头中不包含授权信息则从Query中获取参数
-            value = request.getQueryParams().getFirst(name.toLowerCase());
+            value = request.getQueryParams().getFirst(name);
+            if (StringUtils.isBlank(value)) {
+                value = request.getQueryParams().getFirst(name.toLowerCase());
+            }
         }
         return value;
     }

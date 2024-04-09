@@ -40,7 +40,7 @@ public class RewriteServerHttpRequestDecorator extends ServerHttpRequestDecorato
     RewriteServerHttpRequestDecorator(ServerHttpRequest request, DataBufferFactory dataBufferFactory) {
         super(request);
         Flux<DataBuffer> flux = super.getBody();
-        if (RewriteHttpUtil.getLegalLogMediaTypes().contains(super.getHeaders().getContentType())) {
+        if (RewriteHttpUtil.isReadable(super.getHeaders().getContentType())) {
             this.body = super.getBody().map(dataBuffer -> {
                 byte[] bytes = RewriteHttpUtil.convert(dataBuffer);
                 this.bodyStr = new String(bytes, StandardCharsets.UTF_8);

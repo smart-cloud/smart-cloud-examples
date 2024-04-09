@@ -19,9 +19,6 @@ import org.springframework.core.io.buffer.DataBuffer;
 import org.springframework.core.io.buffer.DataBufferUtils;
 import org.springframework.http.MediaType;
 
-import java.util.HashSet;
-import java.util.Set;
-
 /**
  * 重写http上下文工具类
  *
@@ -30,24 +27,17 @@ import java.util.Set;
  */
 public class RewriteHttpUtil {
 
-    /**
-     * 打印日志的http content-type类型
-     */
-    private static final Set<MediaType> LEGAL_LOG_MEDIA_TYPES = new HashSet<>(8);
-
-    static {
-        LEGAL_LOG_MEDIA_TYPES.add(MediaType.APPLICATION_XML);
-        LEGAL_LOG_MEDIA_TYPES.add(MediaType.APPLICATION_JSON);
-        LEGAL_LOG_MEDIA_TYPES.add(MediaType.APPLICATION_JSON_UTF8);
-        LEGAL_LOG_MEDIA_TYPES.add(MediaType.TEXT_PLAIN);
-        LEGAL_LOG_MEDIA_TYPES.add(MediaType.TEXT_XML);
-    }
-
-    public static Set<MediaType> getLegalLogMediaTypes() {
-        return LEGAL_LOG_MEDIA_TYPES;
-    }
-
     private RewriteHttpUtil() {
+    }
+
+    /**
+     * 是否可读
+     *
+     * @param contentType
+     * @return
+     */
+    public static boolean isReadable(MediaType contentType) {
+        return contentType != null && contentType.includes(MediaType.APPLICATION_JSON);
     }
 
     /**
