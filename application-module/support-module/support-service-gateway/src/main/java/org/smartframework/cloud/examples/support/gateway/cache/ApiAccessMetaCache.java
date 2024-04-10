@@ -158,11 +158,6 @@ public class ApiAccessMetaCache implements Serializable {
     }
 
     @JsonIgnore
-    public boolean isAuth() {
-        return requiresUser || requiresRoles.size() > 0 || requiresPermissions.size() > 0;
-    }
-
-    @JsonIgnore
     public boolean isDataSecurity() {
         return requestDecrypt || responseEncrypt || signType != SignType.NONE.getType();
     }

@@ -80,8 +80,8 @@ public class AuthFilter extends AbstractFilter {
     @Override
     protected Mono<Void> innerFilter(ServerWebExchange exchange, WebFilterChain chain, FilterContext filterContext) {
         ApiAccessMetaCache apiAccessMetaCache = filterContext.getApiAccessMetaCache();
-        // 判断是否需要登陆、鉴权
-        if (!apiAccessMetaCache.isAuth()) {
+        // 判断是否需要登陆校验
+        if (!apiAccessMetaCache.isRequiresUser()) {
             return chain.filter(exchange);
         }
 

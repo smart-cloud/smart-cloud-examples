@@ -229,8 +229,8 @@ sign = RSA签名签名(AES加密(head的json串) + AES加密(body json串))
 ```
 
 # 五、错误码
-所属模块 | code | message
----| ---|---
+所属模块 | code   | message
+---|--------|---
 basic-service-user | 100001 | 账号不存在
 basic-service-user | 100002 | 用户被禁用
 basic-service-user | 100003 | 用户已被删除
@@ -256,6 +256,9 @@ support-service-gateway | 400011 | 请求时间戳格式错误
 support-service-gateway | 400012 | 请求时间戳非法
 support-service-gateway | 400013 | security key过期
 support-service-gateway | 400014 | AES key获取失败
+support-service-gateway | 400015 | 命中黑名单列表，禁止访问
+support-service-gateway | 400016 | 不在白名单中，禁止访问
+support-service-gateway | 400017 | 不支持数据安全
 
 # FAQ
 ## spring cloud gateway集成openfeign启动时卡死

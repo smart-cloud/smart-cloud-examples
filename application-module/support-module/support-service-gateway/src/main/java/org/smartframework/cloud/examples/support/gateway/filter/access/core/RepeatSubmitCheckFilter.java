@@ -15,12 +15,15 @@
  */
 package org.smartframework.cloud.examples.support.gateway.filter.access.core;
 
+import io.github.smart.cloud.exception.DataValidateException;
 import io.github.smart.cloud.exception.RepeatSubmitException;
 import io.github.smart.cloud.utility.security.Md5Util;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.lang3.StringUtils;
 import org.redisson.api.RLock;
 import org.redisson.api.RedissonClient;
 import org.smartframework.cloud.examples.support.gateway.cache.ApiAccessMetaCache;
+import org.smartframework.cloud.examples.support.gateway.constants.GatewayReturnCodes;
 import org.smartframework.cloud.examples.support.gateway.constants.Order;
 import org.smartframework.cloud.examples.support.gateway.filter.FilterContext;
 import org.smartframework.cloud.examples.support.gateway.filter.access.AbstractFilter;
@@ -52,6 +55,11 @@ public class RepeatSubmitCheckFilter extends AbstractFilter {
         if (!apiAccessMetaCache.isRepeatSubmitCheck()) {
             return chain.filter(exchange);
         }
+
+        if (StringUtils.isBlank(filterContext.getToken())) {
+            throw new DataValidateException(GatewayReturnCodes.TOKEN_MISSING);
+        }
+
         ServerHttpRequest request = exchange.getRequest();
 
         StringBuilder key = new StringBuilder();

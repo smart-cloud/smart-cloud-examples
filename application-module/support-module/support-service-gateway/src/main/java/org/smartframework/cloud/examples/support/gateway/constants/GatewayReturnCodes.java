@@ -54,7 +54,7 @@ public interface GatewayReturnCodes {
      */
     String LOGIN_CACHE_MISSING = "400009";
     /**
-     * 请求时间戳为空
+     * 请求时间戳不能为空
      */
     String REQUEST_TIMESTAMP_MISSING = "400010";
     /**
@@ -81,5 +81,9 @@ public interface GatewayReturnCodes {
      * 不在白名单中，禁止访问
      */
     String NOT_IN_WHITE_LIST = "400016";
+    /**
+     * 不支持数据安全
+     */
+    String NOT_SUPPORT_DATA_SECURITY = "400017";
 
 }

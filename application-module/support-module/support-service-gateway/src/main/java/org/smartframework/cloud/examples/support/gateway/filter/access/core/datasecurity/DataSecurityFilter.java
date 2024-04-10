@@ -22,10 +22,10 @@ import org.apache.commons.lang3.StringUtils;
 import org.smartframework.cloud.examples.support.gateway.cache.ApiAccessMetaCache;
 import org.smartframework.cloud.examples.support.gateway.constants.GatewayReturnCodes;
 import org.smartframework.cloud.examples.support.gateway.constants.Order;
+import org.smartframework.cloud.examples.support.gateway.exception.UnsupportedFunctionException;
 import org.smartframework.cloud.examples.support.gateway.filter.FilterContext;
 import org.smartframework.cloud.examples.support.gateway.filter.access.AbstractFilter;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.MediaType;
+import org.smartframework.cloud.examples.support.gateway.util.RewriteHttpUtil;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
 import org.springframework.web.server.WebFilterChain;
@@ -55,15 +55,13 @@ public class DataSecurityFilter extends AbstractFilter {
             return chain.filter(exchange);
         }
 
+        if (!RewriteHttpUtil.isSupported(exchange.getRequest().getHeaders().getContentType())) {
+            throw new UnsupportedFunctionException(GatewayReturnCodes.NOT_SUPPORT_DATA_SECURITY);
+        }
+
         String token = filterContext.getToken();
         if (StringUtils.isBlank(token)) {
             throw new ParamValidateException(GatewayReturnCodes.TOKEN_MISSING);
-        }
-
-        HttpMethod httpMethod = exchange.getRequest().getMethod();
-        MediaType contentType = exchange.getRequest().getHeaders().getContentType();
-        if (!match(contentType, httpMethod)) {
-            return chain.filter(exchange);
         }
 
         return chain.filter(exchange.mutate()
@@ -71,27 +69,6 @@ public class DataSecurityFilter extends AbstractFilter {
                         apiAccessMetaCache.getSignType(), redisAdapter))
                 .response(new DataSecurityServerHttpResponseDecorator(exchange.getResponse(), apiAccessMetaCache.isResponseEncrypt(), apiAccessMetaCache.getSignType()))
                 .build());
-    }
-
-    /**
-     * 加解密、签名匹配条件
-     *
-     * @param contentType
-     * @param httpMethod
-     * @return
-     */
-    private boolean match(MediaType contentType, HttpMethod httpMethod) {
-        if (contentType == null) {
-            return false;
-        }
-
-        String contentTypeStr = contentType.toString();
-        if (!StringUtils.containsAny(contentTypeStr, MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_FORM_URLENCODED_VALUE)) {
-            return false;
-        }
-
-        // GET、POST以外的请求不做加解密、签名处理
-        return httpMethod == HttpMethod.GET || httpMethod == HttpMethod.POST;
     }
 
 }

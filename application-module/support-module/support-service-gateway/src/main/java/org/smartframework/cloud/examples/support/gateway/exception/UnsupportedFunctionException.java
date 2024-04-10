@@ -16,18 +16,17 @@
 package org.smartframework.cloud.examples.support.gateway.exception;
 
 import io.github.smart.cloud.exception.BaseException;
-import org.smartframework.cloud.examples.support.gateway.constants.GatewayReturnCodes;
 
 /**
- * 黑名单异常
+ * 不支持的功能
  *
  * @author collin
- * @date 2024-03-26
+ * @date 2024-04-10
  */
-public class BlackListException extends BaseException {
+public class UnsupportedFunctionException extends BaseException {
 
-    public BlackListException() {
-        super(GatewayReturnCodes.BLACK_LIST_FORBIDDEN_ACCSS);
+    public UnsupportedFunctionException(String code) {
+        super(code);
     }
 
 }

@@ -90,12 +90,14 @@ public class ApiMetaUtil {
             String[] urlTails = getUrlTails(method);
             for (String urlTail : urlTails) {
                 String urlCode = getUrlCode(urlHeader, urlTail);
+                DataSecurityMetaRespVO dataSecurityMeta = buildDataSecurityMeta(method);
+                RepeatSubmitCheckMetaRespVO repeatSubmitCheckMeta = buildRepeatSubmitCheckMeta(method);
 
                 ApiAccessMetaRespVO apiAccessMeta = new ApiAccessMetaRespVO();
-                apiAccessMeta.setAuthMeta(buildAuthMeta(method));
-                apiAccessMeta.setDataSecurityMeta(buildDataSecurityMeta(method));
-                apiAccessMeta.setRepeatSubmitCheckMeta(buildRepeatSubmitCheckMeta(method));
+                apiAccessMeta.setDataSecurityMeta(dataSecurityMeta);
+                apiAccessMeta.setRepeatSubmitCheckMeta(repeatSubmitCheckMeta);
                 apiAccessMeta.setRequestValidMillis(getRequestValidMillis(method));
+                apiAccessMeta.setAuthMeta(buildAuthMeta(method, repeatSubmitCheckMeta.getCheck(), dataSecurityMeta));
                 apiAccessMap.put(urlCode, apiAccessMeta);
             }
         }
@@ -161,16 +163,43 @@ public class ApiMetaUtil {
      * @param method
      * @return
      */
-    private AuthMetaRespVO buildAuthMeta(Method method) {
+    private AuthMetaRespVO buildAuthMeta(Method method, boolean resubmitCheck, DataSecurityMetaRespVO dataSecurityMetaRespVO) {
         RequirePermissions requirePermissions = method.getAnnotation(RequirePermissions.class);
         RequireRoles requireRoles = method.getAnnotation(RequireRoles.class);
         RequireUser requireUser = method.getAnnotation(RequireUser.class);
 
         AuthMetaRespVO authMeta = new AuthMetaRespVO();
-        authMeta.setRequireUser(requireUser != null);
+        authMeta.setRequireUser(isRequireUser(requirePermissions, requireRoles, requireUser, resubmitCheck, dataSecurityMetaRespVO));
         authMeta.setRequireRoles((requireRoles != null) ? requireRoles.value() : new String[0]);
         authMeta.setRequirePermissions((requirePermissions != null) ? requirePermissions.value() : new String[0]);
         return authMeta;
+    }
+
+    /**
+     * 是否需要登录校验
+     *
+     * @param requirePermissions
+     * @param requireRoles
+     * @param requireUser
+     * @param resubmitCheck
+     * @param dataSecurityMetaRespVO
+     * @return
+     */
+    private boolean isRequireUser(RequirePermissions requirePermissions, RequireRoles requireRoles, RequireUser requireUser,
+                                  boolean resubmitCheck, DataSecurityMetaRespVO dataSecurityMetaRespVO) {
+        if (requirePermissions != null || requireRoles != null || requireUser != null) {
+            return true;
+        }
+
+        if (resubmitCheck) {
+            return true;
+        }
+
+        if (dataSecurityMetaRespVO.getRequestDecrypt() || dataSecurityMetaRespVO.getResponseEncrypt()) {
+            return true;
+        }
+
+        return dataSecurityMetaRespVO.getSign() != SignType.NONE.getType();
     }
 
     private Set<Method> getAllApiMethods(Reflections reflections) {

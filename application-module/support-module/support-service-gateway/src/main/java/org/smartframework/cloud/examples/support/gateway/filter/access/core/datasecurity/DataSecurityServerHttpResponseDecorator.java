@@ -50,7 +50,7 @@ public class DataSecurityServerHttpResponseDecorator extends ServerHttpResponseD
     public Mono<Void> writeWith(Publisher<? extends DataBuffer> body) {
         // TODO:
         final MediaType contentType = super.getHeaders().getContentType();
-        if (RewriteHttpUtil.isReadable(contentType)) {
+        if (RewriteHttpUtil.isSupported(contentType)) {
             DataBufferFactory dataBufferFactory = super.bufferFactory();
             if (body instanceof Mono) {
                 ((Mono<DataBuffer>) body).subscribe(buffer -> {

@@ -31,12 +31,12 @@ public class RewriteHttpUtil {
     }
 
     /**
-     * 是否可读
+     * 是否支持
      *
      * @param contentType
      * @return
      */
-    public static boolean isReadable(MediaType contentType) {
+    public static boolean isSupported(MediaType contentType) {
         return contentType != null && contentType.includes(MediaType.APPLICATION_JSON);
     }
 
