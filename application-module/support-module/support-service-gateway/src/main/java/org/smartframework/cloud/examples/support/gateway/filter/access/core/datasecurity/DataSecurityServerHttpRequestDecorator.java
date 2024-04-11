@@ -30,8 +30,10 @@ import org.smartframework.cloud.examples.support.gateway.constants.GatewayConsta
 import org.smartframework.cloud.examples.support.gateway.constants.GatewayReturnCodes;
 import org.smartframework.cloud.examples.support.gateway.exception.AesKeyNotFoundException;
 import org.smartframework.cloud.examples.support.gateway.exception.RequestSignFailException;
+import org.smartframework.cloud.examples.support.gateway.exception.UnsupportedFunctionException;
 import org.smartframework.cloud.examples.support.gateway.filter.rewrite.RewriteServerHttpRequestDecorator;
 import org.smartframework.cloud.examples.support.gateway.util.RedisKeyHelper;
+import org.smartframework.cloud.examples.support.gateway.util.RewriteHttpUtil;
 import org.smartframework.cloud.examples.support.gateway.util.WebUtil;
 import org.springframework.core.io.buffer.DataBuffer;
 import org.springframework.core.io.buffer.DataBufferFactory;
@@ -66,6 +68,12 @@ public class DataSecurityServerHttpRequestDecorator extends ServerHttpRequestDec
 
     DataSecurityServerHttpRequestDecorator(ServerHttpRequest request, DataBufferFactory dataBufferFactory, String token, boolean requestDecrypt, byte signType, IRedisAdapter redisAdapter) {
         super(request);
+
+        if ((requestDecrypt || signType == SignType.REQUEST.getType() || signType == SignType.ALL.getType())
+                && !RewriteHttpUtil.isSupported(super.getHeaders().getContentType())) {
+            throw new UnsupportedFunctionException(GatewayReturnCodes.NOT_SUPPORT_DATA_SECURITY);
+        }
+
         Flux<DataBuffer> flux = super.getBody();
         this.redisAdapter = redisAdapter;
 

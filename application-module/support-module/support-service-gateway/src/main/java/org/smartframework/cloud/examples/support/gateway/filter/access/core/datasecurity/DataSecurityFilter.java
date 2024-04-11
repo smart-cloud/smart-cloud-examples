@@ -22,10 +22,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.smartframework.cloud.examples.support.gateway.cache.ApiAccessMetaCache;
 import org.smartframework.cloud.examples.support.gateway.constants.GatewayReturnCodes;
 import org.smartframework.cloud.examples.support.gateway.constants.Order;
-import org.smartframework.cloud.examples.support.gateway.exception.UnsupportedFunctionException;
 import org.smartframework.cloud.examples.support.gateway.filter.FilterContext;
 import org.smartframework.cloud.examples.support.gateway.filter.access.AbstractFilter;
-import org.smartframework.cloud.examples.support.gateway.util.RewriteHttpUtil;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
 import org.springframework.web.server.WebFilterChain;
@@ -53,10 +51,6 @@ public class DataSecurityFilter extends AbstractFilter {
         ApiAccessMetaCache apiAccessMetaCache = filterContext.getApiAccessMetaCache();
         if (!apiAccessMetaCache.isDataSecurity()) {
             return chain.filter(exchange);
-        }
-
-        if (!RewriteHttpUtil.isSupported(exchange.getRequest().getHeaders().getContentType())) {
-            throw new UnsupportedFunctionException(GatewayReturnCodes.NOT_SUPPORT_DATA_SECURITY);
         }
 
         String token = filterContext.getToken();
