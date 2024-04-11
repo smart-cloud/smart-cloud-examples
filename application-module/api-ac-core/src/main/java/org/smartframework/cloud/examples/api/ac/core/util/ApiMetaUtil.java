@@ -21,6 +21,7 @@ import io.github.smart.cloud.api.core.annotation.RequireTimestamp;
 import io.github.smart.cloud.api.core.annotation.auth.RequirePermissions;
 import io.github.smart.cloud.api.core.annotation.auth.RequireRoles;
 import io.github.smart.cloud.api.core.annotation.auth.RequireUser;
+import io.github.smart.cloud.api.core.annotation.constants.ApiAnnotationConstants;
 import io.github.smart.cloud.api.core.annotation.enums.SignType;
 import io.github.smart.cloud.constants.SymbolConstant;
 import io.github.smart.cloud.starter.core.constants.PackageConfig;
@@ -96,7 +97,7 @@ public class ApiMetaUtil {
                 ApiAccessMetaRespVO apiAccessMeta = new ApiAccessMetaRespVO();
                 apiAccessMeta.setDataSecurityMeta(dataSecurityMeta);
                 apiAccessMeta.setRepeatSubmitCheckMeta(repeatSubmitCheckMeta);
-                apiAccessMeta.setRequestValidMillis(getRequestValidMillis(method));
+                apiAccessMeta.setRequestValidMillis(getRequestValidMillis(method, dataSecurityMeta));
                 apiAccessMeta.setAuthMeta(buildAuthMeta(method, repeatSubmitCheckMeta.getCheck(), dataSecurityMeta));
                 apiAccessMap.put(urlCode, apiAccessMeta);
             }
@@ -131,9 +132,18 @@ public class ApiMetaUtil {
      * @param method
      * @return
      */
-    private Long getRequestValidMillis(Method method) {
+    private Long getRequestValidMillis(Method method, DataSecurityMetaRespVO dataSecurityMeta) {
         RequireTimestamp requireTimestamp = method.getAnnotation(RequireTimestamp.class);
-        return requireTimestamp == null ? null : requireTimestamp.validMillis();
+        if (requireTimestamp != null) {
+            return requireTimestamp.validMillis();
+        }
+
+        // 如果接口需要加解密或签名，则必须校验timestamp
+        if (dataSecurityMeta.getRequestDecrypt() || dataSecurityMeta.getResponseEncrypt() || dataSecurityMeta.getSign() != SignType.NONE.getType()) {
+            return ApiAnnotationConstants.DEFAULT_TIMESTAMP_VALID_MILLIS;
+        }
+
+        return null;
     }
 
     /**

@@ -162,4 +162,14 @@ public class ApiAccessMetaCache implements Serializable {
         return requestDecrypt || responseEncrypt || signType != SignType.NONE.getType();
     }
 
+    /**
+     * 是否需要校验时间戳
+     *
+     * @return
+     */
+    @JsonIgnore
+    public boolean isRequireCheckTimestamp() {
+        return (requestValidMillis != null && requestValidMillis > 0) || isDataSecurity();
+    }
+
 }

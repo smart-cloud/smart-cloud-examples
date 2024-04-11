@@ -17,6 +17,7 @@ package org.smartframework.cloud.examples.support.gateway.filter.access.core;
 
 import io.github.smart.cloud.common.web.constants.SmartHttpHeaders;
 import org.apache.commons.lang3.StringUtils;
+import org.smartframework.cloud.examples.support.gateway.cache.ApiAccessMetaCache;
 import org.smartframework.cloud.examples.support.gateway.constants.GatewayReturnCodes;
 import org.smartframework.cloud.examples.support.gateway.constants.Order;
 import org.smartframework.cloud.examples.support.gateway.exception.RequestTimestampException;
@@ -44,8 +45,8 @@ public class RequestTimestampCheckFilter extends AbstractFilter {
 
     @Override
     protected Mono<Void> innerFilter(ServerWebExchange exchange, WebFilterChain chain, FilterContext filterContext) {
-        Long requestValidMillis = filterContext.getApiAccessMetaCache().getRequestValidMillis();
-        if (requestValidMillis == null || requestValidMillis <= 0) {
+        ApiAccessMetaCache apiAccessMetaCache = filterContext.getApiAccessMetaCache();
+        if (!apiAccessMetaCache.isRequireCheckTimestamp()) {
             return chain.filter(exchange);
         }
 
@@ -56,7 +57,7 @@ public class RequestTimestampCheckFilter extends AbstractFilter {
         if (!StringUtils.isNumeric(requestTimestampStr)) {
             throw new RequestTimestampException(GatewayReturnCodes.REQUEST_TIMESTAMP_FORMAT_INVALID);
         }
-        if (Math.abs(System.currentTimeMillis() - Long.valueOf(requestTimestampStr)) > requestValidMillis) {
+        if (Math.abs(System.currentTimeMillis() - Long.valueOf(requestTimestampStr)) > apiAccessMetaCache.getRequestValidMillis()) {
             throw new RequestTimestampException(GatewayReturnCodes.REQUEST_TIMESTAMP_ILLEGAL);
         }
         return chain.filter(exchange);
