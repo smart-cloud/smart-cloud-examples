@@ -17,7 +17,6 @@ package org.smartframework.cloud.examples.support.gateway.filter.access.core.dat
 
 import io.github.smart.cloud.api.core.annotation.enums.SignType;
 import io.github.smart.cloud.common.web.constants.SmartHttpHeaders;
-import io.github.smart.cloud.constants.SymbolConstant;
 import io.github.smart.cloud.exception.DataValidateException;
 import io.github.smart.cloud.exception.ParamValidateException;
 import io.github.smart.cloud.starter.redis.adapter.IRedisAdapter;
@@ -26,32 +25,29 @@ import io.github.smart.cloud.utility.security.RsaUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.smartframework.cloud.examples.support.gateway.cache.SecurityKeyCache;
-import org.smartframework.cloud.examples.support.gateway.constants.GatewayConstants;
 import org.smartframework.cloud.examples.support.gateway.constants.GatewayReturnCodes;
+import org.smartframework.cloud.examples.support.gateway.dto.DataSecurityParamDTO;
 import org.smartframework.cloud.examples.support.gateway.exception.AesKeyNotFoundException;
 import org.smartframework.cloud.examples.support.gateway.exception.RequestSignFailException;
 import org.smartframework.cloud.examples.support.gateway.exception.UnsupportedFunctionException;
-import org.smartframework.cloud.examples.support.gateway.filter.rewrite.RewriteServerHttpRequestDecorator;
 import org.smartframework.cloud.examples.support.gateway.util.RedisKeyHelper;
 import org.smartframework.cloud.examples.support.gateway.util.RewriteHttpUtil;
+import org.smartframework.cloud.examples.support.gateway.util.SignUtil;
 import org.smartframework.cloud.examples.support.gateway.util.WebUtil;
 import org.springframework.core.io.buffer.DataBuffer;
 import org.springframework.core.io.buffer.DataBufferFactory;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.MediaType;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.http.server.reactive.ServerHttpRequestDecorator;
 import org.springframework.lang.NonNull;
+import org.springframework.util.Base64Utils;
 import org.springframework.util.MultiValueMap;
+import org.springframework.web.util.UriComponents;
+import org.springframework.web.util.UriComponentsBuilder;
 import reactor.core.publisher.Flux;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
+import java.net.URI;
 import java.nio.charset.StandardCharsets;
 import java.security.interfaces.RSAPublicKey;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 /**
  * 请求参数签名校验、解密
@@ -62,100 +58,130 @@ import java.util.List;
 @Slf4j
 public class DataSecurityServerHttpRequestDecorator extends ServerHttpRequestDecorator {
 
-    private transient Flux<DataBuffer> body;
     private final IRedisAdapter redisAdapter;
+
+    private transient Flux<DataBuffer> body;
+    private transient URI uri;
+    private transient MultiValueMap<String, String> queryParams;
+
     private transient SecurityKeyCache securityKeyCache;
 
     DataSecurityServerHttpRequestDecorator(ServerHttpRequest request, DataBufferFactory dataBufferFactory, String token, boolean requestDecrypt, byte signType, IRedisAdapter redisAdapter) {
         super(request);
 
-        if ((requestDecrypt || signType == SignType.REQUEST.getType() || signType == SignType.ALL.getType())
-                && !RewriteHttpUtil.isSupported(super.getHeaders().getContentType())) {
-            throw new UnsupportedFunctionException(GatewayReturnCodes.NOT_SUPPORT_DATA_SECURITY);
-        }
-
-        Flux<DataBuffer> flux = super.getBody();
         this.redisAdapter = redisAdapter;
 
-        final String requestStr = getEncryptedRequestStr(request);
-
-        // 请求信息验签
-        checkRequestSign(request, signType, requestStr, token);
-
-        if (requestDecrypt) {
-            flux.subscribe(buffer -> {
-                SecurityKeyCache securityKeyCache = getSecurityKeyCache(token);
-                String aesKey = securityKeyCache.getAesKey();
-                if (StringUtils.isBlank(aesKey)) {
-                    throw new AesKeyNotFoundException();
-                }
-                String decryptedRequestStr = AesUtil.decrypt(requestStr, aesKey);
-
-                HttpMethod httpMethod = request.getMethod();
-                if (httpMethod == HttpMethod.GET) {
-                    decryptUrlParams(decryptedRequestStr, request.getQueryParams());
-                } else if (httpMethod == HttpMethod.POST) {
-                    MediaType contentType = request.getHeaders().getContentType();
-                    if (MediaType.APPLICATION_FORM_URLENCODED_VALUE.equals(contentType.toString())) {
-                        decryptUrlParams(decryptedRequestStr, request.getQueryParams());
-                    } else if (MediaType.APPLICATION_JSON_VALUE.equals(contentType.toString())) {
-                        this.body = Flux.just(dataBufferFactory.wrap(decryptedRequestStr.getBytes(StandardCharsets.UTF_8)));
-                    }
-                }
-            });
-        } else {
-            this.body = flux;
-        }
+        checkSignAndDecryptRequest(request, dataBufferFactory, token, requestDecrypt, signType);
     }
 
     @Override
     public Flux<DataBuffer> getBody() {
-        return body;
+        return this.body;
     }
 
-    private void decryptUrlParams(String decryptedRequestStr, MultiValueMap<String, String> queryParams) {
-        queryParams.remove(GatewayConstants.REQUEST_ENCRYPT_PARAM_NAME);
-        Arrays.stream(decryptedRequestStr.split(SymbolConstant.AND)).forEach(param -> {
-            if (param.contains(SymbolConstant.EQUAL)) {
-                String[] entry = param.split(SymbolConstant.EQUAL);
-                if (entry.length > 0) {
-                    String value = entry[1];
-                    if (StringUtils.isNotBlank(value)) {
-                        try {
-                            value = URLDecoder.decode(value, StandardCharsets.UTF_8.name());
-                        } catch (UnsupportedEncodingException e) {
-                            log.error("decode.error|value={}", value, e);
-                        }
-                    }
-                    List<String> values = new ArrayList<>(1);
-                    values.add(value);
-                    queryParams.put(entry[0], values);
-                }
+    @Override
+    public URI getURI() {
+        return this.uri;
+    }
+
+    @Override
+    public MultiValueMap<String, String> getQueryParams() {
+        return this.queryParams;
+    }
+
+    /**
+     * 请求参数验签、解密
+     *
+     * @param request
+     * @param dataBufferFactory
+     * @param token
+     * @param requestDecrypt
+     * @param signType
+     */
+    private void checkSignAndDecryptRequest(ServerHttpRequest request, DataBufferFactory dataBufferFactory, String token, boolean requestDecrypt, byte signType) {
+        if (!requestDecrypt && signType == SignType.NONE.getType()) {
+            this.body = super.getBody();
+            this.uri = super.getURI();
+            this.queryParams = super.getQueryParams();
+            return;
+        }
+
+        if ((requestDecrypt || signType == SignType.REQUEST.getType() || signType == SignType.ALL.getType()) && !RewriteHttpUtil.isSupported(super.getHeaders().getContentType())) {
+            throw new UnsupportedFunctionException(GatewayReturnCodes.NOT_SUPPORT_DATA_SECURITY);
+        }
+
+        DataSecurityParamDTO dataSecurityParam = SignUtil.getDataSecurityParams(request);
+
+        // 1、请求参数验签
+        checkRequestSign(request, signType, token, dataSecurityParam);
+
+        // 2、param base64 decode
+        String base64DecodeUrlParams = StringUtils.isBlank(dataSecurityParam.getUrlParamsBase64()) ? null : new String(Base64Utils.decodeFromString(dataSecurityParam.getUrlParamsBase64()));
+        String base64DecodeBody = StringUtils.isBlank(dataSecurityParam.getBodyBase64()) ? null : new String(Base64Utils.decodeFromString(dataSecurityParam.getBodyBase64()));
+
+        if (base64DecodeUrlParams == null && base64DecodeBody == null) {
+            setRealUriData(base64DecodeUrlParams, requestDecrypt, null);
+            setRealBody(dataBufferFactory, token, base64DecodeBody, requestDecrypt, null);
+            return;
+        }
+
+        // 3、解密
+        if (!requestDecrypt) {
+            // 重写base64解密后的参数
+            setRealUriData(base64DecodeUrlParams, requestDecrypt, null);
+            setRealBody(dataBufferFactory, token, base64DecodeBody, requestDecrypt, null);
+            return;
+        }
+
+        super.getBody().subscribe(buffer -> {
+            SecurityKeyCache securityKeyCache = getSecurityKeyCache(token);
+            String aesKey = securityKeyCache.getAesKey();
+            if (StringUtils.isBlank(aesKey)) {
+                throw new AesKeyNotFoundException();
             }
+
+            setRealUriData(base64DecodeUrlParams, true, aesKey);
+            setRealBody(dataBufferFactory, token, base64DecodeBody, true, aesKey);
         });
     }
 
     /**
-     * 获取加密后的请求参数
+     * 重写body参数
      *
-     * @param request
-     * @return
+     * @param dataBufferFactory
+     * @param token
+     * @param base64DecodeBody
+     * @param requestDecrypt
+     * @param aesKey
      */
-    private String getEncryptedRequestStr(ServerHttpRequest request) {
-        String requestStr = null;
-        HttpMethod httpMethod = request.getMethod();
-        if (httpMethod == HttpMethod.GET) {
-            requestStr = request.getQueryParams().getFirst(GatewayConstants.REQUEST_ENCRYPT_PARAM_NAME);
-        } else if (httpMethod == HttpMethod.POST) {
-            MediaType contentType = request.getHeaders().getContentType();
-            if (MediaType.APPLICATION_FORM_URLENCODED_VALUE.equals(contentType.toString())) {
-                requestStr = request.getQueryParams().getFirst(GatewayConstants.REQUEST_ENCRYPT_PARAM_NAME);
-            } else if (MediaType.APPLICATION_JSON_VALUE.equals(contentType.toString())) {
-                RewriteServerHttpRequestDecorator rewriteServerHttpRequestDecorator = (RewriteServerHttpRequestDecorator) request;
-                requestStr = rewriteServerHttpRequestDecorator.getBodyStr();
-            }
+    private void setRealBody(DataBufferFactory dataBufferFactory, String token, String base64DecodeBody, boolean requestDecrypt, String aesKey) {
+        if (base64DecodeBody == null) {
+            this.body = super.getBody();
         }
-        return requestStr;
+
+        String realBody = requestDecrypt ? AesUtil.decrypt(base64DecodeBody, aesKey) : base64DecodeBody;
+        this.body = Flux.just(dataBufferFactory.wrap(realBody.getBytes(StandardCharsets.UTF_8)));
+    }
+
+    /**
+     * 重写url参数
+     *
+     * @param base64DecodeUrlParams
+     * @param requestDecrypt
+     * @param aesKey
+     */
+    private void setRealUriData(String base64DecodeUrlParams, boolean requestDecrypt, String aesKey) {
+        if (base64DecodeUrlParams == null) {
+            this.uri = super.getURI();
+            this.queryParams = super.getQueryParams();
+            return;
+        }
+
+        String realUrlParamsStr = requestDecrypt ? AesUtil.decrypt(base64DecodeUrlParams, aesKey) : base64DecodeUrlParams;
+        UriComponents uriComponents = UriComponentsBuilder.fromUri(super.getURI()).replaceQuery(realUrlParamsStr).build();
+
+        this.uri = uriComponents.toUri();
+        this.queryParams = uriComponents.getQueryParams();
     }
 
     /**
@@ -164,24 +190,25 @@ public class DataSecurityServerHttpRequestDecorator extends ServerHttpRequestDec
      * @param request
      * @param signType
      * @param token
+     * @param dataSecurityParam
      */
-    private void checkRequestSign(ServerHttpRequest request, byte signType, String requestStr, @NonNull String token) {
-        if (StringUtils.isBlank(requestStr)) {
-            return;
-        }
+    private void checkRequestSign(ServerHttpRequest request, byte signType, @NonNull String token, DataSecurityParamDTO dataSecurityParam) {
         if (SignType.REQUEST.getType() != signType && SignType.ALL.getType() != signType) {
             return;
         }
+
         String sign = WebUtil.getFromRequestHeader(request, SmartHttpHeaders.SIGN);
         if (StringUtils.isBlank(sign)) {
             throw new ParamValidateException(GatewayReturnCodes.REQUEST_SIGN_MISSING);
         }
 
+        String requestSignContent = SignUtil.generateRequestSignContent(request.getMethod(), dataSecurityParam);
+
         SecurityKeyCache securityKeyCache = getSecurityKeyCache(token);
         boolean signCheckResult = false;
         try {
             RSAPublicKey publicKey = RsaUtil.getRsaPublidKey(securityKeyCache.getCpubKeyModulus(), securityKeyCache.getCpubKeyExponent());
-            signCheckResult = RsaUtil.checkSign(requestStr, sign, publicKey);
+            signCheckResult = RsaUtil.checkSign(requestSignContent, sign, publicKey);
         } catch (Exception e) {
             log.error("sign.check.error", e);
         }
@@ -191,15 +218,17 @@ public class DataSecurityServerHttpRequestDecorator extends ServerHttpRequestDec
     }
 
     private SecurityKeyCache getSecurityKeyCache(@NonNull String token) {
-        if (securityKeyCache != null) {
-            return securityKeyCache;
+        if (this.securityKeyCache != null) {
+            return this.securityKeyCache;
         }
 
         SecurityKeyCache securityKeyCache = (SecurityKeyCache) redisAdapter.get(RedisKeyHelper.getSecurityKey(token));
         if (securityKeyCache == null) {
             throw new DataValidateException(GatewayReturnCodes.SECURITY_KEY_EXPIRED);
         }
-        return securityKeyCache;
+
+        this.securityKeyCache = securityKeyCache;
+        return this.securityKeyCache;
     }
 
 }

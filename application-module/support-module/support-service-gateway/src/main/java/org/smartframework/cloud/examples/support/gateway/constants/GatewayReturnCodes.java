@@ -85,5 +85,9 @@ public interface GatewayReturnCodes {
      * 不支持数据安全
      */
     String NOT_SUPPORT_DATA_SECURITY = "400017";
+    /**
+     * 请求nonce缺失
+     */
+    String REQUEST_NONCE_MISSING = "400018";
 
 }
