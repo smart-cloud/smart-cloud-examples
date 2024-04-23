@@ -40,7 +40,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -94,7 +96,10 @@ public class ApiMetaRpcService {
             return;
         }
         // redis持久化
-        apiMetaFetch.getApiAccessMap().forEach((urlMethod, apiAccess) -> redisTemplate.opsForHash().put(RedisKeyHelper.getApiMetaKey(), RedisKeyHelper.getApiMetaHashKey(urlMethod), new ApiAccessMetaCache(apiAccess)));
+        Map<String, ApiAccessMetaCache> allApiAccess = new HashMap<>(8);
+        apiMetaFetch.getApiAccessMap().forEach((urlMethod, apiAccess) -> allApiAccess.put(RedisKeyHelper.getApiMetaHashKey(urlMethod), new ApiAccessMetaCache(apiAccess)));
+
+        redisTemplate.opsForHash().putAll(RedisKeyHelper.getApiMetaKey(), allApiAccess);
     }
 
     /**

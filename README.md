@@ -249,13 +249,12 @@ support-service-gateway | 400004 | 登录成功后token失效
 support-service-gateway | 400005 | 请求参数中token缺失
 support-service-gateway | 400006 | 请求签名缺失
 support-service-gateway | 400007 | 请求参数签名校验失败
-support-service-gateway | 400008 | 当前用户暂未登陆，获取userId失败
-support-service-gateway | 400009 | 未获取到登陆缓存信息
+support-service-gateway | 400008 | 生成签名失败
+support-service-gateway | 400009 | 生成签名key失败
 support-service-gateway | 400010 | 请求时间戳不能为空
 support-service-gateway | 400011 | 请求时间戳格式错误
 support-service-gateway | 400012 | 请求时间戳非法
 support-service-gateway | 400013 | security key过期
-support-service-gateway | 400014 | AES key获取失败
 support-service-gateway | 400015 | 命中黑名单列表，禁止访问
 support-service-gateway | 400016 | 不在白名单中，禁止访问
 support-service-gateway | 400017 | 不支持数据安全

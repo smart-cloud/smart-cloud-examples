@@ -51,7 +51,7 @@ public class SignUtil {
      */
     public static String generateRequestSignContent(HttpMethod httpMethod, DataSecurityParamDTO dataSecurityParam) {
         StringBuilder content = new StringBuilder(64);
-        content.append(httpMethod);
+        content.append(httpMethod.name());
         content.append(dataSecurityParam.getHeaders());
         if (StringUtils.isNotBlank(dataSecurityParam.getUrlParamsBase64())) {
             content.append(dataSecurityParam.getUrlParamsBase64());
@@ -59,6 +59,17 @@ public class SignUtil {
         if (StringUtils.isNotBlank(dataSecurityParam.getBodyBase64())) {
             content.append(dataSecurityParam.getBodyBase64());
         }
+        return content.toString();
+    }
+
+    public static String generateResponseSignContent(String nonce, long timestamp, String base64Body) {
+        StringBuilder content = new StringBuilder(128);
+        content.append(nonce);
+        content.append(timestamp);
+        if (StringUtils.isNotBlank(base64Body)) {
+            content.append(base64Body);
+        }
+
         return content.toString();
     }
 

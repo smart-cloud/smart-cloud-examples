@@ -17,9 +17,7 @@ package org.smartframework.cloud.examples.support.gateway.filter.access.core.dat
 
 import io.github.smart.cloud.api.core.annotation.enums.SignType;
 import io.github.smart.cloud.common.web.constants.SmartHttpHeaders;
-import io.github.smart.cloud.exception.DataValidateException;
 import io.github.smart.cloud.exception.ParamValidateException;
-import io.github.smart.cloud.starter.redis.adapter.IRedisAdapter;
 import io.github.smart.cloud.utility.security.AesUtil;
 import io.github.smart.cloud.utility.security.RsaUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -28,9 +26,8 @@ import org.smartframework.cloud.examples.support.gateway.cache.SecurityKeyCache;
 import org.smartframework.cloud.examples.support.gateway.constants.GatewayReturnCodes;
 import org.smartframework.cloud.examples.support.gateway.dto.DataSecurityParamDTO;
 import org.smartframework.cloud.examples.support.gateway.exception.AesKeyNotFoundException;
-import org.smartframework.cloud.examples.support.gateway.exception.RequestSignFailException;
+import org.smartframework.cloud.examples.support.gateway.exception.RequestSignCheckFailException;
 import org.smartframework.cloud.examples.support.gateway.exception.UnsupportedFunctionException;
-import org.smartframework.cloud.examples.support.gateway.util.RedisKeyHelper;
 import org.smartframework.cloud.examples.support.gateway.util.RewriteHttpUtil;
 import org.smartframework.cloud.examples.support.gateway.util.SignUtil;
 import org.smartframework.cloud.examples.support.gateway.util.WebUtil;
@@ -38,7 +35,6 @@ import org.springframework.core.io.buffer.DataBuffer;
 import org.springframework.core.io.buffer.DataBufferFactory;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.http.server.reactive.ServerHttpRequestDecorator;
-import org.springframework.lang.NonNull;
 import org.springframework.util.Base64Utils;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.util.UriComponents;
@@ -58,20 +54,16 @@ import java.security.interfaces.RSAPublicKey;
 @Slf4j
 public class DataSecurityServerHttpRequestDecorator extends ServerHttpRequestDecorator {
 
-    private final IRedisAdapter redisAdapter;
-
+    private final SecurityKeyCache securityKeyCache;
     private transient Flux<DataBuffer> body;
     private transient URI uri;
     private transient MultiValueMap<String, String> queryParams;
 
-    private transient SecurityKeyCache securityKeyCache;
-
-    DataSecurityServerHttpRequestDecorator(ServerHttpRequest request, DataBufferFactory dataBufferFactory, String token, boolean requestDecrypt, byte signType, IRedisAdapter redisAdapter) {
+    DataSecurityServerHttpRequestDecorator(ServerHttpRequest request, DataBufferFactory dataBufferFactory, SecurityKeyCache securityKeyCache, boolean requestDecrypt, byte signType) {
         super(request);
 
-        this.redisAdapter = redisAdapter;
-
-        checkSignAndDecryptRequest(request, dataBufferFactory, token, requestDecrypt, signType);
+        this.securityKeyCache = securityKeyCache;
+        checkSignAndDecryptRequest(request, dataBufferFactory, requestDecrypt, signType);
     }
 
     @Override
@@ -94,11 +86,10 @@ public class DataSecurityServerHttpRequestDecorator extends ServerHttpRequestDec
      *
      * @param request
      * @param dataBufferFactory
-     * @param token
      * @param requestDecrypt
      * @param signType
      */
-    private void checkSignAndDecryptRequest(ServerHttpRequest request, DataBufferFactory dataBufferFactory, String token, boolean requestDecrypt, byte signType) {
+    private void checkSignAndDecryptRequest(ServerHttpRequest request, DataBufferFactory dataBufferFactory, boolean requestDecrypt, byte signType) {
         if (!requestDecrypt && signType == SignType.NONE.getType()) {
             this.body = super.getBody();
             this.uri = super.getURI();
@@ -113,7 +104,7 @@ public class DataSecurityServerHttpRequestDecorator extends ServerHttpRequestDec
         DataSecurityParamDTO dataSecurityParam = SignUtil.getDataSecurityParams(request);
 
         // 1、请求参数验签
-        checkRequestSign(request, signType, token, dataSecurityParam);
+        checkRequestSign(request, signType, dataSecurityParam);
 
         // 2、param base64 decode
         String base64DecodeUrlParams = StringUtils.isBlank(dataSecurityParam.getUrlParamsBase64()) ? null : new String(Base64Utils.decodeFromString(dataSecurityParam.getUrlParamsBase64()));
@@ -121,7 +112,7 @@ public class DataSecurityServerHttpRequestDecorator extends ServerHttpRequestDec
 
         if (base64DecodeUrlParams == null && base64DecodeBody == null) {
             setRealUriData(base64DecodeUrlParams, requestDecrypt, null);
-            setRealBody(dataBufferFactory, token, base64DecodeBody, requestDecrypt, null);
+            setRealBody(dataBufferFactory, base64DecodeBody, requestDecrypt, null);
             return;
         }
 
@@ -129,19 +120,18 @@ public class DataSecurityServerHttpRequestDecorator extends ServerHttpRequestDec
         if (!requestDecrypt) {
             // 重写base64解密后的参数
             setRealUriData(base64DecodeUrlParams, requestDecrypt, null);
-            setRealBody(dataBufferFactory, token, base64DecodeBody, requestDecrypt, null);
+            setRealBody(dataBufferFactory, base64DecodeBody, requestDecrypt, null);
             return;
         }
 
         super.getBody().subscribe(buffer -> {
-            SecurityKeyCache securityKeyCache = getSecurityKeyCache(token);
             String aesKey = securityKeyCache.getAesKey();
             if (StringUtils.isBlank(aesKey)) {
                 throw new AesKeyNotFoundException();
             }
 
             setRealUriData(base64DecodeUrlParams, true, aesKey);
-            setRealBody(dataBufferFactory, token, base64DecodeBody, true, aesKey);
+            setRealBody(dataBufferFactory, base64DecodeBody, true, aesKey);
         });
     }
 
@@ -149,12 +139,11 @@ public class DataSecurityServerHttpRequestDecorator extends ServerHttpRequestDec
      * 重写body参数
      *
      * @param dataBufferFactory
-     * @param token
      * @param base64DecodeBody
      * @param requestDecrypt
      * @param aesKey
      */
-    private void setRealBody(DataBufferFactory dataBufferFactory, String token, String base64DecodeBody, boolean requestDecrypt, String aesKey) {
+    private void setRealBody(DataBufferFactory dataBufferFactory, String base64DecodeBody, boolean requestDecrypt, String aesKey) {
         if (base64DecodeBody == null) {
             this.body = super.getBody();
         }
@@ -189,10 +178,9 @@ public class DataSecurityServerHttpRequestDecorator extends ServerHttpRequestDec
      *
      * @param request
      * @param signType
-     * @param token
      * @param dataSecurityParam
      */
-    private void checkRequestSign(ServerHttpRequest request, byte signType, @NonNull String token, DataSecurityParamDTO dataSecurityParam) {
+    private void checkRequestSign(ServerHttpRequest request, byte signType, DataSecurityParamDTO dataSecurityParam) {
         if (SignType.REQUEST.getType() != signType && SignType.ALL.getType() != signType) {
             return;
         }
@@ -204,7 +192,6 @@ public class DataSecurityServerHttpRequestDecorator extends ServerHttpRequestDec
 
         String requestSignContent = SignUtil.generateRequestSignContent(request.getMethod(), dataSecurityParam);
 
-        SecurityKeyCache securityKeyCache = getSecurityKeyCache(token);
         boolean signCheckResult = false;
         try {
             RSAPublicKey publicKey = RsaUtil.getRsaPublidKey(securityKeyCache.getCpubKeyModulus(), securityKeyCache.getCpubKeyExponent());
@@ -213,22 +200,8 @@ public class DataSecurityServerHttpRequestDecorator extends ServerHttpRequestDec
             log.error("sign.check.error", e);
         }
         if (!signCheckResult) {
-            throw new RequestSignFailException();
+            throw new RequestSignCheckFailException();
         }
-    }
-
-    private SecurityKeyCache getSecurityKeyCache(@NonNull String token) {
-        if (this.securityKeyCache != null) {
-            return this.securityKeyCache;
-        }
-
-        SecurityKeyCache securityKeyCache = (SecurityKeyCache) redisAdapter.get(RedisKeyHelper.getSecurityKey(token));
-        if (securityKeyCache == null) {
-            throw new DataValidateException(GatewayReturnCodes.SECURITY_KEY_EXPIRED);
-        }
-
-        this.securityKeyCache = securityKeyCache;
-        return this.securityKeyCache;
     }
 
 }

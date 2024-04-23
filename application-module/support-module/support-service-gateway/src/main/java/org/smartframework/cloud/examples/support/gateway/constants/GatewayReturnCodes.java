@@ -46,13 +46,13 @@ public interface GatewayReturnCodes {
      */
     String REQUEST_SIGN_CHECK_FAIL = "400007";
     /**
-     * 当前用户暂未登陆，获取userId失败
+     * 生成签名失败
      */
-    String GET_USERID_FAIL = "400008";
+    String GENERATE_SIGN_FAIL = "400008";
     /**
-     * 未获取到登陆缓存信息
+     * 生成签名key失败
      */
-    String LOGIN_CACHE_MISSING = "400009";
+    String GENERATE_SIGN_KEY_FAIL = "400009";
     /**
      * 请求时间戳不能为空
      */
@@ -69,10 +69,6 @@ public interface GatewayReturnCodes {
      * security key过期
      */
     String SECURITY_KEY_EXPIRED = "400013";
-    /**
-     * AES key获取失败
-     */
-    String AES_KEY_NOT_FOUND = "400014";
     /**
      * 命中黑名单列表，禁止访问
      */

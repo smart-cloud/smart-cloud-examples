@@ -15,15 +15,19 @@
  */
 package org.smartframework.cloud.examples.support.gateway.filter.access.core.datasecurity;
 
+import io.github.smart.cloud.exception.DataValidateException;
 import io.github.smart.cloud.exception.ParamValidateException;
 import io.github.smart.cloud.starter.redis.adapter.IRedisAdapter;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.smartframework.cloud.examples.support.gateway.cache.ApiAccessMetaCache;
+import org.smartframework.cloud.examples.support.gateway.cache.SecurityKeyCache;
 import org.smartframework.cloud.examples.support.gateway.constants.GatewayReturnCodes;
 import org.smartframework.cloud.examples.support.gateway.constants.Order;
 import org.smartframework.cloud.examples.support.gateway.filter.FilterContext;
 import org.smartframework.cloud.examples.support.gateway.filter.access.AbstractFilter;
+import org.smartframework.cloud.examples.support.gateway.util.RedisKeyHelper;
+import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
 import org.springframework.web.server.WebFilterChain;
@@ -58,12 +62,22 @@ public class DataSecurityFilter extends AbstractFilter {
             throw new ParamValidateException(GatewayReturnCodes.TOKEN_MISSING);
         }
 
+        SecurityKeyCache securityKeyCache = getSecurityKeyCache(token);
         return chain.filter(exchange.mutate()
-                .request(new DataSecurityServerHttpRequestDecorator(exchange.getRequest(), exchange.getResponse().bufferFactory(), token,
-                        apiAccessMetaCache.isRequestDecrypt(), apiAccessMetaCache.getSignType(), redisAdapter))
-                .response(new DataSecurityServerHttpResponseDecorator(exchange.getResponse(), redisAdapter, apiAccessMetaCache.isResponseEncrypt(),
+                .request(new DataSecurityServerHttpRequestDecorator(exchange.getRequest(), exchange.getResponse().bufferFactory(), securityKeyCache,
+                        apiAccessMetaCache.isRequestDecrypt(), apiAccessMetaCache.getSignType()))
+                .response(new DataSecurityServerHttpResponseDecorator(exchange.getResponse(), securityKeyCache, apiAccessMetaCache.isResponseEncrypt(),
                         apiAccessMetaCache.getSignType()))
                 .build());
+    }
+
+    private SecurityKeyCache getSecurityKeyCache(@NonNull String token) {
+        SecurityKeyCache securityKeyCache = (SecurityKeyCache) redisAdapter.get(RedisKeyHelper.getSecurityKey(token));
+        if (securityKeyCache == null) {
+            throw new DataValidateException(GatewayReturnCodes.SECURITY_KEY_EXPIRED);
+        }
+
+        return securityKeyCache;
     }
 
 }
