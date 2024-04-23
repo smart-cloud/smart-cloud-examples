@@ -41,9 +41,9 @@ public class UserInfoApiBiz extends BaseBiz<UserInfoBaseMapper, UserInfoEntity> 
         userInfoEntity.setId(GlobalId.nextId());
         userInfoEntity.setInsertTime(new Date());
         userInfoEntity.setDelState(DeleteState.NORMAL);
-        userInfoEntity.setMobile(CryptField.of(userInfo.getMobile()));
+        userInfoEntity.setMobile(new CryptField(userInfo.getMobile()));
         userInfoEntity.setNickName(userInfo.getNickname());
-        userInfoEntity.setRealName(CryptField.of(userInfo.getRealname()));
+        userInfoEntity.setRealName(new CryptField(userInfo.getRealname()));
         userInfoEntity.setSex(userInfo.getSex());
         userInfoEntity.setBirthday(userInfo.getBirthday());
         userInfoEntity.setProfileImage(userInfo.getProfileImage());
@@ -61,7 +61,7 @@ public class UserInfoApiBiz extends BaseBiz<UserInfoBaseMapper, UserInfoEntity> 
      */
     public boolean existByMobile(String mobile) {
         LambdaQueryWrapper<UserInfoEntity> wrapper = new LambdaQueryWrapper<>();
-        wrapper.select(UserInfoEntity::getId).eq(UserInfoEntity::getMobile, CryptField.of(mobile));
+        wrapper.select(UserInfoEntity::getId).eq(UserInfoEntity::getMobile, new CryptField(mobile));
 
         return super.getOne(wrapper) != null;
     }

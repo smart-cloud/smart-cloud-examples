@@ -16,7 +16,7 @@
 package org.smartframework.cloud.examples.support.gateway.controller.rpc;
 
 import io.github.smart.cloud.common.pojo.Response;
-import io.github.smart.cloud.starter.core.business.util.RespUtil;
+import io.github.smart.cloud.starter.core.business.util.ResponseUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.smartframework.cloud.examples.support.gateway.service.rpc.ApiMetaRpcService;
@@ -41,9 +41,9 @@ public class ApiMetaRpcController implements ApiMetaRpc {
             apiMetaRpcService.notifyFetch(req);
         } catch (IOException | InterruptedException e) {
             log.error("notifyFetch.fail", e);
-            return RespUtil.error(e.getMessage());
+            return ResponseUtil.error(e.getMessage());
         }
-        return RespUtil.success();
+        return ResponseUtil.success();
     }
 
 }

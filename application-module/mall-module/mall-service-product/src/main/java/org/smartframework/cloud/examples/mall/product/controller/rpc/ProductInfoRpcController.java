@@ -16,7 +16,7 @@
 package org.smartframework.cloud.examples.mall.product.controller.rpc;
 
 import io.github.smart.cloud.common.pojo.Response;
-import io.github.smart.cloud.starter.core.business.util.RespUtil;
+import io.github.smart.cloud.starter.core.business.util.ResponseUtil;
 import lombok.RequiredArgsConstructor;
 import org.smartframework.cloud.examples.mall.product.constants.ProductReturnCodes;
 import org.smartframework.cloud.examples.mall.product.service.rpc.ProductInfoRpcService;
@@ -38,18 +38,18 @@ public class ProductInfoRpcController implements ProductInfoRpc {
 
     @Override
     public Response<QryProductByIdRespDTO> qryProductById(QryProductByIdReqDTO req) {
-        return RespUtil.success(productInfoRpcService.qryProductById(req));
+        return ResponseUtil.success(productInfoRpcService.qryProductById(req));
     }
 
     @Override
     public Response<QryProductByIdsRespDTO> qryProductByIds(QryProductByIdsReqDTO reqDTO) {
-        return RespUtil.success(productInfoRpcService.qryProductByIds(reqDTO));
+        return ResponseUtil.success(productInfoRpcService.qryProductByIds(reqDTO));
     }
 
     @Override
     public Response<Void> updateStock(UpdateStockReqDTO req) {
         boolean success = productInfoRpcService.updateStock(req);
-        return success ? RespUtil.success() : RespUtil.error(ProductReturnCodes.STOCK_NOT_ENOUGH);
+        return success ? ResponseUtil.success() : ResponseUtil.error(ProductReturnCodes.STOCK_NOT_ENOUGH);
     }
 
 }

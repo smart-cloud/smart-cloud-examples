@@ -18,7 +18,7 @@ package org.smartframework.cloud.examples.basic.user.controller.api;
 import io.github.smart.cloud.api.core.annotation.RequireDataSecurity;
 import io.github.smart.cloud.api.core.annotation.RequireTimestamp;
 import io.github.smart.cloud.common.pojo.Response;
-import io.github.smart.cloud.starter.core.business.util.RespUtil;
+import io.github.smart.cloud.starter.core.business.util.ResponseUtil;
 import lombok.RequiredArgsConstructor;
 import org.smartframework.cloud.examples.basic.rpc.user.request.api.token.RenewReqVO;
 import org.smartframework.cloud.examples.basic.user.service.api.TokenApiService;
@@ -48,7 +48,7 @@ public class TokenApiController {
     @RequireDataSecurity
     @RequireTimestamp
     public Response<Boolean> renew(@RequestBody @Valid RenewReqVO req) {
-        return RespUtil.success(tokenApiService.renew(req.getToken()));
+        return ResponseUtil.success(tokenApiService.renew(req.getToken()));
     }
 
 }

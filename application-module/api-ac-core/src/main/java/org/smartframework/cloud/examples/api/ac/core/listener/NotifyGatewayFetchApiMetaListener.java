@@ -17,7 +17,7 @@ package org.smartframework.cloud.examples.api.ac.core.listener;
 
 import io.github.smart.cloud.common.pojo.Response;
 import io.github.smart.cloud.exception.ServerException;
-import io.github.smart.cloud.starter.core.business.util.RespUtil;
+import io.github.smart.cloud.starter.core.business.util.ResponseUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.smartframework.cloud.examples.api.ac.core.properties.ApiAccessProperties;
@@ -56,8 +56,8 @@ public class NotifyGatewayFetchApiMetaListener implements ApplicationListener<Ap
         Response<Void> result = apiMetaRpc.notifyFetch(NotifyFetchReqDTO.builder().serviceName(serviceName).build());
         log.info("notify gateway to fetch api meta to gateway finish!");
 
-        if (!RespUtil.isSuccess(result)) {
-            throw new ServerException(RespUtil.getFailMsg(result));
+        if (!ResponseUtil.isSuccess(result)) {
+            throw new ServerException(ResponseUtil.getFailMsg(result));
         }
     }
 

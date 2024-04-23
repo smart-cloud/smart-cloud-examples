@@ -18,7 +18,7 @@ package org.smartframework.cloud.examples.basic.user.controller.api;
 import io.github.smart.cloud.api.core.annotation.RequireDataSecurity;
 import io.github.smart.cloud.api.core.annotation.RequireTimestamp;
 import io.github.smart.cloud.common.pojo.Response;
-import io.github.smart.cloud.starter.core.business.util.RespUtil;
+import io.github.smart.cloud.starter.core.business.util.ResponseUtil;
 import lombok.RequiredArgsConstructor;
 import org.smartframework.cloud.examples.basic.rpc.user.request.api.login.ExitReqVO;
 import org.smartframework.cloud.examples.basic.rpc.user.request.api.login.LoginReqVO;
@@ -57,7 +57,7 @@ public class LoginInfoApiController {
     @RequireDataSecurity
     @RequireTimestamp
     public Response<LoginRespVO> login(@RequestBody @Valid LoginReqVO req) {
-        return RespUtil.success(loginInfoApiService.login(req));
+        return ResponseUtil.success(loginInfoApiService.login(req));
     }
 
 
@@ -71,7 +71,7 @@ public class LoginInfoApiController {
     @RequireTimestamp
     public Response<Void> exit(@RequestBody @Valid ExitReqVO req) {
         loginInfoApiService.exit(req);
-        return RespUtil.success();
+        return ResponseUtil.success();
     }
 
 }

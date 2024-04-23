@@ -35,8 +35,8 @@ public class UserInfoData {
 	public void insertTestData(Long id) {
 		UserInfoEntity entity = new UserInfoEntity();
 		entity.setId(id);
-		entity.setMobile(CryptField.of("18720912981"));
-		entity.setRealName(CryptField.of("李四"));
+		entity.setMobile(new CryptField("18720912981"));
+		entity.setRealName(new CryptField("李四"));
 		entity.setChannel(ChannelEnum.APP.getValue());
 		entity.setSex(SexEnum.FEMALE.getValue());
 		entity.setInsertTime(new Date());

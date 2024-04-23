@@ -18,7 +18,7 @@ package org.smartframework.cloud.examples.mall.order.test.cases.integration.api;
 import com.fasterxml.jackson.core.type.TypeReference;
 import io.github.smart.cloud.common.pojo.Response;
 import io.github.smart.cloud.constants.CommonReturnCodes;
-import io.github.smart.cloud.starter.core.business.util.RespUtil;
+import io.github.smart.cloud.starter.core.business.util.ResponseUtil;
 import io.github.smart.cloud.test.core.integration.WebMvcIntegrationTest;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -62,23 +62,21 @@ class OrderApiControllerIntegrationTest extends WebMvcIntegrationTest {
         // 2、mock 行为
         mockStubbing(productInfoRpc, buyProducts);
 
-        Response<String> submitResp = post("/order/api/order/submit", reqVO, new TypeReference<Response<String>>() {
+        Response<String> submitResponse = post("/order/api/order/submit", reqVO, new TypeReference<Response<String>>() {
         });
 
         // 3、断言结果
-        Assertions.assertThat(submitResp).isNotNull();
-        Assertions.assertThat(submitResp.getHead()).isNotNull();
-        Assertions.assertThat(submitResp.getHead().getCode()).isEqualTo(CommonReturnCodes.SUCCESS);
-        Assertions.assertThat(submitResp.getBody()).isNotBlank();
+        Assertions.assertThat(submitResponse).isNotNull();
+        Assertions.assertThat(submitResponse.getCode()).isEqualTo(CommonReturnCodes.SUCCESS);
+        Assertions.assertThat(submitResponse.getBody()).isNotBlank();
 
         // 4、查询提单结果
         TimeUnit.SECONDS.sleep(10);
-        Response<QuerySubmitResultRespVO> resp = querySubmitResult(submitResp.getBody());
+        Response<QuerySubmitResultRespVO> response = querySubmitResult(submitResponse.getBody());
 
-        Assertions.assertThat(resp).isNotNull();
-        Assertions.assertThat(resp.getHead()).isNotNull();
-        Assertions.assertThat(resp.getHead().getCode()).isEqualTo(CommonReturnCodes.SUCCESS);
-        Assertions.assertThat(resp.getBody()).isNotNull();
+        Assertions.assertThat(response).isNotNull();
+        Assertions.assertThat(response.getCode()).isEqualTo(CommonReturnCodes.SUCCESS);
+        Assertions.assertThat(response.getBody()).isNotNull();
     }
 
     @Test
@@ -87,8 +85,7 @@ class OrderApiControllerIntegrationTest extends WebMvcIntegrationTest {
         Response<QuerySubmitResultRespVO> resp = querySubmitResult(orderNo);
 
         Assertions.assertThat(resp).isNotNull();
-        Assertions.assertThat(resp.getHead()).isNotNull();
-        Assertions.assertThat(resp.getHead().getCode()).isEqualTo(CommonReturnCodes.SUCCESS);
+        Assertions.assertThat(resp.getCode()).isEqualTo(CommonReturnCodes.SUCCESS);
     }
 
     private Response<QuerySubmitResultRespVO> querySubmitResult(String orderNo) throws Exception {
@@ -113,11 +110,11 @@ class OrderApiControllerIntegrationTest extends WebMvcIntegrationTest {
         }
         QryProductByIdsRespDTO qryProductByIdsRespVO = new QryProductByIdsRespDTO(productInfos);
         // stubbing
-        Mockito.when(productInfoRpc.qryProductByIds(Mockito.any())).thenReturn(RespUtil.success(qryProductByIdsRespVO));
+        Mockito.when(productInfoRpc.qryProductByIds(Mockito.any())).thenReturn(ResponseUtil.success(qryProductByIdsRespVO));
 
         // 2.2updateStock
         // stubbing
-        Mockito.when(productInfoRpc.updateStock(Mockito.any())).thenReturn(RespUtil.success());
+        Mockito.when(productInfoRpc.updateStock(Mockito.any())).thenReturn(ResponseUtil.success());
     }
 
 }

@@ -16,12 +16,11 @@
 package org.smartframework.cloud.examples.support.gateway.filter.access.core;
 
 import io.github.smart.cloud.common.pojo.Response;
-import io.github.smart.cloud.common.pojo.ResponseHead;
 import io.github.smart.cloud.common.web.constants.SmartHttpHeaders;
 import io.github.smart.cloud.exception.BusinessException;
 import io.github.smart.cloud.exception.DataValidateException;
 import io.github.smart.cloud.exception.RpcException;
-import io.github.smart.cloud.starter.core.business.util.RespUtil;
+import io.github.smart.cloud.starter.core.business.util.ResponseUtil;
 import io.github.smart.cloud.starter.redis.adapter.IRedisAdapter;
 import io.github.smart.cloud.utility.JacksonUtil;
 import lombok.RequiredArgsConstructor;
@@ -182,12 +181,11 @@ public class AuthFilter extends AbstractFilter {
 
         // 如果缓存中没有，则rpc查数据库
         Response<AuthRespDTO> authResponse = authRpcObjectProvider.getIfAvailable().listByUid(uid);
-        if (!RespUtil.isSuccess(authResponse)) {
-            if (authResponse == null || authResponse.getHead() == null) {
+        if (!ResponseUtil.isSuccess(authResponse)) {
+            if (authResponse == null) {
                 throw new RpcException();
             }
-            ResponseHead head = authResponse.getHead();
-            throw new RpcException(head.getCode(), head.getMessage());
+            throw new RpcException(authResponse.getCode(), authResponse.getMessage());
         }
         AuthRespDTO authRespDTO = authResponse.getBody();
         if (authRespDTO == null) {

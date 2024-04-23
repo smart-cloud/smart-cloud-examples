@@ -17,12 +17,11 @@ package org.smartframework.cloud.examples.basic.user.service.api;
 
 import com.baomidou.dynamic.datasource.annotation.DS;
 import io.github.smart.cloud.common.pojo.Response;
-import io.github.smart.cloud.common.pojo.ResponseHead;
 import io.github.smart.cloud.exception.BusinessException;
 import io.github.smart.cloud.exception.ParamValidateException;
 import io.github.smart.cloud.exception.RpcException;
 import io.github.smart.cloud.exception.ServerException;
-import io.github.smart.cloud.starter.core.business.util.RespUtil;
+import io.github.smart.cloud.starter.core.business.util.ResponseUtil;
 import io.github.smart.cloud.starter.mybatis.plus.enums.DeleteState;
 import io.github.smart.cloud.utility.PasswordUtil;
 import lombok.RequiredArgsConstructor;
@@ -120,8 +119,8 @@ public class LoginInfoApiService {
     @DS(DataSourceName.BASIC_USER_SLAVE)
     public void exit(ExitReqVO req) {
         Response<Void> exitLoginResponse = userRpc.exit(ExitLoginReqDTO.builder().token(req.getToken()).build());
-        if (!RespUtil.isSuccess(exitLoginResponse)) {
-            throw new ServerException(RespUtil.getFailMsg(exitLoginResponse));
+        if (!ResponseUtil.isSuccess(exitLoginResponse)) {
+            throw new ServerException(ResponseUtil.getFailMsg(exitLoginResponse));
         }
     }
 
@@ -133,12 +132,11 @@ public class LoginInfoApiService {
      */
     public void cacheUserInfo(String token, LoginRespVO loginRespVO) {
         Response<AuthRespDTO> authResponse = authRpc.listByUid(loginRespVO.getUserId());
-        if (!RespUtil.isSuccess(authResponse)) {
-            if (authResponse == null || authResponse.getHead() == null) {
+        if (!ResponseUtil.isSuccess(authResponse)) {
+            if (authResponse == null) {
                 throw new RpcException();
             }
-            ResponseHead head = authResponse.getHead();
-            throw new RpcException(head.getCode(), head.getMessage());
+            throw new RpcException(authResponse.getCode(), authResponse.getMessage());
         }
 
         CacheUserInfoReqDTO cacheUserInfoReqDTO = CacheUserInfoReqDTO.builder()
@@ -155,8 +153,8 @@ public class LoginInfoApiService {
         }
 
         Response<Void> cacheUserInfoResponse = userRpc.cacheUserInfo(cacheUserInfoReqDTO);
-        if (!RespUtil.isSuccess(cacheUserInfoResponse)) {
-            throw new ServerException(RespUtil.getFailMsg(cacheUserInfoResponse));
+        if (!ResponseUtil.isSuccess(cacheUserInfoResponse)) {
+            throw new ServerException(ResponseUtil.getFailMsg(cacheUserInfoResponse));
         }
     }
 

@@ -1,3 +1,7 @@
+smart:
+  mybatis:
+    cryptKeys:
+      'io.github.smart.cloud.starter.mybatis.plus.common.CryptField': 123456
 spring:
   datasource:
     dynamic:

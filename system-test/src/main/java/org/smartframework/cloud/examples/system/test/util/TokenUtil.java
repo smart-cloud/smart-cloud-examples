@@ -76,8 +76,7 @@ public final class TokenUtil {
         // 1、请求服务端生成RSA秘钥
         Response<GenerateClientPubKeyRespVO> generateClientPubKeyResult = SecurityApi.generateClientPubKey();
         Assertions.assertThat(generateClientPubKeyResult).isNotNull();
-        Assertions.assertThat(generateClientPubKeyResult.getHead()).isNotNull();
-        Assertions.assertThat(generateClientPubKeyResult.getHead().getCode()).isEqualTo(CommonReturnCodes.SUCCESS);
+        Assertions.assertThat(generateClientPubKeyResult.getCode()).isEqualTo(CommonReturnCodes.SUCCESS);
         Assertions.assertThat(generateClientPubKeyResult.getBody()).isNotNull();
 
         GenerateClientPubKeyRespVO clientPubKey = generateClientPubKeyResult.getBody();
@@ -99,8 +98,7 @@ public final class TokenUtil {
         generateAesKeyReqVO.setEncryptedCpubKeyExponent(RsaUtil.encryptString(clientRsaPublicKey, StringUtils.reverse(cpubKeyExponent)));
         Response<GenerateAesKeyRespVO> generateAesKeyResult = SecurityApi.generateAesKey(generateAesKeyReqVO);
         Assertions.assertThat(generateAesKeyResult).isNotNull();
-        Assertions.assertThat(generateAesKeyResult.getHead()).isNotNull();
-        Assertions.assertThat(generateAesKeyResult.getHead().getCode()).isEqualTo(CommonReturnCodes.SUCCESS);
+        Assertions.assertThat(generateAesKeyResult.getCode()).isEqualTo(CommonReturnCodes.SUCCESS);
         Assertions.assertThat(generateAesKeyResult.getBody()).isNotNull();
         // 2.3、解密AES key
         String aesKey = RsaUtil.decryptString(serverPubClientPriKeyPair.getPrivate(), generateAesKeyResult.getBody().getEncryptedAesKey());
@@ -132,8 +130,7 @@ public final class TokenUtil {
                 .build();
         Response<RegisterUserRespVO> registerUserResult = RegisterApi.register(registerUserReqVO);
         Assertions.assertThat(registerUserResult).isNotNull();
-        Assertions.assertThat(registerUserResult.getHead()).isNotNull();
-        Assertions.assertThat(registerUserResult.getHead().getCode()).isEqualTo(CommonReturnCodes.SUCCESS);
+        Assertions.assertThat(registerUserResult.getCode()).isEqualTo(CommonReturnCodes.SUCCESS);
         Assertions.assertThat(registerUserResult.getBody()).isNotNull();
 
         context.setLoginRespVO(registerUserResult.getBody());

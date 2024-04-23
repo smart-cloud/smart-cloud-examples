@@ -18,7 +18,7 @@ package org.smartframework.cloud.examples.basic.user.test.cases.integration.api;
 import com.fasterxml.jackson.core.type.TypeReference;
 import io.github.smart.cloud.common.pojo.Response;
 import io.github.smart.cloud.constants.CommonReturnCodes;
-import io.github.smart.cloud.starter.core.business.util.RespUtil;
+import io.github.smart.cloud.starter.core.business.util.ResponseUtil;
 import io.github.smart.cloud.test.core.integration.WebMvcIntegrationTest;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -55,9 +55,9 @@ class LoginInfoApiControllerIntegrationTest extends WebMvcIntegrationTest {
     @Test
     void testLogin() throws Exception {
         // mock start
-        Mockito.when(userRpc.cacheUserInfo(ArgumentMatchers.any())).thenReturn(RespUtil.success());
+        Mockito.when(userRpc.cacheUserInfo(ArgumentMatchers.any())).thenReturn(ResponseUtil.success());
         Mockito.when(authRpc.listByUid(ArgumentMatchers.any()))
-                .thenReturn(RespUtil.success(AuthRespDTO.builder()
+                .thenReturn(ResponseUtil.success(AuthRespDTO.builder()
                         .roles(Sets.newSet("admin"))
                         .permissions(Sets.newSet("/user/api/register/register"))
                         .build()));
@@ -80,8 +80,7 @@ class LoginInfoApiControllerIntegrationTest extends WebMvcIntegrationTest {
                 });
 
         Assertions.assertThat(result).isNotNull();
-        Assertions.assertThat(result.getHead()).isNotNull();
-        Assertions.assertThat(result.getHead().getCode()).isEqualTo(CommonReturnCodes.SUCCESS);
+        Assertions.assertThat(result.getCode()).isEqualTo(CommonReturnCodes.SUCCESS);
         Assertions.assertThat(result.getBody().getUserId()).isNotNull();
         Assertions.assertThat(result.getBody().getUsername()).isNotBlank();
         Assertions.assertThat(result.getBody().getRealName()).isNotBlank();
@@ -91,7 +90,7 @@ class LoginInfoApiControllerIntegrationTest extends WebMvcIntegrationTest {
     @Test
     void testExit() throws Exception {
         // mock start
-        Mockito.when(userRpc.exit(ArgumentMatchers.any())).thenReturn(RespUtil.success());
+        Mockito.when(userRpc.exit(ArgumentMatchers.any())).thenReturn(ResponseUtil.success());
         // mock end
 
         // 构造请求参数
@@ -103,8 +102,7 @@ class LoginInfoApiControllerIntegrationTest extends WebMvcIntegrationTest {
                 });
 
         Assertions.assertThat(result).isNotNull();
-        Assertions.assertThat(result.getHead()).isNotNull();
-        Assertions.assertThat(result.getHead().getCode()).isEqualTo(CommonReturnCodes.SUCCESS);
+        Assertions.assertThat(result.getCode()).isEqualTo(CommonReturnCodes.SUCCESS);
     }
 
 }

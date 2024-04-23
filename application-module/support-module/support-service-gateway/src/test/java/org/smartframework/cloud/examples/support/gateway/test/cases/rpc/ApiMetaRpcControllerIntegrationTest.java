@@ -74,8 +74,7 @@ class ApiMetaRpcControllerIntegrationTest extends WebReactiveIntegrationTest {
         Response<Void> result = post("/gateway/rpc/apiMeta/notifyFetch", new NotifyFetchReqDTO(serviceId), new TypeReference<Response<Void>>() {
         });
         Assertions.assertThat(result).isNotNull();
-        Assertions.assertThat(result.getHead()).isNotNull();
-        Assertions.assertThat(result.getHead().getCode()).isEqualTo(CommonReturnCodes.SUCCESS);
+        Assertions.assertThat(result.getCode()).isEqualTo(CommonReturnCodes.SUCCESS);
     }
 
 }

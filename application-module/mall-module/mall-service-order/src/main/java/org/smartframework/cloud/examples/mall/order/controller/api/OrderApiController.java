@@ -20,7 +20,7 @@ import io.github.smart.cloud.api.core.annotation.RequireRepeatSubmitCheck;
 import io.github.smart.cloud.api.core.annotation.RequireTimestamp;
 import io.github.smart.cloud.api.core.annotation.auth.RequireUser;
 import io.github.smart.cloud.common.pojo.Response;
-import io.github.smart.cloud.starter.core.business.util.RespUtil;
+import io.github.smart.cloud.starter.core.business.util.ResponseUtil;
 import lombok.RequiredArgsConstructor;
 import org.smartframework.cloud.examples.mall.order.mq.producer.OrderProducer;
 import org.smartframework.cloud.examples.mall.order.service.api.OrderApiService;
@@ -60,7 +60,7 @@ public class OrderApiController {
     @RequireRepeatSubmitCheck
     @RequireTimestamp
     public Response<String> submit(@RequestBody @Valid SubmitOrderReqVO req) {
-        return RespUtil.success(orderProducer.submitOrder(req));
+        return ResponseUtil.success(orderProducer.submitOrder(req));
     }
 
     /**
@@ -73,7 +73,7 @@ public class OrderApiController {
     @RequireUser
     @RequireTimestamp
     public Response<QuerySubmitResultRespVO> querySubmitResult(@NotNull String orderNo) {
-        return RespUtil.success(orderApiService.querySubmitResult(orderNo));
+        return ResponseUtil.success(orderApiService.querySubmitResult(orderNo));
     }
 
 }

@@ -1,7 +1,3 @@
-smart:
-  mybatis:
-    cryptKey: 123456
-
 server:
   port: 20031
   

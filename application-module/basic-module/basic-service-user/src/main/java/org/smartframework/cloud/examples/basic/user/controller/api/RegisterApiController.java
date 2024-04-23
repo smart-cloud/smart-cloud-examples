@@ -18,7 +18,7 @@ package org.smartframework.cloud.examples.basic.user.controller.api;
 import io.github.smart.cloud.api.core.annotation.RequireDataSecurity;
 import io.github.smart.cloud.api.core.annotation.RequireTimestamp;
 import io.github.smart.cloud.common.pojo.Response;
-import io.github.smart.cloud.starter.core.business.util.RespUtil;
+import io.github.smart.cloud.starter.core.business.util.ResponseUtil;
 import lombok.RequiredArgsConstructor;
 import org.smartframework.cloud.examples.basic.rpc.user.request.api.register.RegisterUserReqVO;
 import org.smartframework.cloud.examples.basic.rpc.user.response.api.register.RegisterUserRespVO;
@@ -56,7 +56,7 @@ public class RegisterApiController {
     @RequireDataSecurity
     @RequireTimestamp
     public Response<RegisterUserRespVO> register(@RequestBody @Valid RegisterUserReqVO req) {
-        return RespUtil.success(registerApiService.register(req));
+        return ResponseUtil.success(registerApiService.register(req));
     }
 
 }

@@ -51,8 +51,7 @@ class ProductInfoOmsControllerIntegrationTest extends WebMvcIntegrationTest {
                 });
 
         Assertions.assertThat(result).isNotNull();
-        Assertions.assertThat(result.getHead()).isNotNull();
-        Assertions.assertThat(result.getHead().getCode()).isEqualTo(CommonReturnCodes.SUCCESS);
+        Assertions.assertThat(result.getCode()).isEqualTo(CommonReturnCodes.SUCCESS);
         Assertions.assertThat(result.getBody()).isTrue();
     }
 
@@ -72,8 +71,7 @@ class ProductInfoOmsControllerIntegrationTest extends WebMvcIntegrationTest {
                 });
 
         Assertions.assertThat(result).isNotNull();
-        Assertions.assertThat(result.getHead()).isNotNull();
-        Assertions.assertThat(result.getHead().getCode()).isEqualTo(CommonReturnCodes.SUCCESS);
+        Assertions.assertThat(result.getCode()).isEqualTo(CommonReturnCodes.SUCCESS);
         Assertions.assertThat(result.getBody()).isTrue();
     }
 
@@ -90,8 +88,7 @@ class ProductInfoOmsControllerIntegrationTest extends WebMvcIntegrationTest {
                 });
 
         Assertions.assertThat(result).isNotNull();
-        Assertions.assertThat(result.getHead()).isNotNull();
-        Assertions.assertThat(result.getHead().getCode()).isEqualTo(CommonReturnCodes.SUCCESS);
+        Assertions.assertThat(result.getCode()).isEqualTo(CommonReturnCodes.SUCCESS);
         Assertions.assertThat(result.getBody()).isTrue();
     }
 
@@ -110,8 +107,7 @@ class ProductInfoOmsControllerIntegrationTest extends WebMvcIntegrationTest {
                 });
 
         Assertions.assertThat(result).isNotNull();
-        Assertions.assertThat(result.getHead()).isNotNull();
-        Assertions.assertThat(result.getHead().getCode()).isEqualTo(CommonReturnCodes.SUCCESS);
+        Assertions.assertThat(result.getCode()).isEqualTo(CommonReturnCodes.SUCCESS);
         Assertions.assertThat(result.getBody()).isNotNull();
         Assertions.assertThat(result.getBody().getDatas()).isNotEmpty();
     }

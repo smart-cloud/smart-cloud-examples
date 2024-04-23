@@ -39,8 +39,7 @@ class ProductInfoOmsSystemTest extends AbstractSystemTest {
         reqVO.setStock(100L);
         Response<Boolean> result = ProductInfoOms.create(reqVO);
         Assertions.assertThat(result).isNotNull();
-        Assertions.assertThat(result.getHead()).isNotNull();
-        Assertions.assertThat(result.getHead().getCode()).isEqualTo(CommonReturnCodes.SUCCESS);
+        Assertions.assertThat(result.getCode()).isEqualTo(CommonReturnCodes.SUCCESS);
         Assertions.assertThat(result.getBody()).isTrue();
     }
 

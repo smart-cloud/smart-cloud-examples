@@ -16,7 +16,7 @@
 package org.smartframework.cloud.examples.api.ac.core.controller;
 
 import io.github.smart.cloud.common.pojo.Response;
-import io.github.smart.cloud.starter.core.business.util.RespUtil;
+import io.github.smart.cloud.starter.core.business.util.ResponseUtil;
 import org.smartframework.cloud.examples.api.ac.core.constants.ApiMetaConstants;
 import org.smartframework.cloud.examples.api.ac.core.util.ApiMetaUtil;
 import org.smartframework.cloud.examples.api.ac.core.vo.ApiMetaFetchRespVO;
@@ -39,7 +39,7 @@ public class ApiMetaController {
      */
     @GetMapping(ApiMetaConstants.FETCH_URL)
     public Response<ApiMetaFetchRespVO> fetch() {
-        return RespUtil.success(ApiMetaUtil.collectApiMetas());
+        return ResponseUtil.success(ApiMetaUtil.collectApiMetas());
     }
 
 }

@@ -47,8 +47,7 @@ class OrderApiSystemTest extends AbstractSystemTest {
         productInsertReqVO.setStock(100L);
         Response<Boolean> createResult = ProductInfoOms.create(productInsertReqVO);
         Assertions.assertThat(createResult).isNotNull();
-        Assertions.assertThat(createResult.getHead()).isNotNull();
-        Assertions.assertThat(createResult.getHead().getCode()).isEqualTo(CommonReturnCodes.SUCCESS);
+        Assertions.assertThat(createResult.getCode()).isEqualTo(CommonReturnCodes.SUCCESS);
         Assertions.assertThat(createResult.getBody()).isTrue();
 
         // 2、查询商品
@@ -58,8 +57,7 @@ class OrderApiSystemTest extends AbstractSystemTest {
         reqVO.setPageSize(10);
         Response<BasePageResponse<PageProductRespVO>> pageProductResult = ProductInfoApi.pageProduct(reqVO);
         Assertions.assertThat(pageProductResult).isNotNull();
-        Assertions.assertThat(pageProductResult.getHead()).isNotNull();
-        Assertions.assertThat(pageProductResult.getHead().getCode()).isEqualTo(CommonReturnCodes.SUCCESS);
+        Assertions.assertThat(pageProductResult.getCode()).isEqualTo(CommonReturnCodes.SUCCESS);
         Assertions.assertThat(pageProductResult.getBody()).isNotNull();
         Assertions.assertThat(pageProductResult.getBody().getDatas()).isNotEmpty();
 
@@ -74,15 +72,13 @@ class OrderApiSystemTest extends AbstractSystemTest {
 
         Response<String> submitResult = OrderApi.submit(createOrderReqVO);
         Assertions.assertThat(submitResult).isNotNull();
-        Assertions.assertThat(submitResult.getHead()).isNotNull();
-        Assertions.assertThat(submitResult.getHead().getCode()).isEqualTo(CommonReturnCodes.SUCCESS);
+        Assertions.assertThat(submitResult.getCode()).isEqualTo(CommonReturnCodes.SUCCESS);
         Assertions.assertThat(submitResult.getBody()).isNotBlank();
 
         // 4、查询提单结果
         Response<QuerySubmitResultRespVO> querySubmitResultResp = OrderApi.querySubmitResult(submitResult.getBody());
         Assertions.assertThat(querySubmitResultResp).isNotNull();
-        Assertions.assertThat(querySubmitResultResp.getHead()).isNotNull();
-        Assertions.assertThat(querySubmitResultResp.getHead().getCode()).isEqualTo(CommonReturnCodes.SUCCESS);
+        Assertions.assertThat(querySubmitResultResp.getCode()).isEqualTo(CommonReturnCodes.SUCCESS);
         Assertions.assertThat(querySubmitResultResp.getBody()).isNotNull();
         Assertions.assertThat(querySubmitResultResp.getBody().getOrderStatus()).isEqualTo(OrderStatus.PAY_TODO.getStatus());
     }

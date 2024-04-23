@@ -23,7 +23,7 @@ import io.github.smart.cloud.api.core.annotation.auth.RequireRoles;
 import io.github.smart.cloud.api.core.annotation.constants.Role;
 import io.github.smart.cloud.common.pojo.BasePageResponse;
 import io.github.smart.cloud.common.pojo.Response;
-import io.github.smart.cloud.starter.core.business.util.RespUtil;
+import io.github.smart.cloud.starter.core.business.util.ResponseUtil;
 import lombok.RequiredArgsConstructor;
 import org.smartframework.cloud.examples.basic.auth.service.oms.RoleInfoOmsService;
 import org.smartframework.cloud.examples.basic.rpc.auth.request.oms.role.PageRoleReqVO;
@@ -64,7 +64,7 @@ public class RoleInfoOmsController {
     @RequireRepeatSubmitCheck
     @RequireTimestamp
     public Response<Boolean> create(@RequestBody @Valid RoleCreateReqVO req) {
-        return RespUtil.success(roleInfoOmsService.create(req));
+        return ResponseUtil.success(roleInfoOmsService.create(req));
     }
 
     /**
@@ -79,7 +79,7 @@ public class RoleInfoOmsController {
     @RequireDataSecurity
     @RequireTimestamp
     public Response<Boolean> update(@RequestBody @Valid RoleUpdateReqVO req) {
-        return RespUtil.success(roleInfoOmsService.update(req));
+        return ResponseUtil.success(roleInfoOmsService.update(req));
     }
 
     /**
@@ -94,7 +94,7 @@ public class RoleInfoOmsController {
     @RequireDataSecurity
     @RequireTimestamp
     public Response<Boolean> delete(@RequestBody @NotNull Long id) {
-        return RespUtil.success(roleInfoOmsService.logicDelete(id));
+        return ResponseUtil.success(roleInfoOmsService.logicDelete(id));
     }
 
     /**
@@ -108,7 +108,7 @@ public class RoleInfoOmsController {
     @RequirePermissions("auth:role:page")
     @RequireTimestamp
     public Response<BasePageResponse<RoleInfoBaseRespVO>> page(@Valid @NotNull PageRoleReqVO req) {
-        return RespUtil.success(roleInfoOmsService.page(req));
+        return ResponseUtil.success(roleInfoOmsService.page(req));
     }
 
 }

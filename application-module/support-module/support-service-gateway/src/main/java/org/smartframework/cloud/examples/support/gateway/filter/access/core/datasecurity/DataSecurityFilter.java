@@ -59,9 +59,10 @@ public class DataSecurityFilter extends AbstractFilter {
         }
 
         return chain.filter(exchange.mutate()
-                .request(new DataSecurityServerHttpRequestDecorator(exchange.getRequest(), exchange.getResponse().bufferFactory(), token, apiAccessMetaCache.isRequestDecrypt(),
-                        apiAccessMetaCache.getSignType(), redisAdapter))
-                .response(new DataSecurityServerHttpResponseDecorator(exchange.getResponse(), apiAccessMetaCache.isResponseEncrypt(), apiAccessMetaCache.getSignType()))
+                .request(new DataSecurityServerHttpRequestDecorator(exchange.getRequest(), exchange.getResponse().bufferFactory(), token,
+                        apiAccessMetaCache.isRequestDecrypt(), apiAccessMetaCache.getSignType(), redisAdapter))
+                .response(new DataSecurityServerHttpResponseDecorator(exchange.getResponse(), redisAdapter, apiAccessMetaCache.isResponseEncrypt(),
+                        apiAccessMetaCache.getSignType()))
                 .build());
     }
 

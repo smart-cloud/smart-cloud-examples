@@ -19,7 +19,7 @@ import com.baomidou.dynamic.datasource.annotation.DSTransactional;
 import io.github.smart.cloud.common.pojo.Response;
 import io.github.smart.cloud.exception.BusinessException;
 import io.github.smart.cloud.exception.ServerException;
-import io.github.smart.cloud.starter.core.business.util.RespUtil;
+import io.github.smart.cloud.starter.core.business.util.ResponseUtil;
 import io.github.smart.cloud.starter.global.id.GlobalId;
 import io.github.smart.cloud.starter.mybatis.plus.enums.DeleteState;
 import io.github.smart.cloud.utility.spring.SpringContextUtil;
@@ -108,8 +108,8 @@ public class OrderApiService {
         QryProductByIdsReqDTO qryProductByIdsReqDTO = QryProductByIdsReqDTO.builder().ids(productIds).build();
         Response<QryProductByIdsRespDTO> qryProductByIdsResponse = productInfoRpc
                 .qryProductByIds(qryProductByIdsReqDTO);
-        if (!RespUtil.isSuccess(qryProductByIdsResponse)) {
-            throw new ServerException(RespUtil.getFailMsg(qryProductByIdsResponse));
+        if (!ResponseUtil.isSuccess(qryProductByIdsResponse)) {
+            throw new ServerException(ResponseUtil.getFailMsg(qryProductByIdsResponse));
         }
         if (qryProductByIdsResponse.getBody()==null
                 || CollectionUtils.isEmpty(qryProductByIdsResponse.getBody().getProductInfos())
@@ -126,7 +126,7 @@ public class OrderApiService {
         try {
             // 3、扣减库存
             Response<Void> updateStockResponse = deductStock(products);
-            if (RespUtil.isSuccess(updateStockResponse)) {
+            if (ResponseUtil.isSuccess(updateStockResponse)) {
                 // TODO:4、抵扣优惠券
 
                 status = OrderStatus.PAY_TODO;

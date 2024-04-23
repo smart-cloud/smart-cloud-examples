@@ -35,8 +35,7 @@ class ProductInfoApiSystemTest extends AbstractSystemTest {
         reqVO.setPageSize(10);
         Response<BasePageResponse<PageProductRespVO>> result = ProductInfoApi.pageProduct(reqVO);
         Assertions.assertThat(result).isNotNull();
-        Assertions.assertThat(result.getHead()).isNotNull();
-        Assertions.assertThat(result.getHead().getCode()).isEqualTo(CommonReturnCodes.SUCCESS);
+        Assertions.assertThat(result.getCode()).isEqualTo(CommonReturnCodes.SUCCESS);
     }
 
 }

@@ -23,7 +23,7 @@ import io.github.smart.cloud.api.core.annotation.auth.RequireRoles;
 import io.github.smart.cloud.api.core.annotation.constants.Role;
 import io.github.smart.cloud.common.pojo.BasePageResponse;
 import io.github.smart.cloud.common.pojo.Response;
-import io.github.smart.cloud.starter.core.business.util.RespUtil;
+import io.github.smart.cloud.starter.core.business.util.ResponseUtil;
 import lombok.RequiredArgsConstructor;
 import org.smartframework.cloud.examples.basic.auth.service.oms.PermissionInfoOmsService;
 import org.smartframework.cloud.examples.basic.rpc.auth.request.oms.permisson.PagePermissionReqVO;
@@ -64,7 +64,7 @@ public class PermissionInfoOmsController {
     @RequireRepeatSubmitCheck
     @RequireTimestamp
     public Response<Boolean> create(@RequestBody @Valid PermissionCreateReqVO req) {
-        return RespUtil.success(permissionInfoOmsService.create(req));
+        return ResponseUtil.success(permissionInfoOmsService.create(req));
     }
 
     /**
@@ -79,7 +79,7 @@ public class PermissionInfoOmsController {
     @RequireDataSecurity
     @RequireTimestamp
     public Response<Boolean> update(@RequestBody @Valid PermissionUpdateReqVO req) {
-        return RespUtil.success(permissionInfoOmsService.update(req));
+        return ResponseUtil.success(permissionInfoOmsService.update(req));
     }
 
     /**
@@ -94,7 +94,7 @@ public class PermissionInfoOmsController {
     @RequireDataSecurity
     @RequireTimestamp
     public Response<Boolean> delete(@RequestBody @NotNull Long id) {
-        return RespUtil.success(permissionInfoOmsService.logicDelete(id));
+        return ResponseUtil.success(permissionInfoOmsService.logicDelete(id));
     }
 
     /**
@@ -108,7 +108,7 @@ public class PermissionInfoOmsController {
     @RequirePermissions("auth:permission:page")
     @RequireTimestamp
     public Response<BasePageResponse<PermissionInfoBaseRespVO>> page(@Valid @NotNull PagePermissionReqVO req) {
-        return RespUtil.success(permissionInfoOmsService.page(req));
+        return ResponseUtil.success(permissionInfoOmsService.page(req));
     }
 
 }

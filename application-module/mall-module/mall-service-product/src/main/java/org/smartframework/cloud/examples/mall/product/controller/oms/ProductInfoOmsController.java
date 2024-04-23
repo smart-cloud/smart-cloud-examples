@@ -21,7 +21,7 @@ import io.github.smart.cloud.api.core.annotation.RequireTimestamp;
 import io.github.smart.cloud.api.core.annotation.auth.RequirePermissions;
 import io.github.smart.cloud.common.pojo.BasePageResponse;
 import io.github.smart.cloud.common.pojo.Response;
-import io.github.smart.cloud.starter.core.business.util.RespUtil;
+import io.github.smart.cloud.starter.core.business.util.ResponseUtil;
 import lombok.RequiredArgsConstructor;
 import org.smartframework.cloud.examples.mall.product.service.oms.ProductInfoOmsService;
 import org.smartframework.cloud.examples.mall.rpc.product.request.oms.PageProductReqVO;
@@ -62,7 +62,7 @@ public class ProductInfoOmsController {
     @RequireRepeatSubmitCheck
     @RequireTimestamp
     public Response<Boolean> create(@RequestBody @Valid ProductInsertReqVO req) {
-        return RespUtil.success(productOmsService.create(req));
+        return ResponseUtil.success(productOmsService.create(req));
     }
 
     /**
@@ -76,7 +76,7 @@ public class ProductInfoOmsController {
     @RequireDataSecurity
     @RequireTimestamp
     public Response<Boolean> update(@RequestBody @Valid ProductUpdateReqVO req) {
-        return RespUtil.success(productOmsService.update(req));
+        return ResponseUtil.success(productOmsService.update(req));
     }
 
     /**
@@ -90,7 +90,7 @@ public class ProductInfoOmsController {
     @RequireDataSecurity
     @RequireTimestamp
     public Response<Boolean> logicDelete(@RequestBody @Valid ProductDeleteReqVO req) {
-        return RespUtil.success(productOmsService.logicDelete(req));
+        return ResponseUtil.success(productOmsService.logicDelete(req));
     }
 
     /**
@@ -102,7 +102,7 @@ public class ProductInfoOmsController {
     @GetMapping("pageProduct")
     @RequireTimestamp
     public Response<BasePageResponse<ProductInfoBaseRespVO>> pageProduct(@Valid @NotNull PageProductReqVO req) {
-        return RespUtil.success(productOmsService.pageProduct(req));
+        return ResponseUtil.success(productOmsService.pageProduct(req));
     }
 
 }

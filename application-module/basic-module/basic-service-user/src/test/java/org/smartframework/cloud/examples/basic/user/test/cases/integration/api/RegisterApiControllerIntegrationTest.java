@@ -18,7 +18,7 @@ package org.smartframework.cloud.examples.basic.user.test.cases.integration.api;
 import com.fasterxml.jackson.core.type.TypeReference;
 import io.github.smart.cloud.common.pojo.Response;
 import io.github.smart.cloud.constants.CommonReturnCodes;
-import io.github.smart.cloud.starter.core.business.util.RespUtil;
+import io.github.smart.cloud.starter.core.business.util.ResponseUtil;
 import io.github.smart.cloud.test.core.integration.WebMvcIntegrationTest;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -54,9 +54,9 @@ class RegisterApiControllerIntegrationTest extends WebMvcIntegrationTest {
     @Test
     void testRegister() throws Exception {
         // mock start
-        Mockito.when(userRpc.cacheUserInfo(ArgumentMatchers.any())).thenReturn(RespUtil.success());
+        Mockito.when(userRpc.cacheUserInfo(ArgumentMatchers.any())).thenReturn(ResponseUtil.success());
         Mockito.when(authRpc.listByUid(ArgumentMatchers.any()))
-                .thenReturn(RespUtil.success(AuthRespDTO.builder()
+                .thenReturn(ResponseUtil.success(AuthRespDTO.builder()
                         .roles(Sets.newSet("admin"))
                         .permissions(Sets.newSet("/user/api/register/register"))
                         .build()));
@@ -84,8 +84,7 @@ class RegisterApiControllerIntegrationTest extends WebMvcIntegrationTest {
                 });
 
         Assertions.assertThat(result).isNotNull();
-        Assertions.assertThat(result.getHead()).isNotNull();
-        Assertions.assertThat(result.getHead().getCode()).isEqualTo(CommonReturnCodes.SUCCESS);
+        Assertions.assertThat(result.getCode()).isEqualTo(CommonReturnCodes.SUCCESS);
         Assertions.assertThat(result.getBody()).isNotNull();
         Assertions.assertThat(result.getBody().getUserId()).isNotNull();
         Assertions.assertThat(result.getBody().getUsername()).isNotBlank();

@@ -68,8 +68,7 @@ class UserRoleOmsControllerIntegrationTest extends WebMvcIntegrationTest {
                 });
 
         Assertions.assertThat(result).isNotNull();
-        Assertions.assertThat(result.getHead()).isNotNull();
-        Assertions.assertThat(result.getHead().getCode()).isEqualTo(CommonReturnCodes.SUCCESS);
+        Assertions.assertThat(result.getCode()).isEqualTo(CommonReturnCodes.SUCCESS);
         Assertions.assertThat(result.getBody()).isNotNull();
         Assertions.assertThat(result.getBody()).isTrue();
     }
@@ -90,8 +89,7 @@ class UserRoleOmsControllerIntegrationTest extends WebMvcIntegrationTest {
                 });
 
         Assertions.assertThat(result).isNotNull();
-        Assertions.assertThat(result.getHead()).isNotNull();
-        Assertions.assertThat(result.getHead().getCode()).isEqualTo(CommonReturnCodes.SUCCESS);
+        Assertions.assertThat(result.getCode()).isEqualTo(CommonReturnCodes.SUCCESS);
         Assertions.assertThat(result.getBody()).isNotNull();
         Assertions.assertThat(result.getBody()).isTrue();
     }
@@ -109,8 +107,7 @@ class UserRoleOmsControllerIntegrationTest extends WebMvcIntegrationTest {
                 });
 
         Assertions.assertThat(result).isNotNull();
-        Assertions.assertThat(result.getHead()).isNotNull();
-        Assertions.assertThat(result.getHead().getCode()).isEqualTo(CommonReturnCodes.SUCCESS);
+        Assertions.assertThat(result.getCode()).isEqualTo(CommonReturnCodes.SUCCESS);
         Assertions.assertThat(result.getBody()).isNotEmpty();
         Assertions.assertThat(result.getBody().get(0).getRoleCode()).isNotBlank();
         Assertions.assertThat(result.getBody().get(0).getPermissons()).isNotEmpty();

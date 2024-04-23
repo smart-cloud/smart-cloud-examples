@@ -52,26 +52,18 @@ public class RewriteServerHttpResponseDecorator extends ServerHttpResponseDecora
     @Override
     public Mono<Void> writeWith(Publisher<? extends DataBuffer> body) {
         final MediaType contentType = super.getHeaders().getContentType();
-        if (RewriteHttpUtil.isSupported(contentType)) {
-            DataBufferFactory dataBufferFactory = super.bufferFactory();
-            if (body instanceof Mono) {
-                ((Mono<DataBuffer>) body).subscribe(buffer -> {
-                    byte[] bytes = RewriteHttpUtil.convert(buffer);
-                    bodyStr = new String(bytes, StandardCharsets.UTF_8);
-                    this.body = Mono.just(dataBufferFactory.wrap(bytes));
-                });
-
-                return super.writeWith(this.body);
-            } else if (body instanceof Flux) {
-                ((Flux<DataBuffer>) body).subscribe(buffer -> {
-                    byte[] bytes = RewriteHttpUtil.convert(buffer);
-                    bodyStr = new String(bytes, StandardCharsets.UTF_8);
-                    this.body = Flux.just(dataBufferFactory.wrap(bytes));
-                });
-                return super.writeWith(this.body);
-            }
+        if (!RewriteHttpUtil.isSupported(contentType)) {
+            return super.writeWith(body);
         }
-        return super.writeWith(body);
+
+        DataBufferFactory dataBufferFactory = super.bufferFactory();
+        Flux.from(body).subscribe(buffer -> {
+            byte[] bytes = RewriteHttpUtil.convert(buffer);
+            bodyStr = new String(bytes, StandardCharsets.UTF_8);
+            this.body = Mono.just(dataBufferFactory.wrap(bytes));
+        });
+
+        return super.writeWith(this.body);
     }
 
 }

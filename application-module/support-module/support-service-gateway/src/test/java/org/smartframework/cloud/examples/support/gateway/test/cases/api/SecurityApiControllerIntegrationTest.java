@@ -61,8 +61,7 @@ class SecurityApiControllerIntegrationTest extends WebReactiveIntegrationTest {
         Response<GenerateClientPubKeyRespVO> result = post("/gateway/api/security/generateClientPubKey", headers, null, new TypeReference<Response<GenerateClientPubKeyRespVO>>() {
         });
         Assertions.assertThat(result).isNotNull();
-        Assertions.assertThat(result.getHead()).isNotNull();
-        Assertions.assertThat(result.getHead().getCode()).isEqualTo(CommonReturnCodes.SUCCESS);
+        Assertions.assertThat(result.getCode()).isEqualTo(CommonReturnCodes.SUCCESS);
         Assertions.assertThat(result.getBody().getToken()).isNotBlank();
         Assertions.assertThat(result.getBody().getPubKeyModulus()).isNotBlank();
         Assertions.assertThat(result.getBody().getPubKeyExponent()).isNotBlank();
@@ -100,8 +99,7 @@ class SecurityApiControllerIntegrationTest extends WebReactiveIntegrationTest {
         Response<GenerateAesKeyRespVO> result = post("/gateway/api/security/generateAesKey", headers, generateAesKeyReqVO, new TypeReference<Response<GenerateAesKeyRespVO>>() {
         });
         Assertions.assertThat(result).isNotNull();
-        Assertions.assertThat(result.getHead()).isNotNull();
-        Assertions.assertThat(result.getHead().getCode()).isEqualTo(CommonReturnCodes.SUCCESS);
+        Assertions.assertThat(result.getCode()).isEqualTo(CommonReturnCodes.SUCCESS);
         Assertions.assertThat(result.getBody().getEncryptedAesKey()).isNotBlank();
 
         // 解密AES key

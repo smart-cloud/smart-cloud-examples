@@ -23,7 +23,7 @@ import io.github.smart.cloud.api.core.annotation.auth.RequireRoles;
 import io.github.smart.cloud.api.core.annotation.constants.Role;
 import io.github.smart.cloud.common.pojo.BasePageResponse;
 import io.github.smart.cloud.common.pojo.Response;
-import io.github.smart.cloud.starter.core.business.util.RespUtil;
+import io.github.smart.cloud.starter.core.business.util.ResponseUtil;
 import lombok.RequiredArgsConstructor;
 import org.smartframework.cloud.examples.basic.auth.service.oms.RolePermissionOmsService;
 import org.smartframework.cloud.examples.basic.rpc.auth.request.oms.role.permisson.PageRolePermissonReqVO;
@@ -64,7 +64,7 @@ public class RolePermissionOmsController {
     @RequireRepeatSubmitCheck
     @RequireTimestamp
     public Response<Boolean> create(@RequestBody @Valid RolePermissonCreateReqVO req) {
-        return RespUtil.success(rolePermissionOmsService.create(req));
+        return ResponseUtil.success(rolePermissionOmsService.create(req));
     }
 
     /**
@@ -79,7 +79,7 @@ public class RolePermissionOmsController {
     @RequireDataSecurity
     @RequireTimestamp
     public Response<Boolean> update(@RequestBody @Valid RolePermissonUpdateReqVO req) {
-        return RespUtil.success(rolePermissionOmsService.update(req));
+        return ResponseUtil.success(rolePermissionOmsService.update(req));
     }
 
     /**
@@ -93,7 +93,7 @@ public class RolePermissionOmsController {
     @RequirePermissions("auth:role:permission:page")
     @RequireTimestamp
     public Response<BasePageResponse<RolePermissionRespVO>> page(@Valid @NotNull PageRolePermissonReqVO req) {
-        return RespUtil.success(rolePermissionOmsService.page(req));
+        return ResponseUtil.success(rolePermissionOmsService.page(req));
     }
 
 }
