@@ -54,6 +54,7 @@ smart-cloud-examples
 ## （二）接口数据加解密、签名流程
 
 ### 1、约定
+> 只支持application/json格式的数据加解密、签名！
 ```
 接口mapping url格式：服务模块名/接口使用端标志/接口模块名/接口名
 如：user/api/loginInfo/login
@@ -63,46 +64,25 @@ smart-cloud-examples
 	oms：管理后台使用的接口
 	rpc：rpc接口
 	
-http get、http post共同部分，即http headers部分的数据，它包含请求时间戳（默认2分钟内有效）、请求的token、交易流水号、签名等4个自定义字段：
+http headers部分的数据，它包含请求时间戳（默认2分钟内有效）、请求的token、交易流水号、签名等4个自定义字段：
 	smart-sign: 109ad1a8e05f8de345e6d780f09b001e97dc3d6fa9bbbe6936edb2b75a81864ac3b0b071e093af001fbffa479217540138b98f6f165e8246dd25a2536649f1f6
 	smart-timestamp: 1555778393862
 	smart-token: 4c2e22605001000rK
 	smart-nonce: eb9f81e7cee1c000
 ```
 
-### 2、Http GET
-请求数据由http headers、url查询字符串组成，url查询字符串为实际请求的参数。
-如http://localhost:10010/user/api/loginInfo/queryById?id=100
-
-### 3、Http POST
-请求数据采用json格式，通过流的形式传输。
-请求数据由http headers、http body两部分组成，http body部分为请求的实际参数（json格式）。
-
-#### 1.请求数据组成
-**http body部分**
+### 2、响应对象Response组成
 ```
-{
-    "products": [{
-        "buyCount": 1,
-        "productId": 4
-	}]
-}
-```
-
-#### 2.响应对象Resp组成
-```
-{
-	"head": {
-		"transactionId": null,
-		"code": "100200",
-		"msg": "成功",
-		"timestamp": 0
-	},
+{	
+	"nonce": eb9f81e7cee1c000,
+	"code": "100200",
+	"msg": "成功",
 	"body": {
 		"id": "2",
 		"name": "手机",
 		"price": "1200"
 	},
+	"timestamp": 1555778393862
 	"sign": "109ad1a8e05f8de345e6d780f09b001e97dc3d6fa9bbbe6936edb2b75a81864ac3b0b071e093af001fbffa479217540138b98f6f165e8246dd25a2536649f1f6"
 }
 ```
@@ -110,45 +90,32 @@ http get、http post共同部分，即http headers部分的数据，它包含请
 #### 1.签名、加密的key传递
 ![](docs/images/encrypt_decrypt_sign.png)
 
-#### 2.请求方
-##### （1）请求参数
+#### 2.请求参数
 ```
-Http Get请求方式 ：
-1.url查询字符串中的参数以json的格式组装得到查询的json串；
-2.sign = RSA签名（“httpmethod + http headers（按自然排序的json串） + url查询json串”组成）
-
-Http Post请求方式 ：
-1.将http body部分的数据json化；
-2.AES加密body的json串；
-3.sign = RSA签名（“httpmethod + http headers（按自然排序的json串） + AES加密body的json串”）
-```
-##### （2）返回结果
-Http Get、Http Post方式响应信息加密、签名相同。
-```
-1.校验签名是否正确；
-2.解密数据
-head = AES解密(head的json串)
-body = AES解密(body json串)
+1.参数定义
+  H=http headers（smart-timestamp、smart-nonce、smart-token按自然排序的json串）
+  Q=BASE64(AES(url参数，如a=1&b=2&c=3))
+  B=BASE64(AES(body的json串))
+  sign = RSA签名（“httpmethod + H + Q + B”）
+2、请求方处理逻辑
+  2.1如果需要加密，则先加密，再进行base64处理，最后生成签名；否则，直接进行base64处理，再签名。
+  2.2如果有url传参，则，需要对参数进行（加密）base64处理，然后通过参数q请求，如https://api.com/index?q=YT0xJmI9MiZjPTM
+3、处理步骤
+  3.1.请求方对请求参数处理步骤：加密-->base encode-->签名
+  3.2.接收方对请求参数处理步骤：验签-->base decode-->解密
 ```
 
-#### 3.响应方
-##### （1）请求入参
+#### 3.返回结果
+> 对返回数据处理步骤：加密-->base64处理-->签名
 ```
-Http Get请求方式 ：
-校验签名是否正确
-sign = RSA签名校验（“httpmethod + http headers（按自然排序的json串） + url查询的json串”组成，sign， 公钥）
-
-Http Post请求方式 ：
-1.校验签名是否正确
-  sign = RSA签名校验（“httpmethod + http headers（按自然排序的json串） + AES加密body的json串”， 公钥）
-2.AES解密body的json串；
-```
-##### （2）响应结果
-Http Get、Http Post请求方式响应信息加密、签名相同。
-```
-head = AES加密(head的json串)
-body = AES加密(body json串)
-sign = RSA签名签名(AES加密(head的json串) + AES加密(body json串))
+1.参数定义
+  sign = RSA签名（“Response#nonce + Response#timestamp + base64(AES(Response#body的json串))”）
+2、接收方处理逻辑
+  2.1填充Response#nonce、Response#timestamp
+  2.2如果需要加密，则AES(Response#body的json串)，再对其进行base64处理，最后生成签名；否则直接进行base64(Response#body的json串)处理，再签名。
+3、处理步骤
+  3.1.接收方对返回结果处理步骤：加密-->base64 encode-->签名
+  3.2.请求方对返回结果处理步骤：验签-->base64 decode-->解密
 ```
 
 # 三、环境搭建
