@@ -59,11 +59,22 @@ public class DataSecurityServerHttpRequestDecorator extends ServerHttpRequestDec
     private transient URI uri;
     private transient MultiValueMap<String, String> queryParams;
 
-    DataSecurityServerHttpRequestDecorator(ServerHttpRequest request, DataBufferFactory dataBufferFactory, SecurityKeyCache securityKeyCache, boolean requestDecrypt, byte signType) {
+    DataSecurityServerHttpRequestDecorator(ServerHttpRequest request, DataBufferFactory dataBufferFactory, SecurityKeyCache securityKeyCache, boolean requestDecrypt,
+                                           byte signType) {
         super(request);
-
         this.securityKeyCache = securityKeyCache;
-        checkSignAndDecryptRequest(request, dataBufferFactory, requestDecrypt, signType);
+
+        if ((requestDecrypt || signType == SignType.REQUEST.getType() || signType == SignType.ALL.getType())) {
+            if (!RewriteHttpUtil.isSupported(super.getHeaders().getContentType())) {
+                throw new UnsupportedFunctionException(GatewayReturnCodes.NOT_SUPPORT_DATA_SECURITY);
+            }
+
+            checkSignAndDecryptRequest(request, dataBufferFactory, requestDecrypt, signType);
+        } else {
+            this.body = super.getBody();
+            this.uri = super.getURI();
+            this.queryParams = super.getQueryParams();
+        }
     }
 
     @Override
@@ -90,17 +101,6 @@ public class DataSecurityServerHttpRequestDecorator extends ServerHttpRequestDec
      * @param signType
      */
     private void checkSignAndDecryptRequest(ServerHttpRequest request, DataBufferFactory dataBufferFactory, boolean requestDecrypt, byte signType) {
-        if (!requestDecrypt && signType == SignType.NONE.getType()) {
-            this.body = super.getBody();
-            this.uri = super.getURI();
-            this.queryParams = super.getQueryParams();
-            return;
-        }
-
-        if ((requestDecrypt || signType == SignType.REQUEST.getType() || signType == SignType.ALL.getType()) && !RewriteHttpUtil.isSupported(super.getHeaders().getContentType())) {
-            throw new UnsupportedFunctionException(GatewayReturnCodes.NOT_SUPPORT_DATA_SECURITY);
-        }
-
         DataSecurityParamDTO dataSecurityParam = SignUtil.getDataSecurityParams(request);
 
         // 1、请求参数验签
@@ -124,15 +124,13 @@ public class DataSecurityServerHttpRequestDecorator extends ServerHttpRequestDec
             return;
         }
 
-        super.getBody().subscribe(buffer -> {
-            String aesKey = securityKeyCache.getAesKey();
-            if (StringUtils.isBlank(aesKey)) {
-                throw new AesKeyNotFoundException();
-            }
+        String aesKey = securityKeyCache.getAesKey();
+        if (StringUtils.isBlank(aesKey)) {
+            throw new AesKeyNotFoundException();
+        }
 
-            setRealUriData(base64DecodeUrlParams, true, aesKey);
-            setRealBody(dataBufferFactory, base64DecodeBody, true, aesKey);
-        });
+        setRealUriData(base64DecodeUrlParams, true, aesKey);
+        setRealBody(dataBufferFactory, base64DecodeBody, true, aesKey);
     }
 
     /**
@@ -146,6 +144,7 @@ public class DataSecurityServerHttpRequestDecorator extends ServerHttpRequestDec
     private void setRealBody(DataBufferFactory dataBufferFactory, String base64DecodeBody, boolean requestDecrypt, String aesKey) {
         if (base64DecodeBody == null) {
             this.body = super.getBody();
+            return;
         }
 
         String realBody = requestDecrypt ? AesUtil.decrypt(base64DecodeBody, aesKey) : base64DecodeBody;

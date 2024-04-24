@@ -87,7 +87,7 @@ public final class TokenUtil {
         context.setToken(token);
 
         // 2.1、客户端生成一对RSA公、私钥（PK2、SK2）
-        KeyPair serverPubClientPriKeyPair = RsaUtil.generateKeyPair();
+        KeyPair serverPubClientPriKeyPair = RsaUtil.generateKeyPair(256);
         //2.2、用PK1将PK2加密传给服务端
         GenerateAesKeyReqVO generateAesKeyReqVO = new GenerateAesKeyReqVO();
         generateAesKeyReqVO.setToken(token);
@@ -141,7 +141,7 @@ public final class TokenUtil {
     private static String[] generateEncryptedCpubKey(RSAPublicKey publicKey, String cpubKeyText) throws InvalidKeyException,
             NoSuchAlgorithmException, NoSuchPaddingException, IllegalBlockSizeException, BadPaddingException {
         String[] encryptedCpubKey = new String[3];
-        // 公钥明文被拆分后每一段的长度
+        // 公钥明文被拆分后每一段的长度（因RSA加密字符串长度限制，前端传过来的明文被均分为3部分加密传输）
         int averageLen = cpubKeyText.length() / encryptedCpubKey.length;
         for (int i = 0, size = encryptedCpubKey.length; i < size; i++) {
             if (i < size - 1) {

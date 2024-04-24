@@ -23,6 +23,13 @@ package org.smartframework.cloud.examples.api.ac.core.constants;
  */
 public interface ApiMetaConstants {
 
+    /**
+     * 收集api meta数据接口数据
+     */
     String FETCH_URL = "/apiMeta/fetch";
+    /**
+     * 服务名key
+     */
+    String SERVICE_NAME_KEY = "spring.application.name";
 
 }

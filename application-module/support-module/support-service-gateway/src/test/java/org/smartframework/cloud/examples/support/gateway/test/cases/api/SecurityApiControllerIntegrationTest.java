@@ -26,6 +26,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.smartframework.cloud.examples.support.gateway.constants.DataSecurityConstants;
 import org.smartframework.cloud.examples.support.gateway.constants.GatewayReturnCodes;
 import org.smartframework.cloud.examples.support.gateway.service.api.SecurityApiService;
 import org.smartframework.cloud.examples.support.rpc.gateway.request.api.GenerateAesKeyReqVO;
@@ -76,7 +77,7 @@ class SecurityApiControllerIntegrationTest extends WebReactiveIntegrationTest {
         // 客户端私钥、服务端公钥
         KeyPair clientPriServerPubKeyPair = null;
         try {
-            clientPriServerPubKeyPair = RsaUtil.generateKeyPair();
+            clientPriServerPubKeyPair = RsaUtil.generateKeyPair(DataSecurityConstants.RSA_KEY_SIZE);
         } catch (NoSuchAlgorithmException e) {
             log.error(e.getMessage(), e);
             throw new ServerException(GatewayReturnCodes.GENERATE_RSAKEY_FAIL);

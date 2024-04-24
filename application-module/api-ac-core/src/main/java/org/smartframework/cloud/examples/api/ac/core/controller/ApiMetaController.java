@@ -33,7 +33,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class ApiMetaController {
 
     /**
-     * 手机api meta数据
+     * 收集api meta数据
      *
      * @return
      */

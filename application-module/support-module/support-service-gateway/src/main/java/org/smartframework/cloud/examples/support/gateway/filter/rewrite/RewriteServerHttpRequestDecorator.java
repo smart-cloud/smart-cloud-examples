@@ -16,6 +16,7 @@
 package org.smartframework.cloud.examples.support.gateway.filter.rewrite;
 
 import lombok.Getter;
+import org.apache.commons.collections4.CollectionUtils;
 import org.smartframework.cloud.examples.support.gateway.util.RewriteHttpUtil;
 import org.springframework.core.io.buffer.DataBuffer;
 import org.springframework.core.io.buffer.DataBufferFactory;
@@ -24,6 +25,7 @@ import org.springframework.http.server.reactive.ServerHttpRequestDecorator;
 import reactor.core.publisher.Flux;
 
 import java.nio.charset.StandardCharsets;
+import java.util.List;
 
 /**
  * 包装ServerHttpRequest对象，获取请求body参数
@@ -39,16 +41,27 @@ public class RewriteServerHttpRequestDecorator extends ServerHttpRequestDecorato
 
     RewriteServerHttpRequestDecorator(ServerHttpRequest request, DataBufferFactory dataBufferFactory) {
         super(request);
-        Flux<DataBuffer> flux = super.getBody();
-        if (RewriteHttpUtil.isSupported(super.getHeaders().getContentType())) {
-            this.body = super.getBody().map(dataBuffer -> {
-                byte[] bytes = RewriteHttpUtil.convert(dataBuffer);
-                this.bodyStr = new String(bytes, StandardCharsets.UTF_8);
-                return dataBufferFactory.wrap(bytes);
-            });
-        } else {
-            this.body = flux;
+
+        if (!RewriteHttpUtil.isSupported(super.getHeaders().getContentType())) {
+            this.body = super.getBody();
+            return;
         }
+
+
+        List<DataBuffer> dataBuffers = super.getBody().collectList().share().block();
+        if (CollectionUtils.isEmpty(dataBuffers)) {
+            this.body = Flux.empty();
+            return;
+        }
+
+        StringBuilder content = new StringBuilder();
+        for (DataBuffer dataBuffer : dataBuffers) {
+            byte[] bytes = new byte[dataBuffer.readableByteCount()];
+            dataBuffer.read(bytes);
+            content.append(new String(bytes, StandardCharsets.UTF_8));
+        }
+        this.bodyStr = content.toString();
+        this.body = Flux.fromIterable(dataBuffers);
     }
 
     @Override

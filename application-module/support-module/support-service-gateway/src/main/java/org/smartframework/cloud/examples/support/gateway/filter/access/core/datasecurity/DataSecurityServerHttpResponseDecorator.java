@@ -16,6 +16,7 @@
 package org.smartframework.cloud.examples.support.gateway.filter.access.core.datasecurity;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.node.NullNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import io.github.smart.cloud.api.core.annotation.enums.SignType;
 import io.github.smart.cloud.utility.JacksonUtil;
@@ -66,23 +67,17 @@ public class DataSecurityServerHttpResponseDecorator extends ServerHttpResponseD
     /**
      * 是否支持加密、签名
      */
-    private final boolean isSupported;
+    private Boolean isSupported;
     /**
      * 返回体是否需要加密
      */
     private final boolean encrypt;
-    private transient Publisher<? extends DataBuffer> body;
 
     DataSecurityServerHttpResponseDecorator(ServerHttpResponse response, SecurityKeyCache securityKeyCache, boolean responseEncrypt, byte signType) {
         super(response);
 
-        this.isSupported = RewriteHttpUtil.isSupported(super.getHeaders().getContentType());
         this.isSign = signType == SignType.RESPONSE.getType() || signType == SignType.ALL.getType();
         this.encrypt = responseEncrypt;
-        if ((isSign || encrypt) && !isSupported) {
-            throw new UnsupportedFunctionException(GatewayReturnCodes.NOT_SUPPORT_DATA_SECURITY);
-        }
-
         this.securityKeyCache = securityKeyCache;
     }
 
@@ -93,28 +88,34 @@ public class DataSecurityServerHttpResponseDecorator extends ServerHttpResponseD
 
     @Override
     public Mono<Void> writeWith(Publisher<? extends DataBuffer> body) {
-        if (!isSupported || (!isSign && !encrypt)) {
+        if (!isSign && !encrypt) {
             return super.writeWith(body);
         }
 
-        Flux.from(body).subscribe(buffer -> {
+        if (this.isSupported == null) {
+            this.isSupported = RewriteHttpUtil.isSupported(super.getHeaders().getContentType());
+        }
+
+        if (!isSupported) {
+            throw new UnsupportedFunctionException(GatewayReturnCodes.NOT_SUPPORT_DATA_SECURITY);
+        }
+
+        Publisher<? extends DataBuffer> newBody = Flux.from(body).flatMap(buffer -> {
             byte[] bytes = RewriteHttpUtil.convert(buffer);
             String originBodyStr = new String(bytes, StandardCharsets.UTF_8);
             if (StringUtils.isBlank(originBodyStr)) {
-                this.body = Flux.empty();
-                return;
+                return Flux.empty();
             }
 
             ObjectNode originResponseNode = JacksonUtil.parseObject(originBodyStr, ObjectNode.class);
             if (originResponseNode == null) {
-                this.body = Flux.empty();
-                return;
+                return Flux.empty();
             }
 
             // 1、响应体塞入timestamp、nonce、sign
             JsonNode timestampNode = originResponseNode.get(ResponseFields.TIMESTAMP);
             long timestamp;
-            if (timestampNode == null) {
+            if (timestampNode == null || timestampNode instanceof NullNode) {
                 timestamp = System.currentTimeMillis();
                 originResponseNode.put(ResponseFields.TIMESTAMP, timestamp);
             } else {
@@ -123,7 +124,7 @@ public class DataSecurityServerHttpResponseDecorator extends ServerHttpResponseD
 
             JsonNode nonceNode = originResponseNode.get(ResponseFields.NONCE);
             String nonce = null;
-            if (nonceNode == null) {
+            if (nonceNode == null || nonceNode instanceof NullNode) {
                 nonce = String.valueOf(NonceUtil.nextId());
                 originResponseNode.put(ResponseFields.NONCE, nonce);
             } else {
@@ -135,7 +136,7 @@ public class DataSecurityServerHttpResponseDecorator extends ServerHttpResponseD
             String encryptedBody = null;
             if (encrypt) {
                 if (bodyNode != null) {
-                    encryptedBody = AesUtil.encrypt(bodyNode.asText(), securityKeyCache.getAesKey());
+                    encryptedBody = AesUtil.encrypt(bodyNode.toString(), securityKeyCache.getAesKey());
                 }
             }
 
@@ -151,7 +152,7 @@ public class DataSecurityServerHttpResponseDecorator extends ServerHttpResponseD
                 String signContent = SignUtil.generateResponseSignContent(nonce, timestamp, base64EncryptedBody);
                 RSAPrivateKey rsaPrivateKey = null;
                 try {
-                    rsaPrivateKey = RsaUtil.getRsaPrivateKey(securityKeyCache.getCpubKeyExponent(), securityKeyCache.getCpubKeyExponent());
+                    rsaPrivateKey = RsaUtil.getRsaPrivateKey(securityKeyCache.getSpriKeyModulus(), securityKeyCache.getSpriKeyExponent());
                 } catch (DecoderException | InvalidKeySpecException | NoSuchAlgorithmException e) {
                     log.error("generate sign key fail", e);
                     throw new GenerateSignKeyFailException();
@@ -168,10 +169,10 @@ public class DataSecurityServerHttpResponseDecorator extends ServerHttpResponseD
                 originResponseNode.put(ResponseFields.SIGN, sign);
             }
 
-            this.body = Flux.just(super.bufferFactory().wrap(originResponseNode.asText().getBytes(StandardCharsets.UTF_8)));
+            return Flux.just(super.bufferFactory().wrap(originResponseNode.toString().getBytes(StandardCharsets.UTF_8)));
         });
 
-        return super.writeWith(this.body);
+        return super.writeWith(newBody);
     }
 
 }

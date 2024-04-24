@@ -207,7 +207,9 @@ public class AuthFilter extends AbstractFilter {
     public ServerHttpRequest fillUserInHeader(ServerHttpRequest request, MySmartUser mySmartUser) {
         // base64处理，解决中文乱码
         String authUserBase64 = Base64Utils.encodeToUrlSafeString(JacksonUtil.toJson(mySmartUser).getBytes(StandardCharsets.UTF_8));
-        return request.mutate().header(SmartHttpHeaders.HEADER_USER, authUserBase64).build();
+        return request.mutate()
+                .header(SmartHttpHeaders.HEADER_USER, authUserBase64)
+                .build();
     }
 
 }

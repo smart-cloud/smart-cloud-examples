@@ -25,9 +25,11 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.collections4.MapUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.redisson.Redisson;
 import org.redisson.api.RLock;
 import org.smartframework.cloud.examples.api.ac.core.constants.ApiMetaConstants;
+import org.smartframework.cloud.examples.api.ac.core.util.ApiMetaUtil;
 import org.smartframework.cloud.examples.api.ac.core.vo.ApiMetaFetchRespVO;
 import org.smartframework.cloud.examples.support.gateway.cache.ApiAccessMetaCache;
 import org.smartframework.cloud.examples.support.gateway.constants.GatewayReturnCodes;
@@ -35,6 +37,7 @@ import org.smartframework.cloud.examples.support.gateway.util.RedisKeyHelper;
 import org.smartframework.cloud.examples.support.rpc.gateway.request.rpc.NotifyFetchReqDTO;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
+import org.springframework.core.env.Environment;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
@@ -58,6 +61,7 @@ public class ApiMetaRpcService {
 
     private final RedisTemplate<Object, Object> redisTemplate;
     private final Redisson redisson;
+    private final Environment environment;
     private static final long RETRY_FETCH_SERVICE_INSTANCE_DURATION = 6000L;
 
     public void notifyFetch(NotifyFetchReqDTO req) throws IOException, InterruptedException {
@@ -85,16 +89,24 @@ public class ApiMetaRpcService {
      * @throws IOException
      */
     private void fetchAndUpdateApiMetas(String serviceName) throws IOException, InterruptedException {
-        String url = getFetchUrl(serviceName);
-        Response<ApiMetaFetchRespVO> apiMetaFetchRespVO = fetchApiMeta(url);
+        String currentServiceName = environment.getProperty(ApiMetaConstants.SERVICE_NAME_KEY);
+        ApiMetaFetchRespVO apiMetaFetch = null;
+        if (StringUtils.equals(currentServiceName, serviceName)) {
+            apiMetaFetch = ApiMetaUtil.collectApiMetas();
+        } else {
+            String url = getFetchUrl(serviceName);
+            Response<ApiMetaFetchRespVO> apiMetaFetchRespVO = fetchApiMeta(url);
 
-        if (!ResponseUtil.isSuccess(apiMetaFetchRespVO)) {
-            throw new BusinessException(GatewayReturnCodes.FETCH_APIMETA_FAIL);
+            if (!ResponseUtil.isSuccess(apiMetaFetchRespVO)) {
+                throw new BusinessException(GatewayReturnCodes.FETCH_APIMETA_FAIL);
+            }
+            apiMetaFetch = apiMetaFetchRespVO.getBody();
         }
-        ApiMetaFetchRespVO apiMetaFetch = apiMetaFetchRespVO.getBody();
+
         if (apiMetaFetch == null || MapUtils.isEmpty(apiMetaFetch.getApiAccessMap())) {
             return;
         }
+
         // redis持久化
         Map<String, ApiAccessMetaCache> allApiAccess = new HashMap<>(8);
         apiMetaFetch.getApiAccessMap().forEach((urlMethod, apiAccess) -> allApiAccess.put(RedisKeyHelper.getApiMetaHashKey(urlMethod), new ApiAccessMetaCache(apiAccess)));

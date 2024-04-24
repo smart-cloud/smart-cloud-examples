@@ -23,6 +23,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.DecoderException;
 import org.smartframework.cloud.examples.support.gateway.cache.SecurityKeyCache;
+import org.smartframework.cloud.examples.support.gateway.constants.DataSecurityConstants;
 import org.smartframework.cloud.examples.support.gateway.constants.GatewayReturnCodes;
 import org.smartframework.cloud.examples.support.gateway.constants.RedisTtl;
 import org.smartframework.cloud.examples.support.gateway.util.RedisKeyHelper;
@@ -63,7 +64,7 @@ public class SecurityApiService {
         KeyPair clientPubServerPriKeyPair = null;
 
         try {
-            clientPubServerPriKeyPair = RsaUtil.generateKeyPair();
+            clientPubServerPriKeyPair = RsaUtil.generateKeyPair(DataSecurityConstants.RSA_KEY_SIZE);
         } catch (NoSuchAlgorithmException e) {
             log.error(e.getMessage(), e);
             throw new ServerException(GatewayReturnCodes.GENERATE_RSAKEY_FAIL);

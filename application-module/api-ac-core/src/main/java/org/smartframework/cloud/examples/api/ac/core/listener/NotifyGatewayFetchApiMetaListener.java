@@ -20,6 +20,7 @@ import io.github.smart.cloud.exception.ServerException;
 import io.github.smart.cloud.starter.core.business.util.ResponseUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.smartframework.cloud.examples.api.ac.core.constants.ApiMetaConstants;
 import org.smartframework.cloud.examples.api.ac.core.properties.ApiAccessProperties;
 import org.smartframework.cloud.examples.support.rpc.gateway.ApiMetaRpc;
 import org.smartframework.cloud.examples.support.rpc.gateway.request.rpc.NotifyFetchReqDTO;
@@ -39,10 +40,6 @@ public class NotifyGatewayFetchApiMetaListener implements ApplicationListener<Ap
 
     private final ApiMetaRpc apiMetaRpc;
     private final ApiAccessProperties apiAccessProperties;
-    /**
-     * 服务名key
-     */
-    private static final String SERVICE_NAME_KEY = "spring.application.name";
 
     @Override
     public void onApplicationEvent(ApplicationReadyEvent event) {
@@ -52,7 +49,7 @@ public class NotifyGatewayFetchApiMetaListener implements ApplicationListener<Ap
         }
 
         log.info("notify gateway to fetch api meta to gateway start!");
-        String serviceName = event.getApplicationContext().getEnvironment().getProperty(SERVICE_NAME_KEY);
+        String serviceName = event.getApplicationContext().getEnvironment().getProperty(ApiMetaConstants.SERVICE_NAME_KEY);
         Response<Void> result = apiMetaRpc.notifyFetch(NotifyFetchReqDTO.builder().serviceName(serviceName).build());
         log.info("notify gateway to fetch api meta to gateway finish!");
 

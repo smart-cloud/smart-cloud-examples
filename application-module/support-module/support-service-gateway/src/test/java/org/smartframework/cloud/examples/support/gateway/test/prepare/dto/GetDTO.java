@@ -13,23 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.smartframework.cloud.examples.support.gateway.constants;
+package org.smartframework.cloud.examples.support.gateway.test.prepare.dto;
 
-/**
- * 数据安全常量
- *
- * @author collin
- * @date 2024-04-11
- */
-public class DataSecurityConstants {
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
-    /**
-     * url参数名
-     */
-    public static final String URL_PARAM_NAME = "q";
-    /**
-     * rsa加密、签名keySize
-     */
-    public static final int RSA_KEY_SIZE = 512;
+@Getter
+@Setter
+@ToString
+public class GetDTO {
+
+    private int age;
+    private String name;
+    private int height;
 
 }

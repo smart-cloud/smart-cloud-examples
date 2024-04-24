@@ -57,13 +57,12 @@ public class RewriteServerHttpResponseDecorator extends ServerHttpResponseDecora
         }
 
         DataBufferFactory dataBufferFactory = super.bufferFactory();
-        Flux.from(body).subscribe(buffer -> {
+        Publisher<? extends DataBuffer> newBody = Flux.from(body).flatMap(buffer -> {
             byte[] bytes = RewriteHttpUtil.convert(buffer);
             bodyStr = new String(bytes, StandardCharsets.UTF_8);
-            this.body = Mono.just(dataBufferFactory.wrap(bytes));
+            return Flux.just(dataBufferFactory.wrap(bytes));
         });
-
-        return super.writeWith(this.body);
+        return super.writeWith(newBody);
     }
 
 }

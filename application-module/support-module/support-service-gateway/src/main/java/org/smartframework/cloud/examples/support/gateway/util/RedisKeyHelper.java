@@ -16,7 +16,6 @@
 package org.smartframework.cloud.examples.support.gateway.util;
 
 import io.github.smart.cloud.starter.redis.RedisKeyUtil;
-import io.github.smart.cloud.starter.redis.enums.RedisKeyPrefix;
 import org.smartframework.cloud.examples.support.gateway.enums.GatewayRedisKeyPrefix;
 
 public final class RedisKeyHelper {
@@ -48,7 +47,7 @@ public final class RedisKeyHelper {
      * @return
      */
     public static String getRepeatSubmitCheckKey(String token, String paramMd5) {
-        return GatewayRedisKeyPrefix.REPEAT_SUBMIT_CHECK.getKey() + token + RedisKeyPrefix.REDIS_KEY_SEPARATOR.getKey() + paramMd5;
+        return RedisKeyUtil.buildKey(GatewayRedisKeyPrefix.REPEAT_SUBMIT_CHECK.getKey(), token, paramMd5);
     }
 
     /**
@@ -58,7 +57,7 @@ public final class RedisKeyHelper {
      * @return
      */
     public static String getSecurityKey(String token) {
-        return GatewayRedisKeyPrefix.SECURITY_HASH_KEY.getKey() + token;
+        return RedisKeyUtil.buildKey(GatewayRedisKeyPrefix.SECURITY_HASH_KEY.getKey(), token);
     }
 
     /**

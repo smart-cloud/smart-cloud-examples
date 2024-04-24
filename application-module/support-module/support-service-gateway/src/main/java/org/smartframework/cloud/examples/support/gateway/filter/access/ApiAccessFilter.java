@@ -17,6 +17,7 @@ package org.smartframework.cloud.examples.support.gateway.filter.access;
 
 import io.github.smart.cloud.common.web.constants.SmartHttpHeaders;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.lang3.StringUtils;
 import org.smartframework.cloud.examples.support.gateway.cache.ApiAccessMetaCache;
 import org.smartframework.cloud.examples.support.gateway.constants.GatewayConstants;
 import org.smartframework.cloud.examples.support.gateway.constants.Order;
@@ -47,11 +48,14 @@ public class ApiAccessFilter implements WebFilter, Ordered {
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, WebFilterChain chain) {
         ServerHttpRequest request = exchange.getRequest();
+        String token = WebUtil.getFromRequestHeader(request, SmartHttpHeaders.TOKEN);
+        if (StringUtils.isBlank(token)) {
+            return chain.filter(exchange);
+        }
+
         String urlMethod = request.getURI().getPath() + request.getMethodValue();
         ApiAccessMetaCache apiAccessMetaCache = (ApiAccessMetaCache) redisTemplate.opsForHash().get(RedisKeyHelper.getApiMetaKey(),
                 RedisKeyHelper.getApiMetaHashKey(urlMethod));
-
-        String token = WebUtil.getFromRequestHeader(request, SmartHttpHeaders.TOKEN);
 
         // 将数据塞入当前context，供后面filter使用
         FilterContext filterContext = new FilterContext()

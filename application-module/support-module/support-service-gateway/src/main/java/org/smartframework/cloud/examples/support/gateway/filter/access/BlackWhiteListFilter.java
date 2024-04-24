@@ -16,7 +16,6 @@
 package org.smartframework.cloud.examples.support.gateway.filter.access;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.smartframework.cloud.examples.support.gateway.constants.Order;
 import org.smartframework.cloud.examples.support.gateway.exception.BlackListException;
@@ -37,7 +36,6 @@ import java.util.Set;
  * @author collin
  * @date 2024-03-26
  */
-@Slf4j
 @Component
 @RequiredArgsConstructor
 public class BlackWhiteListFilter implements WebFilter, Ordered {
