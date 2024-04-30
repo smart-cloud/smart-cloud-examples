@@ -30,6 +30,6 @@ management:
         
 spring: 
   jmx:
-    enabled: true
+    enabled: false
   sleuth: 
     enabled: true
