@@ -95,32 +95,30 @@ http headers部分的数据，它包含请求时间戳（默认2分钟内有效�
   B=BASE64(AES(body的json串))
   sign = RSA签名（“httpmethod + H + Q + B”）
 2、请求方处理逻辑
-  2.1如果需要加密，则先加密，再进行base64处理，最后生成签名；否则，直接进行base64处理，再签名。
-  2.2如果有url传参，则，需要对参数进行（加密）base64处理，然后通过参数q请求，如https://api.com/index?q=YT0xJmI9MiZjPTM
+  （1）如果需要加密，则先加密，再进行base64处理，最后生成签名；否则，直接进行base64处理，再签名。
+  （2）如果有url传参，则，需要对参数进行（加密）base64处理，然后通过参数q请求，如https://api.com/index?q=YT0xJmI9MiZjPTM
 3、处理步骤
-  3.1.请求方对请求参数处理步骤：加密-->base encode-->签名
-  3.2.接收方对请求参数处理步骤：验签-->base decode-->解密
+  （1）请求方对请求参数处理步骤：AES加密-->base64 encode-->RSA签名
+  （2）接收方对请求参数处理步骤：RSA验签-->base64 decode-->AES解密
 ```
 
 #### 3.返回结果
-> 对返回数据处理步骤：加密-->base64处理-->签名
+> 对返回数据处理步骤：AES加密-->base64处理-->RSA签名
 ```
 1.参数定义
   sign = RSA签名（“Response#nonce + Response#timestamp + base64(AES(Response#body的json串))”）
 2、接收方处理逻辑
-  2.1填充Response#nonce、Response#timestamp
-  2.2如果需要加密，则AES(Response#body的json串)，再对其进行base64处理，最后生成签名；否则直接进行base64(Response#body的json串)处理，再签名。
+  （1）填充Response#nonce、Response#timestamp
+  （2）如果需要加密，则AES(Response#body的json串)，再对其进行base64处理，最后生成签名；否则直接进行base64(Response#body的json串)处理，再签名。
 3、处理步骤
-  3.1.接收方对返回结果处理步骤：加密-->base64 encode-->签名
-  3.2.请求方对返回结果处理步骤：验签-->base64 decode-->解密
+  （1）接收方对返回结果处理步骤：AES加密-->base64 encode-->RSA签名
+  （2）请求方对返回结果处理步骤：RSA验签-->base64 decode-->AES解密
 ```
+#### 4.代码实现
+- 后端接收请求代码逻辑见[DataSecurityServerHttpRequestDecorator.java](application-module/support-module/support-service-gateway/src/main/java/org/smartframework/cloud/examples/support/gateway/filter/access/core/datasecurity/DataSecurityServerHttpRequestDecorator.java)
+- 后端返回信息代码逻辑见[DataSecurityServerHttpResponseDecorator.java](application-module/support-module/support-service-gateway/src/main/java/org/smartframework/cloud/examples/support/gateway/filter/access/core/datasecurity/DataSecurityServerHttpResponseDecorator.java)
 
 # 三、环境搭建
-- 更改hosts文件，添加如下内容（注册中心eureka会使用到）
-```
-  127.0.0.1       nodeA
-```
-
 - 安装[redis](https://github.com/microsoftarchive/redis/releases)，并启动
 - 安装[mysql](https://www.mysql.com/downloads/)，执行/docs/sql下脚本
 - 安装[rabbitmq](https://www.rabbitmq.com)，并启动
