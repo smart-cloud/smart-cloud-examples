@@ -24,14 +24,12 @@ import io.github.smart.cloud.api.core.annotation.auth.RequireUser;
 import io.github.smart.cloud.api.core.annotation.constants.ApiAnnotationConstants;
 import io.github.smart.cloud.api.core.annotation.enums.SignType;
 import io.github.smart.cloud.constants.SymbolConstant;
-import io.github.smart.cloud.starter.core.constants.PackageConfig;
+import io.github.smart.cloud.starter.core.business.util.ReflectionUtil;
 import io.github.smart.cloud.starter.rpc.feign.annotation.SmartFeignClient;
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.ArrayUtils;
-import org.reflections.Reflections;
-import org.reflections.scanners.MethodAnnotationsScanner;
 import org.smartframework.cloud.examples.api.ac.core.vo.*;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;
@@ -58,22 +56,7 @@ public class ApiMetaUtil {
      * @return
      */
     public ApiMetaFetchRespVO collectApiMetas() {
-        String[] basePackages = PackageConfig.getBasePackages();
-        if (ArrayUtils.isEmpty(basePackages)) {
-            log.debug("basePackages is empty!");
-            return null;
-        }
-
-        Reflections reflections = null;
-        for (String basePackage : basePackages) {
-            if (reflections == null) {
-                reflections = new Reflections(basePackage, new MethodAnnotationsScanner());
-            } else {
-                reflections.merge(new Reflections(basePackage, new MethodAnnotationsScanner()));
-            }
-        }
-
-        Set<Method> allMappingSet = getAllApiMethods(reflections);
+        Set<Method> allMappingSet = getAllApiMethods();
         if (CollectionUtils.isEmpty(allMappingSet)) {
             log.debug("methodSet is empty!");
             return null;
@@ -212,14 +195,14 @@ public class ApiMetaUtil {
         return dataSecurityMetaRespVO.getSign() != SignType.NONE.getType();
     }
 
-    private Set<Method> getAllApiMethods(Reflections reflections) {
+    private Set<Method> getAllApiMethods() {
         Set<Method> allMappingSet = new HashSet<>();
-        allMappingSet.addAll(reflections.getMethodsAnnotatedWith(RequestMapping.class));
-        allMappingSet.addAll(reflections.getMethodsAnnotatedWith(PostMapping.class));
-        allMappingSet.addAll(reflections.getMethodsAnnotatedWith(GetMapping.class));
-        allMappingSet.addAll(reflections.getMethodsAnnotatedWith(DeleteMapping.class));
-        allMappingSet.addAll(reflections.getMethodsAnnotatedWith(PutMapping.class));
-        allMappingSet.addAll(reflections.getMethodsAnnotatedWith(PatchMapping.class));
+        allMappingSet.addAll(ReflectionUtil.getMethodsAnnotatedWith(RequestMapping.class));
+        allMappingSet.addAll(ReflectionUtil.getMethodsAnnotatedWith(PostMapping.class));
+        allMappingSet.addAll(ReflectionUtil.getMethodsAnnotatedWith(GetMapping.class));
+        allMappingSet.addAll(ReflectionUtil.getMethodsAnnotatedWith(DeleteMapping.class));
+        allMappingSet.addAll(ReflectionUtil.getMethodsAnnotatedWith(PutMapping.class));
+        allMappingSet.addAll(ReflectionUtil.getMethodsAnnotatedWith(PatchMapping.class));
 
         return allMappingSet;
     }
