@@ -15,7 +15,7 @@
  */
 package org.smartframework.cloud.examples.support.gateway.exception;
 
-import io.github.smart.cloud.exception.BaseException;
+import io.github.smart.cloud.exception.AbstractBaseException;
 
 /**
  * 请求nonce异常
@@ -23,7 +23,7 @@ import io.github.smart.cloud.exception.BaseException;
  * @author collin
  * @date 2024-04-11
  */
-public class RequestNonceException extends BaseException {
+public class RequestNonceException extends AbstractBaseException {
 
     public RequestNonceException(String code) {
         super(code);

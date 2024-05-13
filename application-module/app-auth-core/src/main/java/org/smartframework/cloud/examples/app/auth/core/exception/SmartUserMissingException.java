@@ -16,7 +16,7 @@
 package org.smartframework.cloud.examples.app.auth.core.exception;
 
 import io.github.smart.cloud.constants.CommonReturnCodes;
-import io.github.smart.cloud.exception.BaseException;
+import io.github.smart.cloud.exception.AbstractBaseException;
 
 /**
  * 用户信息获取不到异常
@@ -24,7 +24,7 @@ import io.github.smart.cloud.exception.BaseException;
  * @author collin
  * @date 2020-09-10
  */
-public class SmartUserMissingException extends BaseException {
+public class SmartUserMissingException extends AbstractBaseException {
 
     public SmartUserMissingException() {
         super(CommonReturnCodes.NOT_LOGGED_IN);

@@ -15,7 +15,7 @@
  */
 package org.smartframework.cloud.examples.mall.order.exception;
 
-import io.github.smart.cloud.exception.BaseException;
+import io.github.smart.cloud.exception.AbstractBaseException;
 import org.smartframework.cloud.examples.mall.order.constants.OrderReturnCodes;
 
 /**
@@ -24,7 +24,7 @@ import org.smartframework.cloud.examples.mall.order.constants.OrderReturnCodes;
  * @author collin
  * @date 2019-04-16
  */
-public class UpdateStockException extends BaseException {
+public class UpdateStockException extends AbstractBaseException {
 
 	private static final long serialVersionUID = 1L;
 

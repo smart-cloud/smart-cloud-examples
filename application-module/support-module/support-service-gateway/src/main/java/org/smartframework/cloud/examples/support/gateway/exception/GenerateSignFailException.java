@@ -15,7 +15,7 @@
  */
 package org.smartframework.cloud.examples.support.gateway.exception;
 
-import io.github.smart.cloud.exception.BaseException;
+import io.github.smart.cloud.exception.AbstractBaseException;
 import org.smartframework.cloud.examples.support.gateway.constants.GatewayReturnCodes;
 
 /**
@@ -24,7 +24,7 @@ import org.smartframework.cloud.examples.support.gateway.constants.GatewayReturn
  * @author collin
  * @date 2021-07-25
  */
-public class GenerateSignFailException extends BaseException {
+public class GenerateSignFailException extends AbstractBaseException {
 
     public GenerateSignFailException() {
         super(GatewayReturnCodes.GENERATE_SIGN_FAIL);

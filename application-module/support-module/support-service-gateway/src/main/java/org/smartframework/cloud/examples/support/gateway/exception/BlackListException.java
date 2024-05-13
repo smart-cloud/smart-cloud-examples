@@ -15,7 +15,7 @@
  */
 package org.smartframework.cloud.examples.support.gateway.exception;
 
-import io.github.smart.cloud.exception.BaseException;
+import io.github.smart.cloud.exception.AbstractBaseException;
 import org.smartframework.cloud.examples.support.gateway.constants.GatewayReturnCodes;
 
 /**
@@ -24,7 +24,7 @@ import org.smartframework.cloud.examples.support.gateway.constants.GatewayReturn
  * @author collin
  * @date 2024-03-26
  */
-public class BlackListException extends BaseException {
+public class BlackListException extends AbstractBaseException {
 
     public BlackListException() {
         super(GatewayReturnCodes.BLACK_LIST_FORBIDDEN_ACCSS);

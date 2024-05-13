@@ -15,7 +15,7 @@
  */
 package org.smartframework.cloud.examples.support.gateway.exception;
 
-import io.github.smart.cloud.exception.BaseException;
+import io.github.smart.cloud.exception.AbstractBaseException;
 import io.github.smart.cloud.constants.CommonReturnCodes;
 
 /**
@@ -24,7 +24,7 @@ import io.github.smart.cloud.constants.CommonReturnCodes;
  * @author collin
  * @date 2021-07-15
  */
-public class AuthenticationException extends BaseException {
+public class AuthenticationException extends AbstractBaseException {
 
     public AuthenticationException() {
         super(CommonReturnCodes.NO_ACCESS);

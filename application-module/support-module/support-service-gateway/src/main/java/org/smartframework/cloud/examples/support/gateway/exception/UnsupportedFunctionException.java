@@ -15,7 +15,7 @@
  */
 package org.smartframework.cloud.examples.support.gateway.exception;
 
-import io.github.smart.cloud.exception.BaseException;
+import io.github.smart.cloud.exception.AbstractBaseException;
 
 /**
  * 不支持的功能
@@ -23,7 +23,7 @@ import io.github.smart.cloud.exception.BaseException;
  * @author collin
  * @date 2024-04-10
  */
-public class UnsupportedFunctionException extends BaseException {
+public class UnsupportedFunctionException extends AbstractBaseException {
 
     public UnsupportedFunctionException(String code) {
         super(code);

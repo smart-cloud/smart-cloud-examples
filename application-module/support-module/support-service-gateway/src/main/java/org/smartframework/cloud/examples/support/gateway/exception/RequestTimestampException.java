@@ -15,7 +15,7 @@
  */
 package org.smartframework.cloud.examples.support.gateway.exception;
 
-import io.github.smart.cloud.exception.BaseException;
+import io.github.smart.cloud.exception.AbstractBaseException;
 
 /**
  * 请求时间异常
@@ -23,7 +23,7 @@ import io.github.smart.cloud.exception.BaseException;
  * @author collin
  * @date 2021-07-17
  */
-public class RequestTimestampException extends BaseException {
+public class RequestTimestampException extends AbstractBaseException {
 
     public RequestTimestampException(String code) {
         super(code);

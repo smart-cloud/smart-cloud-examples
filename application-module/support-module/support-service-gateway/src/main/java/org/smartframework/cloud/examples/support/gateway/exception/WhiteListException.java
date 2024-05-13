@@ -15,7 +15,7 @@
  */
 package org.smartframework.cloud.examples.support.gateway.exception;
 
-import io.github.smart.cloud.exception.BaseException;
+import io.github.smart.cloud.exception.AbstractBaseException;
 import org.smartframework.cloud.examples.support.gateway.constants.GatewayReturnCodes;
 
 /**
@@ -24,7 +24,7 @@ import org.smartframework.cloud.examples.support.gateway.constants.GatewayReturn
  * @author collin
  * @date 2024-03-26
  */
-public class WhiteListException extends BaseException {
+public class WhiteListException extends AbstractBaseException {
 
     public WhiteListException() {
         super(GatewayReturnCodes.NOT_IN_WHITE_LIST);

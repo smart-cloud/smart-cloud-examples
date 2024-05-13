@@ -77,7 +77,7 @@
 
 		<dependency>
 			<groupId>io.github.smart-cloud</groupId>
-			<artifactId>smart-cloud-starter-actuator</artifactId>
+			<artifactId>smart-cloud-starter-monitor-actuator</artifactId>
 		</dependency>
 
 		<dependency>

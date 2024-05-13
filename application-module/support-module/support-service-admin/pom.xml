@@ -35,7 +35,7 @@
 	<dependencies>
 		<dependency>
 			<groupId>io.github.smart-cloud</groupId>
-			<artifactId>smart-cloud-starter-monitor</artifactId>
+			<artifactId>smart-cloud-starter-monitor-admin</artifactId>
 		</dependency>
 	</dependencies>
 
