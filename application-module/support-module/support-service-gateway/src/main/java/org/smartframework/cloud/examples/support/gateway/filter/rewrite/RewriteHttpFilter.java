@@ -40,7 +40,7 @@ public class RewriteHttpFilter implements WebFilter, Ordered {
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, WebFilterChain chain) {
         return chain.filter(exchange.mutate()
-                .request(new RewriteServerHttpRequestDecorator(exchange.getRequest(), exchange.getResponse().bufferFactory()))
+                .request(new RewriteServerHttpRequestDecorator(exchange.getRequest()))
                 .response(new RewriteServerHttpResponseDecorator(exchange.getResponse()))
                 .build());
     }

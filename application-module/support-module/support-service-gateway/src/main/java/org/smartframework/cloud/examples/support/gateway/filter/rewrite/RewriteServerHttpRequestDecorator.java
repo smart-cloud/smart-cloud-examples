@@ -19,7 +19,6 @@ import lombok.Getter;
 import org.apache.commons.collections4.CollectionUtils;
 import org.smartframework.cloud.examples.support.gateway.util.RewriteHttpUtil;
 import org.springframework.core.io.buffer.DataBuffer;
-import org.springframework.core.io.buffer.DataBufferFactory;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.http.server.reactive.ServerHttpRequestDecorator;
 import reactor.core.publisher.Flux;
@@ -39,7 +38,7 @@ public class RewriteServerHttpRequestDecorator extends ServerHttpRequestDecorato
     @Getter
     private transient String bodyStr;
 
-    RewriteServerHttpRequestDecorator(ServerHttpRequest request, DataBufferFactory dataBufferFactory) {
+    RewriteServerHttpRequestDecorator(ServerHttpRequest request) {
         super(request);
 
         if (!RewriteHttpUtil.isSupported(super.getHeaders().getContentType())) {

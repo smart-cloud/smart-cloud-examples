@@ -36,7 +36,6 @@ import java.nio.charset.StandardCharsets;
  */
 public class RewriteServerHttpResponseDecorator extends ServerHttpResponseDecorator {
 
-    private transient Publisher<? extends DataBuffer> body;
     @Getter
     private transient String bodyStr;
 
