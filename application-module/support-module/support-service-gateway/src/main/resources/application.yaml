@@ -1,6 +1,10 @@
 server:
-  port: 80
-  
+  port: 10002
+
+management:
+  server:
+    port: 11002
+
 spring:
   application:
     name: supportServiceGateway

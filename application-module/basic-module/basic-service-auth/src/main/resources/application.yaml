@@ -1,6 +1,10 @@
 server:
   port: 20032
-  
+
+management:
+  server:
+    port: 21032
+
 spring:
   application:
     name: basicServiceAuth

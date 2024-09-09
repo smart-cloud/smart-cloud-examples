@@ -1,6 +1,10 @@
 server:
   port: 20031
-  
+
+management:
+  server:
+    port: 21031
+
 spring:
   application:
     name: basicServiceUser

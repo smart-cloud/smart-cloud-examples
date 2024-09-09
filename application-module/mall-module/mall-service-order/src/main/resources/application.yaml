@@ -1,6 +1,10 @@
 server:
   port: 20011
-  
+
+management:
+  server:
+    port: 21011
+
 seata:
   tx-service-group: smartcloud_tx_group
   enable-auto-data-source-proxy: false

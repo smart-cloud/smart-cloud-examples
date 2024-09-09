@@ -8,25 +8,25 @@ smart-cloud-examples
 ├── smart-cloud-example-framework -- 框架进一步封装
 ├── system-test -- 系统测试
 ├── merge-module -- 服务合并模块
-|    ├── merge-basic -- 基础服务合并项目[端口:30001]
-|    └── merge-mall -- 商城服务合并项目[端口:30002]
+|    ├── merge-basic -- 基础服务合并项目[端口:30001,31001]
+|    └── merge-mall -- 商城服务合并项目[端口:30002,31002]
 └── application-module -- 应用服务模块
      ├── api-ac-core -- api meta信息上传gateway处理
      ├── app-auth-core -- 用户上下文信息处理
      ├── app-common-config -- 公共配置
      ├── basic-module -- 基础服务模块（如文件服务、权限服务、登陆服务等）
-     |    ├── basic-service-user -- 用户服务[端口:20031]
-     |    └── basic-service-auth -- 权限服务[端口:20041]
+     |    ├── basic-service-user -- 用户服务[端口:20031,21031]
+     |    └── basic-service-auth -- 权限服务[端口:20041,21041]
      ├── mall-module -- 商城服务模块
-     |    ├── mall-service-order -- 订单服务[端口:20011]
-     |    └── mall-service-product -- 商品服务[端口:20021]
+     |    ├── mall-service-order -- 订单服务[端口:20011,21011]
+     |    └── mall-service-product -- 商品服务[端口:20021,21021]
      ├── rpc-module -- rpc调用模块
      |    ├── basic-service-rpc -- 基础服务rpc模块
      |    ├── mall-service-rpc -- 商城服务rpc模块
      |    └── support-service-rpc -- 支撑服务rpc模块
      └── support-module -- 支撑服务模块
-          ├── support-service-admin -- 注册中心[端口:10001]
-          └── support-service-gateway -- 网关[端口:80]
+          ├── support-service-admin -- 注册中心[端口:10001,11001]
+          └── support-service-gateway -- 网关[端口:10002,11002]
 ```
 ## （二）工程模块图
 ![](docs/images/smart-cloud-examples.jpg)

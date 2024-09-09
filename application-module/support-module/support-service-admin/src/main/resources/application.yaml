@@ -11,6 +11,10 @@ spring:
 server:
   port: 10011
 
+management:
+  server:
+    port: 11011
+
 smart:
   monitor:
     robotKey: 15228554-fc8e-481f-83bc-1e0992f87aea
