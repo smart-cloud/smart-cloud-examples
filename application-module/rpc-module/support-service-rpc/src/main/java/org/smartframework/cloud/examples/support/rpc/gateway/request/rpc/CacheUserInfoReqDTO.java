@@ -25,6 +25,12 @@ import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Set;
 
+/**
+ * 登录（或注册）成功后缓存用户信息请求参数
+ *
+ * @author collin
+ * @date 2020-09-11
+ */
 @Getter
 @Setter
 @ToString

@@ -27,6 +27,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
 
+/**
+ * 接口元数据rpc相关接口
+ *
+ * @author collin
+ * @date 2020-09-10
+ */
 @Slf4j
 @RestController
 @Validated

@@ -24,6 +24,12 @@ import lombok.experimental.SuperBuilder;
 import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 
+/**
+ * 添加角色信息请求参数
+ *
+ * @author collin
+ * @date 2021-06-27
+ */
 @Setter
 @Getter
 @ToString

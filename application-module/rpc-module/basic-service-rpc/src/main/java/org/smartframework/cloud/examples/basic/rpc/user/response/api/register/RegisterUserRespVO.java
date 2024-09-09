@@ -18,6 +18,7 @@ package org.smartframework.cloud.examples.basic.rpc.user.response.api.register;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 import org.smartframework.cloud.examples.basic.rpc.user.response.api.login.LoginRespVO;
 
@@ -29,6 +30,7 @@ import org.smartframework.cloud.examples.basic.rpc.user.response.api.login.Login
  */
 @Setter
 @Getter
+@ToString
 @NoArgsConstructor
 @SuperBuilder
 public class RegisterUserRespVO extends LoginRespVO {

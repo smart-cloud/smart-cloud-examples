@@ -20,6 +20,12 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
+/**
+ * 服务监控启动类
+ *
+ * @author collin
+ * @date 2020-05-13
+ */
 @EnableAdminServer
 @EnableDiscoveryClient
 @SpringBootApplication

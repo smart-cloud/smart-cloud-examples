@@ -20,6 +20,12 @@ import lombok.experimental.SuperBuilder;
 
 import java.io.Serializable;
 
+/**
+ * 生成AES秘钥响应信息
+ *
+ * @author collin
+ * @date 2020-09-07
+ */
 @Getter
 @Setter
 @ToString

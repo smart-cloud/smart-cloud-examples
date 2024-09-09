@@ -19,6 +19,7 @@ import io.github.smart.cloud.common.pojo.BaseEntityResponse;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
 /**
@@ -29,6 +30,7 @@ import lombok.experimental.SuperBuilder;
  */
 @Setter
 @Getter
+@ToString
 @NoArgsConstructor
 @SuperBuilder
 public class RoleInfoBaseRespVO extends BaseEntityResponse {

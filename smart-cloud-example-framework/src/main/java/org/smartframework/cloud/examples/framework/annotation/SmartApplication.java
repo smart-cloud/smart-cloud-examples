@@ -22,6 +22,12 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 
 import java.lang.annotation.*;
 
+/**
+ * 服务启动注解
+ *
+ * @author collin
+ * @date 2019-07-19
+ */
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
 @Documented

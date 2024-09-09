@@ -19,6 +19,12 @@ import org.smartframework.cloud.examples.framework.annotation.SmartApplication;
 import org.springframework.boot.SpringApplication;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
+/**
+ * 订单服务启动类
+ *
+ * @author collin
+ * @date 2019-07-12
+ */
 @SmartApplication
 @EnableTransactionManagement
 public class OrderApplication {

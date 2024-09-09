@@ -29,6 +29,12 @@ import org.smartframework.cloud.examples.mall.rpc.product.response.rpc.QryProduc
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * 商品信息rpc相关接口
+ *
+ * @author collin
+ * @date 2020-09-10
+ */
 @Validated
 @RestController
 @RequiredArgsConstructor

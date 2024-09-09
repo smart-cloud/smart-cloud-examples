@@ -21,6 +21,12 @@ import lombok.experimental.SuperBuilder;
 import java.io.Serializable;
 import java.util.Set;
 
+/**
+ * 根据uid查询用户拥有的权限信息
+ *
+ * @author collin
+ * @date 2021-12-12
+ */
 @Setter
 @Getter
 @ToString

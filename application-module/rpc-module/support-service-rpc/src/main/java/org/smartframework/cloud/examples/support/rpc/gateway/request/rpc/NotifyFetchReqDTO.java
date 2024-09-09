@@ -22,6 +22,8 @@ import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 
 /**
+ * 通知网关获取api meta请求参数
+ *
  * @author collin
  * @date 2020-09-18
  */

@@ -26,6 +26,12 @@ import org.smartframework.cloud.examples.system.test.util.HttpHeaderUtil;
 
 import java.io.IOException;
 
+/**
+ * 订单模块接口
+ *
+ * @author collin
+ * @date 2019-07-12
+ */
 @UtilityClass
 public class OrderApi {
 

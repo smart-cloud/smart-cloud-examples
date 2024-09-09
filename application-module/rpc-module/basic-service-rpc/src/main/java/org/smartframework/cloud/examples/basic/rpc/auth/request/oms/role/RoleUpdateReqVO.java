@@ -25,6 +25,12 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
+/**
+ * 修改角色信息请求参数
+ *
+ * @author collin
+ * @date 2021-06-27
+ */
 @Setter
 @Getter
 @ToString

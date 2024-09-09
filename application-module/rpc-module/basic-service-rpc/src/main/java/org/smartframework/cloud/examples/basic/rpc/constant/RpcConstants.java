@@ -15,6 +15,12 @@
  */
 package org.smartframework.cloud.examples.basic.rpc.constant;
 
+/**
+ * 基础模块rpc常量
+ *
+ * @author collin
+ * @date 2021-07-05
+ */
 public interface RpcConstants {
 
     interface User {

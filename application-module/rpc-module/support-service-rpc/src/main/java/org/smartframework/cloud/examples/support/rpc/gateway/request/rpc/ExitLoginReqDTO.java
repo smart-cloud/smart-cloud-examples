@@ -25,6 +25,8 @@ import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 
 /**
+ * 退出登录请求参数
+ *
  * @author collin
  * @date 2020-09-11
  */

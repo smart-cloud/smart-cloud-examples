@@ -17,9 +17,15 @@ package org.smartframework.cloud.examples.support.gateway.exception;
 
 import io.github.smart.cloud.exception.AbstractBaseException;
 
+/**
+ * AES加密key未找到异常
+ *
+ * @author collin
+ * @date 2021-07-21
+ */
 public class AesKeyNotFoundException extends AbstractBaseException {
 
-    public AesKeyNotFoundException(){
+    public AesKeyNotFoundException() {
         super();
     }
 

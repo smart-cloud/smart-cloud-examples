@@ -18,6 +18,7 @@ package org.smartframework.cloud.examples.basic.rpc.auth.request.oms.permisson;
 import io.github.smart.cloud.common.pojo.BasePageRequest;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 /**
  * 分页查询权限信息请求参数
@@ -27,6 +28,7 @@ import lombok.Setter;
  */
 @Getter
 @Setter
+@ToString
 public class PagePermissionReqVO extends BasePageRequest {
 
     private static final long serialVersionUID = 1L;

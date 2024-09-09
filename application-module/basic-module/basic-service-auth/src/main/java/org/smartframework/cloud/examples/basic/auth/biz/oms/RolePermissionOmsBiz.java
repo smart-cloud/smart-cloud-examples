@@ -22,7 +22,6 @@ import io.github.smart.cloud.starter.global.id.GlobalId;
 import io.github.smart.cloud.starter.mybatis.plus.common.biz.BaseBiz;
 import io.github.smart.cloud.starter.mybatis.plus.enums.DeleteState;
 import lombok.RequiredArgsConstructor;
-import org.apache.commons.collections4.CollectionUtils;
 import org.smartframework.cloud.examples.app.auth.core.UserContext;
 import org.smartframework.cloud.examples.basic.auth.dataobject.PermissionDO;
 import org.smartframework.cloud.examples.basic.auth.dataobject.RoleDO;
@@ -35,6 +34,7 @@ import org.smartframework.cloud.examples.basic.rpc.auth.request.oms.role.permiss
 import org.smartframework.cloud.examples.basic.rpc.auth.response.oms.role.permisson.PermissionInfoRespVO;
 import org.smartframework.cloud.examples.basic.rpc.auth.response.oms.role.permisson.RolePermissionRespVO;
 import org.springframework.stereotype.Repository;
+import org.springframework.util.CollectionUtils;
 
 import java.util.Date;
 import java.util.HashSet;

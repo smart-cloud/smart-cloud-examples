@@ -15,6 +15,12 @@
  */
 package org.smartframework.cloud.examples.support.gateway.constants;
 
+/**
+ * 网关服务异常码
+ *
+ * @author collin
+ * @date 2024-03-27
+ */
 public interface GatewayReturnCodes {
 
     /**

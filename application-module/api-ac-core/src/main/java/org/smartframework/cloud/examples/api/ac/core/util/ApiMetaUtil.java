@@ -28,10 +28,10 @@ import io.github.smart.cloud.starter.core.business.util.ReflectionUtil;
 import io.github.smart.cloud.starter.rpc.feign.annotation.SmartFeignClient;
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.ArrayUtils;
 import org.smartframework.cloud.examples.api.ac.core.vo.*;
 import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.*;
 
 import java.lang.reflect.Method;

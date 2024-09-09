@@ -23,6 +23,12 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 
+/**
+ * 生成AES秘钥请求参数
+ *
+ * @author collin
+ * @date 2020-09-11
+ */
 @Getter
 @Setter
 @ToString

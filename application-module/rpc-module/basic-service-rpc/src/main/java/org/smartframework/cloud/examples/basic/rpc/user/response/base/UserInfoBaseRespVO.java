@@ -21,6 +21,7 @@ import io.github.smart.cloud.mask.MaskRule;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
 import java.util.Date;
@@ -33,6 +34,7 @@ import java.util.Date;
  */
 @Setter
 @Getter
+@ToString
 @NoArgsConstructor
 @SuperBuilder
 public class UserInfoBaseRespVO extends BaseEntityResponse {

@@ -18,11 +18,17 @@ package org.smartframework.cloud.examples.support.gateway;
 import org.smartframework.cloud.examples.framework.annotation.SmartApplication;
 import org.springframework.boot.SpringApplication;
 
+/**
+ * 网关启动类
+ *
+ * @author collin
+ * @date 2020-05-13
+ */
 @SmartApplication
 public class GatewayApplication {
-	
-	public static void main(String[] args) {
-		SpringApplication.run(GatewayApplication.class, args);
-	}
-	
+
+    public static void main(String[] args) {
+        SpringApplication.run(GatewayApplication.class, args);
+    }
+
 }

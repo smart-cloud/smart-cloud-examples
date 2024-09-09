@@ -21,6 +21,12 @@ import org.smartframework.cloud.examples.system.test.enums.SytemTestEnv;
 import java.util.EnumMap;
 import java.util.Map;
 
+/**
+ * 系统测试配置
+ *
+ * @author collin
+ * @date 2019-07-12
+ */
 @UtilityClass
 public class SystemTestConfig {
 

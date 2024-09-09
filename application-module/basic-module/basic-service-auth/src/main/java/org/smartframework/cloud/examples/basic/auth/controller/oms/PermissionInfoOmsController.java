@@ -52,7 +52,7 @@ public class PermissionInfoOmsController {
     private final PermissionInfoOmsService permissionInfoOmsService;
 
     /**
-     * 添加角色
+     * 添加权限
      *
      * @param req
      * @return
@@ -68,7 +68,7 @@ public class PermissionInfoOmsController {
     }
 
     /**
-     * 修改角色信息
+     * 修改权限信息
      *
      * @param req
      * @return
@@ -83,7 +83,7 @@ public class PermissionInfoOmsController {
     }
 
     /**
-     * 删除角色
+     * 删除权限
      *
      * @param id 权限主键id
      * @return
@@ -98,7 +98,7 @@ public class PermissionInfoOmsController {
     }
 
     /**
-     * 分页查询角色信息
+     * 分页查询权限信息
      *
      * @param req
      * @return

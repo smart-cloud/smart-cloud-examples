@@ -15,6 +15,12 @@
  */
 package org.smartframework.cloud.examples.support.rpc.constant;
 
+/**
+ * 网关rpc常量
+ *
+ * @author collin
+ * @date 2021-07-05
+ */
 public interface RpcConstants {
 
     interface Gateway {

@@ -47,6 +47,12 @@ import java.security.interfaces.RSAPublicKey;
 import java.security.spec.InvalidKeySpecException;
 import java.util.Date;
 
+/**
+ * token工具类
+ *
+ * @author collin
+ * @date 2019-07-12
+ */
 @Slf4j
 public final class TokenUtil {
 
@@ -62,7 +68,8 @@ public final class TokenUtil {
                     try {
                         context = login();
                     } catch (IOException | NoSuchAlgorithmException | InvalidKeySpecException | DecoderException
-                            | IllegalBlockSizeException | BadPaddingException | NoSuchPaddingException | InvalidKeyException e) {
+                             | IllegalBlockSizeException | BadPaddingException | NoSuchPaddingException |
+                             InvalidKeyException e) {
                         log.error("fetch token fail!", e);
                     }
                 }

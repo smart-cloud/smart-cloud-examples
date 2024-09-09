@@ -36,7 +36,6 @@ import javax.validation.constraints.NotNull;
  *
  * @author collin
  * @date 2020-09-10
- * @status done
  */
 @SmartFeignClient(name = RpcConstants.Product.FEIGN_CLIENT_NAME, contextId = "productInfoRpc")
 public interface ProductInfoRpc {

@@ -26,6 +26,12 @@ import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Set;
 
+/**
+ * 添加用户角色请求参数
+ *
+ * @author collin
+ * @date 2021-07-04
+ */
 @Setter
 @Getter
 @ToString

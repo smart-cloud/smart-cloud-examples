@@ -19,13 +19,28 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+/**
+ * 接口安全参数DTO
+ *
+ * @author collin
+ * @date 2020-09-10
+ */
 @Getter
 @Setter
 @ToString
 public class DataSecurityParamDTO {
 
+    /**
+     * 请求头
+     */
     private String headers;
+    /**
+     * url参数（base64）
+     */
     private String urlParamsBase64;
+    /**
+     * body参数（base64）
+     */
     private String bodyBase64;
 
 }

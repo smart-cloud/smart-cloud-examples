@@ -18,6 +18,7 @@ package org.smartframework.cloud.examples.mall.rpc.product.request.api;
 import io.github.smart.cloud.common.pojo.BasePageRequest;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 /**
  * 分页查询商品信息请求参数
@@ -27,6 +28,7 @@ import lombok.Setter;
  */
 @Getter
 @Setter
+@ToString
 public class PageProductReqVO extends BasePageRequest {
 
     private static final long serialVersionUID = 1L;

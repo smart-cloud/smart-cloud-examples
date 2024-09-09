@@ -15,6 +15,12 @@
  */
 package org.smartframework.cloud.examples.system.test.config;
 
+/**
+ * 系统测试url配置
+ *
+ * @author collin
+ * @date 2019-07-12
+ */
 public class SystemTestLocalConfig extends AbstractSystemTestConfig implements ISystemTestConfig {
 
     private static final boolean GATEWAY = true;
