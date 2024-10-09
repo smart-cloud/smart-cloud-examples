@@ -224,3 +224,6 @@ support-service-gateway | 400017 | 不支持数据安全
 # FAQ
 ## spring cloud gateway集成openfeign启动时卡死
 openfeign不支持 reactive clients。解决方案：1.延迟（@Lazy）加载feign客户端；2.通过ObjectProvider<openfeign客户端>的方式获取feign的bean（参考：https://docs.spring.io/spring-cloud-openfeign/docs/current/reference/html/#reactive-support）.
+
+---
+![](docs/images/wechat_cp.png)
