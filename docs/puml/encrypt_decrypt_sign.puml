@@ -1,0 +1,41 @@
+@startuml
+skinparam sequenceMessageAlign center
+skinparam responseMessageBelowArrow true
+
+participant 客户端 as c
+participant 服务端 as s
+
+autonumber 1.1
+activate c
+group 服务端生成RSA秘钥
+c -> s: 请求生成RSA秘钥
+activate s
+s->s:生成一对RSA公、私秘钥（PK1、SK1）
+c<-s:返回RSA公钥PK1
+deactivate s
+end
+
+autonumber 2.1
+group 服务端生成AES秘钥
+c ->c: 生成一对RSA公、私秘钥（PK2、SK2）
+c->s:用PK1将PK2加密传给服务端
+activate s
+s->s:生成AES加密的key
+c<-s:用PK2加密key返回客户端
+deactivate s
+c ->c: 将key存储至本地
+end
+
+autonumber 3.1
+loop 客户端与服务端后续每一次通信
+c ->c: 使用key加密，SK2签名
+c->s:发起请求
+activate s
+s->s:使用PK2验签，key解密
+s->s:使用key加密，SK1签名
+c<-s:响应请求
+deactivate s
+c ->c:使用PK1验签，key解密
+end
+deactivate c
+@enduml

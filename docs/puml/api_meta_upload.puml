@@ -1,0 +1,52 @@
+@startuml
+skinparam sequenceMessageAlign center
+skinparam responseMessageBelowArrow true
+
+participant 应用服务 as app_service
+participant gateway as gw
+participant 注册中心 as register
+database redis as redis
+
+autonumber 1.1
+activate app_service
+app_service->register: 注册服务
+activate app_service
+activate register
+app_service<-register:返回结果
+deactivate register
+deactivate app_service
+
+app_service->app_service: 监听服务启动事件
+    app_service->gw:通知网关获取服务meta
+    activate gw
+        autonumber 2.1
+        group 获取接口mata信息
+            gw->register:根据服务名获取服务的ip、port
+            activate gw
+            activate register
+            gw<-register:返回结果
+            deactivate register
+            deactivate gw
+
+            gw->app_service:发送http请求，获取接口meta
+            activate gw
+            activate app_service
+                app_service->app_service:通过反射收集接口meta信息
+                gw<-app_service:返回结果
+            deactivate app_service
+            deactivate gw
+        end
+        autonumber 3.1
+        group 缓存接口mata信息
+            gw->redis:缓存接口meta信息
+            activate gw
+            activate redis
+            gw<-redis:返回结果
+            deactivate redis
+            deactivate gw
+        end
+    autonumber 4
+    app_service<-gw:返回结果
+    deactivate gw
+deactivate app_service
+@enduml
