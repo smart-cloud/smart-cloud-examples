@@ -32,7 +32,7 @@ smart-cloud-examples
 ![](docs/images/smart-cloud-examples.jpg)
 
 ## （三）架构图
-![](docs/images/service_architecture.jpg)
+![](docs/images/service_architecture.png)
 
 # 二、接口安全
 
