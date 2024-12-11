@@ -18,7 +18,7 @@ package org.smartframework.cloud.examples.mall.product.controller.api;
 import io.github.smart.cloud.api.core.annotation.RequireTimestamp;
 import io.github.smart.cloud.common.pojo.BasePageResponse;
 import io.github.smart.cloud.common.pojo.Response;
-import io.github.smart.cloud.starter.core.business.util.ResponseUtil;
+import io.github.smart.cloud.starter.core.util.ResponseUtil;
 import lombok.RequiredArgsConstructor;
 import org.smartframework.cloud.examples.mall.product.service.api.ProductInfoApiService;
 import org.smartframework.cloud.examples.mall.rpc.product.request.api.PageProductReqVO;

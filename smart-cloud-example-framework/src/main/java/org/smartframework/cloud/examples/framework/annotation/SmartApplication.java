@@ -15,8 +15,8 @@
  */
 package org.smartframework.cloud.examples.framework.annotation;
 
-import io.github.smart.cloud.starter.core.support.annotation.SmartBootApplication;
-import io.github.smart.cloud.starter.core.support.annotation.YamlScan;
+import io.github.smart.cloud.starter.core.annotation.SmartBootApplication;
+import io.github.smart.cloud.starter.core.annotation.YamlScan;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 

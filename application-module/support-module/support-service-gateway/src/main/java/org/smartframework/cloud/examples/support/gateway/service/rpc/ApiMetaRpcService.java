@@ -18,7 +18,7 @@ package org.smartframework.cloud.examples.support.gateway.service.rpc;
 import com.fasterxml.jackson.core.type.TypeReference;
 import io.github.smart.cloud.common.pojo.Response;
 import io.github.smart.cloud.exception.BusinessException;
-import io.github.smart.cloud.starter.core.business.util.ResponseUtil;
+import io.github.smart.cloud.starter.core.util.ResponseUtil;
 import io.github.smart.cloud.utility.HttpUtil;
 import io.github.smart.cloud.utility.spring.SpringContextUtil;
 import lombok.RequiredArgsConstructor;

@@ -16,7 +16,7 @@
 package org.smartframework.cloud.examples.api.ac.core.controller;
 
 import io.github.smart.cloud.common.pojo.Response;
-import io.github.smart.cloud.starter.core.business.util.ResponseUtil;
+import io.github.smart.cloud.starter.core.util.ResponseUtil;
 import org.smartframework.cloud.examples.api.ac.core.constants.ApiMetaConstants;
 import org.smartframework.cloud.examples.api.ac.core.util.ApiMetaUtil;
 import org.smartframework.cloud.examples.api.ac.core.vo.ApiMetaFetchRespVO;

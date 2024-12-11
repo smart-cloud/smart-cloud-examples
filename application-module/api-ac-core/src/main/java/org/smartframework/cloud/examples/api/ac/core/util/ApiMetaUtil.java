@@ -24,7 +24,7 @@ import io.github.smart.cloud.api.core.annotation.auth.RequireUser;
 import io.github.smart.cloud.api.core.annotation.constants.ApiAnnotationConstants;
 import io.github.smart.cloud.api.core.annotation.enums.SignType;
 import io.github.smart.cloud.constants.SymbolConstant;
-import io.github.smart.cloud.starter.core.business.util.ReflectionUtil;
+import io.github.smart.cloud.starter.core.util.ReflectionUtil;
 import io.github.smart.cloud.starter.rpc.feign.annotation.SmartFeignClient;
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;

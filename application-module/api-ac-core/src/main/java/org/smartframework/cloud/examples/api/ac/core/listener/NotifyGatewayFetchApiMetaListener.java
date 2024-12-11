@@ -17,7 +17,7 @@ package org.smartframework.cloud.examples.api.ac.core.listener;
 
 import io.github.smart.cloud.common.pojo.Response;
 import io.github.smart.cloud.exception.ServerException;
-import io.github.smart.cloud.starter.core.business.util.ResponseUtil;
+import io.github.smart.cloud.starter.core.util.ResponseUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.smartframework.cloud.examples.api.ac.core.constants.ApiMetaConstants;

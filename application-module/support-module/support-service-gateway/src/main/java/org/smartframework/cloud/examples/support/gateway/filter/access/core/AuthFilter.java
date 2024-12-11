@@ -20,7 +20,7 @@ import io.github.smart.cloud.common.web.constants.SmartHttpHeaders;
 import io.github.smart.cloud.exception.BusinessException;
 import io.github.smart.cloud.exception.DataValidateException;
 import io.github.smart.cloud.exception.RpcException;
-import io.github.smart.cloud.starter.core.business.util.ResponseUtil;
+import io.github.smart.cloud.starter.core.util.ResponseUtil;
 import io.github.smart.cloud.starter.redis.adapter.IRedisAdapter;
 import io.github.smart.cloud.utility.JacksonUtil;
 import lombok.RequiredArgsConstructor;

@@ -19,7 +19,7 @@ import com.baomidou.dynamic.datasource.annotation.DSTransactional;
 import io.github.smart.cloud.common.pojo.Response;
 import io.github.smart.cloud.exception.BusinessException;
 import io.github.smart.cloud.exception.ServerException;
-import io.github.smart.cloud.starter.core.business.util.ResponseUtil;
+import io.github.smart.cloud.starter.core.util.ResponseUtil;
 import io.github.smart.cloud.starter.global.id.GlobalId;
 import io.github.smart.cloud.starter.mybatis.plus.enums.DeleteState;
 import io.github.smart.cloud.utility.spring.SpringContextUtil;

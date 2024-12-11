@@ -17,7 +17,7 @@ package org.smartframework.cloud.examples.support.gateway.test.prepare.controlle
 
 import io.github.smart.cloud.api.core.annotation.RequireDataSecurity;
 import io.github.smart.cloud.common.pojo.Response;
-import io.github.smart.cloud.starter.core.business.util.ResponseUtil;
+import io.github.smart.cloud.starter.core.util.ResponseUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.smartframework.cloud.examples.support.gateway.test.prepare.dto.GetBodyDTO;
 import org.smartframework.cloud.examples.support.gateway.test.prepare.dto.GetDTO;
