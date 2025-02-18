@@ -32,7 +32,7 @@ CREATE TABLE `t_user_info` (
 	`f_sys_del_state` TINYINT(1) UNSIGNED NOT NULL DEFAULT '1' COMMENT '记录状态=={"1":"正常","2":"已删除"}',
 	PRIMARY KEY (`f_id`),
 	UNIQUE INDEX `f_mobile` (`f_mobile`)
-)COMMENT='用户信息' COLLATE='utf8mb4_general_ci' ENGINE=InnoDB ROW_FORMAT=COMPACT;
+)COMMENT='用户服务|用户信息|collin|20190712' COLLATE='utf8mb4_general_ci' ENGINE=InnoDB ROW_FORMAT=COMPACT;
 
 
 CREATE TABLE `t_login_info` (
@@ -54,4 +54,4 @@ CREATE TABLE `t_login_info` (
 	PRIMARY KEY (`f_id`),
 	UNIQUE INDEX `f_username` (`f_username`),
 	UNIQUE INDEX `t_user_id` (`t_user_id`)
-)COMMENT='登录信息' COLLATE='utf8_general_ci' ENGINE=InnoDB;
+)COMMENT='用户服务|登录信息|collin|20190712' COLLATE='utf8_general_ci' ENGINE=InnoDB;

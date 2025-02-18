@@ -28,9 +28,7 @@ CREATE TABLE `t_product_info` (
 	`f_sys_del_state` TINYINT(1) UNSIGNED NOT NULL DEFAULT '1' COMMENT '删除状态=={1:正常, 2:已删除}',
 	PRIMARY KEY (`f_id`)
 )
-COMMENT='商品信息'
-COLLATE='utf8_general_ci'
-ENGINE=InnoDB;
+COMMENT='产品服务|商品信息|collin|20190712' COLLATE='utf8_general_ci' ENGINE=InnoDB;
 
 
 -- for AT mode you must to init this sql for you business database. the seata server not need it.

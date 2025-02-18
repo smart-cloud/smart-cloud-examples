@@ -30,7 +30,7 @@ CREATE TABLE `t_order_bill_0` (
   `f_sys_del_state` tinyint(1) unsigned NOT NULL DEFAULT '1' COMMENT '删除状态=={1:正常, 2:已删除}',
   PRIMARY KEY (`f_id`),
   KEY `uk_order_no` (`f_order_no`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='订单信息';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='订单服务|订单信息|collin|20210209';
 
 CREATE TABLE `t_order_delivery_info_0` (
   `f_id` bigint(20) unsigned NOT NULL,
@@ -48,7 +48,7 @@ CREATE TABLE `t_order_delivery_info_0` (
   `f_sys_del_state` tinyint(1) unsigned NOT NULL DEFAULT '1' COMMENT '删除状态=={1:正常, 2:已删除}',
   PRIMARY KEY (`f_id`),
   KEY `idx_order_no` (`f_order_no`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='运单信息';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='订单服务|运单信息|collin|20210209';
 
 -- for AT mode you must to init this sql for you business database. the seata server not need it.
 CREATE TABLE IF NOT EXISTS `undo_log`

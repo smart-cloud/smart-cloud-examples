@@ -28,7 +28,7 @@ CREATE TABLE `t_permission_info` (
   `f_sys_del_state` tinyint(1) unsigned NOT NULL DEFAULT '1' COMMENT '删除状态=={1:正常, 2:已删除}',
   PRIMARY KEY (`f_id`) USING BTREE,
   UNIQUE KEY `uk_code` (`f_code`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='权限表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='鉴权服务|权限表|collin|20210627';
 
 -- ----------------------------
 -- Table structure for t_role_info
@@ -47,7 +47,7 @@ CREATE TABLE `t_role_info` (
   `f_sys_del_state` tinyint(1) unsigned NOT NULL DEFAULT '1' COMMENT '删除状态=={1:正常, 2:已删除}',
   PRIMARY KEY (`f_id`) USING BTREE,
   UNIQUE KEY `uk_code` (`f_code`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='角色表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='鉴权服务|角色表|collin|20210627';
 
 -- ----------------------------
 -- Table structure for t_role_permission_rela
@@ -67,7 +67,7 @@ CREATE TABLE `t_role_permission_rela` (
   PRIMARY KEY (`f_id`) USING BTREE,
   KEY `idx_role_info_id` (`t_role_info_id`),
   KEY `idx_permission_info_id` (`t_permission_info_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='角色权限关系表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='鉴权服务|角色权限关系表|collin|20210627';
 
 -- ----------------------------
 -- Table structure for t_user_role_rela
@@ -87,4 +87,4 @@ CREATE TABLE `t_user_role_rela` (
   PRIMARY KEY (`f_id`) USING BTREE,
   KEY `idx_user_info_id` (`t_user_info_id`),
   KEY `idx_role_info_id` (`t_role_info_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户角色表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='鉴权服务|用户角色表|collin|20210627';
