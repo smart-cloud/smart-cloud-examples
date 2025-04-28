@@ -18,10 +18,10 @@ package org.smartframework.cloud.examples.basic.auth.service.rpc;
 import com.baomidou.dynamic.datasource.annotation.DS;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.collections4.CollectionUtils;
-import org.smartframework.cloud.examples.basic.auth.biz.oms.PermissionInfoOmsBiz;
-import org.smartframework.cloud.examples.basic.auth.biz.oms.RoleInfoOmsBiz;
-import org.smartframework.cloud.examples.basic.auth.biz.oms.RolePermissionOmsBiz;
-import org.smartframework.cloud.examples.basic.auth.biz.oms.UserRoleOmsBiz;
+import org.smartframework.cloud.examples.basic.auth.repository.oms.PermissionInfoOmsRepository;
+import org.smartframework.cloud.examples.basic.auth.repository.oms.RoleInfoOmsRepository;
+import org.smartframework.cloud.examples.basic.auth.repository.oms.RolePermissionOmsRepository;
+import org.smartframework.cloud.examples.basic.auth.repository.oms.UserRoleOmsRepository;
 import org.smartframework.cloud.examples.basic.rpc.auth.response.rpc.AuthRespDTO;
 import org.smartframework.cloud.examples.common.config.constants.DataSourceName;
 import org.springframework.stereotype.Service;
@@ -33,10 +33,10 @@ import java.util.Set;
 @DS(DataSourceName.BASIC_AUTH_MASTER)
 public class AuthRpcService {
 
-    private final UserRoleOmsBiz userRoleOmsBiz;
-    private final RolePermissionOmsBiz rolePermissionOmsBiz;
-    private final RoleInfoOmsBiz roleInfoOmsBiz;
-    private final PermissionInfoOmsBiz permissionInfoOmsBiz;
+    private final UserRoleOmsRepository userRoleOmsRepository;
+    private final RolePermissionOmsRepository rolePermissionOmsRepository;
+    private final RoleInfoOmsRepository roleInfoOmsRepository;
+    private final PermissionInfoOmsRepository permissionInfoOmsRepository;
 
     /**
      * 根据uid查询用户拥有的权限信息
@@ -46,20 +46,20 @@ public class AuthRpcService {
      */
     @DS(DataSourceName.BASIC_AUTH_SLAVE)
     public AuthRespDTO listByUid(Long uid) {
-        Set<Long> roleIds = userRoleOmsBiz.listRoleId(uid);
+        Set<Long> roleIds = userRoleOmsRepository.listRoleId(uid);
         if (CollectionUtils.isEmpty(roleIds)) {
             return new AuthRespDTO();
         }
 
-        Set<String> roleCodes = roleInfoOmsBiz.listCode(roleIds);
+        Set<String> roleCodes = roleInfoOmsRepository.listCode(roleIds);
         if (CollectionUtils.isEmpty(roleCodes)) {
             return new AuthRespDTO();
         }
 
-        Set<Long> permissionIds = rolePermissionOmsBiz.listPermissionIds(roleIds);
+        Set<Long> permissionIds = rolePermissionOmsRepository.listPermissionIds(roleIds);
         Set<String> permissionCodes = null;
         if (CollectionUtils.isNotEmpty(permissionIds)) {
-            permissionCodes = permissionInfoOmsBiz.listCode(permissionIds);
+            permissionCodes = permissionInfoOmsRepository.listCode(permissionIds);
         }
 
         AuthRespDTO authRespDTO = new AuthRespDTO();

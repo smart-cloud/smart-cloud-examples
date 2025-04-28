@@ -20,7 +20,7 @@ import com.baomidou.dynamic.datasource.annotation.DSTransactional;
 import io.github.smart.cloud.common.pojo.BasePageResponse;
 import lombok.RequiredArgsConstructor;
 import org.smartframework.cloud.examples.app.auth.core.UserContext;
-import org.smartframework.cloud.examples.basic.auth.biz.oms.RolePermissionOmsBiz;
+import org.smartframework.cloud.examples.basic.auth.repository.oms.RolePermissionOmsRepository;
 import org.smartframework.cloud.examples.basic.rpc.auth.request.oms.role.permisson.PageRolePermissonReqVO;
 import org.smartframework.cloud.examples.basic.rpc.auth.request.oms.role.permisson.RolePermissonCreateReqVO;
 import org.smartframework.cloud.examples.basic.rpc.auth.request.oms.role.permisson.RolePermissonUpdateReqVO;
@@ -33,7 +33,7 @@ import org.springframework.stereotype.Service;
 @DS(DataSourceName.BASIC_AUTH_MASTER)
 public class RolePermissionOmsService {
 
-    private final RolePermissionOmsBiz rolePermissionOmsBiz;
+    private final RolePermissionOmsRepository rolePermissionOmsRepository;
 
     /**
      * 添加角色权限
@@ -42,7 +42,7 @@ public class RolePermissionOmsService {
      * @return
      */
     public Boolean create(RolePermissonCreateReqVO req) {
-        return rolePermissionOmsBiz.create(req.getRoleId(), req.getPermissonIds(), UserContext.getUserId());
+        return rolePermissionOmsRepository.create(req.getRoleId(), req.getPermissonIds(), UserContext.getUserId());
     }
 
     /**
@@ -53,8 +53,8 @@ public class RolePermissionOmsService {
      */
     @DSTransactional
     public Boolean update(RolePermissonUpdateReqVO req) {
-        rolePermissionOmsBiz.logicDelete(req.getRoleId());
-        rolePermissionOmsBiz.create(req.getRoleId(), req.getPermissonIds(), UserContext.getUserId());
+        rolePermissionOmsRepository.logicDelete(req.getRoleId());
+        rolePermissionOmsRepository.create(req.getRoleId(), req.getPermissonIds(), UserContext.getUserId());
         return true;
     }
 
@@ -66,7 +66,7 @@ public class RolePermissionOmsService {
      */
     @DS(DataSourceName.BASIC_AUTH_SLAVE)
     public BasePageResponse<RolePermissionRespVO> page(PageRolePermissonReqVO req) {
-        return rolePermissionOmsBiz.page(req);
+        return rolePermissionOmsRepository.page(req);
     }
 
 }

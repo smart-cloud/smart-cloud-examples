@@ -19,7 +19,7 @@ import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.dynamic.datasource.annotation.DSTransactional;
 import lombok.RequiredArgsConstructor;
 import org.smartframework.cloud.examples.app.auth.core.UserContext;
-import org.smartframework.cloud.examples.basic.auth.biz.oms.UserRoleOmsBiz;
+import org.smartframework.cloud.examples.basic.auth.repository.oms.UserRoleOmsRepository;
 import org.smartframework.cloud.examples.basic.rpc.auth.request.oms.user.role.UserRoleCreateReqVO;
 import org.smartframework.cloud.examples.basic.rpc.auth.request.oms.user.role.UserRoleUpdateReqVO;
 import org.smartframework.cloud.examples.basic.rpc.auth.response.oms.user.role.UserRoleRespVO;
@@ -33,7 +33,7 @@ import java.util.List;
 @DS(DataSourceName.BASIC_AUTH_MASTER)
 public class UserRoleOmsService {
 
-    private final UserRoleOmsBiz userRoleOmsBiz;
+    private final UserRoleOmsRepository userRoleOmsRepository;
 
     /**
      * 添加用户角色
@@ -42,7 +42,7 @@ public class UserRoleOmsService {
      * @return
      */
     public Boolean create(UserRoleCreateReqVO req) {
-        return userRoleOmsBiz.create(req.getUid(), req.getRoleIds(), UserContext.getUserId());
+        return userRoleOmsRepository.create(req.getUid(), req.getRoleIds(), UserContext.getUserId());
     }
 
     /**
@@ -53,8 +53,8 @@ public class UserRoleOmsService {
      */
     @DSTransactional
     public Boolean update(UserRoleUpdateReqVO req) {
-        userRoleOmsBiz.logicDelete(req.getUid());
-        userRoleOmsBiz.create(req.getUid(), req.getRoleIds(), UserContext.getUserId());
+        userRoleOmsRepository.logicDelete(req.getUid());
+        userRoleOmsRepository.create(req.getUid(), req.getRoleIds(), UserContext.getUserId());
         return true;
     }
 
@@ -66,7 +66,7 @@ public class UserRoleOmsService {
      */
     @DS(DataSourceName.BASIC_AUTH_SLAVE)
     public List<UserRoleRespVO> listRole(Long uid) {
-        return userRoleOmsBiz.listRole(uid);
+        return userRoleOmsRepository.listRole(uid);
     }
 
 }

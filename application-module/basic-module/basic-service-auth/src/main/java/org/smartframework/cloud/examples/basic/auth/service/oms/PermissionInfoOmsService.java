@@ -20,7 +20,7 @@ import io.github.smart.cloud.common.pojo.BasePageResponse;
 import io.github.smart.cloud.exception.DataValidateException;
 import lombok.RequiredArgsConstructor;
 import org.smartframework.cloud.examples.app.auth.core.UserContext;
-import org.smartframework.cloud.examples.basic.auth.biz.oms.PermissionInfoOmsBiz;
+import org.smartframework.cloud.examples.basic.auth.repository.oms.PermissionInfoOmsRepository;
 import org.smartframework.cloud.examples.basic.auth.constants.AuthReturnCodes;
 import org.smartframework.cloud.examples.basic.rpc.auth.request.oms.permisson.PagePermissionReqVO;
 import org.smartframework.cloud.examples.basic.rpc.auth.request.oms.permisson.PermissionCreateReqVO;
@@ -34,7 +34,7 @@ import org.springframework.stereotype.Service;
 @DS(DataSourceName.BASIC_AUTH_MASTER)
 public class PermissionInfoOmsService {
 
-    private final PermissionInfoOmsBiz permissionInfoOmsBiz;
+    private final PermissionInfoOmsRepository permissionInfoOmsRepository;
 
     /**
      * 添加角色
@@ -43,10 +43,10 @@ public class PermissionInfoOmsService {
      * @return
      */
     public Boolean create(PermissionCreateReqVO req) {
-        if (permissionInfoOmsBiz.exist(null, req.getCode())) {
+        if (permissionInfoOmsRepository.exist(null, req.getCode())) {
             throw new DataValidateException(AuthReturnCodes.PERMISSION_CODE_EXIST);
         }
-        return permissionInfoOmsBiz.create(req);
+        return permissionInfoOmsRepository.create(req);
     }
 
     /**
@@ -56,10 +56,10 @@ public class PermissionInfoOmsService {
      * @return
      */
     public Boolean update(PermissionUpdateReqVO req) {
-        if (permissionInfoOmsBiz.exist(req.getId(), req.getCode())) {
+        if (permissionInfoOmsRepository.exist(req.getId(), req.getCode())) {
             throw new DataValidateException(AuthReturnCodes.PERMISSION_CODE_EXIST);
         }
-        return permissionInfoOmsBiz.update(req);
+        return permissionInfoOmsRepository.update(req);
     }
 
     /**
@@ -69,7 +69,7 @@ public class PermissionInfoOmsService {
      * @return
      */
     public Boolean logicDelete(Long id) {
-        return permissionInfoOmsBiz.logicDelete(id, UserContext.getUserId());
+        return permissionInfoOmsRepository.logicDelete(id, UserContext.getUserId());
     }
 
     /**
@@ -80,7 +80,7 @@ public class PermissionInfoOmsService {
      */
     @DS(DataSourceName.BASIC_AUTH_SLAVE)
     public BasePageResponse<PermissionInfoBaseRespVO> page(PagePermissionReqVO req) {
-        return permissionInfoOmsBiz.page(req);
+        return permissionInfoOmsRepository.page(req);
     }
 
 }

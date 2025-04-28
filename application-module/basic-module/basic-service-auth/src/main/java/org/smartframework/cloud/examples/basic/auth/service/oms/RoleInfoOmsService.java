@@ -20,7 +20,7 @@ import io.github.smart.cloud.common.pojo.BasePageResponse;
 import io.github.smart.cloud.exception.DataValidateException;
 import lombok.RequiredArgsConstructor;
 import org.smartframework.cloud.examples.app.auth.core.UserContext;
-import org.smartframework.cloud.examples.basic.auth.biz.oms.RoleInfoOmsBiz;
+import org.smartframework.cloud.examples.basic.auth.repository.oms.RoleInfoOmsRepository;
 import org.smartframework.cloud.examples.basic.auth.constants.AuthReturnCodes;
 import org.smartframework.cloud.examples.basic.rpc.auth.request.oms.role.PageRoleReqVO;
 import org.smartframework.cloud.examples.basic.rpc.auth.request.oms.role.RoleCreateReqVO;
@@ -34,7 +34,7 @@ import org.springframework.stereotype.Service;
 @DS(DataSourceName.BASIC_AUTH_MASTER)
 public class RoleInfoOmsService {
 
-    private final RoleInfoOmsBiz roleInfoOmsBiz;
+    private final RoleInfoOmsRepository roleInfoOmsRepository;
 
     /**
      * 添加角色
@@ -43,10 +43,10 @@ public class RoleInfoOmsService {
      * @return
      */
     public Boolean create(RoleCreateReqVO req) {
-        if (roleInfoOmsBiz.exist(req.getCode())) {
+        if (roleInfoOmsRepository.exist(req.getCode())) {
             throw new DataValidateException(AuthReturnCodes.ROLE_CODE_EXIST);
         }
-        return roleInfoOmsBiz.create(req);
+        return roleInfoOmsRepository.create(req);
     }
 
     /**
@@ -56,10 +56,10 @@ public class RoleInfoOmsService {
      * @return
      */
     public Boolean update(RoleUpdateReqVO req) {
-        if (roleInfoOmsBiz.exist(req.getCode())) {
+        if (roleInfoOmsRepository.exist(req.getCode())) {
             throw new DataValidateException(AuthReturnCodes.ROLE_CODE_EXIST);
         }
-        return roleInfoOmsBiz.update(req);
+        return roleInfoOmsRepository.update(req);
     }
 
     /**
@@ -69,7 +69,7 @@ public class RoleInfoOmsService {
      * @return
      */
     public Boolean logicDelete(Long id) {
-        return roleInfoOmsBiz.logicDelete(id, UserContext.getUserId());
+        return roleInfoOmsRepository.logicDelete(id, UserContext.getUserId());
     }
 
     /**
@@ -80,7 +80,7 @@ public class RoleInfoOmsService {
      */
     @DS(DataSourceName.BASIC_AUTH_SLAVE)
     public BasePageResponse<RoleInfoBaseRespVO> page(PageRoleReqVO req) {
-        return roleInfoOmsBiz.page(req);
+        return roleInfoOmsRepository.page(req);
     }
 
 }

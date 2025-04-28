@@ -19,7 +19,7 @@ import com.baomidou.dynamic.datasource.annotation.DS;
 import io.github.smart.cloud.common.pojo.BasePageResponse;
 import lombok.RequiredArgsConstructor;
 import org.smartframework.cloud.examples.common.config.constants.DataSourceName;
-import org.smartframework.cloud.examples.mall.product.biz.oms.ProductInfoOmsBiz;
+import org.smartframework.cloud.examples.mall.product.repository.oms.ProductInfoOmsRepository;
 import org.smartframework.cloud.examples.mall.rpc.product.request.oms.PageProductReqVO;
 import org.smartframework.cloud.examples.mall.rpc.product.request.oms.ProductDeleteReqVO;
 import org.smartframework.cloud.examples.mall.rpc.product.request.oms.ProductInsertReqVO;
@@ -38,7 +38,7 @@ import org.springframework.stereotype.Service;
 @DS(DataSourceName.MALL_PRODUCT_MASTER)
 public class ProductInfoOmsService {
 
-    private final ProductInfoOmsBiz productOmsBiz;
+    private final ProductInfoOmsRepository productOmsBiz;
 
     /**
      * 新增

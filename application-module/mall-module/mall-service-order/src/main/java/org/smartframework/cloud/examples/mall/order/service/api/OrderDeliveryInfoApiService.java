@@ -18,7 +18,7 @@ package org.smartframework.cloud.examples.mall.order.service.api;
 import com.baomidou.dynamic.datasource.annotation.DS;
 import io.github.smart.cloud.starter.mp.shardingjdbc.constants.ShardingSphereDataSourceName;
 import lombok.RequiredArgsConstructor;
-import org.smartframework.cloud.examples.mall.order.biz.api.OrderDeliveryInfoApiBiz;
+import org.smartframework.cloud.examples.mall.order.repository.api.OrderDeliveryInfoApiRepository;
 import org.smartframework.cloud.examples.mall.order.entity.base.OrderDeliveryInfoEntity;
 import org.springframework.stereotype.Service;
 
@@ -35,10 +35,10 @@ import java.util.List;
 @RequiredArgsConstructor
 public class OrderDeliveryInfoApiService {
 
-    private final OrderDeliveryInfoApiBiz orderDeliveryInfoApiBiz;
+    private final OrderDeliveryInfoApiRepository orderDeliveryInfoApiRepository;
 
     public boolean create(List<OrderDeliveryInfoEntity> entities) {
-        return orderDeliveryInfoApiBiz.getBaseMapper().insertBatchSomeColumn(entities) == entities.size();
+        return orderDeliveryInfoApiRepository.getBaseMapper().insertBatchSomeColumn(entities) == entities.size();
     }
 
 }

@@ -17,7 +17,7 @@ package org.smartframework.cloud.examples.basic.auth.test.data;
 
 import io.github.smart.cloud.starter.mybatis.plus.enums.DeleteState;
 import lombok.RequiredArgsConstructor;
-import org.smartframework.cloud.examples.basic.auth.biz.oms.UserRoleOmsBiz;
+import org.smartframework.cloud.examples.basic.auth.repository.oms.UserRoleOmsRepository;
 import org.smartframework.cloud.examples.basic.auth.entity.UserRoleRelaEntity;
 import org.springframework.stereotype.Component;
 
@@ -29,7 +29,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class UserRoleRelaData {
 
-    private final UserRoleOmsBiz userRoleOmsBiz;
+    private final UserRoleOmsRepository userRoleOmsRepository;
 
     public void insert(Long uid, List<Long> roleIds) {
         List<UserRoleRelaEntity> userRoleRelaEntities = roleIds.stream().map(roleId -> {
@@ -44,7 +44,7 @@ public class UserRoleRelaData {
             return userRoleRelaEntity;
         }).collect(Collectors.toList());
 
-        userRoleOmsBiz.insertBatchSomeColumn(userRoleRelaEntities);
+        userRoleOmsRepository.insertBatchSomeColumn(userRoleRelaEntities);
     }
 
 }

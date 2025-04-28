@@ -13,11 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.smartframework.cloud.examples.basic.user.biz.api;
+package org.smartframework.cloud.examples.basic.user.repository.api;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import io.github.smart.cloud.starter.global.id.GlobalId;
-import io.github.smart.cloud.starter.mybatis.plus.common.biz.BaseBiz;
+import io.github.smart.cloud.starter.mybatis.plus.common.repository.BaseRepository;
 import io.github.smart.cloud.starter.mybatis.plus.enums.DeleteState;
 import org.smartframework.cloud.examples.basic.rpc.enums.user.UserStateEnum;
 import org.smartframework.cloud.examples.basic.user.bo.login.LoginInfoInsertBizBO;
@@ -28,7 +28,7 @@ import org.springframework.stereotype.Repository;
 import java.util.Date;
 
 @Repository
-public class LoginInfoApiBiz extends BaseBiz<LoginInfoBaseMapper, LoginInfoEntity> {
+public class LoginInfoApiRepository extends BaseRepository<LoginInfoBaseMapper, LoginInfoEntity> {
 
     /**
      * 插入登陆信息

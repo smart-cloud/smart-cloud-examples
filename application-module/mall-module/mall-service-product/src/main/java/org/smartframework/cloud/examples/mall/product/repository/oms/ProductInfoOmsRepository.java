@@ -13,12 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.smartframework.cloud.examples.mall.product.biz.oms;
+package org.smartframework.cloud.examples.mall.product.repository.oms;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import io.github.smart.cloud.common.pojo.BasePageResponse;
 import io.github.smart.cloud.starter.global.id.GlobalId;
-import io.github.smart.cloud.starter.mybatis.plus.common.biz.BaseBiz;
+import io.github.smart.cloud.starter.mybatis.plus.common.repository.BaseRepository;
 import io.github.smart.cloud.starter.mybatis.plus.enums.DeleteState;
 import org.apache.commons.lang3.StringUtils;
 import org.smartframework.cloud.examples.app.auth.core.UserContext;
@@ -39,7 +39,7 @@ import java.util.Date;
  * @date 2019-03-31
  */
 @Repository
-public class ProductInfoOmsBiz extends BaseBiz<ProductInfoBaseMapper, ProductInfoEntity> {
+public class ProductInfoOmsRepository extends BaseRepository<ProductInfoBaseMapper, ProductInfoEntity> {
 
     /**
      * 新增

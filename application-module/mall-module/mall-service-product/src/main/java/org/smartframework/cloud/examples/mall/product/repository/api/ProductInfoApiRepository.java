@@ -13,13 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.smartframework.cloud.examples.mall.product.biz.api;
+package org.smartframework.cloud.examples.mall.product.repository.api;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.github.smart.cloud.common.pojo.BasePageResponse;
-import io.github.smart.cloud.starter.mybatis.plus.common.biz.BaseBiz;
+import io.github.smart.cloud.starter.mybatis.plus.common.repository.BaseRepository;
 import io.github.smart.cloud.starter.mybatis.plus.enums.DeleteState;
 import org.apache.commons.lang3.StringUtils;
 import org.smartframework.cloud.examples.mall.product.entity.ProductInfoEntity;
@@ -39,7 +39,7 @@ import java.util.stream.Collectors;
  * @date 2019-03-31
  */
 @Repository
-public class ProductInfoApiBiz extends BaseBiz<ProductInfoBaseMapper, ProductInfoEntity> {
+public class ProductInfoApiRepository extends BaseRepository<ProductInfoBaseMapper, ProductInfoEntity> {
 
     /**
      * 分页查询商品信息

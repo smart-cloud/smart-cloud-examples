@@ -19,7 +19,7 @@ import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.dynamic.datasource.annotation.DSTransactional;
 import lombok.RequiredArgsConstructor;
 import org.smartframework.cloud.examples.common.config.constants.DataSourceName;
-import org.smartframework.cloud.examples.mall.product.biz.rpc.ProductInfoRpcBiz;
+import org.smartframework.cloud.examples.mall.product.repository.rpc.ProductInfoRpcRepository;
 import org.smartframework.cloud.examples.mall.rpc.product.request.rpc.QryProductByIdReqDTO;
 import org.smartframework.cloud.examples.mall.rpc.product.request.rpc.QryProductByIdsReqDTO;
 import org.smartframework.cloud.examples.mall.rpc.product.request.rpc.UpdateStockReqDTO;
@@ -38,7 +38,7 @@ import org.springframework.stereotype.Service;
 @DS(DataSourceName.MALL_PRODUCT_MASTER)
 public class ProductInfoRpcService {
 
-    private final ProductInfoRpcBiz productRpcBiz;
+    private final ProductInfoRpcRepository productRpcBiz;
 
     /**
      * 根据id查询商品信息

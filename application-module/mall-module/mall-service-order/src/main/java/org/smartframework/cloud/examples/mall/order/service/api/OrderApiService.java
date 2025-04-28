@@ -27,8 +27,8 @@ import io.seata.spring.annotation.GlobalTransactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
-import org.smartframework.cloud.examples.mall.order.biz.api.OrderBillApiBiz;
-import org.smartframework.cloud.examples.mall.order.biz.api.OrderDeliveryInfoApiBiz;
+import org.smartframework.cloud.examples.mall.order.repository.api.OrderBillApiRepository;
+import org.smartframework.cloud.examples.mall.order.repository.api.OrderDeliveryInfoApiRepository;
 import org.smartframework.cloud.examples.mall.order.constants.OrderReturnCodes;
 import org.smartframework.cloud.examples.mall.order.entity.base.OrderBillEntity;
 import org.smartframework.cloud.examples.mall.order.entity.base.OrderDeliveryInfoEntity;
@@ -64,8 +64,8 @@ import java.util.stream.Collectors;
 public class OrderApiService {
 
     private final ProductInfoRpc productInfoRpc;
-    private final OrderBillApiBiz orderBillApiBiz;
-    private final OrderDeliveryInfoApiBiz orderDeliveryInfoApiBiz;
+    private final OrderBillApiRepository orderBillApiRepository;
+    private final OrderDeliveryInfoApiRepository orderDeliveryInfoApiRepository;
     private final OrderDeliveryInfoApiService orderDeliveryInfoApiService;
 
     /**
@@ -78,7 +78,7 @@ public class OrderApiService {
     public void submit(SubmitOrderDTO submitOrderDTO) {
         // 幂等校验
         String orderNo = submitOrderDTO.getOrderNo();
-        if (orderBillApiBiz.getByOrderNo(orderNo) != null) {
+        if (orderBillApiRepository.getByOrderNo(orderNo) != null) {
             log.warn("order[{}] had created", orderNo);
             return;
         }
@@ -137,7 +137,7 @@ public class OrderApiService {
             log.error("deductStockAndCounpon.fail", e);
             status = OrderStatus.DEDUCT_STOCK_FAIL;
         }
-        orderBillApiBiz.updateStatus(orderNo, status);
+        orderBillApiRepository.updateStatus(orderNo, status);
     }
 
     /**
@@ -178,7 +178,7 @@ public class OrderApiService {
      * @return
      */
     public QuerySubmitResultRespVO querySubmitResult(String orderNo) {
-        OrderBillEntity orderBillEntity = orderBillApiBiz.getByOrderNo(orderNo);
+        OrderBillEntity orderBillEntity = orderBillApiRepository.getByOrderNo(orderNo);
         if (orderBillEntity == null) {
             return null;
         }
@@ -188,7 +188,7 @@ public class OrderApiService {
         queryDetailRespVO.setAmount(orderBillEntity.getAmount());
         queryDetailRespVO.setPayStatus(orderBillEntity.getPayState());
 
-        List<OrderDeliveryInfoEntity> orderDeliveryInfoEntities = orderDeliveryInfoApiBiz.getByOrderNo(orderNo);
+        List<OrderDeliveryInfoEntity> orderDeliveryInfoEntities = orderDeliveryInfoApiRepository.getByOrderNo(orderNo);
         if (CollectionUtils.isNotEmpty(orderDeliveryInfoEntities)) {
             List<OrderDeliveryRespVO> orderDeliveries = new ArrayList<>(orderDeliveryInfoEntities.size());
             queryDetailRespVO.setOrderDeliveries(orderDeliveries);
@@ -242,7 +242,7 @@ public class OrderApiService {
         orderBillEntity.setInsertTime(new Date());
         orderBillEntity.setDelState(DeleteState.NORMAL);
 
-        orderBillApiBiz.create(orderBillEntity);
+        orderBillApiRepository.create(orderBillEntity);
 
         return orderBillEntity;
     }

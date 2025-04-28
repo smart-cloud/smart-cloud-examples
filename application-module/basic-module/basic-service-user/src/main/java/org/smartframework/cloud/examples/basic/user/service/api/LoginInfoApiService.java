@@ -32,8 +32,8 @@ import org.smartframework.cloud.examples.basic.rpc.enums.user.UserStateEnum;
 import org.smartframework.cloud.examples.basic.rpc.user.request.api.login.ExitReqVO;
 import org.smartframework.cloud.examples.basic.rpc.user.request.api.login.LoginReqVO;
 import org.smartframework.cloud.examples.basic.rpc.user.response.api.login.LoginRespVO;
-import org.smartframework.cloud.examples.basic.user.biz.api.LoginInfoApiBiz;
-import org.smartframework.cloud.examples.basic.user.biz.api.UserInfoApiBiz;
+import org.smartframework.cloud.examples.basic.user.repository.api.LoginInfoApiRepository;
+import org.smartframework.cloud.examples.basic.user.repository.api.UserInfoApiRepository;
 import org.smartframework.cloud.examples.basic.user.bo.login.LoginInfoInsertBizBO;
 import org.smartframework.cloud.examples.basic.user.bo.login.LoginInfoInsertServiceBO;
 import org.smartframework.cloud.examples.basic.user.constants.UserReturnCodes;
@@ -56,8 +56,8 @@ import java.util.Objects;
 @DS(DataSourceName.BASIC_USER_MASTER)
 public class LoginInfoApiService {
 
-    private final LoginInfoApiBiz loginInfoApiBiz;
-    private final UserInfoApiBiz userInfoApiBiz;
+    private final LoginInfoApiRepository loginInfoApiRepository;
+    private final UserInfoApiRepository userInfoApiRepository;
     private final UserRpc userRpc;
     private final AuthRpc authRpc;
     private final ApplicationEventPublisher applicationEventPublisher;
@@ -70,7 +70,7 @@ public class LoginInfoApiService {
      */
     @DS(DataSourceName.BASIC_USER_SLAVE)
     public LoginRespVO login(LoginReqVO req) {
-        LoginInfoEntity loginInfoEntity = loginInfoApiBiz.queryByUsername(req.getUsername());
+        LoginInfoEntity loginInfoEntity = loginInfoApiRepository.queryByUsername(req.getUsername());
         if (Objects.isNull(loginInfoEntity)) {
             throw new BusinessException(UserReturnCodes.ACCOUNT_NOT_EXIST);
         }
@@ -88,7 +88,7 @@ public class LoginInfoApiService {
             throw new BusinessException(UserReturnCodes.USER_DELETED);
         }
 
-        UserInfoEntity userInfoEntity = userInfoApiBiz.getById(loginInfoEntity.getUserId());
+        UserInfoEntity userInfoEntity = userInfoApiRepository.getById(loginInfoEntity.getUserId());
 
         LoginRespVO loginRespVO = LoginRespVO.builder()
                 .userId(userInfoEntity.getId())
@@ -166,7 +166,7 @@ public class LoginInfoApiService {
      */
     public LoginInfoEntity insert(LoginInfoInsertServiceBO bo) {
         // 判断该用户名是否已存在
-        boolean existUsername = loginInfoApiBiz.existByUsername(bo.getUsername());
+        boolean existUsername = loginInfoApiRepository.existByUsername(bo.getUsername());
         if (existUsername) {
             throw new ParamValidateException(UserReturnCodes.REGISTER_USERNAME_EXSITED);
         }
@@ -181,7 +181,7 @@ public class LoginInfoApiService {
                 .pwdState(bo.getPwdState())
                 .salt(salt)
                 .build();
-        return loginInfoApiBiz.insert(loginInfoInsertBizBO);
+        return loginInfoApiRepository.insert(loginInfoInsertBizBO);
     }
 
 

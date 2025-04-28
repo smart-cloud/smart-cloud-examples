@@ -13,12 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.smartframework.cloud.examples.mall.order.biz.api;
+package org.smartframework.cloud.examples.mall.order.repository.api;
 
 import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import io.github.smart.cloud.starter.mp.shardingjdbc.constants.ShardingSphereDataSourceName;
-import io.github.smart.cloud.starter.mybatis.plus.common.biz.BaseBiz;
+import io.github.smart.cloud.starter.mybatis.plus.common.repository.BaseRepository;
 import io.github.smart.cloud.starter.mybatis.plus.enums.DeleteState;
 import org.smartframework.cloud.examples.mall.order.entity.base.OrderBillEntity;
 import org.smartframework.cloud.examples.mall.order.mapper.OrderBillBaseMapper;
@@ -33,7 +33,7 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 @DS(ShardingSphereDataSourceName.SHARDING_DATASOURCE)
-public class OrderBillApiBiz extends BaseBiz<OrderBillBaseMapper, OrderBillEntity> {
+public class OrderBillApiRepository extends BaseRepository<OrderBillBaseMapper, OrderBillEntity> {
 
     public long create(OrderBillEntity entity) {
         super.save(entity);

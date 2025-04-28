@@ -21,7 +21,7 @@ import lombok.RequiredArgsConstructor;
 import org.smartframework.cloud.examples.app.auth.core.UserContext;
 import org.smartframework.cloud.examples.basic.rpc.user.request.api.user.UserInfoInsertReqVO;
 import org.smartframework.cloud.examples.basic.rpc.user.response.base.UserInfoBaseRespVO;
-import org.smartframework.cloud.examples.basic.user.biz.api.UserInfoApiBiz;
+import org.smartframework.cloud.examples.basic.user.repository.api.UserInfoApiRepository;
 import org.smartframework.cloud.examples.basic.user.constants.UserReturnCodes;
 import org.smartframework.cloud.examples.basic.user.entity.UserInfoEntity;
 import org.smartframework.cloud.examples.common.config.constants.DataSourceName;
@@ -33,7 +33,7 @@ import org.springframework.stereotype.Service;
 @DS(DataSourceName.BASIC_USER_MASTER)
 public class UserInfoApiService {
 
-    private final UserInfoApiBiz userInfoApiBiz;
+    private final UserInfoApiRepository userInfoApiRepository;
 
     /**
      * 根据id查询用户信息
@@ -43,7 +43,7 @@ public class UserInfoApiService {
     @DS(DataSourceName.BASIC_USER_SLAVE)
     public UserInfoBaseRespVO queryById() {
         Long userId = UserContext.getUserId();
-        UserInfoEntity userInfoEntity = userInfoApiBiz.getById(userId);
+        UserInfoEntity userInfoEntity = userInfoApiRepository.getById(userId);
         UserInfoBaseRespVO userInfoBaseRespVO = new UserInfoBaseRespVO();
         BeanUtils.copyProperties(userInfoEntity, userInfoBaseRespVO);
         return userInfoBaseRespVO;
@@ -56,12 +56,12 @@ public class UserInfoApiService {
      * @return
      */
     public UserInfoEntity insert(UserInfoInsertReqVO userInfo) {
-        boolean existMobile = userInfoApiBiz.existByMobile(userInfo.getMobile());
+        boolean existMobile = userInfoApiRepository.existByMobile(userInfo.getMobile());
         if (existMobile) {
             throw new ParamValidateException(UserReturnCodes.REGISTER_MOBILE_EXSITED);
         }
 
-        return userInfoApiBiz.insert(userInfo);
+        return userInfoApiRepository.insert(userInfo);
     }
 
 }

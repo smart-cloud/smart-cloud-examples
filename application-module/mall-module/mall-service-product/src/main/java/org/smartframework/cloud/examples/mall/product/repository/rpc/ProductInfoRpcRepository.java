@@ -13,10 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.smartframework.cloud.examples.mall.product.biz.rpc;
+package org.smartframework.cloud.examples.mall.product.repository.rpc;
 
-import io.github.smart.cloud.starter.mybatis.plus.common.biz.BaseBiz;
-import io.github.smart.cloud.utility.ObjectUtil;
+import io.github.smart.cloud.starter.mybatis.plus.common.repository.BaseRepository;
 import lombok.RequiredArgsConstructor;
 import org.smartframework.cloud.examples.mall.product.entity.ProductInfoEntity;
 import org.smartframework.cloud.examples.mall.product.mapper.base.ProductInfoBaseMapper;
@@ -39,7 +38,7 @@ import java.util.stream.Collectors;
  */
 @Repository
 @RequiredArgsConstructor
-public class ProductInfoRpcBiz extends BaseBiz<ProductInfoBaseMapper, ProductInfoEntity> {
+public class ProductInfoRpcRepository extends BaseRepository<ProductInfoBaseMapper, ProductInfoEntity> {
 
     private final ProductInfoRpcMapper productInfoRpcMapper;
 

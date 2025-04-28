@@ -13,12 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.smartframework.cloud.examples.mall.order.biz.api;
+package org.smartframework.cloud.examples.mall.order.repository.api;
 
 import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import io.github.smart.cloud.starter.mp.shardingjdbc.constants.ShardingSphereDataSourceName;
-import io.github.smart.cloud.starter.mybatis.plus.common.biz.BaseBiz;
+import io.github.smart.cloud.starter.mybatis.plus.common.repository.BaseRepository;
 import org.smartframework.cloud.examples.mall.order.entity.base.OrderDeliveryInfoEntity;
 import org.smartframework.cloud.examples.mall.order.mapper.OrderDeliveryInfoBaseMapper;
 import org.springframework.stereotype.Repository;
@@ -33,7 +33,7 @@ import java.util.List;
  */
 @Repository
 @DS(ShardingSphereDataSourceName.SHARDING_DATASOURCE)
-public class OrderDeliveryInfoApiBiz extends BaseBiz<OrderDeliveryInfoBaseMapper, OrderDeliveryInfoEntity> {
+public class OrderDeliveryInfoApiRepository extends BaseRepository<OrderDeliveryInfoBaseMapper, OrderDeliveryInfoEntity> {
 
     /**
      * 根据订单号查询运单信息
