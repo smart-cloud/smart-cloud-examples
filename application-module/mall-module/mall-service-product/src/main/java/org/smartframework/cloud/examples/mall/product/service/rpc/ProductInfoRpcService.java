@@ -19,7 +19,7 @@ import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.dynamic.datasource.annotation.DSTransactional;
 import lombok.RequiredArgsConstructor;
 import org.smartframework.cloud.examples.common.config.constants.DataSourceName;
-import org.smartframework.cloud.examples.mall.product.repository.rpc.ProductInfoRpcRepository;
+import org.smartframework.cloud.examples.mall.product.repository.ProductInfoRepository;
 import org.smartframework.cloud.examples.mall.rpc.product.request.rpc.QryProductByIdReqDTO;
 import org.smartframework.cloud.examples.mall.rpc.product.request.rpc.QryProductByIdsReqDTO;
 import org.smartframework.cloud.examples.mall.rpc.product.request.rpc.UpdateStockReqDTO;
@@ -38,7 +38,7 @@ import org.springframework.stereotype.Service;
 @DS(DataSourceName.MALL_PRODUCT_MASTER)
 public class ProductInfoRpcService {
 
-    private final ProductInfoRpcRepository productRpcBiz;
+    private final ProductInfoRepository productInfoRepository;
 
     /**
      * 根据id查询商品信息
@@ -48,7 +48,7 @@ public class ProductInfoRpcService {
      */
     @DS(DataSourceName.MALL_PRODUCT_SLAVE)
     public QryProductByIdRespDTO qryProductById(QryProductByIdReqDTO reqBody) {
-        return productRpcBiz.qryProductById(reqBody);
+        return productInfoRepository.qryProductById(reqBody);
     }
 
     /**
@@ -59,7 +59,7 @@ public class ProductInfoRpcService {
      */
     @DS(DataSourceName.MALL_PRODUCT_SLAVE)
     public QryProductByIdsRespDTO qryProductByIds(QryProductByIdsReqDTO reqDTO) {
-        return productRpcBiz.qryProductByIds(reqDTO);
+        return productInfoRepository.qryProductByIds(reqDTO);
     }
 
     /**
@@ -70,7 +70,7 @@ public class ProductInfoRpcService {
      */
     @DSTransactional
     public Boolean updateStock(UpdateStockReqDTO req) {
-        return productRpcBiz.updateStock(req.getItems());
+        return productInfoRepository.updateStock(req.getItems());
     }
 
 }

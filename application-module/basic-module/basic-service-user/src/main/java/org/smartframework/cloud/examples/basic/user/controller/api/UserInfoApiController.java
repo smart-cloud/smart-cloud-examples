@@ -22,7 +22,7 @@ import io.github.smart.cloud.common.pojo.Response;
 import io.github.smart.cloud.starter.core.util.ResponseUtil;
 import lombok.RequiredArgsConstructor;
 import org.smartframework.cloud.examples.basic.rpc.user.response.base.UserInfoBaseRespVO;
-import org.smartframework.cloud.examples.basic.user.service.api.UserInfoApiService;
+import org.smartframework.cloud.examples.basic.user.service.UserInfoService;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -41,7 +41,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class UserInfoApiController {
 
-    private final UserInfoApiService userInfoApIService;
+    private final UserInfoService userInfoApIService;
 
     /**
      * 查询当前用户信息

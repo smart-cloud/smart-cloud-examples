@@ -17,7 +17,7 @@ package org.smartframework.cloud.examples.basic.auth.test.data;
 
 import io.github.smart.cloud.starter.mybatis.plus.enums.DeleteState;
 import lombok.RequiredArgsConstructor;
-import org.smartframework.cloud.examples.basic.auth.repository.oms.RolePermissionOmsRepository;
+import org.smartframework.cloud.examples.basic.auth.repository.RolePermissionRelaRepository;
 import org.smartframework.cloud.examples.basic.auth.entity.RolePermissionRelaEntity;
 import org.springframework.stereotype.Component;
 
@@ -29,7 +29,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class RolePermissionRelaData {
 
-    private final RolePermissionOmsRepository rolePermissionOmsRepository;
+    private final RolePermissionRelaRepository rolePermissionRelaRepository;
 
     public void insert(Long roleId, List<Long> permissionIds) {
         List<RolePermissionRelaEntity> rolePermissionRelaEntities = permissionIds.stream().map(permissionId -> {
@@ -43,7 +43,7 @@ public class RolePermissionRelaData {
             return userRoleRelaEntity;
         }).collect(Collectors.toList());
 
-        rolePermissionOmsRepository.insertBatchSomeColumn(rolePermissionRelaEntities);
+        rolePermissionRelaRepository.insertBatchSomeColumn(rolePermissionRelaEntities);
     }
 
 }

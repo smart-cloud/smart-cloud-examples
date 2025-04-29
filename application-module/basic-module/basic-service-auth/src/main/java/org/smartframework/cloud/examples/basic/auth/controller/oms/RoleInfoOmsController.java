@@ -25,7 +25,7 @@ import io.github.smart.cloud.common.pojo.BasePageResponse;
 import io.github.smart.cloud.common.pojo.Response;
 import io.github.smart.cloud.starter.core.util.ResponseUtil;
 import lombok.RequiredArgsConstructor;
-import org.smartframework.cloud.examples.basic.auth.service.oms.RoleInfoOmsService;
+import org.smartframework.cloud.examples.basic.auth.service.RoleInfoService;
 import org.smartframework.cloud.examples.basic.rpc.auth.request.oms.role.PageRoleReqVO;
 import org.smartframework.cloud.examples.basic.rpc.auth.request.oms.role.RoleCreateReqVO;
 import org.smartframework.cloud.examples.basic.rpc.auth.request.oms.role.RoleUpdateReqVO;
@@ -49,7 +49,7 @@ import javax.validation.constraints.NotNull;
 @RequiredArgsConstructor
 public class RoleInfoOmsController {
 
-    private final RoleInfoOmsService roleInfoOmsService;
+    private final RoleInfoService roleInfoService;
 
     /**
      * 添加角色
@@ -64,7 +64,7 @@ public class RoleInfoOmsController {
     @RequireRepeatSubmitCheck
     @RequireTimestamp
     public Response<Boolean> create(@RequestBody @Valid RoleCreateReqVO req) {
-        return ResponseUtil.success(roleInfoOmsService.create(req));
+        return ResponseUtil.success(roleInfoService.create(req));
     }
 
     /**
@@ -79,7 +79,7 @@ public class RoleInfoOmsController {
     @RequireDataSecurity
     @RequireTimestamp
     public Response<Boolean> update(@RequestBody @Valid RoleUpdateReqVO req) {
-        return ResponseUtil.success(roleInfoOmsService.update(req));
+        return ResponseUtil.success(roleInfoService.update(req));
     }
 
     /**
@@ -94,7 +94,7 @@ public class RoleInfoOmsController {
     @RequireDataSecurity
     @RequireTimestamp
     public Response<Boolean> delete(@RequestBody @NotNull Long id) {
-        return ResponseUtil.success(roleInfoOmsService.logicDelete(id));
+        return ResponseUtil.success(roleInfoService.logicDelete(id));
     }
 
     /**
@@ -108,7 +108,7 @@ public class RoleInfoOmsController {
     @RequirePermissions("auth:role:page")
     @RequireTimestamp
     public Response<BasePageResponse<RoleInfoBaseRespVO>> page(@Valid @NotNull PageRoleReqVO req) {
-        return ResponseUtil.success(roleInfoOmsService.page(req));
+        return ResponseUtil.success(roleInfoService.page(req));
     }
 
 }

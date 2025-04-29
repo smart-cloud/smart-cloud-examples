@@ -21,7 +21,7 @@ import io.github.smart.cloud.common.pojo.Response;
 import io.github.smart.cloud.starter.core.util.ResponseUtil;
 import lombok.RequiredArgsConstructor;
 import org.smartframework.cloud.examples.basic.rpc.user.request.api.token.RenewReqVO;
-import org.smartframework.cloud.examples.basic.user.service.api.TokenApiService;
+import org.smartframework.cloud.examples.basic.user.service.TokenService;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -36,7 +36,7 @@ import javax.validation.Valid;
 @RequiredArgsConstructor
 public class TokenApiController {
 
-    private final TokenApiService tokenApiService;
+    private final TokenService tokenService;
 
     /**
      * token续期
@@ -48,7 +48,7 @@ public class TokenApiController {
     @RequireDataSecurity
     @RequireTimestamp
     public Response<Boolean> renew(@RequestBody @Valid RenewReqVO req) {
-        return ResponseUtil.success(tokenApiService.renew(req.getToken()));
+        return ResponseUtil.success(tokenService.renew(req.getToken()));
     }
 
 }

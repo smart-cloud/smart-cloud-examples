@@ -17,7 +17,7 @@ package org.smartframework.cloud.examples.mall.product.test.data;
 
 import io.github.smart.cloud.starter.mybatis.plus.enums.DeleteState;
 import org.smartframework.cloud.examples.mall.product.entity.ProductInfoEntity;
-import org.smartframework.cloud.examples.mall.product.mapper.base.ProductInfoBaseMapper;
+import org.smartframework.cloud.examples.mall.product.mapper.ProductInfoMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,7 +30,7 @@ import java.util.List;
 public class ProductInfoData {
 
     @Autowired
-    private ProductInfoBaseMapper productInfoBaseMapper;
+    private ProductInfoMapper productInfoMapper;
 
     /**
      * 插入指定id的数据
@@ -45,7 +45,7 @@ public class ProductInfoData {
         entity.setStock(2000L);
         entity.setInsertTime(new Date());
         entity.setDelState(DeleteState.NORMAL);
-        productInfoBaseMapper.insert(entity);
+        productInfoMapper.insert(entity);
     }
 
     /**
@@ -75,7 +75,7 @@ public class ProductInfoData {
             entity.setInsertUser(1L);
             entity.setDelState(DeleteState.NORMAL);
 
-            productInfoBaseMapper.insert(entity);
+            productInfoMapper.insert(entity);
         }
     }
 

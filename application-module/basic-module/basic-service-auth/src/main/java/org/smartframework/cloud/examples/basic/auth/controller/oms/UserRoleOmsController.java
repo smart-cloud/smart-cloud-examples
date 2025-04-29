@@ -24,7 +24,7 @@ import io.github.smart.cloud.api.core.annotation.constants.Role;
 import io.github.smart.cloud.common.pojo.Response;
 import io.github.smart.cloud.starter.core.util.ResponseUtil;
 import lombok.RequiredArgsConstructor;
-import org.smartframework.cloud.examples.basic.auth.service.oms.UserRoleOmsService;
+import org.smartframework.cloud.examples.basic.auth.service.UserRoleService;
 import org.smartframework.cloud.examples.basic.rpc.auth.request.oms.user.role.UserRoleCreateReqVO;
 import org.smartframework.cloud.examples.basic.rpc.auth.request.oms.user.role.UserRoleUpdateReqVO;
 import org.smartframework.cloud.examples.basic.rpc.auth.response.oms.user.role.UserRoleRespVO;
@@ -48,7 +48,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class UserRoleOmsController {
 
-    private final UserRoleOmsService userRoleOmsService;
+    private final UserRoleService userRoleService;
 
     /**
      * 添加用户角色
@@ -63,7 +63,7 @@ public class UserRoleOmsController {
     @RequireRepeatSubmitCheck
     @RequireTimestamp
     public Response<Boolean> create(@RequestBody @Valid UserRoleCreateReqVO req) {
-        return ResponseUtil.success(userRoleOmsService.create(req));
+        return ResponseUtil.success(userRoleService.create(req));
     }
 
     /**
@@ -78,7 +78,7 @@ public class UserRoleOmsController {
     @RequireDataSecurity
     @RequireTimestamp
     public Response<Boolean> update(@RequestBody @Valid UserRoleUpdateReqVO req) {
-        return ResponseUtil.success(userRoleOmsService.update(req));
+        return ResponseUtil.success(userRoleService.update(req));
     }
 
     /**
@@ -92,7 +92,7 @@ public class UserRoleOmsController {
     @RequirePermissions("auth:user:role:listRole")
     @RequireTimestamp
     public Response<List<UserRoleRespVO>> listRole(@NotNull Long uid) {
-        return ResponseUtil.success(userRoleOmsService.listRole(uid));
+        return ResponseUtil.success(userRoleService.listRole(uid));
     }
 
 }

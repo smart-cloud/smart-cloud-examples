@@ -19,7 +19,7 @@ import com.baomidou.dynamic.datasource.annotation.DS;
 import io.github.smart.cloud.common.pojo.BasePageResponse;
 import lombok.RequiredArgsConstructor;
 import org.smartframework.cloud.examples.common.config.constants.DataSourceName;
-import org.smartframework.cloud.examples.mall.product.repository.oms.ProductInfoOmsRepository;
+import org.smartframework.cloud.examples.mall.product.repository.ProductInfoRepository;
 import org.smartframework.cloud.examples.mall.rpc.product.request.oms.PageProductReqVO;
 import org.smartframework.cloud.examples.mall.rpc.product.request.oms.ProductDeleteReqVO;
 import org.smartframework.cloud.examples.mall.rpc.product.request.oms.ProductInsertReqVO;
@@ -38,7 +38,7 @@ import org.springframework.stereotype.Service;
 @DS(DataSourceName.MALL_PRODUCT_MASTER)
 public class ProductInfoOmsService {
 
-    private final ProductInfoOmsRepository productOmsBiz;
+    private final ProductInfoRepository productInfoRepository;
 
     /**
      * 新增
@@ -47,7 +47,7 @@ public class ProductInfoOmsService {
      * @return
      */
     public Boolean create(ProductInsertReqVO reqBody) {
-        return productOmsBiz.insert(reqBody);
+        return productInfoRepository.insert(reqBody);
     }
 
     /**
@@ -57,7 +57,7 @@ public class ProductInfoOmsService {
      * @return
      */
     public Boolean update(ProductUpdateReqVO reqBody) {
-        return productOmsBiz.update(reqBody);
+        return productInfoRepository.update(reqBody);
     }
 
     /**
@@ -67,7 +67,7 @@ public class ProductInfoOmsService {
      * @return
      */
     public Boolean logicDelete(ProductDeleteReqVO reqBody) {
-        return productOmsBiz.logicDelete(reqBody.getId());
+        return productInfoRepository.logicDelete(reqBody.getId());
     }
 
     /**
@@ -78,7 +78,7 @@ public class ProductInfoOmsService {
      */
     @DS(DataSourceName.MALL_PRODUCT_SLAVE)
     public BasePageResponse<ProductInfoBaseRespVO> pageProduct(PageProductReqVO req) {
-        return productOmsBiz.pageProduct(req);
+        return productInfoRepository.pageProduct(req);
     }
 
 }

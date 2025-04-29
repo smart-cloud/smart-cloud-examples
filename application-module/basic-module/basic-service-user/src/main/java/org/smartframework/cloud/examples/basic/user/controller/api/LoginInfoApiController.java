@@ -23,7 +23,7 @@ import lombok.RequiredArgsConstructor;
 import org.smartframework.cloud.examples.basic.rpc.user.request.api.login.ExitReqVO;
 import org.smartframework.cloud.examples.basic.rpc.user.request.api.login.LoginReqVO;
 import org.smartframework.cloud.examples.basic.rpc.user.response.api.login.LoginRespVO;
-import org.smartframework.cloud.examples.basic.user.service.api.LoginInfoApiService;
+import org.smartframework.cloud.examples.basic.user.service.LoginInfoService;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -45,7 +45,7 @@ import javax.validation.Valid;
 @RequiredArgsConstructor
 public class LoginInfoApiController {
 
-    private final LoginInfoApiService loginInfoApiService;
+    private final LoginInfoService loginInfoService;
 
     /**
      * 登陆
@@ -57,7 +57,7 @@ public class LoginInfoApiController {
     @RequireDataSecurity
     @RequireTimestamp
     public Response<LoginRespVO> login(@RequestBody @Valid LoginReqVO req) {
-        return ResponseUtil.success(loginInfoApiService.login(req));
+        return ResponseUtil.success(loginInfoService.login(req));
     }
 
 
@@ -70,7 +70,7 @@ public class LoginInfoApiController {
     @PostMapping("exit")
     @RequireTimestamp
     public Response<Void> exit(@RequestBody @Valid ExitReqVO req) {
-        loginInfoApiService.exit(req);
+        loginInfoService.exit(req);
         return ResponseUtil.success();
     }
 

@@ -34,7 +34,7 @@ import org.smartframework.cloud.examples.basic.rpc.user.request.api.login.LoginI
 import org.smartframework.cloud.examples.basic.rpc.user.request.api.register.RegisterUserReqVO;
 import org.smartframework.cloud.examples.basic.rpc.user.request.api.user.UserInfoInsertReqVO;
 import org.smartframework.cloud.examples.basic.rpc.user.response.api.register.RegisterUserRespVO;
-import org.smartframework.cloud.examples.basic.user.service.api.LoginInfoApiService;
+import org.smartframework.cloud.examples.basic.user.service.LoginInfoService;
 import org.smartframework.cloud.examples.support.rpc.gateway.UserRpc;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.annotation.Rollback;
@@ -45,7 +45,7 @@ import org.springframework.transaction.annotation.Transactional;
 class RegisterApiControllerIntegrationTest extends WebMvcIntegrationTest {
 
     @MockBean
-    private LoginInfoApiService loginInfoApiService;
+    private LoginInfoService loginInfoService;
     @MockBean
     private UserRpc userRpc;
     @MockBean

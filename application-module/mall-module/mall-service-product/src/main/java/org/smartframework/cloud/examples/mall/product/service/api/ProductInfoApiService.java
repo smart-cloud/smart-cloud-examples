@@ -19,7 +19,7 @@ import com.baomidou.dynamic.datasource.annotation.DS;
 import io.github.smart.cloud.common.pojo.BasePageResponse;
 import lombok.RequiredArgsConstructor;
 import org.smartframework.cloud.examples.common.config.constants.DataSourceName;
-import org.smartframework.cloud.examples.mall.product.repository.api.ProductInfoApiRepository;
+import org.smartframework.cloud.examples.mall.product.repository.ProductInfoRepository;
 import org.smartframework.cloud.examples.mall.rpc.product.request.api.PageProductReqVO;
 import org.smartframework.cloud.examples.mall.rpc.product.response.api.PageProductRespVO;
 import org.springframework.stereotype.Service;
@@ -35,7 +35,7 @@ import org.springframework.stereotype.Service;
 @DS(DataSourceName.MALL_PRODUCT_MASTER)
 public class ProductInfoApiService {
 
-    private final ProductInfoApiRepository productOmsBiz;
+    private final ProductInfoRepository productInfoRepository;
 
     /**
      * 分页查询商品信息
@@ -45,7 +45,7 @@ public class ProductInfoApiService {
      */
     @DS(DataSourceName.MALL_PRODUCT_SLAVE)
     public BasePageResponse<PageProductRespVO> pageProduct(PageProductReqVO req) {
-        return productOmsBiz.pageProduct(req);
+        return productInfoRepository.pageProduct(req);
     }
 
 }

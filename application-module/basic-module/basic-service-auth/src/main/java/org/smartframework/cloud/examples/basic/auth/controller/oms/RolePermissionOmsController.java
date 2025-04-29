@@ -25,7 +25,7 @@ import io.github.smart.cloud.common.pojo.BasePageResponse;
 import io.github.smart.cloud.common.pojo.Response;
 import io.github.smart.cloud.starter.core.util.ResponseUtil;
 import lombok.RequiredArgsConstructor;
-import org.smartframework.cloud.examples.basic.auth.service.oms.RolePermissionOmsService;
+import org.smartframework.cloud.examples.basic.auth.service.RolePermissionService;
 import org.smartframework.cloud.examples.basic.rpc.auth.request.oms.role.permisson.PageRolePermissonReqVO;
 import org.smartframework.cloud.examples.basic.rpc.auth.request.oms.role.permisson.RolePermissonCreateReqVO;
 import org.smartframework.cloud.examples.basic.rpc.auth.request.oms.role.permisson.RolePermissonUpdateReqVO;
@@ -49,7 +49,7 @@ import javax.validation.constraints.NotNull;
 @RequiredArgsConstructor
 public class RolePermissionOmsController {
 
-    private final RolePermissionOmsService rolePermissionOmsService;
+    private final RolePermissionService rolePermissionService;
 
     /**
      * 添加角色权限
@@ -64,7 +64,7 @@ public class RolePermissionOmsController {
     @RequireRepeatSubmitCheck
     @RequireTimestamp
     public Response<Boolean> create(@RequestBody @Valid RolePermissonCreateReqVO req) {
-        return ResponseUtil.success(rolePermissionOmsService.create(req));
+        return ResponseUtil.success(rolePermissionService.create(req));
     }
 
     /**
@@ -79,7 +79,7 @@ public class RolePermissionOmsController {
     @RequireDataSecurity
     @RequireTimestamp
     public Response<Boolean> update(@RequestBody @Valid RolePermissonUpdateReqVO req) {
-        return ResponseUtil.success(rolePermissionOmsService.update(req));
+        return ResponseUtil.success(rolePermissionService.update(req));
     }
 
     /**
@@ -93,7 +93,7 @@ public class RolePermissionOmsController {
     @RequirePermissions("auth:role:permission:page")
     @RequireTimestamp
     public Response<BasePageResponse<RolePermissionRespVO>> page(@Valid @NotNull PageRolePermissonReqVO req) {
-        return ResponseUtil.success(rolePermissionOmsService.page(req));
+        return ResponseUtil.success(rolePermissionService.page(req));
     }
 
 }

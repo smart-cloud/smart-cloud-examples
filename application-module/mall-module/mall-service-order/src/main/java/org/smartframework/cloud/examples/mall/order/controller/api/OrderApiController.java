@@ -23,7 +23,7 @@ import io.github.smart.cloud.common.pojo.Response;
 import io.github.smart.cloud.starter.core.util.ResponseUtil;
 import lombok.RequiredArgsConstructor;
 import org.smartframework.cloud.examples.mall.order.mq.producer.OrderProducer;
-import org.smartframework.cloud.examples.mall.order.service.api.OrderApiService;
+import org.smartframework.cloud.examples.mall.order.service.OrderService;
 import org.smartframework.cloud.examples.mall.rpc.order.request.api.SubmitOrderReqVO;
 import org.smartframework.cloud.examples.mall.rpc.order.response.api.QuerySubmitResultRespVO;
 import org.springframework.validation.annotation.Validated;
@@ -46,7 +46,7 @@ import javax.validation.constraints.NotNull;
 public class OrderApiController {
 
     private final OrderProducer orderProducer;
-    private final OrderApiService orderApiService;
+    private final OrderService orderService;
 
     /**
      * 提交订单
@@ -73,7 +73,7 @@ public class OrderApiController {
     @RequireUser
     @RequireTimestamp
     public Response<QuerySubmitResultRespVO> querySubmitResult(@NotNull String orderNo) {
-        return ResponseUtil.success(orderApiService.querySubmitResult(orderNo));
+        return ResponseUtil.success(orderService.querySubmitResult(orderNo));
     }
 
 }

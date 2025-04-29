@@ -25,7 +25,7 @@ import io.github.smart.cloud.common.pojo.BasePageResponse;
 import io.github.smart.cloud.common.pojo.Response;
 import io.github.smart.cloud.starter.core.util.ResponseUtil;
 import lombok.RequiredArgsConstructor;
-import org.smartframework.cloud.examples.basic.auth.service.oms.PermissionInfoOmsService;
+import org.smartframework.cloud.examples.basic.auth.service.PermissionInfoService;
 import org.smartframework.cloud.examples.basic.rpc.auth.request.oms.permisson.PagePermissionReqVO;
 import org.smartframework.cloud.examples.basic.rpc.auth.request.oms.permisson.PermissionCreateReqVO;
 import org.smartframework.cloud.examples.basic.rpc.auth.request.oms.permisson.PermissionUpdateReqVO;
@@ -49,7 +49,7 @@ import javax.validation.constraints.NotNull;
 @RequiredArgsConstructor
 public class PermissionInfoOmsController {
 
-    private final PermissionInfoOmsService permissionInfoOmsService;
+    private final PermissionInfoService permissionInfoService;
 
     /**
      * 添加权限
@@ -64,7 +64,7 @@ public class PermissionInfoOmsController {
     @RequireRepeatSubmitCheck
     @RequireTimestamp
     public Response<Boolean> create(@RequestBody @Valid PermissionCreateReqVO req) {
-        return ResponseUtil.success(permissionInfoOmsService.create(req));
+        return ResponseUtil.success(permissionInfoService.create(req));
     }
 
     /**
@@ -79,7 +79,7 @@ public class PermissionInfoOmsController {
     @RequireDataSecurity
     @RequireTimestamp
     public Response<Boolean> update(@RequestBody @Valid PermissionUpdateReqVO req) {
-        return ResponseUtil.success(permissionInfoOmsService.update(req));
+        return ResponseUtil.success(permissionInfoService.update(req));
     }
 
     /**
@@ -94,7 +94,7 @@ public class PermissionInfoOmsController {
     @RequireDataSecurity
     @RequireTimestamp
     public Response<Boolean> delete(@RequestBody @NotNull Long id) {
-        return ResponseUtil.success(permissionInfoOmsService.logicDelete(id));
+        return ResponseUtil.success(permissionInfoService.logicDelete(id));
     }
 
     /**
@@ -108,7 +108,7 @@ public class PermissionInfoOmsController {
     @RequirePermissions("auth:permission:page")
     @RequireTimestamp
     public Response<BasePageResponse<PermissionInfoBaseRespVO>> page(@Valid @NotNull PagePermissionReqVO req) {
-        return ResponseUtil.success(permissionInfoOmsService.page(req));
+        return ResponseUtil.success(permissionInfoService.page(req));
     }
 
 }

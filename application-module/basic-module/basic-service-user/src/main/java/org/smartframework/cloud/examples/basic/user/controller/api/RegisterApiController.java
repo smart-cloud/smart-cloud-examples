@@ -22,7 +22,7 @@ import io.github.smart.cloud.starter.core.util.ResponseUtil;
 import lombok.RequiredArgsConstructor;
 import org.smartframework.cloud.examples.basic.rpc.user.request.api.register.RegisterUserReqVO;
 import org.smartframework.cloud.examples.basic.rpc.user.response.api.register.RegisterUserRespVO;
-import org.smartframework.cloud.examples.basic.user.service.api.RegisterApiService;
+import org.smartframework.cloud.examples.basic.user.service.RegisterService;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -44,7 +44,7 @@ import javax.validation.Valid;
 @RequiredArgsConstructor
 public class RegisterApiController {
 
-    private final RegisterApiService registerApiService;
+    private final RegisterService registerService;
 
     /**
      * 注册
@@ -56,7 +56,7 @@ public class RegisterApiController {
     @RequireDataSecurity
     @RequireTimestamp
     public Response<RegisterUserRespVO> register(@RequestBody @Valid RegisterUserReqVO req) {
-        return ResponseUtil.success(registerApiService.register(req));
+        return ResponseUtil.success(registerService.register(req));
     }
 
 }

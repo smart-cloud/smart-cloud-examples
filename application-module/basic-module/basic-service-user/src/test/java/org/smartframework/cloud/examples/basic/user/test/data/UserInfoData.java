@@ -20,7 +20,7 @@ import io.github.smart.cloud.starter.mybatis.plus.enums.DeleteState;
 import org.smartframework.cloud.examples.basic.rpc.enums.user.ChannelEnum;
 import org.smartframework.cloud.examples.basic.rpc.enums.user.SexEnum;
 import org.smartframework.cloud.examples.basic.user.entity.UserInfoEntity;
-import org.smartframework.cloud.examples.basic.user.mapper.base.UserInfoBaseMapper;
+import org.smartframework.cloud.examples.basic.user.mapper.UserInfoMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -30,7 +30,7 @@ import java.util.Date;
 public class UserInfoData {
 
 	@Autowired
-	private UserInfoBaseMapper userInfoBaseMapper;
+	private UserInfoMapper userInfoMapper;
 
 	public void insertTestData(Long id) {
 		UserInfoEntity entity = new UserInfoEntity();
@@ -41,7 +41,7 @@ public class UserInfoData {
 		entity.setSex(SexEnum.FEMALE.getValue());
 		entity.setInsertTime(new Date());
 		entity.setDelState(DeleteState.NORMAL);
-		userInfoBaseMapper.insert(entity);
+		userInfoMapper.insert(entity);
 	}
 
 }
