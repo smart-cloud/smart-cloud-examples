@@ -20,7 +20,7 @@ import io.github.smart.cloud.exception.ParamValidateException;
 import lombok.RequiredArgsConstructor;
 import org.smartframework.cloud.examples.app.auth.core.UserContext;
 import org.smartframework.cloud.examples.basic.rpc.user.request.api.user.UserInfoInsertReqVO;
-import org.smartframework.cloud.examples.basic.rpc.user.response.base.UserInfoBaseRespVO;
+import org.smartframework.cloud.examples.basic.rpc.user.response.entity.UserInfoEntityRespVO;
 import org.smartframework.cloud.examples.basic.user.repository.UserInfoRepository;
 import org.smartframework.cloud.examples.basic.user.constants.UserReturnCodes;
 import org.smartframework.cloud.examples.basic.user.entity.UserInfoEntity;
@@ -41,12 +41,12 @@ public class UserInfoService {
      * @return
      */
     @DS(DataSourceName.BASIC_USER_SLAVE)
-    public UserInfoBaseRespVO queryById() {
+    public UserInfoEntityRespVO queryById() {
         Long userId = UserContext.getUserId();
         UserInfoEntity userInfoEntity = userInfoRepository.getById(userId);
-        UserInfoBaseRespVO userInfoBaseRespVO = new UserInfoBaseRespVO();
-        BeanUtils.copyProperties(userInfoEntity, userInfoBaseRespVO);
-        return userInfoBaseRespVO;
+        UserInfoEntityRespVO userInfoEntityRespVO = new UserInfoEntityRespVO();
+        BeanUtils.copyProperties(userInfoEntity, userInfoEntityRespVO);
+        return userInfoEntityRespVO;
     }
 
     /**

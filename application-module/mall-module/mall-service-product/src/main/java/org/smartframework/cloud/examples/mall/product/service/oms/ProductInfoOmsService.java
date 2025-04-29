@@ -24,7 +24,7 @@ import org.smartframework.cloud.examples.mall.rpc.product.request.oms.PageProduc
 import org.smartframework.cloud.examples.mall.rpc.product.request.oms.ProductDeleteReqVO;
 import org.smartframework.cloud.examples.mall.rpc.product.request.oms.ProductInsertReqVO;
 import org.smartframework.cloud.examples.mall.rpc.product.request.oms.ProductUpdateReqVO;
-import org.smartframework.cloud.examples.mall.rpc.product.response.base.ProductInfoBaseRespVO;
+import org.smartframework.cloud.examples.mall.rpc.product.response.entity.ProductInfoEntityRespVO;
 import org.springframework.stereotype.Service;
 
 /**
@@ -77,7 +77,7 @@ public class ProductInfoOmsService {
      * @return
      */
     @DS(DataSourceName.MALL_PRODUCT_SLAVE)
-    public BasePageResponse<ProductInfoBaseRespVO> pageProduct(PageProductReqVO req) {
+    public BasePageResponse<ProductInfoEntityRespVO> pageProduct(PageProductReqVO req) {
         return productInfoRepository.pageProduct(req);
     }
 

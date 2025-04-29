@@ -27,7 +27,7 @@ import org.smartframework.cloud.examples.mall.rpc.product.request.oms.PageProduc
 import org.smartframework.cloud.examples.mall.rpc.product.request.oms.ProductDeleteReqVO;
 import org.smartframework.cloud.examples.mall.rpc.product.request.oms.ProductInsertReqVO;
 import org.smartframework.cloud.examples.mall.rpc.product.request.oms.ProductUpdateReqVO;
-import org.smartframework.cloud.examples.mall.rpc.product.response.base.ProductInfoBaseRespVO;
+import org.smartframework.cloud.examples.mall.rpc.product.response.entity.ProductInfoEntityRespVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
@@ -101,9 +101,9 @@ class ProductInfoOmsControllerIntegrationTest extends WebMvcIntegrationTest {
         reqVO.setPageNum(1);
         reqVO.setPageSize(10);
 
-        Response<BasePageResponse<ProductInfoBaseRespVO>> result = super.get(
+        Response<BasePageResponse<ProductInfoEntityRespVO>> result = super.get(
                 "/product/oms/productInfo/pageProduct", reqVO,
-                new TypeReference<Response<BasePageResponse<ProductInfoBaseRespVO>>>() {
+                new TypeReference<Response<BasePageResponse<ProductInfoEntityRespVO>>>() {
                 });
 
         Assertions.assertThat(result).isNotNull();

@@ -25,7 +25,7 @@ import org.smartframework.cloud.examples.basic.auth.constants.AuthReturnCodes;
 import org.smartframework.cloud.examples.basic.rpc.auth.request.oms.permisson.PagePermissionReqVO;
 import org.smartframework.cloud.examples.basic.rpc.auth.request.oms.permisson.PermissionCreateReqVO;
 import org.smartframework.cloud.examples.basic.rpc.auth.request.oms.permisson.PermissionUpdateReqVO;
-import org.smartframework.cloud.examples.basic.rpc.auth.response.base.PermissionInfoBaseRespVO;
+import org.smartframework.cloud.examples.basic.rpc.auth.response.entity.PermissionInfoEntityRespVO;
 import org.smartframework.cloud.examples.common.config.constants.DataSourceName;
 import org.springframework.stereotype.Service;
 
@@ -79,7 +79,7 @@ public class PermissionInfoService {
      * @return
      */
     @DS(DataSourceName.BASIC_AUTH_SLAVE)
-    public BasePageResponse<PermissionInfoBaseRespVO> page(PagePermissionReqVO req) {
+    public BasePageResponse<PermissionInfoEntityRespVO> page(PagePermissionReqVO req) {
         return permissionInfoRepository.page(req);
     }
 

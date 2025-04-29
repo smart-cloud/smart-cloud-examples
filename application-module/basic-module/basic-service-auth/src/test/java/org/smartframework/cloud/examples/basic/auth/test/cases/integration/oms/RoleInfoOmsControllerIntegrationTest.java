@@ -27,7 +27,7 @@ import org.smartframework.cloud.examples.basic.auth.test.data.RoleInfoData;
 import org.smartframework.cloud.examples.basic.rpc.auth.request.oms.role.PageRoleReqVO;
 import org.smartframework.cloud.examples.basic.rpc.auth.request.oms.role.RoleCreateReqVO;
 import org.smartframework.cloud.examples.basic.rpc.auth.request.oms.role.RoleUpdateReqVO;
-import org.smartframework.cloud.examples.basic.rpc.auth.response.base.RoleInfoBaseRespVO;
+import org.smartframework.cloud.examples.basic.rpc.auth.response.entity.RoleInfoEntityRespVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
@@ -97,8 +97,8 @@ class RoleInfoOmsControllerIntegrationTest extends WebMvcIntegrationTest {
         reqVO.setCode(entity.getCode());
         reqVO.setDesc(entity.getDescription());
 
-        Response<BasePageResponse<RoleInfoBaseRespVO>> result = super.get("/auth/oms/role/page", reqVO,
-                new TypeReference<Response<BasePageResponse<RoleInfoBaseRespVO>>>() {
+        Response<BasePageResponse<RoleInfoEntityRespVO>> result = super.get("/auth/oms/role/page", reqVO,
+                new TypeReference<Response<BasePageResponse<RoleInfoEntityRespVO>>>() {
                 });
 
         Assertions.assertThat(result).isNotNull();

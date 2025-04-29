@@ -27,7 +27,7 @@ import org.smartframework.cloud.examples.basic.auth.test.data.PermissionInfoData
 import org.smartframework.cloud.examples.basic.rpc.auth.request.oms.permisson.PagePermissionReqVO;
 import org.smartframework.cloud.examples.basic.rpc.auth.request.oms.permisson.PermissionCreateReqVO;
 import org.smartframework.cloud.examples.basic.rpc.auth.request.oms.permisson.PermissionUpdateReqVO;
-import org.smartframework.cloud.examples.basic.rpc.auth.response.base.PermissionInfoBaseRespVO;
+import org.smartframework.cloud.examples.basic.rpc.auth.response.entity.PermissionInfoEntityRespVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
@@ -97,8 +97,8 @@ class PermissionInfoOmsControllerIntegrationTest extends WebMvcIntegrationTest {
         reqVO.setCode(entity.getCode());
         reqVO.setDesc(entity.getDescription());
 
-        Response<BasePageResponse<PermissionInfoBaseRespVO>> result = super.get("/auth/oms/permission/page", reqVO,
-                new TypeReference<Response<BasePageResponse<PermissionInfoBaseRespVO>>>() {
+        Response<BasePageResponse<PermissionInfoEntityRespVO>> result = super.get("/auth/oms/permission/page", reqVO,
+                new TypeReference<Response<BasePageResponse<PermissionInfoEntityRespVO>>>() {
                 });
 
         Assertions.assertThat(result).isNotNull();

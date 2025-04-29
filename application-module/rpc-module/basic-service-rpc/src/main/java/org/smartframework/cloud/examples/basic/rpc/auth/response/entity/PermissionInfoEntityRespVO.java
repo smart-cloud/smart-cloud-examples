@@ -13,21 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.smartframework.cloud.examples.basic.rpc.user.response.base;
+package org.smartframework.cloud.examples.basic.rpc.auth.response.entity;
 
-import io.github.smart.cloud.common.pojo.BaseEntityResponse;
-import io.github.smart.cloud.mask.MaskLog;
-import io.github.smart.cloud.mask.MaskRule;
+import io.github.smart.cloud.common.pojo.EntityResponse;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
-import java.util.Date;
-
 /**
- * 用户信息
+ * 权限表
  *
  * @author collin
  * @date 2021-12-12
@@ -37,31 +33,14 @@ import java.util.Date;
 @ToString
 @NoArgsConstructor
 @SuperBuilder
-public class UserInfoBaseRespVO extends BaseEntityResponse {
+public class PermissionInfoEntityRespVO extends EntityResponse {
 
 	private static final long serialVersionUID = 1L;
 
-    /** 手机号 */
-    @MaskLog(MaskRule.MOBILE)
-	private String mobile;
+    /** 权限编码 */
+	private String code;
 	
-    /** 昵称 */
-	private String nickName;
-	
-    /** 真实姓名 */
-    @MaskLog(MaskRule.NAME)
-	private String realName;
-	
-    /** 性别=={"1":"男","2":"女","3":"未知"} */
-	private Byte sex;
-	
-    /** 出生年月 */
-	private Date birthday;
-	
-    /** 头像 */
-	private String profileImage;
-	
-    /** 所在平台=={"1":"app","2":"web后台","3":"微信"} */
-	private Byte channel;
+    /** 权限描述 */
+	private String description;
 	
 }

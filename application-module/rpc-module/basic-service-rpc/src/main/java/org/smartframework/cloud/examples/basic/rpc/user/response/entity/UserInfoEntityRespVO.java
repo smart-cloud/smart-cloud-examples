@@ -13,17 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.smartframework.cloud.examples.mall.rpc.order.response.base;
+package org.smartframework.cloud.examples.basic.rpc.user.response.entity;
 
-import io.github.smart.cloud.common.pojo.BaseEntityResponse;
+import io.github.smart.cloud.common.pojo.EntityResponse;
+import io.github.smart.cloud.mask.MaskLog;
+import io.github.smart.cloud.mask.MaskRule;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
+import java.util.Date;
+
 /**
- * 运单信息
+ * 用户信息
  *
  * @author collin
  * @date 2021-12-12
@@ -33,23 +37,31 @@ import lombok.experimental.SuperBuilder;
 @ToString
 @NoArgsConstructor
 @SuperBuilder
-public class OrderDeliveryInfoBaseRespVO extends BaseEntityResponse {
+public class UserInfoEntityRespVO extends EntityResponse {
 
 	private static final long serialVersionUID = 1L;
 
-    /** 订单号（t_order_bill表f_order_no） */
-	private String orderNo;
+    /** 手机号 */
+    @MaskLog(MaskRule.MOBILE)
+	private String mobile;
 	
-    /** 购买的商品id（demo_product库t_product_info表f_id） */
-	private Long productInfoId;
+    /** 昵称 */
+	private String nickName;
 	
-    /** 商品名称 */
-	private String productName;
+    /** 真实姓名 */
+    @MaskLog(MaskRule.NAME)
+	private String realName;
 	
-    /** 商品购买价格（单位：万分之一元） */
-	private Long price;
+    /** 性别=={"1":"男","2":"女","3":"未知"} */
+	private Byte sex;
 	
-    /** 购买数量 */
-	private Integer buyCount;
+    /** 出生年月 */
+	private Date birthday;
+	
+    /** 头像 */
+	private String profileImage;
+	
+    /** 所在平台=={"1":"app","2":"web后台","3":"微信"} */
+	private Byte channel;
 	
 }

@@ -29,7 +29,7 @@ import org.smartframework.cloud.examples.basic.auth.service.PermissionInfoServic
 import org.smartframework.cloud.examples.basic.rpc.auth.request.oms.permisson.PagePermissionReqVO;
 import org.smartframework.cloud.examples.basic.rpc.auth.request.oms.permisson.PermissionCreateReqVO;
 import org.smartframework.cloud.examples.basic.rpc.auth.request.oms.permisson.PermissionUpdateReqVO;
-import org.smartframework.cloud.examples.basic.rpc.auth.response.base.PermissionInfoBaseRespVO;
+import org.smartframework.cloud.examples.basic.rpc.auth.response.entity.PermissionInfoEntityRespVO;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -107,7 +107,7 @@ public class PermissionInfoOmsController {
     @RequireRoles(Role.ADMIN)
     @RequirePermissions("auth:permission:page")
     @RequireTimestamp
-    public Response<BasePageResponse<PermissionInfoBaseRespVO>> page(@Valid @NotNull PagePermissionReqVO req) {
+    public Response<BasePageResponse<PermissionInfoEntityRespVO>> page(@Valid @NotNull PagePermissionReqVO req) {
         return ResponseUtil.success(permissionInfoService.page(req));
     }
 

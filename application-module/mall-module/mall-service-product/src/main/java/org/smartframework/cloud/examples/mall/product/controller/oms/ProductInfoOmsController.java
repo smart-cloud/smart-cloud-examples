@@ -28,7 +28,7 @@ import org.smartframework.cloud.examples.mall.rpc.product.request.oms.PageProduc
 import org.smartframework.cloud.examples.mall.rpc.product.request.oms.ProductDeleteReqVO;
 import org.smartframework.cloud.examples.mall.rpc.product.request.oms.ProductInsertReqVO;
 import org.smartframework.cloud.examples.mall.rpc.product.request.oms.ProductUpdateReqVO;
-import org.smartframework.cloud.examples.mall.rpc.product.response.base.ProductInfoBaseRespVO;
+import org.smartframework.cloud.examples.mall.rpc.product.response.entity.ProductInfoEntityRespVO;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -101,7 +101,7 @@ public class ProductInfoOmsController {
      */
     @GetMapping("pageProduct")
     @RequireTimestamp
-    public Response<BasePageResponse<ProductInfoBaseRespVO>> pageProduct(@Valid @NotNull PageProductReqVO req) {
+    public Response<BasePageResponse<ProductInfoEntityRespVO>> pageProduct(@Valid @NotNull PageProductReqVO req) {
         return ResponseUtil.success(productOmsService.pageProduct(req));
     }
 

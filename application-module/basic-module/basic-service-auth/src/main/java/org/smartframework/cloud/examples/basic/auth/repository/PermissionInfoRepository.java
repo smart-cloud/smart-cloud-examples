@@ -27,7 +27,7 @@ import org.smartframework.cloud.examples.basic.auth.mapper.PermissionInfoMapper;
 import org.smartframework.cloud.examples.basic.rpc.auth.request.oms.permisson.PagePermissionReqVO;
 import org.smartframework.cloud.examples.basic.rpc.auth.request.oms.permisson.PermissionCreateReqVO;
 import org.smartframework.cloud.examples.basic.rpc.auth.request.oms.permisson.PermissionUpdateReqVO;
-import org.smartframework.cloud.examples.basic.rpc.auth.response.base.PermissionInfoBaseRespVO;
+import org.smartframework.cloud.examples.basic.rpc.auth.response.entity.PermissionInfoEntityRespVO;
 import org.springframework.stereotype.Repository;
 
 import java.util.Date;
@@ -98,7 +98,7 @@ public class PermissionInfoRepository extends BaseRepository<PermissionInfoMappe
      * @param req
      * @return
      */
-    public BasePageResponse<PermissionInfoBaseRespVO> page(PagePermissionReqVO req) {
+    public BasePageResponse<PermissionInfoEntityRespVO> page(PagePermissionReqVO req) {
         LambdaQueryWrapper<PermissionInfoEntity> wrapper = new LambdaQueryWrapper<>();
         String code = req.getCode();
         if (StringUtils.isNotBlank(code)) {
@@ -111,7 +111,7 @@ public class PermissionInfoRepository extends BaseRepository<PermissionInfoMappe
         wrapper.eq(PermissionInfoEntity::getDelState, DeleteState.NORMAL);
         wrapper.orderByDesc(PermissionInfoEntity::getInsertTime);
 
-        return super.page(req, wrapper, PermissionInfoBaseRespVO.class);
+        return super.page(req, wrapper, PermissionInfoEntityRespVO.class);
     }
 
     /**

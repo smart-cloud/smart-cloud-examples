@@ -13,9 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.smartframework.cloud.examples.basic.rpc.auth.response.base;
+package org.smartframework.cloud.examples.basic.rpc.auth.response.entity;
 
-import io.github.smart.cloud.common.pojo.BaseEntityResponse;
+import io.github.smart.cloud.common.pojo.EntityResponse;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -23,7 +23,7 @@ import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
 /**
- * 权限表
+ * 角色权限关系表
  *
  * @author collin
  * @date 2021-12-12
@@ -33,14 +33,14 @@ import lombok.experimental.SuperBuilder;
 @ToString
 @NoArgsConstructor
 @SuperBuilder
-public class PermissionInfoBaseRespVO extends BaseEntityResponse {
+public class RolePermissionRelaEntityRespVO extends EntityResponse {
 
 	private static final long serialVersionUID = 1L;
 
-    /** 权限编码 */
-	private String code;
+    /** t_role_info表id */
+	private Long roleInfoId;
 	
-    /** 权限描述 */
-	private String description;
+    /** t_permission_info表id */
+	private Long permissionInfoId;
 	
 }

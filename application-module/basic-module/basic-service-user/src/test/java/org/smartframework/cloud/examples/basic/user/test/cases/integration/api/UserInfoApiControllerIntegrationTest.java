@@ -21,7 +21,7 @@ import io.github.smart.cloud.constants.CommonReturnCodes;
 import io.github.smart.cloud.test.core.integration.WebMvcIntegrationTest;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.smartframework.cloud.examples.basic.rpc.user.response.base.UserInfoBaseRespVO;
+import org.smartframework.cloud.examples.basic.rpc.user.response.entity.UserInfoEntityRespVO;
 import org.smartframework.cloud.examples.basic.user.test.data.UserInfoData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.annotation.Rollback;
@@ -39,8 +39,8 @@ class UserInfoApiControllerIntegrationTest extends WebMvcIntegrationTest {
         Long userId = 1L;
         userInfoData.insertTestData(userId);
 
-        Response<UserInfoBaseRespVO> result = super.get("/user/api/userInfo/query", null,
-                new TypeReference<Response<UserInfoBaseRespVO>>() {
+        Response<UserInfoEntityRespVO> result = super.get("/user/api/userInfo/query", null,
+                new TypeReference<Response<UserInfoEntityRespVO>>() {
                 });
 
         Assertions.assertThat(result).isNotNull();

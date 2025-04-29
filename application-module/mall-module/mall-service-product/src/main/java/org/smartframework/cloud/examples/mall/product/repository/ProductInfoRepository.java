@@ -33,7 +33,7 @@ import org.smartframework.cloud.examples.mall.rpc.product.request.rpc.QryProduct
 import org.smartframework.cloud.examples.mall.rpc.product.request.rpc.QryProductByIdsReqDTO;
 import org.smartframework.cloud.examples.mall.rpc.product.request.rpc.UpdateStockReqDTO;
 import org.smartframework.cloud.examples.mall.rpc.product.response.api.PageProductRespVO;
-import org.smartframework.cloud.examples.mall.rpc.product.response.base.ProductInfoBaseRespVO;
+import org.smartframework.cloud.examples.mall.rpc.product.response.entity.ProductInfoEntityRespVO;
 import org.smartframework.cloud.examples.mall.rpc.product.response.rpc.QryProductByIdRespDTO;
 import org.smartframework.cloud.examples.mall.rpc.product.response.rpc.QryProductByIdsRespDTO;
 import org.springframework.stereotype.Repository;
@@ -188,13 +188,13 @@ public class ProductInfoRepository extends BaseRepository<ProductInfoMapper, Pro
      * @param req
      * @return
      */
-    public BasePageResponse<ProductInfoBaseRespVO> pageProduct(org.smartframework.cloud.examples.mall.rpc.product.request.oms.PageProductReqVO req) {
+    public BasePageResponse<ProductInfoEntityRespVO> pageProduct(org.smartframework.cloud.examples.mall.rpc.product.request.oms.PageProductReqVO req) {
         LambdaQueryWrapper<ProductInfoEntity> wrapper = new LambdaQueryWrapper<>();
         String name = req.getName();
         wrapper.like(StringUtils.isNotBlank(name), ProductInfoEntity::getName, name)
                 .eq(ProductInfoEntity::getDelState, DeleteState.NORMAL)
                 .orderByDesc(ProductInfoEntity::getInsertTime);
-        return super.page(req, wrapper, ProductInfoBaseRespVO.class);
+        return super.page(req, wrapper, ProductInfoEntityRespVO.class);
     }
 
 }

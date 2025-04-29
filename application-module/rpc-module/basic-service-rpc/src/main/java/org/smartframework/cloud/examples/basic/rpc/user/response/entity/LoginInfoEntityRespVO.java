@@ -13,9 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.smartframework.cloud.examples.basic.rpc.user.response.base;
+package org.smartframework.cloud.examples.basic.rpc.user.response.entity;
 
-import io.github.smart.cloud.common.pojo.BaseEntityResponse;
+import io.github.smart.cloud.common.pojo.EntityResponse;
 import io.github.smart.cloud.mask.MaskLog;
 import io.github.smart.cloud.mask.MaskRule;
 import lombok.Getter;
@@ -37,30 +37,42 @@ import java.util.Date;
 @ToString
 @NoArgsConstructor
 @SuperBuilder
-public class LoginInfoBaseRespVO extends BaseEntityResponse {
+public class LoginInfoEntityRespVO extends EntityResponse {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	private Long userId;
-	
-    /** 用户名 */
-	private String username;
-	
-    /** 密码（md5加盐处理） */
+    private Long userId;
+
+    /**
+     * 用户名
+     */
+    private String username;
+
+    /**
+     * 密码（md5加盐处理）
+     */
     @MaskLog(MaskRule.PASSWROD)
-	private String password;
-	
-    /** 16位盐值 */
+    private String password;
+
+    /**
+     * 16位盐值
+     */
     @MaskLog(MaskRule.DEFAULT)
-	private String salt;
-	
-    /** 最近成功登录时间 */
-	private Date lastLoginTime;
-	
-    /** 密码状态=={"1":"未设置","2":"已设置"} */
-	private Byte pwdState;
-	
-    /** 用户状态=={"1":"启用","2":"禁用"} */
-	private Byte userState;
-	
+    private String salt;
+
+    /**
+     * 最近成功登录时间
+     */
+    private Date lastLoginTime;
+
+    /**
+     * 密码状态=={"1":"未设置","2":"已设置"}
+     */
+    private Byte pwdState;
+
+    /**
+     * 用户状态=={"1":"启用","2":"禁用"}
+     */
+    private Byte userState;
+
 }

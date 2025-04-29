@@ -25,7 +25,7 @@ import org.smartframework.cloud.examples.basic.auth.constants.AuthReturnCodes;
 import org.smartframework.cloud.examples.basic.rpc.auth.request.oms.role.PageRoleReqVO;
 import org.smartframework.cloud.examples.basic.rpc.auth.request.oms.role.RoleCreateReqVO;
 import org.smartframework.cloud.examples.basic.rpc.auth.request.oms.role.RoleUpdateReqVO;
-import org.smartframework.cloud.examples.basic.rpc.auth.response.base.RoleInfoBaseRespVO;
+import org.smartframework.cloud.examples.basic.rpc.auth.response.entity.RoleInfoEntityRespVO;
 import org.smartframework.cloud.examples.common.config.constants.DataSourceName;
 import org.springframework.stereotype.Service;
 
@@ -79,7 +79,7 @@ public class RoleInfoService {
      * @return
      */
     @DS(DataSourceName.BASIC_AUTH_SLAVE)
-    public BasePageResponse<RoleInfoBaseRespVO> page(PageRoleReqVO req) {
+    public BasePageResponse<RoleInfoEntityRespVO> page(PageRoleReqVO req) {
         return roleInfoRepository.page(req);
     }
 

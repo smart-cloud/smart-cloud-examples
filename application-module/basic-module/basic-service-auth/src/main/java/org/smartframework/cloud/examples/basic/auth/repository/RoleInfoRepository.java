@@ -27,7 +27,7 @@ import org.smartframework.cloud.examples.basic.auth.mapper.RoleInfoMapper;
 import org.smartframework.cloud.examples.basic.rpc.auth.request.oms.role.PageRoleReqVO;
 import org.smartframework.cloud.examples.basic.rpc.auth.request.oms.role.RoleCreateReqVO;
 import org.smartframework.cloud.examples.basic.rpc.auth.request.oms.role.RoleUpdateReqVO;
-import org.smartframework.cloud.examples.basic.rpc.auth.response.base.RoleInfoBaseRespVO;
+import org.smartframework.cloud.examples.basic.rpc.auth.response.entity.RoleInfoEntityRespVO;
 import org.springframework.stereotype.Repository;
 
 import java.util.Date;
@@ -93,7 +93,7 @@ public class RoleInfoRepository extends BaseRepository<RoleInfoMapper, RoleInfoE
      * @param req
      * @return
      */
-    public BasePageResponse<RoleInfoBaseRespVO> page(PageRoleReqVO req) {
+    public BasePageResponse<RoleInfoEntityRespVO> page(PageRoleReqVO req) {
         LambdaQueryWrapper<RoleInfoEntity> wrapper = new LambdaQueryWrapper<>();
         String code = req.getCode();
         if (StringUtils.isNotBlank(code)) {
@@ -106,7 +106,7 @@ public class RoleInfoRepository extends BaseRepository<RoleInfoMapper, RoleInfoE
         wrapper.eq(RoleInfoEntity::getDelState, DeleteState.NORMAL);
         wrapper.orderByDesc(RoleInfoEntity::getInsertTime);
 
-        return super.page(req, wrapper, RoleInfoBaseRespVO.class);
+        return super.page(req, wrapper, RoleInfoEntityRespVO.class);
     }
 
     /**

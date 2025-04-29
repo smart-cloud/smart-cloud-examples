@@ -21,7 +21,7 @@ import io.github.smart.cloud.api.core.annotation.auth.RequireUser;
 import io.github.smart.cloud.common.pojo.Response;
 import io.github.smart.cloud.starter.core.util.ResponseUtil;
 import lombok.RequiredArgsConstructor;
-import org.smartframework.cloud.examples.basic.rpc.user.response.base.UserInfoBaseRespVO;
+import org.smartframework.cloud.examples.basic.rpc.user.response.entity.UserInfoEntityRespVO;
 import org.smartframework.cloud.examples.basic.user.service.UserInfoService;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -52,7 +52,7 @@ public class UserInfoApiController {
     @RequireUser
     @RequireDataSecurity
     @RequireTimestamp
-    public Response<UserInfoBaseRespVO> query() {
+    public Response<UserInfoEntityRespVO> query() {
         return ResponseUtil.success(userInfoApIService.queryById());
     }
 

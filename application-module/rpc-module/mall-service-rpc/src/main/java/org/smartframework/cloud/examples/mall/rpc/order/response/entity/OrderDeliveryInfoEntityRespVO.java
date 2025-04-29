@@ -13,9 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.smartframework.cloud.examples.basic.rpc.auth.response.base;
+package org.smartframework.cloud.examples.mall.rpc.order.response.entity;
 
-import io.github.smart.cloud.common.pojo.BaseEntityResponse;
+import io.github.smart.cloud.common.pojo.EntityResponse;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -23,7 +23,7 @@ import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
 /**
- * 角色表
+ * 运单信息
  *
  * @author collin
  * @date 2021-12-12
@@ -33,14 +33,23 @@ import lombok.experimental.SuperBuilder;
 @ToString
 @NoArgsConstructor
 @SuperBuilder
-public class RoleInfoBaseRespVO extends BaseEntityResponse {
+public class OrderDeliveryInfoEntityRespVO extends EntityResponse {
 
 	private static final long serialVersionUID = 1L;
 
-    /** 角色编码 */
-	private String code;
+    /** 订单号（t_order_bill表f_order_no） */
+	private String orderNo;
 	
-    /** 角色描述 */
-	private String description;
+    /** 购买的商品id（demo_product库t_product_info表f_id） */
+	private Long productInfoId;
+	
+    /** 商品名称 */
+	private String productName;
+	
+    /** 商品购买价格（单位：万分之一元） */
+	private Long price;
+	
+    /** 购买数量 */
+	private Integer buyCount;
 	
 }
