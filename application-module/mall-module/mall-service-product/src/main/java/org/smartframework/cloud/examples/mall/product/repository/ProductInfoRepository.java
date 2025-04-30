@@ -44,7 +44,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * 商品信息api biz
+ * 商品信息repository
  *
  * @author collin
  * @date 2019-03-31

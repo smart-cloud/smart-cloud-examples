@@ -32,7 +32,7 @@
         </if>
     </sql>
 
-    <select id="pageRole" resultType="org.smartframework.cloud.examples.basic.auth.dataobject.RoleDO">
+    <select id="pageRole" resultType="org.smartframework.cloud.examples.basic.auth.pojo.RoleDO">
         SELECT
             r.f_id roleId,
             r.f_code roleCode,
@@ -46,7 +46,7 @@
         <include refid="pageRoleCommon"></include>
     </select>
 
-    <select id="listPermission" resultType="org.smartframework.cloud.examples.basic.auth.dataobject.PermissionDO">
+    <select id="listPermission" resultType="org.smartframework.cloud.examples.basic.auth.pojo.PermissionDO">
         SELECT
             rp.t_role_info_id roleId,
             p.f_id permissonId,

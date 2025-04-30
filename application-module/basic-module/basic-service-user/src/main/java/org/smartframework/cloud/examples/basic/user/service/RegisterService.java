@@ -21,7 +21,7 @@ import lombok.RequiredArgsConstructor;
 import org.smartframework.cloud.examples.basic.rpc.user.request.api.login.LoginInfoInsertReqVO;
 import org.smartframework.cloud.examples.basic.rpc.user.request.api.register.RegisterUserReqVO;
 import org.smartframework.cloud.examples.basic.rpc.user.response.api.register.RegisterUserRespVO;
-import org.smartframework.cloud.examples.basic.user.bo.login.LoginInfoInsertServiceBO;
+import org.smartframework.cloud.examples.basic.user.pojo.login.LoginInfoInsertBO;
 import org.smartframework.cloud.examples.basic.user.entity.UserInfoEntity;
 import org.smartframework.cloud.examples.basic.user.event.RegisterSuccessEventCache;
 import org.smartframework.cloud.examples.common.config.constants.DataSourceName;
@@ -57,7 +57,7 @@ public class RegisterService {
         // 登陆信息
         LoginInfoInsertReqVO loginInfo = req.getLoginInfo();
 
-        LoginInfoInsertServiceBO loginInfoInsertBO = LoginInfoInsertServiceBO.builder()
+        LoginInfoInsertBO loginInfoInsertBO = LoginInfoInsertBO.builder()
                 .userId(userInfoEntity.getId())
                 .username(loginInfo.getUsername())
                 .password(loginInfo.getPassword())

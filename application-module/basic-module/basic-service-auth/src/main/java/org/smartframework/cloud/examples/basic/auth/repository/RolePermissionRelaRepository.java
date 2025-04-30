@@ -23,10 +23,10 @@ import io.github.smart.cloud.starter.mybatis.plus.common.repository.BaseReposito
 import io.github.smart.cloud.starter.mybatis.plus.enums.DeleteState;
 import lombok.RequiredArgsConstructor;
 import org.smartframework.cloud.examples.app.auth.core.UserContext;
-import org.smartframework.cloud.examples.basic.auth.dataobject.PermissionDO;
-import org.smartframework.cloud.examples.basic.auth.dataobject.RoleDO;
-import org.smartframework.cloud.examples.basic.auth.dataobject.param.PageRolePermissonReqDO;
-import org.smartframework.cloud.examples.basic.auth.dataobject.param.PermissionReqDO;
+import org.smartframework.cloud.examples.basic.auth.pojo.PermissionDO;
+import org.smartframework.cloud.examples.basic.auth.pojo.RoleDO;
+import org.smartframework.cloud.examples.basic.auth.pojo.param.PageRolePermissonReqDO;
+import org.smartframework.cloud.examples.basic.auth.pojo.param.PermissionReqDO;
 import org.smartframework.cloud.examples.basic.auth.entity.RolePermissionRelaEntity;
 import org.smartframework.cloud.examples.basic.auth.mapper.RolePermissionRelaMapper;
 import org.smartframework.cloud.examples.basic.rpc.auth.request.oms.role.permisson.PageRolePermissonReqVO;

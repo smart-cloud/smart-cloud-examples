@@ -34,8 +34,8 @@ import org.smartframework.cloud.examples.basic.rpc.user.request.api.login.LoginR
 import org.smartframework.cloud.examples.basic.rpc.user.response.api.login.LoginRespVO;
 import org.smartframework.cloud.examples.basic.user.repository.LoginInfoRepository;
 import org.smartframework.cloud.examples.basic.user.repository.UserInfoRepository;
-import org.smartframework.cloud.examples.basic.user.bo.login.LoginInfoInsertBizBO;
-import org.smartframework.cloud.examples.basic.user.bo.login.LoginInfoInsertServiceBO;
+import org.smartframework.cloud.examples.basic.user.pojo.login.LoginInfoInsertDO;
+import org.smartframework.cloud.examples.basic.user.pojo.login.LoginInfoInsertBO;
 import org.smartframework.cloud.examples.basic.user.constants.UserReturnCodes;
 import org.smartframework.cloud.examples.basic.user.entity.LoginInfoEntity;
 import org.smartframework.cloud.examples.basic.user.entity.UserInfoEntity;
@@ -164,7 +164,7 @@ public class LoginInfoService {
      * @param bo
      * @return
      */
-    public LoginInfoEntity insert(LoginInfoInsertServiceBO bo) {
+    public LoginInfoEntity insert(LoginInfoInsertBO bo) {
         // 判断该用户名是否已存在
         boolean existUsername = loginInfoRepository.existByUsername(bo.getUsername());
         if (existUsername) {
@@ -174,14 +174,14 @@ public class LoginInfoService {
         String salt = generateRandomSalt();
         String securePassword = PasswordUtil.secure(bo.getPassword(), salt);
 
-        LoginInfoInsertBizBO loginInfoInsertBizBO = LoginInfoInsertBizBO.builder()
+        LoginInfoInsertDO loginInfoInsertDO = LoginInfoInsertDO.builder()
                 .userId(bo.getUserId())
                 .username(bo.getUsername())
                 .password(securePassword)
                 .pwdState(bo.getPwdState())
                 .salt(salt)
                 .build();
-        return loginInfoRepository.insert(loginInfoInsertBizBO);
+        return loginInfoRepository.insert(loginInfoInsertDO);
     }
 
 

@@ -13,31 +13,26 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.smartframework.cloud.examples.basic.auth.dataobject.param;
+package org.smartframework.cloud.examples.basic.auth.pojo.param;
 
-import io.github.smart.cloud.common.pojo.dataobject.BasePageRequestDO;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+
+import java.io.Serializable;
+import java.util.Set;
 
 @Getter
 @Setter
+@ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class PageRolePermissonReqDO extends BasePageRequestDO {
+public class PermissionReqDO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     /**
-     * 角色编码
+     * 角色id
      */
-    private String roleCode;
-    /**
-     * 角色描述
-     */
-    private String roleDesc;
-
+    private Set<Long> roleIds;
     /**
      * 权限编码
      */

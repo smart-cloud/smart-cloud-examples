@@ -20,7 +20,7 @@ import io.github.smart.cloud.starter.global.id.GlobalId;
 import io.github.smart.cloud.starter.mybatis.plus.common.repository.BaseRepository;
 import io.github.smart.cloud.starter.mybatis.plus.enums.DeleteState;
 import org.smartframework.cloud.examples.basic.rpc.enums.user.UserStateEnum;
-import org.smartframework.cloud.examples.basic.user.bo.login.LoginInfoInsertBizBO;
+import org.smartframework.cloud.examples.basic.user.pojo.login.LoginInfoInsertDO;
 import org.smartframework.cloud.examples.basic.user.entity.LoginInfoEntity;
 import org.smartframework.cloud.examples.basic.user.mapper.LoginInfoMapper;
 import org.springframework.stereotype.Repository;
@@ -36,16 +36,16 @@ public class LoginInfoRepository extends BaseRepository<LoginInfoMapper, LoginIn
      * @param bo
      * @return
      */
-    public LoginInfoEntity insert(LoginInfoInsertBizBO bo) {
+    public LoginInfoEntity insert(LoginInfoInsertDO loginInfoInsert) {
         LoginInfoEntity entity = new LoginInfoEntity();
         entity.setId(GlobalId.nextId());
         entity.setInsertTime(new Date());
         entity.setDelState(DeleteState.NORMAL);
-        entity.setUserId(bo.getUserId());
-        entity.setUsername(bo.getUsername());
-        entity.setSalt(bo.getSalt());
-        entity.setPassword(bo.getPassword());
-        entity.setPwdState(bo.getPwdState());
+        entity.setUserId(loginInfoInsert.getUserId());
+        entity.setUsername(loginInfoInsert.getUsername());
+        entity.setSalt(loginInfoInsert.getSalt());
+        entity.setPassword(loginInfoInsert.getPassword());
+        entity.setPwdState(loginInfoInsert.getPwdState());
         entity.setLastLoginTime(new Date());
         entity.setUserState(UserStateEnum.ENABLE.getValue());
         super.save(entity);

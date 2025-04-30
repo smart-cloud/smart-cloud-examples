@@ -16,7 +16,7 @@
 package org.smartframework.cloud.examples.basic.user.test.data;
 
 import org.smartframework.cloud.examples.basic.rpc.enums.user.PwdStateEnum;
-import org.smartframework.cloud.examples.basic.user.bo.login.LoginInfoInsertServiceBO;
+import org.smartframework.cloud.examples.basic.user.pojo.login.LoginInfoInsertBO;
 import org.smartframework.cloud.examples.basic.user.entity.LoginInfoEntity;
 import org.smartframework.cloud.examples.basic.user.service.LoginInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,12 +29,12 @@ public class LoginInfoData {
 	private LoginInfoService loginInfoService;
 	
 	public LoginInfoEntity insert(String username, String password) {
-		LoginInfoInsertServiceBO dto = new LoginInfoInsertServiceBO();
-		dto.setUsername(username);
-		dto.setPassword(password);
-		dto.setUserId(1000L);
-		dto.setPwdState(PwdStateEnum.DONE_SETTING.getValue());
-		return loginInfoService.insert(dto);
+		LoginInfoInsertBO bo = new LoginInfoInsertBO();
+		bo.setUsername(username);
+		bo.setPassword(password);
+		bo.setUserId(1000L);
+		bo.setPwdState(PwdStateEnum.DONE_SETTING.getValue());
+		return loginInfoService.insert(bo);
 	}
 	
 }

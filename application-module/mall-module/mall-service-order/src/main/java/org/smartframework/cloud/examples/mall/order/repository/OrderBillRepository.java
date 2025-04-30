@@ -26,7 +26,7 @@ import org.smartframework.cloud.examples.mall.rpc.enums.order.OrderStatus;
 import org.springframework.stereotype.Repository;
 
 /**
- * 订单信息api biz
+ * 订单信息repository
  *
  * @author collin
  * @date 2019-04-08

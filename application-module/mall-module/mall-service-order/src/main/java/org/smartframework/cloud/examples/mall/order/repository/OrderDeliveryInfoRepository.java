@@ -26,7 +26,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 /**
- * 运单信息api biz
+ * 运单信息repository
  *
  * @author collin
  * @date 2019-04-08

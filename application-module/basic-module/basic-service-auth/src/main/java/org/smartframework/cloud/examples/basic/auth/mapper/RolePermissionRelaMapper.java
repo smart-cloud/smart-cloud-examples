@@ -17,10 +17,10 @@ package org.smartframework.cloud.examples.basic.auth.mapper;
 
 import io.github.smart.cloud.starter.mybatis.plus.common.mapper.SmartMapper;
 import org.apache.ibatis.annotations.Mapper;
-import org.smartframework.cloud.examples.basic.auth.dataobject.PermissionDO;
-import org.smartframework.cloud.examples.basic.auth.dataobject.RoleDO;
-import org.smartframework.cloud.examples.basic.auth.dataobject.param.PageRolePermissonReqDO;
-import org.smartframework.cloud.examples.basic.auth.dataobject.param.PermissionReqDO;
+import org.smartframework.cloud.examples.basic.auth.pojo.PermissionDO;
+import org.smartframework.cloud.examples.basic.auth.pojo.RoleDO;
+import org.smartframework.cloud.examples.basic.auth.pojo.param.PageRolePermissonReqDO;
+import org.smartframework.cloud.examples.basic.auth.pojo.param.PermissionReqDO;
 import org.smartframework.cloud.examples.basic.auth.entity.RolePermissionRelaEntity;
 import org.smartframework.cloud.examples.basic.rpc.auth.request.oms.role.permisson.PageRolePermissonReqVO;
 
