@@ -16,8 +16,6 @@
 package org.smartframework.cloud.examples.basic.rpc.user.response.entity;
 
 import io.github.smart.cloud.common.pojo.EntityResponse;
-import io.github.smart.cloud.mask.MaskLog;
-import io.github.smart.cloud.mask.MaskRule;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -42,14 +40,12 @@ public class UserInfoEntityRespVO extends EntityResponse {
 	private static final long serialVersionUID = 1L;
 
     /** 手机号 */
-    @MaskLog(MaskRule.MOBILE)
 	private String mobile;
 	
     /** 昵称 */
 	private String nickName;
 	
     /** 真实姓名 */
-    @MaskLog(MaskRule.NAME)
 	private String realName;
 	
     /** 性别=={"1":"男","2":"女","3":"未知"} */

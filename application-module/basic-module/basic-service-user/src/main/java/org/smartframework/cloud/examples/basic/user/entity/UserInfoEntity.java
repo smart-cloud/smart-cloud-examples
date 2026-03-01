@@ -22,8 +22,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 import io.github.smart.cloud.starter.mybatis.plus.common.CryptField;
-import io.github.smart.cloud.mask.MaskRule;
-import io.github.smart.cloud.mask.MaskLog;
 import java.util.Date;
 import io.github.smart.cloud.starter.mybatis.plus.common.entity.BaseEntity;
 
@@ -43,7 +41,6 @@ public class UserInfoEntity extends BaseEntity {
     private static final long serialVersionUID = 1L;
 
     /** 手机号 */
-    @MaskLog(MaskRule.MOBILE)
     @TableField(value = "f_mobile")
     private CryptField mobile;
 
@@ -52,7 +49,6 @@ public class UserInfoEntity extends BaseEntity {
     private String nickName;
 
     /** 真实姓名 */
-    @MaskLog(MaskRule.NAME)
     @TableField(value = "f_real_name")
     private CryptField realName;
 

@@ -17,8 +17,6 @@ package org.smartframework.cloud.examples.basic.user.entity;
 
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
-import io.github.smart.cloud.mask.MaskLog;
-import io.github.smart.cloud.mask.MaskRule;
 import io.github.smart.cloud.starter.mybatis.plus.common.entity.BaseEntity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -50,12 +48,10 @@ public class LoginInfoEntity extends BaseEntity {
 	private String username;
 	
     /** 密码（md5加盐处理） */
-    @MaskLog(MaskRule.PASSWROD)
     @TableField(value = "f_password")
 	private String password;
 	
     /** 16位盐值 */
-    @MaskLog(MaskRule.DEFAULT)
     @TableField(value = "f_salt")
 	private String salt;
 	

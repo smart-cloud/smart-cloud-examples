@@ -16,8 +16,6 @@
 package org.smartframework.cloud.examples.basic.rpc.user.response.entity;
 
 import io.github.smart.cloud.common.pojo.EntityResponse;
-import io.github.smart.cloud.mask.MaskLog;
-import io.github.smart.cloud.mask.MaskRule;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -51,13 +49,11 @@ public class LoginInfoEntityRespVO extends EntityResponse {
     /**
      * 密码（md5加盐处理）
      */
-    @MaskLog(MaskRule.PASSWROD)
     private String password;
 
     /**
      * 16位盐值
      */
-    @MaskLog(MaskRule.DEFAULT)
     private String salt;
 
     /**

@@ -15,8 +15,6 @@
  */
 package org.smartframework.cloud.examples.basic.rpc.user.request.api.login;
 
-import io.github.smart.cloud.mask.MaskLog;
-import io.github.smart.cloud.mask.MaskRule;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -57,7 +55,6 @@ public class LoginReqVO implements Serializable {
      * 密码
      */
     @NotBlank
-    @MaskLog(MaskRule.PASSWROD)
     private String password;
 
 }

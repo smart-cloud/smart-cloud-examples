@@ -15,8 +15,6 @@
  */
 package org.smartframework.cloud.examples.support.rpc.gateway.request.rpc;
 
-import io.github.smart.cloud.mask.MaskLog;
-import io.github.smart.cloud.mask.MaskRule;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
@@ -63,13 +61,11 @@ public class CacheUserInfoReqDTO implements Serializable {
      * 真实姓名
      */
     @NotBlank
-    @MaskLog(MaskRule.NAME)
     private String realName;
 
     /**
      * 手机号
      */
-    @MaskLog(MaskRule.MOBILE)
     private String mobile;
 
     /**

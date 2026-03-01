@@ -15,8 +15,6 @@
  */
 package org.smartframework.cloud.examples.basic.rpc.user.request.api.user;
 
-import io.github.smart.cloud.mask.MaskLog;
-import io.github.smart.cloud.mask.MaskRule;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -49,7 +47,6 @@ public class UserInfoInsertReqVO implements Serializable {
      */
     @Size(max = 11)
     @NotBlank
-    @MaskLog(MaskRule.PASSWROD)
     private String mobile;
 
     /**
@@ -62,7 +59,6 @@ public class UserInfoInsertReqVO implements Serializable {
      * 真实姓名
      */
     @Size(max = 45)
-    @MaskLog(MaskRule.NAME)
     private String realname;
 
     /**
